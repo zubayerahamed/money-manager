@@ -47,7 +47,7 @@ class WalletController extends Controller
 
         if($uWallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
 
-        return redirect('/wallet')->with('error', "Can't update wallet");
+        return redirect('/wallet/' . $wallet->id . '/edit')->with('error', $wallet->name . ' wallet update failed');
     }
 
     public function deleteWallet(Wallet $wallet){

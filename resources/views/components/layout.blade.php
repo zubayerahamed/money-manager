@@ -11,6 +11,7 @@
     <link href="/assets/fonts/inter/inter.css" rel="stylesheet" type="text/css">
     <link href="/assets/icons/phosphor/styles.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/ltr/all.min.css" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="/assets/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -132,26 +133,26 @@
                             <a href="/" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
                                 <span>
-                                    Dashboard
+                                    Home
                                 </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/wallet/all" class="nav-link {{ Request::is('wallet/**') ? 'active' : '' }}">
+                            <a href="/wallet/all" class="nav-link {{ Request::is('wallet/**') || Request::is('wallet') ? 'active' : '' }}">
                                 <i class="ph-wallet"></i>
-                                <span>Wallets</span>
+                                <span>Wallet Status</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/income-sources" class="nav-link {{ Request::is('income-sources') ? 'active' : '' }}">
+                            <a href="/income-source/all" class="nav-link {{ Request::is('income-source/**') || Request::is('income-source') ? 'active' : '' }}">
                                 <i class="ph-trend-up"></i>
-                                <span>Income Sources</span>
+                                <span>Income Status</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/expense-types" class="nav-link {{ Request::is('expense-types') ? 'active' : '' }}">
+                            <a href="/expense-type/all" class="nav-link {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'active' : '' }}">
                                 <i class="ph-trend-down"></i>
-                                <span>Expense Types</span>
+                                <span>Expense Status</span>
                             </a>
                         </li>
 
@@ -177,15 +178,25 @@
                 <div class="page-header page-header-light shadow">
                     <div class="page-header-content d-lg-flex">
                         <div class="d-flex">
-                            <h4 class="page-title mb-0">
+                            <h4 class="page-title text-center">
                                 @if (Request::is('/'))
-                                <span class="fw-normal">Dashboard</span>
+                                <div class="d-inline-flex ms-auto" style="width: 100%">
+                                    <a href="/wallet/all" class="btn btn-success">
+                                       <i class="fas fa-arrow-alt-circle-down"></i> &nbsp; Add Income
+                                    </a>
+                                    <a href="/wallet/all" class="btn btn-danger" style="margin-left: 10px;">
+                                        <i class="fas fa-arrow-alt-circle-up"></i> &nbsp;  Add Expense
+                                    </a>
+                                    <a href="/wallet/all" class="btn btn-primary" style="margin-left: 10px;">
+                                        <i class="fas fa-retweet"></i> &nbsp; Transfer
+                                    </a>
+                                </div>
                                 @elseif(Request::is('wallet/**'))
-                                Wallet
-                                @elseif(Request::is('income-sources'))
-                                <span class="fw-normal">Income Sources</span>
-                                @elseif(Request::is('expense-types'))
-                                <span class="fw-normal">Expense Types</span>
+                                Wallet Status
+                                @elseif(Request::is('income-source/**'))
+                                Income Status
+                                @elseif(Request::is('expense-type/**'))
+                                Expense Status
                                 @endif
                             </h4>
                         </div>

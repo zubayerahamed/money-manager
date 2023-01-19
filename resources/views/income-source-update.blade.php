@@ -14,35 +14,30 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="mb-0">Update Wallet</h5>
+                                <h5 class="mb-0">Update Income Source</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/wallet/all" class="btn btn-success" style="margin-left: 10px;">
-                                        Back To Wallet Lists
+                                    <a href="/income-source/all" class="btn btn-success" style="margin-left: 10px;">
+                                        Back To Income Sources List
                                     </a>
                                 </div>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/wallet/{{ $wallet->id }}" method="POST">
+                                <form action="/income-source/{{ $incomeSource->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
                                     <div class="row mb-3">
-                                        <label class="form-label">Wallet name:</label>
-                                        <input type="text" name="name" class="form-control" value="{{ old('name', $wallet->name ) }}">
+                                        <label class="form-label">Income Source Name:</label>
+                                        <input type="text" name="name" class="form-control" value="{{ old('name', $incomeSource->name ) }}">
                                         @error('name')
                                             <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
                                         @enderror
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Current Balance:</label>
-                                        <input type="text" name="current_balance" class="form-control" value="{{ old('current_balance') }}" readonly disabled>
-                                    </div>
-
-                                    <div class="row mb-3">
                                         <label class="form-label">Note:</label>
-                                        <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note', $wallet->note) }}</textarea>
+                                        <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note', $incomeSource->note) }}</textarea>
                                     </div>
 
                                     <div class="text-end">
@@ -54,8 +49,6 @@
                     </div>
                 </div>
                 <!-- /centered card -->
-
-                <!-- /marketing campaigns -->
 
             </div>
         </div>
