@@ -15,9 +15,9 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Create Income Source</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/income-source/all" class="btn btn-success" style="margin-left: 10px;">
+                                    <a href="/income-source/all" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Income Sources List
                                     </a>
                                 </div>
@@ -26,21 +26,37 @@
                             <div class="card-body border-top">
                                 <form action="/income-source" method="POST">
                                     @csrf
+                                    
+                                    <i class="fas fa-dot-circle fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
+
+                                    <div class="row mb-3">
+                                        <label class="form-label">Icon:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="icon" id="icon" value="{{ old('icon', 'fas fa-dot-circle') }}" readonly>
+                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
+                                        </div>
+                                    </div>
+
                                     <div class="row mb-3">
                                         <label class="form-label">Income Source Name:</label>
-                                        <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-                                        @error('name')
-                                            <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
-                                        @enderror
+                                        <div class="form-group">
+                                            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                            @error('name')
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label class="form-label">Note:</label>
-                                        <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note') }}</textarea>
+                                        <div class="form-group">
+                                            <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note') }}</textarea>
+                                        </div>
                                     </div>
 
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-primary">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
+                                        <button type="submit" class="btn btn-primary">Submit<i
+                                                class="ph-paper-plane-tilt ms-2"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -58,8 +74,6 @@
     </div>
     <!-- /content area -->
 
-
-
-    <!-- /main content -->
+    @include('icon-modal');
 
 </x-layout>

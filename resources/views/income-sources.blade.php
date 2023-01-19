@@ -33,7 +33,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="#" class="d-block me-3">
-                                                    <img src="/assets/images/brands/facebook.svg" class="rounded-circle" width="36" height="36" alt="">
+                                                    <i class="{{ $incomeSource->icon }} fa-2x"></i>
                                                 </a>
                                                 <div>
                                                     <a href="#" class="text-body fw-semibold">{{ $incomeSource->name }}</a>

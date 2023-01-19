@@ -26,9 +26,11 @@ class IncomeSourceController extends Controller
     public function createIncomeSource(Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'icon' => 'required'
         ]);
 
+        $incomingFields['note'] = $requset->get('note');
         $incomingFields['user_id'] = auth()->user()->id;
 
         $incomeSource = IncomeSource::create($incomingFields);
@@ -41,8 +43,11 @@ class IncomeSourceController extends Controller
     public function updateIncomeSource(IncomeSource $incomeSource, Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'icon' => 'required'
         ]);
+
+        $incomingFields['note'] = $requset->get('note');
 
         $uIncomeSource = $incomeSource->update($incomingFields);
 

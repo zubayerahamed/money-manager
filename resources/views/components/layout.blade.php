@@ -15,6 +15,7 @@
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
     <!-- /core JS files -->
 
@@ -182,10 +183,10 @@
                                 @if (Request::is('/'))
                                 <div class="d-inline-flex ms-auto" style="width: 100%">
                                     <a href="/wallet/all" class="btn btn-success">
-                                       <i class="fas fa-arrow-alt-circle-down"></i> &nbsp; Add Income
+                                       <i class="fas fa-plus-circle"></i> &nbsp; Add Income
                                     </a>
                                     <a href="/wallet/all" class="btn btn-danger" style="margin-left: 10px;">
-                                        <i class="fas fa-arrow-alt-circle-up"></i> &nbsp;  Add Expense
+                                        <i class="fas fa-minus-circle"></i> &nbsp;  Add Expense
                                     </a>
                                     <a href="/wallet/all" class="btn btn-primary" style="margin-left: 10px;">
                                         <i class="fas fa-retweet"></i> &nbsp; Transfer

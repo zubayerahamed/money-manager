@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('note')->nullable();
-            $table->string('icon')->nullable();
+            $table->string('icon');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
             $table->timestamps();
             $table->index(['name', 'user_id']);
