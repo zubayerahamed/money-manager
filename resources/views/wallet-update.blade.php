@@ -17,9 +17,10 @@
                                 <h5 class="mb-0">Update Wallet</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/wallet/all" class="btn btn-success" style="margin-left: 10px;">
+                                    <a href="/wallet/all" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Wallet Lists
                                     </a>
+                                    <a href="/wallet" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
                                 </div>
                             </div>
 
@@ -27,6 +28,19 @@
                                 <form action="/wallet/{{ $wallet->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
+
+                                    @if ($wallet->icon)
+                                        <i class="{{ $wallet->icon }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
+                                    @endif
+
+                                    <div class="row mb-3">
+                                        <label class="form-label">Icon:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="icon" id="icon" value="{{ old('icon', $wallet->icon) }}" readonly>
+                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
+                                        </div>
+                                    </div>
+                        
                                     <div class="row mb-3">
                                         <label class="form-label">Wallet name:</label>
                                         <input type="text" name="name" class="form-control" value="{{ old('name', $wallet->name ) }}">
@@ -66,6 +80,6 @@
 
 
 
-    <!-- /main content -->
+    @include('icon-modal');
 
 </x-layout>

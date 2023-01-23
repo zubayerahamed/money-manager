@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IncomeSource;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class IncomeSourceController extends Controller
 {
@@ -26,7 +27,7 @@ class IncomeSourceController extends Controller
     public function createIncomeSource(Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required',
+            'name' => ['required', Rule::unique('income_source')],
             'icon' => 'required'
         ]);
 
@@ -43,7 +44,7 @@ class IncomeSourceController extends Controller
     public function updateIncomeSource(IncomeSource $incomeSource, Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required',
+            'name' => ['required', Rule::unique('income_source')->ignore($incomeSource->id)],
             'icon' => 'required'
         ]);
 

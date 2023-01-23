@@ -20,7 +20,8 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="../../../assets/js/vendor/visualization/echarts/echarts.min.js"></script>
+    <script src="/assets/js/vendor/notifications/noty.min.js"></script>
+    <script src="/assets/js/vendor/visualization/echarts/echarts.min.js"></script>
     <script src="/assets/js/vendor/visualization/d3/d3.min.js"></script>
     <script src="/assets/js/vendor/visualization/d3/d3_tooltip.js"></script>
 
@@ -131,7 +132,7 @@
                             <i class="ph-dots-three sidebar-resize-show"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="/" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+                            <a href="/" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
                                 <span>
                                     Home
@@ -178,17 +179,17 @@
                 <!-- Page header -->
                 <div class="page-header page-header-light shadow">
                     <div class="page-header-content d-lg-flex">
-                        <div class="d-flex">
-                            <h4 class="page-title text-center">
-                                @if (Request::is('/'))
+                       
+                            <h4 class="page-title text-center" style="margin: 0px;">
+                                @if (Request::is('/') || Request::is('transaction/**'))
                                 <div class="d-inline-flex ms-auto" style="width: 100%">
-                                    <a href="/wallet/all" class="btn btn-success">
+                                    <a href="/transaction/add-income" class="btn btn-success">
                                        <i class="fas fa-plus-circle"></i> &nbsp; Add Income
                                     </a>
-                                    <a href="/wallet/all" class="btn btn-danger" style="margin-left: 10px;">
+                                    <a href="/transaction/add-expense" class="btn btn-danger" style="margin-left: 10px;">
                                         <i class="fas fa-minus-circle"></i> &nbsp;  Add Expense
                                     </a>
-                                    <a href="/wallet/all" class="btn btn-primary" style="margin-left: 10px;">
+                                    <a href="/transaction/do-transfer" class="btn btn-primary" style="margin-left: 10px;">
                                         <i class="fas fa-retweet"></i> &nbsp; Transfer
                                     </a>
                                 </div>
@@ -200,12 +201,31 @@
                                 Expense Status
                                 @endif
                             </h4>
-                        </div>
+                        
+
                     </div>
 
                     
                 </div>
                 <!-- /page header -->
+
+                @if (Session::has('success'))
+                    <div class="col-md-12" style="padding: 20px; padding-bottom: 0px;">
+                        <div class="alert alert-success alert-dismissible fade show" style="margin-bottom: 0px;">
+                            <span class="fw-semibold">Well done!</span> {{ Session::get('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    </div>
+                @endif
+                @if (Session::has('error'))
+                    <div class="col-md-12" style="padding: 20px; padding-bottom: 0px;">
+                        <div class="alert alert-danger alert-dismissible fade show" style="margin-bottom: 0px;">
+                            <span class="fw-semibold">Oh snap!</span> {{ Session::get('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    </div>
+                @endif
+                
 
                 {{ $slot }}
 

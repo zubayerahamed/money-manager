@@ -27,7 +27,7 @@
                                 <form action="/income-source" method="POST">
                                     @csrf
                                     
-                                    <i class="fas fa-dot-circle fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
+                                    <i class="{{ old('icon', 'fas fa-dot-circle') }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
 
                                     <div class="row mb-3">
                                         <label class="form-label">Icon:</label>

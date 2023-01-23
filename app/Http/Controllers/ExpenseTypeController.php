@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ExpenseType;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ExpenseTypeController extends Controller
 {
@@ -26,7 +27,8 @@ class ExpenseTypeController extends Controller
     public function createExpenseType(Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required'
+            'name' => ['required', Rule::unique('expense_type')],
+            'icon' => 'required'
         ]);
 
         $incomingFields['user_id'] = auth()->user()->id;
@@ -41,7 +43,8 @@ class ExpenseTypeController extends Controller
     public function updateExpenseType(ExpenseType $expenseType, Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required'
+            'name' => ['required', Rule::unique('expense_type')->ignore($expenseType->id)],
+            'icon' => 'required'
         ]);
 
         $uExpenseType = $expenseType->update($incomingFields);

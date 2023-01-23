@@ -32,11 +32,11 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="#" class="d-block me-3">
-                                                    <img src="/assets/images/brands/facebook.svg" class="rounded-circle" width="36" height="36" alt="">
-                                                </a>
+                                                <div style="width: 70px; text-align: center;">
+                                                    <i class="{{ $expenseType->icon }} fa-2x me-3"></i>
+                                                </div>
                                                 <div>
-                                                    <a href="#" class="text-body fw-semibold">{{ $expenseType->name }}</a>
+                                                    <div style="text-transform: uppercase; font-weight: bold;">{{ $expenseType->name }}</div>
                                                     <div class="text-muted fs-sm">
                                                         <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> Created on : {{ $expenseType->created_at->format('d/m/Y H:i:s') }}
                                                     </div>

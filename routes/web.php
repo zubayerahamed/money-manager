@@ -6,6 +6,7 @@ use App\Http\Controllers\IncomeSourceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TrackingHistoryController;
 use App\Http\Controllers\WalletController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/expense-type', [ExpenseTypeController::class, 'createExpenseType'])->name('expense-type.create');
     Route::put('/expense-type/{expenseType}', [ExpenseTypeController::class, 'updateExpenseType'])->name('expense-type.update');
     Route::delete('/expense-type/{expenseType}/delete', [ExpenseTypeController::class, 'deleteExpenseType'])->name('expense-type.delete');
+
+    // Transactions
+    Route::get('/transaction/add-income', [TrackingHistoryController::class, 'showAddIncomePage'])->name('add-income.page');
+    Route::get('/transaction/add-expense', [TrackingHistoryController::class, 'showAddExpensePage'])->name('add-expense.page');
+    Route::get('/transaction/do-transfer', [TrackingHistoryController::class, 'showDoTransferPage'])->name('do-transfer.page');
+    Route::post('/transaction', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
+
 
     // Logout
     Route::get('/logout', [LogoutController::class, 'doLogout'])->middleware('auth');

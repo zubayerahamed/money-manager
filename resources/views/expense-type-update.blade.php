@@ -17,9 +17,10 @@
                                 <h5 class="mb-0">Update Expense Type</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/expense-type/all" class="btn btn-success" style="margin-left: 10px;">
+                                    <a href="/expense-type/all" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Expense Types List
                                     </a>
+                                    <a href="/expense-type" class="btn btn-success" style="margin-left: 10px;">Create Expense Type</a>
                                 </div>
                             </div>
 
@@ -27,6 +28,20 @@
                                 <form action="/expense-type/{{ $expenseType->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
+
+                                    @if ($expenseType->icon)
+                                        <i class="{{ $expenseType->icon }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
+                                    @endif
+
+                                    <div class="row mb-3">
+                                        <label class="form-label">Icon:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="icon" id="icon" value="{{ old('icon', $expenseType->icon) }}" readonly>
+                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
+                                        </div>
+                                    </div>
+
+
                                     <div class="row mb-3">
                                         <label class="form-label">Expense Type Name:</label>
                                         <input type="text" name="name" class="form-control" value="{{ old('name', $expenseType->name ) }}">
@@ -59,8 +74,6 @@
     </div>
     <!-- /content area -->
 
-
-
-    <!-- /main content -->
+    @include('icon-modal');
 
 </x-layout>

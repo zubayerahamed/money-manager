@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class WalletController extends Controller
 {
@@ -25,7 +26,8 @@ class WalletController extends Controller
     public function createWallet(Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required'
+            'name' => ['required', Rule::unique('wallet')],
+            'icon' => 'required'
         ]);
 
         $incomingFields['user_id'] = auth()->user()->id;
@@ -40,7 +42,8 @@ class WalletController extends Controller
     public function updateWallet(Wallet $wallet, Request $requset){
 
         $incomingFields = $requset->validate([
-            'name' => 'required'
+            'name' => ['required', Rule::unique('wallet')->ignore($wallet->id)],
+            'icon' => 'required'
         ]);
 
         $uWallet = $wallet->update($incomingFields);

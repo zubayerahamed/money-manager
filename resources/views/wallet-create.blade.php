@@ -26,6 +26,17 @@
                             <div class="card-body border-top">
                                 <form action="/wallet" method="POST">
                                     @csrf
+
+                                    <i class="{{ old('icon', 'fas fa-dot-circle') }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
+
+                                    <div class="row mb-3">
+                                        <label class="form-label">Icon:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="icon" id="icon" value="{{ old('icon', 'fas fa-dot-circle') }}" readonly>
+                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
+                                        </div>
+                                    </div>
+
                                     <div class="row mb-3">
                                         <label class="form-label">Wallet name:</label>
                                         <input type="text" name="name" class="form-control" value="{{ old('name') }}">
@@ -65,6 +76,6 @@
 
 
 
-    <!-- /main content -->
+    @include('icon-modal');
 
 </x-layout>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->string('icon')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
-            $table->index(['name', 'user_id']);
+            $table->unique(['name', 'user_id']);
             $table->timestamps();
         });
     }
