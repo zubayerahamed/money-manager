@@ -18,7 +18,7 @@
                                 <form action="/transaction" method="POST">
                                     @csrf
 
-                                    <input type="hidden" name="transaction_type" value="income" />
+                                    <input type="hidden" name="transaction_type" value="Income" />
 
                                     <div class="row mb-3">
                                         <label class="form-label">Amount:</label>
@@ -33,7 +33,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Charge:</label>
                                         <div class="form-group">
-                                            <input type="number" name="amount" class="form-control" value="{{ old('transaction_charge', 0.00) }}" min="0">
+                                            <input type="number" name="transaction_charge" class="form-control" value="{{ old('transaction_charge', 0.00) }}" min="0">
                                             @error('transaction_charge')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -73,7 +73,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Date:</label>
                                         <div class="form-group">
-                                            <input type="date" name="name" class="form-control" value="{{ old('transaction_date', date('m/d/Y')) }}" required>
+                                            <input type="date" name="transaction_date" class="form-control" value="{{ old('transaction_date', date('m/d/Y')) }}" required>
                                             @error('transaction_date')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -83,8 +83,8 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Time:</label>
                                         <div class="form-group">
-                                            <input type="time" name="name" class="form-control" value="{{ old('transaction_time') }}" required>
-                                            @error('transaction_date')
+                                            <input type="time" name="transaction_time" class="form-control" value="{{ old('transaction_time') }}" required>
+                                            @error('transaction_time')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>

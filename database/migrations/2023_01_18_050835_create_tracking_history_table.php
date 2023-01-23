@@ -18,14 +18,13 @@ return new class extends Migration
             $table->enum('transaction_type', ['Income', 'Expense', 'Transfer', 'Opening']);
             $table->double('amount', 8, 2)->default('0');
             $table->double('transaction_charge', 8, 2)->default('0');
-            $table->foreignId('from_wallet')->references('id')->on('wallet')->onDelete('cascade');
-            $table->foreignId('to_wallet')->references('id')->on('wallet')->onDelete('cascade');
-            $table->foreignId('income_source')->references('id')->on('income_source')->onDelete('cascade');
-            $table->foreignId('expense_type')->references('id')->on('expense_type')->onDelete('cascade');
+            $table->foreignId('from_wallet')->nullable()->references('id')->on('wallet')->onDelete('cascade');
+            $table->foreignId('to_wallet')->nullable()->references('id')->on('wallet')->onDelete('cascade');
+            $table->foreignId('income_source')->nullable()->references('id')->on('income_source')->onDelete('cascade');
+            $table->foreignId('expense_type')->nullable()->references('id')->on('expense_type')->onDelete('cascade');
             $table->date('transaction_date');
             $table->time('transaction_time', $precision = 0);
             $table->text('note')->nullable();
-            $table->integer('row_sign');
             $table->foreignId('user_id');
             $table->timestamps();
         });
