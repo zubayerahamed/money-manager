@@ -44,15 +44,19 @@
 
                                     <div class="row mb-3">
                                         <label class="form-label">Expense Type Name:</label>
-                                        <input type="text" name="name" class="form-control" value="{{ old('name', $expenseType->name ) }}">
-                                        @error('name')
-                                            <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
-                                        @enderror
+                                        <div class="input-group">
+                                            <input type="text" name="name" class="form-control" value="{{ old('name', $expenseType->name ) }}">
+                                            @error('name')
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label class="form-label">Note:</label>
-                                        <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note', $expenseType->note) }}</textarea>
+                                        <div class="input-group">
+                                            <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note', $expenseType->note) }}</textarea>
+                                        </div>
                                     </div>
 
                                     <div class="text-end">

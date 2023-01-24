@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Arhead;
+use App\Models\ExpenseType;
 use App\Models\IncomeSource;
 use App\Models\TrackingHistory;
 use App\Models\Wallet;
@@ -13,8 +14,6 @@ class TrackingHistoryController extends Controller
 {
     
     public function showAddIncomePage(){
-
-        //$incomeSources = DB::table('income_source')->where('user_id', auth()->user()->id)->get();
         $incomeSources = IncomeSource::where('user_id', auth()->user()->id)->get();
         $wallets = Wallet::where('user_id', auth()->user()->id)->get();
 
@@ -25,11 +24,20 @@ class TrackingHistoryController extends Controller
     }
 
     public function showAddExpensePage(){
-        return view('add-expense');
+        $wallets = Wallet::where('user_id', auth()->user()->id)->get();
+        $expenseTypes = ExpenseType::where('user_id', auth()->user()->id)->get();
+
+        return view('add-expense', [
+            'expenseTypes' => $expenseTypes,
+            'wallets' => $wallets
+        ]);
     }
 
     public function showDoTransferPage(){
-        return view('do-transfer');
+        $wallets = Wallet::where('user_id', auth()->user()->id)->get();
+        return view('do-transfer', [
+            'wallets' => $wallets
+        ]);
     }
 
 
@@ -45,7 +53,7 @@ class TrackingHistoryController extends Controller
         $errorMessage = "";
         $redirectUrl = "";
 
-        if($transactionType == 'Income'){
+        if($transactionType == 'INCOME'){
             $message = "Income Added Successfully";
             $errorMessage = "Failed to add income";
             $redirectUrl = "add-income";
@@ -59,7 +67,7 @@ class TrackingHistoryController extends Controller
                 'transaction_time' => 'required'
             ]);
 
-        } else if($transactionType == 'Expense'){
+        } else if($transactionType == 'EXPENSE'){
             $message = "Expense Added Successfully";
             $errorMessage = "Failed to add expense";
             $redirectUrl = "add-expense";
@@ -99,14 +107,14 @@ class TrackingHistoryController extends Controller
 
             $arhead['tracking_history_id'] = $trackingHistory->id;
             $arhead['user_id'] = auth()->user()->id;
-            if($transactionType == 'Income'){
+            if($transactionType == 'INCOME'){
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
 
                 $savedArhead = Arhead::create($arhead);
-            } else if ($transactionType == 'Expense'){
+            } else if ($transactionType == 'EXPENSE'){
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];

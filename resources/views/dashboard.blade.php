@@ -32,102 +32,40 @@
                             </ul>
                             <!-- /tabs -->
 
+                       
 
                             <!-- Tabs content -->
                             <div class="tab-content card-body">
+                                
                                 <div class="tab-pane active fade show" id="messages-monthly">
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="status-indicator-container me-3">
-                                            <img src="/assets/images/demo/users/face10.jpg" class="rounded-circle"
-                                                width="40" jeight="40" alt="">
-                                            <span class="status-indicator bg-success"></span>
-                                            <span
-                                                class="badge bg-yellow text-black position-absolute top-0 start-100 translate-middle rounded-pill">5</span>
+
+                                    <div class="chart-container">
+                                        <div class="chart has-fixed-height" id="line_basic"></div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="text-center box-item box-item-success">
+                                            <h2>Monthly Income</h2>
+                                            <h3>500000 TK</h3>
                                         </div>
-
-                                        <div class="flex-fill">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="fw-semibold"><a href="#">James Alexander</a>
-                                                </div>
-                                                <span class="fs-sm text-muted">14:58</span>
-                                            </div>
-
-                                            Who knows, maybe that would be the best thing for me...
+                                        <div class="text-center box-item box-item-danger">
+                                            <h2>Monthly Expense</h2>
+                                            <h3>500000 TK</h3>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="status-indicator-container me-3">
-                                            <img src="/assets/images/demo/users/face3.jpg" class="rounded-circle"
-                                                width="40" jeight="40" alt="">
-                                            <span class="status-indicator bg-danger"></span>
-                                            <span
-                                                class="badge bg-yellow text-black position-absolute top-0 start-100 translate-middle rounded-pill">4</span>
+                                    <div class="row">
+                                        <div class="text-center box-item box-item-primary">
+                                            <h2>Monthly Saving</h2>
+                                            <h3>500000 TK</h3>
                                         </div>
-
-                                        <div class="flex-fill">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="fw-semibold"><a href="#">Margo Baker</a></div>
-                                                <span class="fs-sm text-muted">12:16</span>
-                                            </div>
-
-                                            That was something he was unable to do because...
+                                        <div class="text-center box-item box-item-success">
+                                            <h2>Current Balance</h2>
+                                            <h3>500000 TK</h3>
                                         </div>
                                     </div>
+                                    
 
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="status-indicator-container me-3">
-                                            <img src="/assets/images/demo/users/face24.jpg" class="rounded-circle"
-                                                width="40" jeight="40" alt="">
-                                            <span class="status-indicator bg-danger"></span>
-                                        </div>
-
-                                        <div class="flex-fill">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="fw-semibold"><a href="#">Jeremy Victorino</a>
-                                                </div>
-                                                <span class="fs-sm text-muted">22:48</span>
-                                            </div>
-
-                                            But that would be extremely strained and suspicious...
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="status-indicator-container me-3">
-                                            <img src="/assets/images/demo/users/face4.jpg" class="rounded-circle"
-                                                width="40" jeight="40" alt="">
-                                            <span class="status-indicator bg-danger"></span>
-                                        </div>
-
-                                        <div class="flex-fill">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="fw-semibold"><a href="#">Beatrix Diaz</a>
-                                                </div>
-                                                <span class="fs-sm text-muted">Tue</span>
-                                            </div>
-
-                                            What a strenuous career it is that I've chosen...
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex align-items-start">
-                                        <div class="status-indicator-container me-3">
-                                            <img src="/assets/images/demo/users/face25.jpg" class="rounded-circle"
-                                                width="40" jeight="40" alt="">
-                                            <span class="status-indicator bg-success"></span>
-                                        </div>
-
-                                        <div class="flex-fill">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="fw-semibold"><a href="#">Beatrix Diaz</a>
-                                                </div>
-                                                <span class="fs-sm text-muted">Tue</span>
-                                            </div>
-
-                                            Amidst roadrunner distantly pompously where...
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div class="tab-pane fade" id="messages-yearly">
@@ -229,6 +167,101 @@
 
 
                     </div>
+                
+                    <div class="col-xl-3">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="mb-0">JAN 2023</h5>
+                            </div>
+                            <div class="card-body border-top">
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex">
+                                        Income
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Expense
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Saving
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="mb-0">JAN 2023</h5>
+                            </div>
+                            <div class="card-body border-top">
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex">
+                                        Income
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Expense
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Saving
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="mb-0">JAN 2023</h5>
+                            </div>
+                            <div class="card-body border-top">
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex">
+                                        Income
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Expense
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Saving
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="mb-0">JAN 2023</h5>
+                            </div>
+                            <div class="card-body border-top">
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex">
+                                        Income
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Expense
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Saving
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">80/-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                
                 </div>
                 <!-- /dashboard content -->
 

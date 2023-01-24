@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tracking_history', function (Blueprint $table) {
             $table->id();
-            $table->enum('transaction_type', ['Income', 'Expense', 'Transfer', 'Opening']);
+            $table->enum('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'OPENING']);
             $table->double('amount', 8, 2)->default('0');
             $table->double('transaction_charge', 8, 2)->default('0');
             $table->foreignId('from_wallet')->nullable()->references('id')->on('wallet')->onDelete('cascade');

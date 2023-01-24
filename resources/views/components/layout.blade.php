@@ -39,8 +39,38 @@
     <script src="/assets/demo/charts/pages/dashboard/bullets.js"></script>
 
     <script src="/assets/demo/charts/echarts/pies/pie_donut.js"></script>
+    <script src="/assets/demo/charts/echarts/lines/lines_basic.js"></script>
     <!-- /theme JS files -->
 
+    <style>
+        .box-item{
+            width: 48%;
+            margin-left: 1%;
+            margin-right: 1%;
+            border-radius: 10px;
+            padding: 10px !important;
+            box-sizing: border-box;
+            box-shadow: 0px 0px 5px #ddd;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+        .box-item-success{
+            color: #fff;
+            background-color: #059669;
+        }
+        .box-item-danger{
+            color: #fff;
+            background-color: #EF4444
+        }
+        .box-item-primary{
+            color: #fff;
+            background-color: #0c83ff;
+        }
+        .box-item h2, .box-item h3{
+            padding: 0; 
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -55,10 +85,9 @@
             </div>
 
             <div class="navbar-brand flex-1 flex-lg-0">
-                <a href="/" class="d-inline-flex align-items-center">
-                    <img src="/assets/images/logo_icon.svg" alt="">
-                    <img src="/assets/images/logo_text_light.svg" class="d-none d-sm-inline-block h-16px ms-3"
-                        alt="">
+                <a href="/" class="d-inline-flex align-items-center" style="text-decoration: none;">
+                    <img src="/assets/images/logo_icon.png" alt="">
+                    <h1 style="margin: 0; padding: 0; padding-left: 15px; color: #fff;">Money Manager</h1>
                 </a>
             </div>
 

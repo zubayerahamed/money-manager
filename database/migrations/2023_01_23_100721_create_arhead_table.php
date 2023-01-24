@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->double('amount', 8, 2)->default('0');
             $table->double('transaction_charge', 8, 2)->default('0');
-            $table->foreignId('tracking_history_id')->onDelete('cascade');
-            $table->foreignId('wallet_id')->onDelete('cascade');
+            $table->foreignId('tracking_history_id')->references('id')->on('tracking_history')->onDelete('cascade');
+            $table->foreignId('wallet_id')->references('id')->on('wallet')->onDelete('cascade');
             $table->integer('row_sign');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

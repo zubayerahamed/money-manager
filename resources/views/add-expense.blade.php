@@ -11,14 +11,14 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="mb-0">Add Income</h5>
+                                <h5 class="mb-0">Add Expense</h5>
                             </div>
 
                             <div class="card-body border-top">
                                 <form action="/transaction" method="POST">
                                     @csrf
 
-                                    <input type="hidden" name="transaction_type" value="INCOME" />
+                                    <input type="hidden" name="transaction_type" value="EXPENSE" />
 
                                     <div class="row mb-3">
                                         <label class="form-label">Amount:</label>
@@ -41,32 +41,32 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label class="form-label">To Wallet:</label>
+                                        <label class="form-label">From Wallet:</label>
                                         <div class="input-group">
-                                            <select class="form-control" name="to_wallet" required>
+                                            <select class="form-control" name="from_wallet" required>
                                                 <option>-- Select Wallet --</option>
                                                 @foreach ($wallets as $wallet)
                                                     <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
                                                 @endforeach
                                             </select>
                                             <a href="/wallet" target="_blank" class="btn btn-light" type="button">Create Wallet</a>
-                                            @error('to_wallet')
+                                            @error('from_wallet')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Income Source:</label>
+                                        <label class="form-label">Expense Type:</label>
                                         <div class="input-group">
-                                            <select class="form-control" name="income_source" required>
-                                                <option>-- Select Income Source --</option>
-                                                @foreach ($incomeSources as $incomeSource)
-                                                    <option value="{{ $incomeSource->id }}">{{ $incomeSource->name }}</option>
+                                            <select class="form-control" name="expense_type" required>
+                                                <option>-- Select Expense Type --</option>
+                                                @foreach ($expenseTypes as $expenseType)
+                                                    <option value="{{ $expenseType->id }}">{{ $expenseType->name }}</option>
                                                 @endforeach
                                             </select>
-                                            <a href="/income-source" target="_blank" class="btn btn-light" type="button">Create Income Source</a>
-                                            @error('income_source')
+                                            <a href="/expense-type" target="_blank" class="btn btn-light" type="button">Create Expense Type</a>
+                                            @error('expense_type')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>

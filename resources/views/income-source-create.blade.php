@@ -55,8 +55,7 @@
                                     </div>
 
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-primary">Submit<i
-                                                class="ph-paper-plane-tilt ms-2"></i></button>
+                                        <button type="submit" class="btn btn-primary">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
                                     </div>
                                 </form>
                             </div>

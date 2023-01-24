@@ -39,20 +39,26 @@
 
                                     <div class="row mb-3">
                                         <label class="form-label">Wallet name:</label>
-                                        <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-                                        @error('name')
-                                            <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
-                                        @enderror
+                                        <div class="input-group">
+                                            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                            @error('name')
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label class="form-label">Current Balance:</label>
-                                        <input type="text" name="current_balance" class="form-control" value="{{ old('current_balance') }}">
+                                        <div class="input-group">
+                                            <input type="text" name="current_balance" class="form-control" value="{{ old('current_balance') }}">
+                                        </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label class="form-label">Note:</label>
-                                        <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note') }}</textarea>
+                                        <div class="input-group">
+                                            <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note') }}</textarea>
+                                        </div>
                                     </div>
 
                                     <div class="text-end">
