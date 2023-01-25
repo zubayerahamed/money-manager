@@ -10,6 +10,19 @@ use Illuminate\Validation\Rule;
 class ExpenseTypeController extends Controller
 {
 
+    public function expenseTypeStatusPieChart(){
+
+        return DB::table('tracking_history')
+                ->leftjoin('wallet','wallet.id','=','tracking_history.from_wallet')                       
+                ->selectRaw("wallet.name, SUM(tracking_history.amount) as value")
+                ->where('tracking_history.user_id', '=', auth()->user()->id)
+                ->where('tracking_history.transaction_type', '=', 'EXPENSE')
+                ->groupBy('tracking_history.from_wallet')
+                ->groupBy('wallet.name')
+                ->get();
+
+    }
+
     public function expenseTypes(){
 
         $expenseTypes = ExpenseType::all()->sortDesc();

@@ -72,4 +72,30 @@
         <!-- /dashboard content -->
     </div>
     <!-- /content area -->
+
+    <script>
+        $(document).ready(function(){
+
+            console.log("here");
+
+            $.ajax({
+                url : "http://127.0.0.1:8000/wallet/status",
+                type : 'GET',
+                success : function(data) {
+                    console.log({data});
+                }, 
+                error : function(jqXHR, status, errorThrown){
+                    showMessage(status, "Something went wrong .... ");
+                    loadingMask2.hide();
+                }
+            });
+
+
+            function preparePieChart(){
+                
+            }
+
+        })
+    </script>
+
 </x-layout>

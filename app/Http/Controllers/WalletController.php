@@ -11,15 +11,25 @@ use Illuminate\Validation\Rule;
 
 class WalletController extends Controller
 {
+
+    public function walletStatusPieChart(){
+        return DB::table('arhead')    
+                ->leftjoin('wallet','wallet.id','=','arhead.wallet_id')                       
+                ->selectRaw("wallet.name, SUM(arhead.amount * arhead.row_sign)-SUM(arhead.transaction_charge) as value")
+                ->where('arhead.user_id', '=', auth()->user()->id)
+                ->groupBy('arhead.wallet_id')
+                ->groupBy('wallet.name')
+                ->get();
+    }
+
     public function wallets(){
         $wallets = Wallet::all()->sortDesc();
 
-
-        //SELECT SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance FROM `arhead`;
         $totalBalance = DB::table('arhead')
                                 ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
                                 ->where('user_id', '=', auth()->user()->id)
                                 ->get();
+
 
         return view('wallets', [
             'wallets' => $wallets,

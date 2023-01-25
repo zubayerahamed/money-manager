@@ -10,6 +10,19 @@ use Illuminate\Validation\Rule;
 class IncomeSourceController extends Controller
 {
 
+    public function incomeSourceStatusPieChart(){
+
+        return DB::table('tracking_history')
+                ->leftjoin('wallet','wallet.id','=','tracking_history.to_wallet')                       
+                ->selectRaw("wallet.name, SUM(tracking_history.amount) as value")
+                ->where('tracking_history.user_id', '=', auth()->user()->id)
+                ->where('tracking_history.transaction_type', '=', 'INCOME')
+                ->groupBy('tracking_history.to_wallet')
+                ->groupBy('wallet.name')
+                ->get();
+
+    }
+
     public function incomeSources(){
 
         $incomeSources = IncomeSource::all()->sortDesc();

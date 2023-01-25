@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'showDashboardPage']);
 
     // Wallets
+    Route::get('/wallet/status', [WalletController::class, 'walletStatusPieChart'])->name('wallet.status');
     Route::get('/wallet/all', [WalletController::class, 'wallets'])->name('wallets');
     Route::get('/wallet', [WalletController::class, 'showCreateWalletPage'])->name('wallet.create.page');
     Route::get('/wallet/{wallet}/edit', [WalletController::class, 'showUpdateWalletPage'])->name('wallet.update.page');
@@ -44,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/wallet/{wallet}/delete', [WalletController::class, 'deleteWallet'])->name('wallet.delete');
 
     // Income Source
+    Route::get('/income-source/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('income-source.status');
     Route::get('/income-source/all', [IncomeSourceController::class, 'incomeSources'])->name('income-sources');
     Route::get('/income-source', [IncomeSourceController::class, 'showCreateIncomeSourcePage'])->name('income-sources.create.page');
     Route::get('/income-source/{incomeSource}/edit', [IncomeSourceController::class, 'showUpdateIncomeSourcePage'])->name('income-sources.update.page');
@@ -52,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/income-source/{incomeSource}/delete', [IncomeSourceController::class, 'deleteIncomeSource'])->name('income-sources.delete');
 
     // Wallets
+    Route::get('/expense-type/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('expense-type.status');
     Route::get('/expense-type/all', [ExpenseTypeController::class, 'expenseTypes'])->name('expense-types');
     Route::get('/expense-type', [ExpenseTypeController::class, 'showCreateExpenseTypePage'])->name('expense-type.create.page');
     Route::get('/expense-type/{expenseType}/edit', [ExpenseTypeController::class, 'showUpdateExpenseTypePage'])->name('expense-type.update.page');
