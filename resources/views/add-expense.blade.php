@@ -44,7 +44,7 @@
                                         <label class="form-label">From Wallet:</label>
                                         <div class="input-group">
                                             <select class="form-control" name="from_wallet" required>
-                                                <option>-- Select Wallet --</option>
+                                                <option value="">-- Select Wallet --</option>
                                                 @foreach ($wallets as $wallet)
                                                     <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
                                                 @endforeach
@@ -60,7 +60,7 @@
                                         <label class="form-label">Expense Type:</label>
                                         <div class="input-group">
                                             <select class="form-control" name="expense_type" required>
-                                                <option>-- Select Expense Type --</option>
+                                                <option value="">-- Select Expense Type --</option>
                                                 @foreach ($expenseTypes as $expenseType)
                                                     <option value="{{ $expenseType->id }}">{{ $expenseType->name }}</option>
                                                 @endforeach

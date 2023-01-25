@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseType extends Model
 {
@@ -11,4 +12,14 @@ class ExpenseType extends Model
 
     protected $table = "expense_type";
     protected $fillable = ['name', 'icon', 'note', 'user_id'];
+
+    public function getTotalExpenseAttribute(){
+        $totalExpense = DB::table('tracking_history')
+                                ->selectRaw("SUM(amount) as totalExpense")
+                                ->where('from_wallet', '=', $this->id)
+                                ->where('user_id', '=', auth()->user()->id)
+                                ->where('transaction_type', '=', 'EXPENSE')
+                                ->get();
+        return $totalExpense[0]->totalExpense == null? 0 : $totalExpense[0]->totalExpense;
+    }
 }

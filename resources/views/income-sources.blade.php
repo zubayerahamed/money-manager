@@ -13,7 +13,7 @@
                         <h5 class="mb-0">Total Income</h5>
 
                         <div class="d-inline-flex ms-auto">
-                            <a href="#" class="btn btn-indigo">20,000 TK</a>
+                            <a href="#" class="btn btn-indigo">{{ $totalIncome }} TK</a>
                             <a href="/income-source" class="btn btn-success" style="margin-left: 10px;">Create Income Source</a>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <h6 class="mb-0">Total Income <br /> 5000 TK</h6>
+                                            <h6 class="mb-0">Total Income <br /> {{ $incomeSource->totalIncome }} TK</h6>
                                         </td>
                                         <td style="text-align: right;">
                                             <a href="/income-source/{{ $incomeSource->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">

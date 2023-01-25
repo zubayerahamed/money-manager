@@ -54,7 +54,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Current Balance:</label>
                                         <div class="input-group">
-                                            <input type="text" name="current_balance" class="form-control" value="{{ old('current_balance') }}" readonly disabled>
+                                            <input type="text" name="current_balance" class="form-control" value="{{ old('current_balance', $wallet->currentBalance) }}" readonly disabled>
                                         </div>
                                     </div>
 

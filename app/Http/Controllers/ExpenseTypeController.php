@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ExpenseType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ExpenseTypeController extends Controller
@@ -13,7 +14,16 @@ class ExpenseTypeController extends Controller
 
         $expenseTypes = ExpenseType::all()->sortDesc();
 
-        return view('expense-types', ['expenseTypes' => $expenseTypes]);
+        $totalExpense = DB::table('tracking_history')
+                                ->selectRaw("SUM(amount) as totalExpense")
+                                ->where('user_id', '=', auth()->user()->id)
+                                ->where('transaction_type', '=', 'EXPENSE')
+                                ->get();
+
+        return view('expense-types', [
+            'expenseTypes' => $expenseTypes,
+            'totalExpense' => $totalExpense[0]->totalExpense == null? 0 : $totalExpense[0]->totalExpense
+        ]);
     }
 
     public function showCreateExpenseTypePage(){

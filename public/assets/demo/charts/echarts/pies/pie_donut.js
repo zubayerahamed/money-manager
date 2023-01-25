@@ -12,7 +12,6 @@
 
 var EchartsPieDonutLight = function() {
 
-
     //
     // Setup module components
     //
@@ -57,23 +56,23 @@ var EchartsPieDonutLight = function() {
                 textStyle: {
                     fontFamily: 'var(--body-font-family)',
                     color: 'var(--body-color)',
-                    fontSize: 14,
+                    fontSize: 18,
                     lineHeight: 22,
                     textBorderColor: 'transparent'
                 },
 
                 // Add title
                 title: {
-                    text: 'Browser popularity',
-                    subtext: 'Open source information',
+                    text: 'Wallet Status',
+                    subtext: 'Wallet Current Balance Status',
                     left: 'center',
                     textStyle: {
-                        fontSize: 18,
+                        fontSize: 25,
                         fontWeight: 500,
                         color: 'var(--body-color)'
                     },
                     subtextStyle: {
-                        fontSize: 12,
+                        fontSize: 18,
                         color: 'rgba(var(--body-color-rgb), 0.5)'
                     }
                 },
@@ -86,7 +85,8 @@ var EchartsPieDonutLight = function() {
                     borderColor: 'var(--gray-400)',
                     padding: 15,
                     textStyle: {
-                        color: '#000'
+                        color: '#000',
+                        align: 'center'
                     },
                     formatter: "{a} <br/>{b}: {c} ({d}%)"
                 },
@@ -96,7 +96,7 @@ var EchartsPieDonutLight = function() {
                     orient: 'vertical',
                     top: 'center',
                     left: 0,
-                    data: ['IE', 'Opera', 'Safari', 'Firefox', 'Chrome'],
+                    data: ['Bank', 'Bkash', 'Money Bag'],
                     itemHeight: 8,
                     itemWidth: 8,
                     textStyle: {
@@ -109,9 +109,9 @@ var EchartsPieDonutLight = function() {
 
                 // Add series
                 series: [{
-                    name: 'Browsers',
+                    name: 'Wallet',
                     type: 'pie',
-                    radius: ['50%', '70%'],
+                    radius: ['70%', '40%'],
                     center: ['50%', '57.5%'],
                     itemStyle: {
                         borderColor: 'var(--card-bg)'
@@ -120,11 +120,9 @@ var EchartsPieDonutLight = function() {
                         color: 'var(--body-color)'
                     },
                     data: [
-                        {value: 335, name: 'IE'},
-                        {value: 310, name: 'Opera'},
-                        {value: 234, name: 'Safari'},
-                        {value: 135, name: 'Firefox'},
-                        {value: 1548, name: 'Chrome'}
+                        {value: 140, name: 'Bkash'},
+                        {value: 10, name: 'Money Bag'},
+                        {value: 45, name: 'Bank'}
                     ]
                 }]
             });

@@ -13,7 +13,7 @@
                         <h5 class="mb-0">Total Expense</h5>
 
                         <div class="d-inline-flex ms-auto">
-                            <a href="#" class="btn btn-indigo">20,000 TK</a>
+                            <a href="#" class="btn btn-indigo">{{ $totalExpense }} TK</a>
                             <a href="/expense-type" class="btn btn-success" style="margin-left: 10px;">Create Expense Type</a>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <h6 class="mb-0">Total Expense <br /> 5000 TK</h6>
+                                            <h6 class="mb-0">Total Expense <br /> {{ $expenseType->totalExpense }} TK</h6>
                                         </td>
                                         <td style="text-align: right;">
                                             <a href="/expense-type/{{ $expenseType->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">

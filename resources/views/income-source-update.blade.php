@@ -44,7 +44,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Income Source Name:</label>
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" value="{{ old('name', $incomeSource->name ) }}">
+                                            <input type="text" name="name" class="form-control" value="{{ old('name', $incomeSource->name ) }}" required>
                                             @error('name')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
                                             @enderror

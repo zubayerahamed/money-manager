@@ -155,11 +155,6 @@
                 <div class="sidebar-section">
                     <ul class="nav nav-sidebar" data-nav-type="accordion">
 
-                        <!-- Main -->
-                        <li class="nav-item-header pt-0">
-                            <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Main</div>
-                            <i class="ph-dots-three sidebar-resize-show"></i>
-                        </li>
                         <li class="nav-item">
                             <a href="/" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
@@ -168,26 +163,39 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/wallet/all" class="nav-link {{ Request::is('wallet/**') || Request::is('wallet') ? 'active' : '' }}">
-                                <i class="ph-wallet"></i>
-                                <span>Wallet Status</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/income-source/all" class="nav-link {{ Request::is('income-source/**') || Request::is('income-source') ? 'active' : '' }}">
-                                <i class="ph-trend-up"></i>
-                                <span>Income Status</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/expense-type/all" class="nav-link {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'active' : '' }}">
-                                <i class="ph-trend-down"></i>
-                                <span>Expense Status</span>
-                            </a>
-                        </li>
 
-                        <!-- /page kits -->
+                        <li class="nav-item nav-item-submenu {{ Request::is('wallet/**') || Request::is('wallet') ? 'nav-item-expanded nav-item-open' : '' }}">
+							<a href="#" class="nav-link">
+								<i class="ph-wallet"></i>
+								<span>Wallet</span>
+							</a>
+							<ul class="nav-group-sub collapse {{ Request::is('wallet/**') || Request::is('wallet') ? 'show' : '' }}">
+								<li class="nav-item"><a href="/wallet/all" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+								<li class="nav-item"><a href="/wallet" class="nav-link {{ Request::is('wallet') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+							</ul>
+						</li>
+
+                        <li class="nav-item nav-item-submenu {{ Request::is('income-source/**') || Request::is('income-source') ? 'nav-item-expanded nav-item-open' : '' }}">
+							<a href="#" class="nav-link">
+								<i class="ph-trend-up"></i>
+								<span>Income Source</span>
+							</a>
+							<ul class="nav-group-sub collapse {{ Request::is('income-source/**') || Request::is('income-source') ? 'show' : '' }}">
+								<li class="nav-item"> <a href="/income-source/all" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+								<li class="nav-item"> <a href="/income-source" class="nav-link {{ Request::is('income-source') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+							</ul>
+						</li>
+                        
+                        <li class="nav-item nav-item-submenu {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'nav-item-expanded nav-item-open' : '' }}">
+							<a href="#" class="nav-link">
+                                <i class="ph-trend-down"></i>
+								<span>Expense Type</span>
+							</a>
+							<ul class="nav-group-sub collapse {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'show' : '' }}">
+								<li class="nav-item"> <a href="/expense-type/all" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+								<li class="nav-item"> <a href="/expense-type" class="nav-link {{ Request::is('expense-type') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+							</ul>
+						</li>
 
                     </ul>
                 </div>
@@ -210,7 +218,7 @@
                     <div class="page-header-content d-lg-flex">
                        
                             <h4 class="page-title text-center" style="margin: 0px;">
-                                @if (Request::is('/') || Request::is('transaction/**'))
+                                
                                 <div class="d-inline-flex ms-auto" style="width: 100%">
                                     <a href="/transaction/add-income" class="btn btn-success">
                                        <i class="fas fa-plus-circle"></i> &nbsp; Add Income
@@ -222,13 +230,7 @@
                                         <i class="fas fa-retweet"></i> &nbsp; Transfer
                                     </a>
                                 </div>
-                                @elseif(Request::is('wallet/**'))
-                                Wallet Status
-                                @elseif(Request::is('income-source/**'))
-                                Income Status
-                                @elseif(Request::is('expense-type/**'))
-                                Expense Status
-                                @endif
+
                             </h4>
                         
 

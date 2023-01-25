@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IncomeSource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class IncomeSourceController extends Controller
@@ -13,7 +14,16 @@ class IncomeSourceController extends Controller
 
         $incomeSources = IncomeSource::all()->sortDesc();
 
-        return view('income-sources', ['incomeSources' => $incomeSources]);
+        $totalIncome = DB::table('tracking_history')
+                                ->selectRaw("SUM(amount) as totalIncome")
+                                ->where('user_id', '=', auth()->user()->id)
+                                ->where('transaction_type', '=', 'INCOME')
+                                ->get();
+
+        return view('income-sources', [
+            'incomeSources' => $incomeSources,
+            'totalIncome' => $totalIncome[0]->totalIncome == null? 0 : $totalIncome[0]->totalIncome
+        ]);
     }
 
     public function showCreateIncomeSourcePage(){
