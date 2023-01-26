@@ -26,20 +26,8 @@
     <script src="/assets/js/vendor/visualization/d3/d3_tooltip.js"></script>
 
     <script src="/assets/js/app.js"></script>
-    <script src="/assets/demo/pages/dashboard.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/streamgraph.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/sparklines.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/lines.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/areas.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/donuts.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/bars.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/progress.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/heatmaps.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/pies.js"></script>
-    <script src="/assets/demo/charts/pages/dashboard/bullets.js"></script>
 
     <script src="/assets/demo/charts/echarts/pies/pie_donut.js"></script>
-    <script src="/assets/demo/charts/echarts/lines/lines_basic.js"></script>
     <!-- /theme JS files -->
 
     <style>
@@ -74,6 +62,8 @@
 </head>
 
 <body>
+
+    <a href="{{ url('/') }}" class="basePath"></a>
 
     <!-- Main navbar -->
     <div class="navbar navbar-dark navbar-expand-lg navbar-static border-bottom border-bottom-white border-opacity-10">

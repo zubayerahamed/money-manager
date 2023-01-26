@@ -100,6 +100,8 @@ class TrackingHistoryController extends Controller
         $incomingFields['transaction_type'] = $request->get('transaction_type');
         $incomingFields['note'] = $request->get('note');
         $incomingFields['user_id'] = auth()->user()->id;
+        $incomingFields['month'] = date('m', strtotime($incomingFields['transaction_date']));
+        $incomingFields['year'] =  date('Y', strtotime($incomingFields['transaction_date']));
 
         $trackingHistory = TrackingHistory::create($incomingFields);
 

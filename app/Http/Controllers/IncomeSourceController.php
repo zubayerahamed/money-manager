@@ -13,12 +13,12 @@ class IncomeSourceController extends Controller
     public function incomeSourceStatusPieChart(){
 
         return DB::table('tracking_history')
-                ->leftjoin('wallet','wallet.id','=','tracking_history.to_wallet')                       
-                ->selectRaw("wallet.name, SUM(tracking_history.amount) as value")
+                ->leftjoin('income_source','income_source.id','=','tracking_history.income_source')                       
+                ->selectRaw("income_source.name, SUM(tracking_history.amount) as value")
                 ->where('tracking_history.user_id', '=', auth()->user()->id)
                 ->where('tracking_history.transaction_type', '=', 'INCOME')
-                ->groupBy('tracking_history.to_wallet')
-                ->groupBy('wallet.name')
+                ->groupBy('tracking_history.income_source')
+                ->groupBy('income_source.name')
                 ->get();
 
     }

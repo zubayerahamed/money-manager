@@ -96,7 +96,7 @@ var EchartsPieRoseLabelsLight = function() {
                     orient: 'vertical',
                     top: 'center',
                     left: 0,
-                    data: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    data: ['Jan','Feb','Mar','Apr','May'],
                     itemHeight: 8,
                     itemWidth: 8,
                     textStyle: {
@@ -126,14 +126,7 @@ var EchartsPieRoseLabelsLight = function() {
                         {value: 260, name: 'Feb'},
                         {value: 350, name: 'Mar'},
                         {value: 250, name: 'Apr'},
-                        {value: 210, name: 'May'},
-                        {value: 350, name: 'Jun'},
-                        {value: 300, name: 'Jul'},
-                        {value: 430, name: 'Aug'},
-                        {value: 400, name: 'Sep'},
-                        {value: 450, name: 'Oct'},
-                        {value: 330, name: 'Nov'},
-                        {value: 200, name: 'Dec'}
+                        {value: 210, name: 'May'}
                     ]
                 }]
             });

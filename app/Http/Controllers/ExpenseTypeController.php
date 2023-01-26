@@ -13,12 +13,12 @@ class ExpenseTypeController extends Controller
     public function expenseTypeStatusPieChart(){
 
         return DB::table('tracking_history')
-                ->leftjoin('wallet','wallet.id','=','tracking_history.from_wallet')                       
-                ->selectRaw("wallet.name, SUM(tracking_history.amount) as value")
+                ->leftjoin('expense_type','expense_type.id','=','tracking_history.expense_type')                       
+                ->selectRaw("expense_type.name, SUM(tracking_history.amount) as value")
                 ->where('tracking_history.user_id', '=', auth()->user()->id)
                 ->where('tracking_history.transaction_type', '=', 'EXPENSE')
-                ->groupBy('tracking_history.from_wallet')
-                ->groupBy('wallet.name')
+                ->groupBy('tracking_history.expense_type')
+                ->groupBy('expense_type.name')
                 ->get();
 
     }

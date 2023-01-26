@@ -16,7 +16,7 @@ class IncomeSource extends Model
     public function getTotalIncomeAttribute(){
         $totalIncome = DB::table('tracking_history')
                                 ->selectRaw("SUM(amount) as totalIncome")
-                                ->where('to_wallet', '=', $this->id)
+                                ->where('income_source', '=', $this->id)
                                 ->where('user_id', '=', auth()->user()->id)
                                 ->where('transaction_type', '=', 'INCOME')
                                 ->get();

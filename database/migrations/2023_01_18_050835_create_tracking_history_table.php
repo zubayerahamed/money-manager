@@ -26,6 +26,8 @@ return new class extends Migration
             $table->time('transaction_time', $precision = 0);
             $table->text('note')->nullable();
             $table->foreignId('user_id');
+            $table->integer('month');
+            $table->integer('year');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class ExpenseType extends Model
     public function getTotalExpenseAttribute(){
         $totalExpense = DB::table('tracking_history')
                                 ->selectRaw("SUM(amount) as totalExpense")
-                                ->where('from_wallet', '=', $this->id)
+                                ->where('expense_type', '=', $this->id)
                                 ->where('user_id', '=', auth()->user()->id)
                                 ->where('transaction_type', '=', 'EXPENSE')
                                 ->get();

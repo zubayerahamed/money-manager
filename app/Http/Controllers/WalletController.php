@@ -65,6 +65,8 @@ class WalletController extends Controller
             $trackingFields['transaction_date'] = date('Y-m-d');
             $trackingFields['transaction_time'] = date('H:i');
             $trackingFields['user_id'] = auth()->user()->id;
+            $trackingFields['month'] = date('m');
+            $trackingFields['year'] = date('Y');
 
             $trackingHistory = TrackingHistory::create($trackingFields);
 

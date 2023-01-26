@@ -34,6 +34,8 @@ Route::post('/login', [LoginController::class, 'doLogin']);
 Route::middleware(['auth'])->group(function () {
     // Home Page
     Route::get('/', [DashboardController::class, 'showDashboardPage']);
+    Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData']);
+    Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
 
     // Wallets
     Route::get('/wallet/status', [WalletController::class, 'walletStatusPieChart'])->name('wallet.status');

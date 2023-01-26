@@ -21,6 +21,8 @@ class TrackingHistory extends Model
         'transaction_date', 
         'transaction_time', 
         'user_id',
+        'month',
+        'year',
         'note'
     ];
 }
