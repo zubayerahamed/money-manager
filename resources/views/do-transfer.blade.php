@@ -15,7 +15,7 @@
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/transaction" method="POST">
+                                <form action="{{ url('/transaction') }}" method="POST">
                                     @csrf
 
                                     <input type="hidden" name="transaction_type" value="TRANSFER" />

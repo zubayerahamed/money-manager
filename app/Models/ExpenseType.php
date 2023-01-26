@@ -22,4 +22,8 @@ class ExpenseType extends Model
                                 ->get();
         return $totalExpense[0]->totalExpense == null? 0 : $totalExpense[0]->totalExpense;
     }
+
+    public function trackingHistory(){
+        return $this->hasMany(TrackingHistory::class, 'expense_type', 'id');
+    }
 }

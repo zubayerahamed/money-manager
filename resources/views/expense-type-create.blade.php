@@ -17,14 +17,14 @@
                                 <h5 class="mb-0">Create Expense Type</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/expense-type/all" class="btn btn-success" style="margin-left: 10px;">
+                                    <a href="{{ url('/expense-type/all') }}" class="btn btn-success" style="margin-left: 10px;">
                                         Back To Expense Types List
                                     </a>
                                 </div>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/expense-type" method="POST">
+                                <form action="{{ url('/expense-type') }}" method="POST">
                                     @csrf
 
                                     <i class="{{ old('icon', 'fab fa-korvue') }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>

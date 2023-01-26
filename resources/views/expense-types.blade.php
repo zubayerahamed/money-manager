@@ -14,7 +14,7 @@
 
                         <div class="d-inline-flex ms-auto">
                             <a href="#" class="btn btn-indigo">{{ $totalExpense }} TK</a>
-                            <a href="/expense-type" class="btn btn-success" style="margin-left: 10px;">Create Expense Type</a>
+                            <a href="{{ url('/expense-type') }}" class="btn btn-success" style="margin-left: 10px;">Create Expense Type</a>
                         </div>
                     </div>
 
@@ -47,10 +47,10 @@
                                             <h6 class="mb-0">Total Expense <br /> {{ $expenseType->totalExpense }} TK</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="/expense-type/{{ $expenseType->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
+                                            <a href="{{ url('/expense-type') . '/' . $expenseType->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
-                                            <form action="/expense-type/{{ $expenseType->id }}/delete" style="display: inline-block" method="POST">
+                                            <form action="{{ url('/expense-type') . '/' . $expenseType->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm">

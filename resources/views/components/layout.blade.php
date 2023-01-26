@@ -75,7 +75,7 @@
             </div>
 
             <div class="navbar-brand flex-1 flex-lg-0">
-                <a href="/" class="d-inline-flex align-items-center" style="text-decoration: none;">
+                <a href="{{ url('/') }}" class="d-inline-flex align-items-center" style="text-decoration: none;">
                     <img src="/assets/images/logo_icon.png" alt="">
                     <h1 style="margin: 0; padding: 0; padding-left: 15px; color: #fff;">Money Manager</h1>
                 </a>
@@ -99,7 +99,7 @@
                             <i class="ph-user-circle me-2"></i>
                             My profile
                         </a>
-                        <a href="/logout" class="dropdown-item">
+                        <a href="{{ url('/logout') }}" class="dropdown-item">
                             <i class="ph-sign-out me-2"></i>
                             Logout
                         </a>
@@ -146,7 +146,7 @@
                     <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                         <li class="nav-item">
-                            <a href="/" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
+                            <a href="{{ url('/') }}" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
                                 <span>
                                     Home
@@ -160,8 +160,8 @@
 								<span>Wallet</span>
 							</a>
 							<ul class="nav-group-sub collapse {{ Request::is('wallet/**') || Request::is('wallet') ? 'show' : '' }}">
-								<li class="nav-item"><a href="/wallet/all" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-								<li class="nav-item"><a href="/wallet" class="nav-link {{ Request::is('wallet') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+								<li class="nav-item"><a href="{{ url('/wallet/all') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+								<li class="nav-item"><a href="{{ url('/wallet') }}" class="nav-link {{ Request::is('wallet') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
 							</ul>
 						</li>
 
@@ -171,8 +171,8 @@
 								<span>Income Source</span>
 							</a>
 							<ul class="nav-group-sub collapse {{ Request::is('income-source/**') || Request::is('income-source') ? 'show' : '' }}">
-								<li class="nav-item"> <a href="/income-source/all" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-								<li class="nav-item"> <a href="/income-source" class="nav-link {{ Request::is('income-source') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+								<li class="nav-item"> <a href="{{ url('/income-source/all') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+								<li class="nav-item"> <a href="{{ url('/income-source') }}" class="nav-link {{ Request::is('income-source') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
 							</ul>
 						</li>
                         
@@ -182,8 +182,8 @@
 								<span>Expense Type</span>
 							</a>
 							<ul class="nav-group-sub collapse {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'show' : '' }}">
-								<li class="nav-item"> <a href="/expense-type/all" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-								<li class="nav-item"> <a href="/expense-type" class="nav-link {{ Request::is('expense-type') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+								<li class="nav-item"> <a href="{{ url('/expense-type/all') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+								<li class="nav-item"> <a href="{{ url('/expense-type') }}" class="nav-link {{ Request::is('expense-type') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
 							</ul>
 						</li>
 
@@ -210,13 +210,13 @@
                             <h4 class="page-title text-center" style="margin: 0px;">
                                 
                                 <div class="d-inline-flex ms-auto" style="width: 100%">
-                                    <a href="/transaction/add-income" class="btn btn-success">
+                                    <a href="{{ url('/transaction/add-income') }}" class="btn btn-success">
                                        <i class="fas fa-plus-circle"></i> &nbsp; Add Income
                                     </a>
-                                    <a href="/transaction/add-expense" class="btn btn-danger" style="margin-left: 10px;">
+                                    <a href="{{ url('/transaction/add-expense') }}" class="btn btn-danger" style="margin-left: 10px;">
                                         <i class="fas fa-minus-circle"></i> &nbsp;  Add Expense
                                     </a>
-                                    <a href="/transaction/do-transfer" class="btn btn-primary" style="margin-left: 10px;">
+                                    <a href="{{ url('/transaction/do-transfer') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         <i class="fas fa-retweet"></i> &nbsp; Transfer
                                     </a>
                                 </div>
@@ -253,7 +253,7 @@
                 <!-- Footer -->
                 <div class="navbar navbar-sm navbar-footer border-top">
                     <div class="container-fluid text-center">
-                        <span>&copy; {{ date('Y') }} <a href="https://www.karigorit.com">Karigor IT</a></span>
+                        <span>&copy; {{ date('Y') }} <a href="https://www.karigorit.com" target="_blank">Karigor IT</a></span>
                     </div>
                 </div>
                 <!-- /footer -->
@@ -265,216 +265,6 @@
 
     </div>
     <!-- /page content -->
-
-
-    <!-- Notifications -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="notifications">
-        <div class="offcanvas-header py-0">
-            <h5 class="offcanvas-title py-3">Activity</h5>
-            <button type="button" class="btn btn-light btn-sm btn-icon border-transparent rounded-pill"
-                data-bs-dismiss="offcanvas">
-                <i class="ph-x"></i>
-            </button>
-        </div>
-
-        <div class="offcanvas-body p-0">
-            <div class="bg-light fw-medium py-2 px-3">New notifications</div>
-            <div class="p-3">
-                <div class="d-flex align-items-start mb-3">
-                    <a href="#" class="status-indicator-container me-3">
-                        <img src="/assets/images/demo/users/face1.jpg" class="w-40px h-40px rounded-pill"
-                            alt="">
-                        <span class="status-indicator bg-success"></span>
-                    </a>
-                    <div class="flex-fill">
-                        <a href="#" class="fw-semibold">James</a> has completed the task <a
-                            href="#">Submit documents</a> from <a href="#">Onboarding</a> list
-
-                        <div class="bg-light rounded p-2 my-2">
-                            <label class="form-check ms-1">
-                                <input type="checkbox" class="form-check-input" checked disabled>
-                                <del class="form-check-label">Submit personal documents</del>
-                            </label>
-                        </div>
-
-                        <div class="fs-sm text-muted mt-1">2 hours ago</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start mb-3">
-                    <a href="#" class="status-indicator-container me-3">
-                        <img src="/assets/images/demo/users/face3.jpg" class="w-40px h-40px rounded-pill"
-                            alt="">
-                        <span class="status-indicator bg-warning"></span>
-                    </a>
-                    <div class="flex-fill">
-                        <a href="#" class="fw-semibold">Margo</a> has added 4 users to <span
-                            class="fw-semibold">Customer enablement</span> channel
-
-                        <div class="d-flex my-2">
-                            <a href="#" class="status-indicator-container me-1">
-                                <img src="/assets/images/demo/users/face10.jpg" class="w-32px h-32px rounded-pill"
-                                    alt="">
-                                <span class="status-indicator bg-danger"></span>
-                            </a>
-                            <a href="#" class="status-indicator-container me-1">
-                                <img src="/assets/images/demo/users/face11.jpg" class="w-32px h-32px rounded-pill"
-                                    alt="">
-                                <span class="status-indicator bg-success"></span>
-                            </a>
-                            <a href="#" class="status-indicator-container me-1">
-                                <img src="/assets/images/demo/users/face12.jpg" class="w-32px h-32px rounded-pill"
-                                    alt="">
-                                <span class="status-indicator bg-success"></span>
-                            </a>
-                            <a href="#" class="status-indicator-container me-1">
-                                <img src="/assets/images/demo/users/face13.jpg" class="w-32px h-32px rounded-pill"
-                                    alt="">
-                                <span class="status-indicator bg-success"></span>
-                            </a>
-                            <button type="button"
-                                class="btn btn-light btn-icon d-inline-flex align-items-center justify-content-center w-32px h-32px rounded-pill p-0">
-                                <i class="ph-plus ph-sm"></i>
-                            </button>
-                        </div>
-
-                        <div class="fs-sm text-muted mt-1">3 hours ago</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start">
-                    <div class="me-3">
-                        <div class="bg-warning bg-opacity-10 text-warning rounded-pill">
-                            <i class="ph-warning p-2"></i>
-                        </div>
-                    </div>
-                    <div class="flex-1">
-                        Subscription <a href="#">#466573</a> from 10.12.2021 has been cancelled. Refund
-                        case <a href="#">#4492</a> created
-                        <div class="fs-sm text-muted mt-1">4 hours ago</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-light fw-medium py-2 px-3">Older notifications</div>
-            <div class="p-3">
-                <div class="d-flex align-items-start mb-3">
-                    <a href="#" class="status-indicator-container me-3">
-                        <img src="/assets/images/demo/users/face25.jpg" class="w-40px h-40px rounded-pill"
-                            alt="">
-                        <span class="status-indicator bg-success"></span>
-                    </a>
-                    <div class="flex-fill">
-                        <a href="#" class="fw-semibold">Nick</a> requested your feedback and approval in
-                        support request <a href="#">#458</a>
-
-                        <div class="my-2">
-                            <a href="#" class="btn btn-success btn-sm me-1">
-                                <i class="ph-checks ph-sm me-1"></i>
-                                Approve
-                            </a>
-                            <a href="#" class="btn btn-light btn-sm">
-                                Review
-                            </a>
-                        </div>
-
-                        <div class="fs-sm text-muted mt-1">3 days ago</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start mb-3">
-                    <a href="#" class="status-indicator-container me-3">
-                        <img src="/assets/images/demo/users/face24.jpg" class="w-40px h-40px rounded-pill"
-                            alt="">
-                        <span class="status-indicator bg-grey"></span>
-                    </a>
-                    <div class="flex-fill">
-                        <a href="#" class="fw-semibold">Mike</a> added 1 new file(s) to <a
-                            href="#">Product management</a> project
-
-                        <div class="bg-light rounded p-2 my-2">
-                            <div class="d-flex align-items-center">
-                                <div class="me-2">
-                                    <img src="/assets/images/icons/pdf.svg" width="34" height="34"
-                                        alt="">
-                                </div>
-                                <div class="flex-fill">
-                                    new_contract.pdf
-                                    <div class="fs-sm text-muted">112KB</div>
-                                </div>
-                                <div class="ms-2">
-                                    <button type="button"
-                                        class="btn btn-flat-dark text-body btn-icon btn-sm border-transparent rounded-pill">
-                                        <i class="ph-arrow-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="fs-sm text-muted mt-1">1 day ago</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start mb-3">
-                    <div class="me-3">
-                        <div class="bg-success bg-opacity-10 text-success rounded-pill">
-                            <i class="ph-calendar-plus p-2"></i>
-                        </div>
-                    </div>
-                    <div class="flex-fill">
-                        All hands meeting will take place coming Thursday at 13:45.
-
-                        <div class="my-2">
-                            <a href="#" class="btn btn-primary btn-sm">
-                                <i class="ph-calendar-plus ph-sm me-1"></i>
-                                Add to calendar
-                            </a>
-                        </div>
-
-                        <div class="fs-sm text-muted mt-1">2 days ago</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start mb-3">
-                    <a href="#" class="status-indicator-container me-3">
-                        <img src="/assets/images/demo/users/face4.jpg" class="w-40px h-40px rounded-pill"
-                            alt="">
-                        <span class="status-indicator bg-danger"></span>
-                    </a>
-                    <div class="flex-fill">
-                        <a href="#" class="fw-semibold">Christine</a> commented on your community <a
-                            href="#">post</a> from 10.12.2021
-
-                        <div class="fs-sm text-muted mt-1">2 days ago</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start mb-3">
-                    <div class="me-3">
-                        <div class="bg-primary bg-opacity-10 text-primary rounded-pill">
-                            <i class="ph-users-four p-2"></i>
-                        </div>
-                    </div>
-                    <div class="flex-fill">
-                        <span class="fw-semibold">HR department</span> requested you to complete internal
-                        survey by
-                        Friday
-
-                        <div class="fs-sm text-muted mt-1">3 days ago</div>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /notifications -->
-
-
 
 </body>
 

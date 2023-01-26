@@ -14,7 +14,7 @@
 
                         <div class="d-inline-flex ms-auto">
                             <a href="#" class="btn btn-indigo">{{ $totalBalance }} TK</a>
-                            <a href="/wallet" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
+                            <a href="{{ url('/wallet')  }}" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
                         </div>
                     </div>
 
@@ -47,10 +47,10 @@
                                             <h6 class="mb-0">Balance <br /> {{ $wallet->currentBalance }} TK</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="/wallet/{{ $wallet->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
+                                            <a href="{{ url('/wallet').'/'.$wallet->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
-                                            <form action="/wallet/{{ $wallet->id }}/delete" style="display: inline-block" method="POST">
+                                            <form action="{{ url('/wallet').'/'.$wallet->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm">

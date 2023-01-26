@@ -40,7 +40,7 @@
                 <div class="content d-flex justify-content-center align-items-center">
 
                     <!-- Registration form -->
-                    <form class="login-form" action="/register" method="POST">
+                    <form class="login-form" action="{{ url('/register') }}" method="POST">
                         @csrf
                         <div class="card mb-0">
                             <div class="card-body">
@@ -114,7 +114,7 @@
                                 </div>
 
                                 <div class="text-center">
-									Already have an account? <a href="/login">Login here</a>
+									Already have an account? <a href="{{ url('/login') }}">Login here</a>
 								</div>
                             </div>
                         </div>

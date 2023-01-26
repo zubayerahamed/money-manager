@@ -81,6 +81,9 @@ class TrackingHistoryController extends Controller
                 'transaction_time' => 'required'
             ]);
 
+
+            // TODO: need to check money available or not
+
         } else {
             $message = "Transfer Successfully";
             $errorMessage = "Failed to do transfer";
@@ -94,6 +97,8 @@ class TrackingHistoryController extends Controller
                 'transaction_date' => 'required',
                 'transaction_time' => 'required'
             ]);
+
+            // TODO; need to check money available or not
         }
 
 

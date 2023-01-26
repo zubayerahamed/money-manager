@@ -17,15 +17,15 @@
                                 <h5 class="mb-0">Update Income Source</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/income-source/all" class="btn btn-primary" style="margin-left: 10px;">
+                                    <a href="{{ url('/income-source/all') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Income Sources List
                                     </a>
-                                    <a href="/income-source" class="btn btn-success" style="margin-left: 10px;">Create Income Source</a>
+                                    <a href="{{ url('/income-source') }}" class="btn btn-success" style="margin-left: 10px;">Create Income Source</a>
                                 </div>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/income-source/{{ $incomeSource->id }}" method="POST">
+                                <form action="{{ url('/income-source').'/'.$incomeSource->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
 

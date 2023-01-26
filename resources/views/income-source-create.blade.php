@@ -17,14 +17,14 @@
                                 <h5 class="mb-0">Create Income Source</h5>
 
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/income-source/all" class="btn btn-primary" style="margin-left: 10px;">
+                                    <a href="{{ url('/income-source/all') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Income Sources List
                                     </a>
                                 </div>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/income-source" method="POST">
+                                <form action="{{ url('/income-source') }}" method="POST">
                                     @csrf
                                     
                                     <i class="{{ old('icon', 'fab fa-korvue') }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>

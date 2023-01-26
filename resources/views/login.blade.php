@@ -39,7 +39,7 @@
                 <div class="content d-flex justify-content-center align-items-center">
 
                     <!-- Login form -->
-                    <form class="login-form" action="/login" method="POST">
+                    <form class="login-form" action="{{ url('/login') }}" method="POST">
                         @csrf
                         <div class="card mb-0">
                             <div class="card-body">
@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="text-center">
-									Don't have an account? <a href="/register">Register here</a>
+									Don't have an account? <a href="{{ url('/register') }}">Register here</a>
 								</div>
                             </div>
                         </div>

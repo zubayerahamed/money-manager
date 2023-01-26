@@ -17,15 +17,15 @@
                                 <h5 class="mb-0">Update Expense Type</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/expense-type/all" class="btn btn-primary" style="margin-left: 10px;">
+                                    <a href="{{ url('/expense-type/all') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Expense Types List
                                     </a>
-                                    <a href="/expense-type" class="btn btn-success" style="margin-left: 10px;">Create Expense Type</a>
+                                    <a href="{{ url('/expense-type') }}" class="btn btn-success" style="margin-left: 10px;">Create Expense Type</a>
                                 </div>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/expense-type/{{ $expenseType->id }}" method="POST">
+                                <form action="{{ url('/expense-type').'/'.$expenseType->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
 

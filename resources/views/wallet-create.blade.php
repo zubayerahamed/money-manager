@@ -17,14 +17,14 @@
                                 <h5 class="mb-0">Create Wallet</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/wallet/all" class="btn btn-success" style="margin-left: 10px;">
+                                    <a href="{{ url('/wallet/all') }}" class="btn btn-success" style="margin-left: 10px;">
                                         Back To Wallet Lists
                                     </a>
                                 </div>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/wallet" method="POST">
+                                <form action="{{ url('/wallet') }}" method="POST">
                                     @csrf
 
                                     <i class="{{ old('icon', 'fab fa-korvue') }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>

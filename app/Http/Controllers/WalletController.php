@@ -56,7 +56,7 @@ class WalletController extends Controller
 
         $wallet = Wallet::create($incomingFields);
 
-        if($wallet) {
+        if($wallet && $requset->get('current_balance') != 0) {
             // Add to tracking 
             $trackingFields['transaction_type'] = 'OPENING';
             $trackingFields['amount'] = $requset->get('current_balance');
@@ -82,8 +82,9 @@ class WalletController extends Controller
                 $savedArhead = Arhead::create($arhead);
             }
 
-            return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
         }
+
+        if($wallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
 
         return redirect('/wallet')->with('error', "Can't create wallet");
     }
@@ -103,6 +104,31 @@ class WalletController extends Controller
     }
 
     public function deleteWallet(Wallet $wallet){
+
+        $incomeCount =  DB::table('tracking_history')             
+                ->selectRaw("count(*)")
+                ->where('user_id', '=', auth()->user()->id)
+                ->where('to_wallet', '=', $wallet->id)
+                ->where(function($query){
+                    $query->where('transaction_type', '=', 'INCOME')
+                    ->orWhere('transaction_type', '=', 'TRANSFER');
+                })
+                ->count();
+
+        $expenseCount =  DB::table('tracking_history')             
+                ->selectRaw("count(*)")
+                ->where('user_id', '=', auth()->user()->id)
+                ->where('from_wallet', '=', $wallet->id)
+                ->where(function($query){
+                    $query->where('transaction_type', '=', 'EXPENSE')
+                    ->orWhere('transaction_type', '=', 'TRANSFER');
+                })
+                ->count();
+
+        if($incomeCount > 0 || $expenseCount > 0){
+            return back()->with('error', $wallet->name . ' already has transaction');
+        }
+
         $walletName = $wallet->name;
         $deleted = $wallet->delete();
 

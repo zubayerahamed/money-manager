@@ -14,7 +14,7 @@
 
                         <div class="d-inline-flex ms-auto">
                             <a href="#" class="btn btn-indigo">{{ $totalIncome }} TK</a>
-                            <a href="/income-source" class="btn btn-success" style="margin-left: 10px;">Create Income Source</a>
+                            <a href="{{ url('/income-source') }}" class="btn btn-success" style="margin-left: 10px;">Create Income Source</a>
                         </div>
                     </div>
 
@@ -49,10 +49,10 @@
                                             <h6 class="mb-0">Total Income <br /> {{ $incomeSource->totalIncome }} TK</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="/income-source/{{ $incomeSource->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
+                                            <a href="{{ url('/income-source').'/'.$incomeSource->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
-                                            <form action="/income-source/{{ $incomeSource->id }}/delete" style="display: inline-block" method="POST">
+                                            <form action="{{ url('/income-source').'/'.$incomeSource->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm">

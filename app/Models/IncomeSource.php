@@ -22,4 +22,8 @@ class IncomeSource extends Model
                                 ->get();
         return $totalIncome[0]->totalIncome == null? 0 : $totalIncome[0]->totalIncome;
     }
+
+    public function trackingHistory(){
+        return $this->hasMany(TrackingHistory::class, 'income_source', 'id');
+    }
 }

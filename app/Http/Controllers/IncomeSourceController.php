@@ -81,6 +81,11 @@ class IncomeSourceController extends Controller
     }
 
     public function deleteIncomeSource(IncomeSource $incomeSource){
+
+        if($incomeSource->trackingHistory()->count() > 0){
+            return back()->with('error', $incomeSource->name . ' already has transaction');
+        }
+
         $incomeSourceName = $incomeSource->name;
         $deleted = $incomeSource->delete();
 

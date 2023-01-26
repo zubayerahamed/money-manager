@@ -78,6 +78,11 @@ class ExpenseTypeController extends Controller
     }
 
     public function deleteExpenseType(ExpenseType $expenseType){
+
+        if($expenseType->trackingHistory()->count() > 0){
+            return back()->with('error', $expenseType->name . ' already has transaction');
+        }
+
         $expenseTypeName = $expenseType->name;
         $deleted = $expenseType->delete();
 

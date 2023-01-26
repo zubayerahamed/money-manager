@@ -17,15 +17,15 @@
                                 <h5 class="mb-0">Update Wallet</h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="/wallet/all" class="btn btn-primary" style="margin-left: 10px;">
+                                    <a href="{{ url('/wallet/all') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Wallet Lists
                                     </a>
-                                    <a href="/wallet" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
+                                    <a href="{{ url('/wallet') }}" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
                                 </div>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="/wallet/{{ $wallet->id }}" method="POST">
+                                <form action="{{ url('/wallet').'/'.$wallet->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
 
