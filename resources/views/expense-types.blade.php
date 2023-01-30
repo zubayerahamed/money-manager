@@ -13,8 +13,8 @@
                         <h5 class="mb-0">Total Expense</h5>
 
                         <div class="d-inline-flex ms-auto">
-                            <a href="#" class="btn btn-indigo">{{ $totalExpense }} TK</a>
-                            <a href="{{ url('/expense-type') }}" class="btn btn-success" style="margin-left: 10px;">Create Expense Type</a>
+                            <a href="#" class="btn btn-danger" style="margin-left: 10px;" title="Total Expense">{{ $totalExpense }} TK</a>
+                            <a href="{{ url('/expense-type') }}" class="btn btn-success" style="margin-left: 10px;" title="Create Expense Type">Create Expense Type</a>
                         </div>
                     </div>
 
@@ -26,13 +26,20 @@
 
                     <div class="table-responsive">
                         <table class="table text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Expense Type</th>
+                                    <th class="text-center">Expense (TK)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
                             <tbody>
 
                                 @foreach ($expenseTypes as $expenseType)
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div style="width: 70px; text-align: center;">
+                                                <div style="width: 60px;">
                                                     <i class="{{ $expenseType->icon }} fa-2x me-3"></i>
                                                 </div>
                                                 <div>
@@ -44,16 +51,16 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <h6 class="mb-0">Total Expense <br /> {{ $expenseType->totalExpense }} TK</h6>
+                                            <h6 class="mb-0 text-center">{{ $expenseType->totalExpense }}</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="{{ url('/expense-type') . '/' . $expenseType->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
+                                            <a href="{{ url('/expense-type') . '/' . $expenseType->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
                                             <form action="{{ url('/expense-type') . '/' . $expenseType->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm">
+                                                <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm" title="Delete">
                                                     <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-trash ph-sm"></i> </span> Delete
                                                 </button>
                                             </form>

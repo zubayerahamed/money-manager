@@ -29,11 +29,17 @@ class WalletController extends Controller
                                 ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
                                 ->where('user_id', '=', auth()->user()->id)
                                 ->get();
+        
+        $totalTransactionCharge = DB::table('arhead')
+                                ->selectRaw("SUM(transaction_charge) as totalTrnCharge")
+                                ->where('user_id', '=', auth()->user()->id)
+                                ->get();
 
 
         return view('wallets', [
             'wallets' => $wallets,
-            'totalBalance' => $totalBalance[0]->totalBalance == null? 0 : $totalBalance[0]->totalBalance
+            'totalBalance' => $totalBalance[0]->totalBalance == null? 0 : $totalBalance[0]->totalBalance,
+            'totalTrnCharge' => $totalTransactionCharge[0]->totalTrnCharge == null? 0 : $totalTransactionCharge[0]->totalTrnCharge
         ]);
     }
 

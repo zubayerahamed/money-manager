@@ -130,8 +130,7 @@ class TrackingHistoryController extends Controller
                 $savedArhead = Arhead::create($arhead);
             } else {
                 $arhead['amount'] = $trackingHistory['amount'];
-                $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
-
+                
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
 
@@ -139,6 +138,7 @@ class TrackingHistoryController extends Controller
 
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
+                $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
 
                 $savedArhead = Arhead::create($arhead);
             }

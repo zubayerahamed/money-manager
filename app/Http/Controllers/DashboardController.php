@@ -147,8 +147,17 @@ class DashboardController extends Controller
         $currentMonthTotalExpense = $totalExpense[0]->totalExpense == null? 0 : $totalExpense[0]->totalExpense;
 
 
+        $totalTransactionCharge = DB::table('tracking_history')
+                                ->selectRaw("SUM(transaction_charge) as totalTrnCharge")
+                                ->where('user_id', '=', auth()->user()->id)
+                                ->where('month', '=', date('m'))
+                                ->where('year', '=', date('Y'))
+                                ->get();
+        $totalTrnCharge = $totalTransactionCharge[0]->totalTrnCharge == null? 0 : $totalTransactionCharge[0]->totalTrnCharge;
+
+
         // Current month savings
-        $currentMonthSavings = $currentMonthTotalIncome - $currentMonthTotalExpense;
+        $currentMonthSavings = $currentMonthTotalIncome - $currentMonthTotalExpense - $totalTrnCharge;
 
         // Current balance
         $currentBalance = DB::table('arhead')
@@ -163,7 +172,8 @@ class DashboardController extends Controller
             'currentMonthTotalIncome' => $currentMonthTotalIncome,
             'currentMonthTotalExpense' => $currentMonthTotalExpense,
             'currentMonthSavings' => $currentMonthSavings,
-            'currentBalance' => $currentBalanceFinal
+            'currentBalance' => $currentBalanceFinal,
+            'currentMonthTrnCharge' => $totalTrnCharge
         ]);
     }
 }

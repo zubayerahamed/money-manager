@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="text-center box-item box-item-danger">
                                     <h2>Monthly Expense</h2>
-                                    <h3>{{ $currentMonthTotalExpense }} TK</h3>
+                                    <h3>Expense : {{ $currentMonthTotalExpense }} TK , TRNC : {{ $currentMonthTrnCharge }}</h3>
                                 </div>
                             </div>
 

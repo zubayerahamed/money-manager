@@ -10,10 +10,10 @@
                 <div class="card">
 
                     <div class="card-header d-flex align-items-center">
-                        <h5 class="mb-0">Total Balance</h5>
+                        <h5 class="mb-0">Total Balance</h5><a href="#" class="btn btn-indigo" style="margin-left: 10px;">{{ $totalBalance }} TK</a>
 
                         <div class="d-inline-flex ms-auto">
-                            <a href="#" class="btn btn-indigo">{{ $totalBalance }} TK</a>
+                            <a href="#" class="btn btn-danger" title="Total transaction charge">TRNC: {{ $totalTrnCharge }} TK</a>
                             <a href="{{ url('/wallet')  }}" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
                         </div>
                     </div>
@@ -27,6 +27,13 @@
                     <div class="table-responsive">
                         <table class="table text-nowrap">
                             <tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Wallet</th>
+                                        <th class="text-center">Balance (TK)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
 
                                 @foreach ($wallets as $wallet)
                                     <tr>
@@ -44,16 +51,16 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <h6 class="mb-0">Balance <br /> {{ $wallet->currentBalance }} TK</h6>
+                                            <h6 class="mb-0 text-center">{{ $wallet->currentBalance }}</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="{{ url('/wallet').'/'.$wallet->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm">
+                                            <a href="{{ url('/wallet').'/'.$wallet->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
                                             <form action="{{ url('/wallet').'/'.$wallet->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm">
+                                                <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm" title="Delete">
                                                     <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-trash ph-sm"></i> </span> Delete
                                                 </button>
                                             </form>
