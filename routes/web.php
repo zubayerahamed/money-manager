@@ -5,6 +5,7 @@ use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\IncomeSourceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TrackingHistoryController;
 use App\Http\Controllers\WalletController;
@@ -36,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'showDashboardPage']);
     Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData']);
     Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
+
+    Route::get('/profile', [ProfileController::class, 'showProfilePage'])->name('profile.page');
 
     // Wallets
     Route::get('/wallet/status', [WalletController::class, 'walletStatusPieChart'])->name('wallet.status');

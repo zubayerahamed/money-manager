@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout pageTitle="Wallets Status">
 
     <!-- Content area -->
     <div class="content">

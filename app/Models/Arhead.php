@@ -19,4 +19,8 @@ class Arhead extends Model
         'transaction_charge',
         'user_id'
     ];
+
+    public function wallet(){
+        $this->belongsTo(Wallet::class, 'wallet_id');
+    }
 }

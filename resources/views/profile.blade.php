@@ -1,8 +1,4 @@
-<x-layout pageTitle="Create Income Source">
-
-
-
-
+<x-layout pageTitle="Profile">
     <!-- Content area -->
     <div class="content">
 
@@ -14,31 +10,15 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="mb-0">Create Income Source</h5>
-
-                                <div class="d-inline-flex ms-auto">
-                                    <a href="{{ url('/income-source/all') }}" class="btn btn-primary" style="margin-left: 10px;">
-                                        Back To Income Sources List
-                                    </a>
-                                </div>
+                                <h5 class="mb-0">Update Profile</h5>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/income-source') }}" method="POST">
+                                <form action="{{ url('/profile') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    
-                                    <i class="{{ old('icon', 'fab fa-korvue') }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Icon:</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="icon" id="icon" value="{{ old('icon', 'fab fa-korvue') }}" readonly>
-                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label class="form-label">Income Source Name:</label>
+                                        <label class="form-label">Name:</label>
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                                             @error('name')
@@ -48,9 +28,10 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Note:</label>
+                                        <label class="col-form-label col-lg-3">Avatar</label>
                                         <div class="form-group">
-                                            <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note') }}</textarea>
+                                            <input type="file" name="avatar" class="form-control" accept="image/*">
+                                            <div class="form-text">Image File</div>
                                         </div>
                                     </div>
 
@@ -71,8 +52,4 @@
         <!-- /dashboard content -->
 
     </div>
-    <!-- /content area -->
-
-    @include('icon-modal');
-
 </x-layout>

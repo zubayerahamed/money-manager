@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout pageTitle="Create Expense Type">
 
 
 

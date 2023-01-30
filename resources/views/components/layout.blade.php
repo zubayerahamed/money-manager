@@ -5,7 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>
+    @isset($pageTitle)
+        {{ $pageTitle }}    
+    @else
+        Money Manager
+    @endisset
+    </title>
 
     <!-- Global stylesheets -->
     <link href="/assets/fonts/inter/inter.css" rel="stylesheet" type="text/css">
@@ -95,7 +101,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#" class="dropdown-item">
+                        <a href="{{ url('/profile') }}" class="dropdown-item">
                             <i class="ph-user-circle me-2"></i>
                             My profile
                         </a>

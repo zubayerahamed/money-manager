@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout pageTitle="Add Income">
 
     <!-- Content area -->
     <div class="content">

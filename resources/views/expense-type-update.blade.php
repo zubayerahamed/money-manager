@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout pageTitle="Update Expense Type">
 
 
 

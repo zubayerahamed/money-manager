@@ -1,5 +1,4 @@
-<x-layout>
-
+<x-layout pageTitle="Add Expense">
     <!-- Content area -->
     <div class="content">
 

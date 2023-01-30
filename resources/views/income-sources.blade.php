@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout pageTitle="Income Sources Status">
 
     <!-- Content area -->
     <div class="content">

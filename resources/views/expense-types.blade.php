@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout pageTitle="Expense Types Status">
 
     <!-- Content area -->
     <div class="content">

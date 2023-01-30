@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout pageTitle="Transfer">
 
     <!-- Content area -->
     <div class="content">
