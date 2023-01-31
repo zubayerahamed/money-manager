@@ -38,7 +38,7 @@
                     <div class="tab-content card-body">
 
                         <div class="tab-pane active fade show" id="messages-monthly">
-
+                            <a href="{{ url('/tracking/details') }}" class="btn btn-success btn-sm">View Details</a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic" style="height: 440px;"></div>
                             </div>

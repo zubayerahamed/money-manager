@@ -154,4 +154,18 @@ class TrackingHistoryController extends Controller
         return redirect('/transaction/' . $redirectUrl)->with('error', $errorMessage);
     }
 
+    public function showAllTransactions(){
+
+        $totalIncome = DB::table('tracking_history')
+                                ->where('user_id', '=', auth()->user()->id)
+                                ->where('month', '=', date('m'))
+                                ->where('year', '=', date('Y'))
+                                ->orderBy('transaction_date')
+                                ->get();
+
+        dd($totalIncome);
+
+        return "hi";
+    }
+
 }

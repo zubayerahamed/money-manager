@@ -77,6 +77,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction/do-transfer', [TrackingHistoryController::class, 'showDoTransferPage'])->name('do-transfer.page');
     Route::post('/transaction', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
 
+    // Tracking
+    Route::get('/tracking/details', [TrackingHistoryController::class, 'showAllTransactions'])->name('tracking.monthly');
+
     // Logout
     Route::get('/logout', [LogoutController::class, 'doLogout'])->middleware('auth');
 });
