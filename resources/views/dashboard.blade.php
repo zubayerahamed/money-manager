@@ -40,7 +40,7 @@
                         <div class="tab-pane active fade show" id="messages-monthly">
 
                             <div class="chart-container">
-                                <div class="chart has-fixed-height" id="line_stacked"></div>
+                                <div class="chart has-fixed-height" id="line_basic" style="height: 440px;"></div>
                             </div>
 
                             <div class="row">
@@ -70,7 +70,7 @@
 
                         <div class="tab-pane fade" id="messages-yearly">
                             <div class="chart-container">
-                                <div class="chart has-fixed-height" id="line_stacked_yearly"></div>
+                                <div class="chart has-fixed-height" id="line_basic_yearly" style="height: 440px;"></div>
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,7 @@
                 }
 
                 // Define element
-                var line_stacked_element_yearly = document.getElementById('line_stacked_yearly');
+                var line_stacked_element_yearly = document.getElementById('line_basic_yearly');
 
 
                 //
@@ -244,6 +244,9 @@
                     // Options
                     line_stacked.setOption({
 
+                        // Define colors
+                        color: ['#66BB6A', '#EF5350'],
+
                         // Global text styles
                         textStyle: {
                             fontFamily: 'var(--body-font-family)',
@@ -259,9 +262,9 @@
                         // Setup grid
                         grid: {
                             left: 10,
-                            right: 25,
-                            top: 35,
-                            bottom: 10,
+                            right: 20,
+                            top: 40,
+                            bottom: 80,
                             containLabel: true
                         },
 
@@ -274,6 +277,20 @@
                                 color: 'var(--body-color)'
                             }
                         },
+
+                        // Title
+                        title: [
+                            {
+                                left: 'center',
+                                text: 'Income Vs Expense monthly increment',
+                                top: 380,
+                                textStyle: {
+                                    fontSize: 15,
+                                    fontWeight: 500,
+                                    color: 'var(--body-color)'
+                                }
+                            }
+                        ],
 
                         // Add tooltip
                         tooltip: {
@@ -345,21 +362,29 @@
                             {
                                 name: 'Income',
                                 type: 'line',
-                                stack: 'Total',
+                                data: incomeAmounts,
                                 smooth: true,
                                 symbol: 'circle',
                                 symbolSize: 8,
-                                data: incomeAmounts
+                                areaStyle: {
+                                    normal: {
+                                        opacity: 0.25
+                                    }
+                                },
                             },
                             {
                                 name: 'Expense',
                                 type: 'line',
-                                stack: 'Total',
+                                data: expenseAmounts,
                                 smooth: true,
                                 symbol: 'circle',
                                 symbolSize: 8,
-                                data: expenseAmounts
-                            }
+                                areaStyle: {
+                                    normal: {
+                                        opacity: 0.25
+                                    }
+                                },
+                            }    
                         ]
                     });
                 }
@@ -413,12 +438,12 @@
                 }
 
                 if (typeof echarts == 'undefined') {
-                    console.warn('Warning - echarts.min.js is not loaded.');
+                    console.warn('Warning - chart is not loaded.');
                     return;
                 }
 
                 // Define element
-                var line_stacked_element = document.getElementById('line_stacked');
+                var line_stacked_element = document.getElementById('line_basic');
 
 
                 //
@@ -438,6 +463,9 @@
                     // Options
                     line_stacked.setOption({
 
+                        // Define colors
+                        color: ['#66BB6A', '#EF5350'],
+
                         // Global text styles
                         textStyle: {
                             fontFamily: 'var(--body-font-family)',
@@ -453,9 +481,9 @@
                         // Setup grid
                         grid: {
                             left: 10,
-                            right: 25,
-                            top: 35,
-                            bottom: 10,
+                            right: 20,
+                            top: 40,
+                            bottom: 80,
                             containLabel: true
                         },
 
@@ -468,6 +496,20 @@
                                 color: 'var(--body-color)'
                             }
                         },
+
+                        // Title
+                        title: [
+                            {
+                                left: 'center',
+                                text: 'Income Vs Expense daily increment',
+                                top: 380,
+                                textStyle: {
+                                    fontSize: 15,
+                                    fontWeight: 500,
+                                    color: 'var(--body-color)'
+                                }
+                            }
+                        ],
 
                         // Add tooltip
                         tooltip: {
@@ -539,21 +581,30 @@
                             {
                                 name: 'Income',
                                 type: 'line',
-                                stack: 'Total',
+                                data: incomeAmounts,
                                 smooth: true,
                                 symbol: 'circle',
                                 symbolSize: 8,
-                                data: incomeAmounts
+                                areaStyle: {
+                                    normal: {
+                                        opacity: 0.25
+                                    }
+                                },
                             },
                             {
                                 name: 'Expense',
                                 type: 'line',
-                                stack: 'Total',
+                                data: expenseAmounts,
                                 smooth: true,
                                 symbol: 'circle',
                                 symbolSize: 8,
-                                data: expenseAmounts
-                            }
+                                areaStyle: {
+                                    normal: {
+                                        opacity: 0.25
+                                    }
+                                },
+                            }    
+                        
                         ]
                     });
                 }

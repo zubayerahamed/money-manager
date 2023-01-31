@@ -104,7 +104,7 @@
                                             <i class="ph-lock text-muted"></i>
                                         </div>
                                     </div>
-                                    @error('confirm_password')
+                                    @error('password_confirmation')
                                         <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
                                     @enderror
                                 </div>

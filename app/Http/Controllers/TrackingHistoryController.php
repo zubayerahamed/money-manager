@@ -81,8 +81,10 @@ class TrackingHistoryController extends Controller
                 'transaction_time' => 'required'
             ]);
 
-
-            // TODO: need to check money available or not
+            $wallet = Wallet::find($incomingFields['from_wallet']);
+            if($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])){
+                return back()->with('error', $wallet->name . ' has insufficient balance for transaction');
+            }
 
         } else {
             $message = "Transfer Successfully";
@@ -98,7 +100,10 @@ class TrackingHistoryController extends Controller
                 'transaction_time' => 'required'
             ]);
 
-            // TODO; need to check money available or not
+            $wallet = Wallet::find($incomingFields['from_wallet']);
+            if($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])){
+                return back()->with('error', $wallet->name . ' has insufficient balance for transaction');
+            }
         }
 
 

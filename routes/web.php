@@ -33,12 +33,16 @@ Route::get('/login', [LoginController::class, 'showLoginPage'])->name('login');
 Route::post('/login', [LoginController::class, 'doLogin']);
 
 Route::middleware(['auth'])->group(function () {
-    // Home Page
+    // Home
     Route::get('/', [DashboardController::class, 'showDashboardPage']);
     Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData']);
     Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
 
+    // Profile
     Route::get('/profile', [ProfileController::class, 'showProfilePage'])->name('profile.page');
+    Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('profile');
+    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
 
     // Wallets
     Route::get('/wallet/status', [WalletController::class, 'walletStatusPieChart'])->name('wallet.status');
@@ -72,7 +76,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction/add-expense', [TrackingHistoryController::class, 'showAddExpensePage'])->name('add-expense.page');
     Route::get('/transaction/do-transfer', [TrackingHistoryController::class, 'showDoTransferPage'])->name('do-transfer.page');
     Route::post('/transaction', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
-
 
     // Logout
     Route::get('/logout', [LogoutController::class, 'doLogout'])->middleware('auth');

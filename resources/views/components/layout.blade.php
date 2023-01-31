@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>
     @isset($pageTitle)
         {{ $pageTitle }}    
@@ -18,11 +19,14 @@
     <link href="/assets/icons/phosphor/styles.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/ltr/all.min.css" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="/assets/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -64,6 +68,28 @@
             padding: 0; 
             margin: 0;
         }
+
+
+        input#avatar{
+            display: none;
+        }
+        #image {
+            display: block;
+            max-width: 100%;
+        }
+        .preview {
+            text-align: center;
+            overflow: hidden;
+            width: 160px; 
+            height: 160px;
+            margin: 0 auto;
+            border: 1px solid red;
+        }
+        .section{
+            margin-top:150px;
+            background:#fff;
+            padding:50px 30px;
+        }
     </style>
 </head>
 
@@ -93,7 +119,7 @@
                     <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1"
                         data-bs-toggle="dropdown">
                         <div class="status-indicator-container">
-                            <img src="/assets/images/demo/users/face11.jpg" class="w-32px h-32px rounded-pill"
+                            <img src="{{ auth()->user()->avatar }}" class="w-32px h-32px rounded-pill"
                                 alt="">
                             <span class="status-indicator bg-success"></span>
                         </div>

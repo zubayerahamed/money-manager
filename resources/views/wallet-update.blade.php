@@ -43,7 +43,7 @@
                         
                                     <div class="row mb-3">
                                         <label class="form-label">Wallet name:</label>
-                                        <div class="input-group">
+                                        <div class="form-group">
                                             <input type="text" name="name" class="form-control" value="{{ old('name', $wallet->name ) }}">
                                             @error('name')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
@@ -53,14 +53,14 @@
 
                                     <div class="row mb-3">
                                         <label class="form-label">Current Balance:</label>
-                                        <div class="input-group">
+                                        <div class="form-group">
                                             <input type="text" name="current_balance" class="form-control" value="{{ old('current_balance', $wallet->currentBalance) }}" readonly disabled>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label class="form-label">Note:</label>
-                                        <div class="input-group">
+                                        <div class="form-group">
                                             <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note', $wallet->note) }}</textarea>
                                         </div>
                                     </div>
