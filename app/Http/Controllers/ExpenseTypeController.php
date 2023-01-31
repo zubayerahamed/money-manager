@@ -25,7 +25,7 @@ class ExpenseTypeController extends Controller
 
     public function expenseTypes(){
 
-        $expenseTypes = ExpenseType::all()->sortDesc();
+        $expenseTypes = ExpenseType::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
         $totalExpense = DB::table('tracking_history')
                                 ->selectRaw("SUM(amount) as totalExpense")

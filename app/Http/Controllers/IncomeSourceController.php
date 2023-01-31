@@ -25,7 +25,7 @@ class IncomeSourceController extends Controller
 
     public function incomeSources(){
 
-        $incomeSources = IncomeSource::all()->sortDesc();
+        $incomeSources = IncomeSource::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
         $totalIncome = DB::table('tracking_history')
                                 ->selectRaw("SUM(amount) as totalIncome")

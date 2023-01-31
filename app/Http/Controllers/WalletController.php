@@ -23,7 +23,7 @@ class WalletController extends Controller
     }
 
     public function wallets(){
-        $wallets = Wallet::all()->sortDesc();
+        $wallets = Wallet::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
         $totalBalance = DB::table('arhead')
                                 ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")

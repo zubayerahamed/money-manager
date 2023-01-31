@@ -9,6 +9,7 @@ use App\Models\TrackingHistory;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mockery\Undefined;
 
 class TrackingHistoryController extends Controller
 {
@@ -154,16 +155,54 @@ class TrackingHistoryController extends Controller
         return redirect('/transaction/' . $redirectUrl)->with('error', $errorMessage);
     }
 
+    function array_push_assoc($array, $key, $value){
+        $array[$key] = $value;
+        return $array;
+    }
+
     public function showAllTransactions(){
 
         $totalIncome = DB::table('tracking_history')
                                 ->where('user_id', '=', auth()->user()->id)
                                 ->where('month', '=', date('m'))
                                 ->where('year', '=', date('Y'))
-                                ->orderBy('transaction_date')
+                                ->orderBy('transaction_date', 'desc')
                                 ->get();
 
-        dd($totalIncome);
+        $dateWiseGroup = [];
+
+        $final_arr = $this->array_push_assoc($dateWiseGroup, '4', [12, 13, 14] );
+
+
+        $currentTrnDate = "";
+        foreach($totalIncome->all() as $trn){
+
+
+            if($currentTrnDate == "" || $currentTrnDate != $trn->transaction_date){
+                $currentTrnDate = $trn->transaction_date;
+                $income = 0;
+                $expense = 0;
+                if($trn->transaction_type == 'INCOME') $income = $trn->amount;
+                if($trn->transaction_type == 'EXPENSE') $expense = $trn->amount;
+                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date , ['data' => [$trn], 'income' => $income, 'expense' => $expense]);
+            } else {
+                $dateData = $dateWiseGroup[$trn->transaction_date];
+                $existDateData = $dateData['data'];
+                if($trn->transaction_type == 'INCOME') $dateData['income'] = $dateData['income'] + $trn->amount;
+                if($trn->transaction_type == 'EXPENSE') $dateData['expense'] = $dateData['expense'] + $trn->amount;
+                array_push($existDateData, $trn);
+                $dateData = $this->array_push_assoc($dateData, 'data', $existDateData);
+                $dateData = $this->array_push_assoc($dateData, 'income', $dateData['income']);
+                $dateData = $this->array_push_assoc($dateData, 'expense', $dateData['expense']);
+                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date , $dateData);
+            }
+
+           
+        }
+
+        dd($dateWiseGroup);
+
+        dd($totalIncome->all());
 
         return "hi";
     }
