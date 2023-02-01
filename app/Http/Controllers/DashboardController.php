@@ -139,6 +139,7 @@ class DashboardController extends Controller
         // month wise grid data
         $allTransactionsOfCurrentYear = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('year', '=', date('Y'))
+            ->where('transaction_type', '<>', 'OPENING')
             ->orderBy('transaction_date', 'desc')
             ->get();
 
