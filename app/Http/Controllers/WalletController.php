@@ -12,46 +12,51 @@ use Illuminate\Validation\Rule;
 class WalletController extends Controller
 {
 
-    public function walletStatusPieChart(){
-        return DB::table('arhead')    
-                ->leftjoin('wallet','wallet.id','=','arhead.wallet_id')                       
-                ->selectRaw("wallet.name, SUM(arhead.amount * arhead.row_sign)-SUM(arhead.transaction_charge) as value")
-                ->where('arhead.user_id', '=', auth()->user()->id)
-                ->groupBy('arhead.wallet_id')
-                ->groupBy('wallet.name')
-                ->get();
+    public function walletStatusPieChart()
+    {
+        return DB::table('arhead')
+            ->leftjoin('wallet', 'wallet.id', '=', 'arhead.wallet_id')
+            ->selectRaw("wallet.name, SUM(arhead.amount * arhead.row_sign)-SUM(arhead.transaction_charge) as value")
+            ->where('arhead.user_id', '=', auth()->user()->id)
+            ->groupBy('arhead.wallet_id')
+            ->groupBy('wallet.name')
+            ->get();
     }
 
-    public function wallets(){
+    public function wallets()
+    {
         $wallets = Wallet::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
         $totalBalance = DB::table('arhead')
-                                ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
-                                ->where('user_id', '=', auth()->user()->id)
-                                ->get();
-        
+            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+
         $totalTransactionCharge = DB::table('arhead')
-                                ->selectRaw("SUM(transaction_charge) as totalTrnCharge")
-                                ->where('user_id', '=', auth()->user()->id)
-                                ->get();
+            ->selectRaw("SUM(transaction_charge) as totalTrnCharge")
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
 
 
         return view('wallets', [
             'wallets' => $wallets,
-            'totalBalance' => $totalBalance[0]->totalBalance == null? 0 : $totalBalance[0]->totalBalance,
-            'totalTrnCharge' => $totalTransactionCharge[0]->totalTrnCharge == null? 0 : $totalTransactionCharge[0]->totalTrnCharge
+            'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
+            'totalTrnCharge' => $totalTransactionCharge[0]->totalTrnCharge == null ? 0 : $totalTransactionCharge[0]->totalTrnCharge
         ]);
     }
 
-    public function showCreateWalletPage(){
+    public function showCreateWalletPage()
+    {
         return view('wallet-create');
     }
 
-    public function showUpdateWalletPage(Wallet $wallet){
+    public function showUpdateWalletPage(Wallet $wallet)
+    {
         return view('wallet-update', ['wallet' => $wallet]);
     }
 
-    public function createWallet(Request $requset){
+    public function createWallet(Request $requset)
+    {
 
         $incomingFields = $requset->validate([
             'name' => ['required', Rule::unique('wallet')],
@@ -62,7 +67,7 @@ class WalletController extends Controller
 
         $wallet = Wallet::create($incomingFields);
 
-        if($wallet && $requset->get('current_balance') != 0) {
+        if ($wallet && $requset->get('current_balance') != 0) {
             // Add to tracking 
             $trackingFields['transaction_type'] = 'OPENING';
             $trackingFields['amount'] = $requset->get('current_balance');
@@ -77,7 +82,7 @@ class WalletController extends Controller
             $trackingHistory = TrackingHistory::create($trackingFields);
 
             // Add to arhead
-            if($trackingHistory){
+            if ($trackingHistory) {
                 $arhead['tracking_history_id'] = $trackingHistory->id;
                 $arhead['user_id'] = auth()->user()->id;
                 $arhead['amount'] = $trackingHistory['amount'];
@@ -87,15 +92,15 @@ class WalletController extends Controller
 
                 $savedArhead = Arhead::create($arhead);
             }
-
         }
 
-        if($wallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
+        if ($wallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
 
         return redirect('/wallet')->with('error', "Can't create wallet");
     }
 
-    public function updateWallet(Wallet $wallet, Request $requset){
+    public function updateWallet(Wallet $wallet, Request $requset)
+    {
 
         $incomingFields = $requset->validate([
             'name' => ['required', Rule::unique('wallet')->ignore($wallet->id)],
@@ -104,41 +109,42 @@ class WalletController extends Controller
 
         $uWallet = $wallet->update($incomingFields);
 
-        if($uWallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
+        if ($uWallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
 
         return redirect('/wallet/' . $wallet->id . '/edit')->with('error', $wallet->name . ' wallet update failed');
     }
 
-    public function deleteWallet(Wallet $wallet){
+    public function deleteWallet(Wallet $wallet)
+    {
 
-        $incomeCount =  DB::table('tracking_history')             
-                ->selectRaw("count(*)")
-                ->where('user_id', '=', auth()->user()->id)
-                ->where('to_wallet', '=', $wallet->id)
-                ->where(function($query){
-                    $query->where('transaction_type', '=', 'INCOME')
+        $incomeCount =  DB::table('tracking_history')
+            ->selectRaw("count(*)")
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('to_wallet', '=', $wallet->id)
+            ->where(function ($query) {
+                $query->where('transaction_type', '=', 'INCOME')
                     ->orWhere('transaction_type', '=', 'TRANSFER');
-                })
-                ->count();
+            })
+            ->count();
 
-        $expenseCount =  DB::table('tracking_history')             
-                ->selectRaw("count(*)")
-                ->where('user_id', '=', auth()->user()->id)
-                ->where('from_wallet', '=', $wallet->id)
-                ->where(function($query){
-                    $query->where('transaction_type', '=', 'EXPENSE')
+        $expenseCount =  DB::table('tracking_history')
+            ->selectRaw("count(*)")
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('from_wallet', '=', $wallet->id)
+            ->where(function ($query) {
+                $query->where('transaction_type', '=', 'EXPENSE')
                     ->orWhere('transaction_type', '=', 'TRANSFER');
-                })
-                ->count();
+            })
+            ->count();
 
-        if($incomeCount > 0 || $expenseCount > 0){
+        if ($incomeCount > 0 || $expenseCount > 0) {
             return back()->with('error', $wallet->name . ' already has transaction');
         }
 
         $walletName = $wallet->name;
         $deleted = $wallet->delete();
 
-        if($deleted) return redirect('/wallet/all')->with('success', $walletName . ' wallet deleted successfully');
+        if ($deleted) return redirect('/wallet/all')->with('success', $walletName . ' wallet deleted successfully');
 
         return redirect('/wallet/all')->with('error', "Can't delete wallet");
     }

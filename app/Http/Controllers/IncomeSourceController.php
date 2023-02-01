@@ -10,44 +10,48 @@ use Illuminate\Validation\Rule;
 class IncomeSourceController extends Controller
 {
 
-    public function incomeSourceStatusPieChart(){
+    public function incomeSourceStatusPieChart()
+    {
 
         return DB::table('tracking_history')
-                ->leftjoin('income_source','income_source.id','=','tracking_history.income_source')                       
-                ->selectRaw("income_source.name, SUM(tracking_history.amount) as value")
-                ->where('tracking_history.user_id', '=', auth()->user()->id)
-                ->where('tracking_history.transaction_type', '=', 'INCOME')
-                ->groupBy('tracking_history.income_source')
-                ->groupBy('income_source.name')
-                ->get();
-
+            ->leftjoin('income_source', 'income_source.id', '=', 'tracking_history.income_source')
+            ->selectRaw("income_source.name, SUM(tracking_history.amount) as value")
+            ->where('tracking_history.user_id', '=', auth()->user()->id)
+            ->where('tracking_history.transaction_type', '=', 'INCOME')
+            ->groupBy('tracking_history.income_source')
+            ->groupBy('income_source.name')
+            ->get();
     }
 
-    public function incomeSources(){
+    public function incomeSources()
+    {
 
         $incomeSources = IncomeSource::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
         $totalIncome = DB::table('tracking_history')
-                                ->selectRaw("SUM(amount) as totalIncome")
-                                ->where('user_id', '=', auth()->user()->id)
-                                ->where('transaction_type', '=', 'INCOME')
-                                ->get();
+            ->selectRaw("SUM(amount) as totalIncome")
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('transaction_type', '=', 'INCOME')
+            ->get();
 
         return view('income-sources', [
             'incomeSources' => $incomeSources,
-            'totalIncome' => $totalIncome[0]->totalIncome == null? 0 : $totalIncome[0]->totalIncome
+            'totalIncome' => $totalIncome[0]->totalIncome == null ? 0 : $totalIncome[0]->totalIncome
         ]);
     }
 
-    public function showCreateIncomeSourcePage(){
+    public function showCreateIncomeSourcePage()
+    {
         return view('income-source-create');
     }
 
-    public function showUpdateIncomeSourcePage(IncomeSource $incomeSource){
+    public function showUpdateIncomeSourcePage(IncomeSource $incomeSource)
+    {
         return view('income-source-update', ['incomeSource' => $incomeSource]);
     }
 
-    public function createIncomeSource(Request $requset){
+    public function createIncomeSource(Request $requset)
+    {
 
         $incomingFields = $requset->validate([
             'name' => ['required', Rule::unique('income_source')],
@@ -59,12 +63,13 @@ class IncomeSourceController extends Controller
 
         $incomeSource = IncomeSource::create($incomingFields);
 
-        if($incomeSource) return redirect('/income-source/' . $incomeSource->id . '/edit')->with('success', $incomeSource->name . ' income source created successfully');
+        if ($incomeSource) return redirect('/income-source/' . $incomeSource->id . '/edit')->with('success', $incomeSource->name . ' income source created successfully');
 
         return redirect('/income-source')->with('error', "Can't create income source");
     }
 
-    public function updateIncomeSource(IncomeSource $incomeSource, Request $requset){
+    public function updateIncomeSource(IncomeSource $incomeSource, Request $requset)
+    {
 
         $incomingFields = $requset->validate([
             'name' => ['required', Rule::unique('income_source')->ignore($incomeSource->id)],
@@ -75,21 +80,22 @@ class IncomeSourceController extends Controller
 
         $uIncomeSource = $incomeSource->update($incomingFields);
 
-        if($uIncomeSource) return redirect('/income-source/' . $incomeSource->id . '/edit')->with('success', $incomeSource->name . ' income source updated successfully');
+        if ($uIncomeSource) return redirect('/income-source/' . $incomeSource->id . '/edit')->with('success', $incomeSource->name . ' income source updated successfully');
 
         return redirect('/income-source/' . $incomeSource->id . '/edit')->with('error', $incomeSource->name . ' income source update failed');
     }
 
-    public function deleteIncomeSource(IncomeSource $incomeSource){
+    public function deleteIncomeSource(IncomeSource $incomeSource)
+    {
 
-        if($incomeSource->trackingHistory()->count() > 0){
+        if ($incomeSource->trackingHistory()->count() > 0) {
             return back()->with('error', $incomeSource->name . ' already has transaction');
         }
 
         $incomeSourceName = $incomeSource->name;
         $deleted = $incomeSource->delete();
 
-        if($deleted) return redirect('/income-source/all')->with('success', $incomeSourceName . ' income source deleted successfully');
+        if ($deleted) return redirect('/income-source/all')->with('success', $incomeSourceName . ' income source deleted successfully');
 
         return redirect('/income-source/all')->with('error', "Can't delete income source");
     }

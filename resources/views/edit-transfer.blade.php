@@ -11,11 +11,12 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="mb-0">Transfer</h5>
+                                <h5 class="mb-0">Edit Transfer</h5>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/transaction') }}" method="POST">
+                                <form action="{{ url('/tracking/detail/'.$trackingHistory->id.'/update') }}" method="POST">
+                                    @method('PUT')
                                     @csrf
 
                                     <input type="hidden" name="transaction_type" value="TRANSFER" />
@@ -23,7 +24,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Amount:</label>
                                         <div class="form-group">
-                                            <input type="number" name="amount" class="form-control" value="{{ old('amount', 0.00) }}" min="0" required>
+                                            <input type="number" name="amount" class="form-control" value="{{ old('amount', $trackingHistory->amount) }}" min="0" required>
                                             @error('amount')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -33,7 +34,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Charge:</label>
                                         <div class="form-group">
-                                            <input type="number" name="transaction_charge" class="form-control" value="{{ old('transaction_charge', 0.00) }}" min="0">
+                                            <input type="number" name="transaction_charge" class="form-control" value="{{ old('transaction_charge', $trackingHistory->transaction_charge) }}" min="0">
                                             @error('transaction_charge')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -46,7 +47,7 @@
                                             <select class="form-control" name="from_wallet" required>
                                                 <option value="">-- Select Wallet --</option>
                                                 @foreach ($wallets as $wallet)
-                                                    <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
+                                                    <option value="{{ $wallet->id }}" {{ old('from_wallet', $trackingHistory->from_wallet) == $wallet->id ? "selected" : "" }}>{{ $wallet->name }}</option>
                                                 @endforeach
                                             </select>
                                             <a href="/wallet" target="_blank" class="btn btn-light" type="button">Create Wallet</a>
@@ -62,7 +63,7 @@
                                             <select class="form-control" name="to_wallet" required>
                                                 <option value="">-- Select Wallet --</option>
                                                 @foreach ($wallets as $wallet)
-                                                    <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
+                                                    <option value="{{ $wallet->id }}" {{ old('to_wallet', $trackingHistory->to_wallet) == $wallet->id ? "selected" : "" }}>{{ $wallet->name }}</option>
                                                 @endforeach
                                             </select>
                                             <a href="/wallet" target="_blank" class="btn btn-light" type="button">Create Wallet</a>
@@ -75,7 +76,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Date:</label>
                                         <div class="form-group">
-                                            <input type="date" name="transaction_date" class="form-control" value="{{ old('transaction_date', date('Y-m-d')) }}" max="{{ date('Y-m-d') }}" required>
+                                            <input type="date" name="transaction_date" class="form-control" value="{{ old('transaction_date', $trackingHistory->transaction_date) }}" max="{{ date('Y-m-d') }}" required>
                                             @error('transaction_date')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -85,7 +86,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Time:</label>
                                         <div class="form-group">
-                                            <input type="time" name="transaction_time" class="form-control" value="{{ old('transaction_time', date('H:i')) }}" required>
+                                            <input type="time" name="transaction_time" class="form-control" value="{{ old('transaction_time', $trackingHistory->transaction_time) }}" required>
                                             @error('transaction_time')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -95,7 +96,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Note:</label>
                                         <div class="form-group">
-                                            <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note') }}</textarea>
+                                            <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note', $trackingHistory->note) }}</textarea>
                                         </div>
                                     </div>
 

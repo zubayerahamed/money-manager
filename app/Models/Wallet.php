@@ -15,13 +15,13 @@ class Wallet extends Model
     protected $fillable = ['name', 'icon', 'note', 'user_id'];
 
 
-    public function getCurrentBalanceAttribute(){
+    public function getCurrentBalanceAttribute()
+    {
         $currentBalance = DB::table('arhead')
-                                ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as currentBalance")
-                                ->where('wallet_id', '=', $this->id)
-                                ->where('user_id', '=', auth()->user()->id)
-                                ->get();
-        return $currentBalance[0]->currentBalance == null? 0 : $currentBalance[0]->currentBalance;
+            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as currentBalance")
+            ->where('wallet_id', '=', $this->id)
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+        return $currentBalance[0]->currentBalance == null ? 0 : $currentBalance[0]->currentBalance;
     }
-
 }

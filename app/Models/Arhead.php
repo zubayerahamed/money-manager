@@ -20,7 +20,8 @@ class Arhead extends Model
         'user_id'
     ];
 
-    public function wallet(){
+    public function wallet()
+    {
         $this->belongsTo(Wallet::class, 'wallet_id');
     }
 }

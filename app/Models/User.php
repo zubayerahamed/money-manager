@@ -26,15 +26,11 @@ class User extends Authenticatable
         'avatar'
     ];
 
-    public function getAvatarAttribute($value){
-        return $value ? '/upload/avatar/'.$value : "/assets/images/demo/users/face11.jpg";
+    public function getAvatarAttribute($value)
+    {
+        return $value ? '/upload/avatar/' . $value : "/assets/images/demo/users/face11.jpg";
     }
 
-    // protected function avatar(): Attribute{
-    //     return Attribute::make(get: function($value){
-    //         return $value;
-    //     });
-    // }
 
     /**
      * The attributes that should be hidden for serialization.

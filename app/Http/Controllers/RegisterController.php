@@ -8,11 +8,13 @@ use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
-    public function showRegisterPage(){
+    public function showRegisterPage()
+    {
         return view('register');
     }
 
-    public function doRegistration(Request $request){
+    public function doRegistration(Request $request)
+    {
         $incomingFields = $request->validate([
             'name' => 'required',
             'email' => ['required', 'email', Rule::unique('users', 'email')],

@@ -13,17 +13,19 @@ class IncomeSource extends Model
     protected $table = "income_source";
     protected $fillable = ['name', 'icon', 'note', 'user_id'];
 
-    public function getTotalIncomeAttribute(){
+    public function getTotalIncomeAttribute()
+    {
         $totalIncome = DB::table('tracking_history')
-                                ->selectRaw("SUM(amount) as totalIncome")
-                                ->where('income_source', '=', $this->id)
-                                ->where('user_id', '=', auth()->user()->id)
-                                ->where('transaction_type', '=', 'INCOME')
-                                ->get();
-        return $totalIncome[0]->totalIncome == null? 0 : $totalIncome[0]->totalIncome;
+            ->selectRaw("SUM(amount) as totalIncome")
+            ->where('income_source', '=', $this->id)
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('transaction_type', '=', 'INCOME')
+            ->get();
+        return $totalIncome[0]->totalIncome == null ? 0 : $totalIncome[0]->totalIncome;
     }
 
-    public function trackingHistory(){
+    public function trackingHistory()
+    {
         return $this->hasMany(TrackingHistory::class, 'income_source', 'id');
     }
 }

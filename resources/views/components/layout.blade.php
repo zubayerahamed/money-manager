@@ -69,7 +69,6 @@
             margin: 0;
         }
 
-
         input#avatar{
             display: none;
         }
@@ -218,6 +217,15 @@
 								<li class="nav-item"> <a href="{{ url('/expense-type') }}" class="nav-link {{ Request::is('expense-type') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
 							</ul>
 						</li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('/tracking/details/today') }}" class="nav-link {{ Request::is('/tracking/details/today') ? 'active' : '' }}">
+                                <i class="far fa-calendar-check"></i>
+                                <span>
+                                    Today's History
+                                </span>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>

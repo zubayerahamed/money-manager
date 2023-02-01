@@ -75,7 +75,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Date:</label>
                                         <div class="form-group">
-                                            <input type="date" name="transaction_date" class="form-control" value="{{ old('transaction_date', date('m/d/Y')) }}" required>
+                                            <input type="date" name="transaction_date" class="form-control" value="{{ old('transaction_date', date('Y-m-d')) }}" max="{{ date('Y-m-d') }}" required>
                                             @error('transaction_date')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -85,7 +85,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Transaction Time:</label>
                                         <div class="form-group">
-                                            <input type="time" name="transaction_time" class="form-control" value="{{ old('transaction_time') }}" required>
+                                            <input type="time" name="transaction_time" class="form-control" value="{{ old('transaction_time', date('H:i')) }}" required>
                                             @error('transaction_time')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
