@@ -419,10 +419,10 @@ class TrackingHistoryController extends Controller
                 $savedArhead = Arhead::create($arhead);
             }
 
-            return redirect('/tracking/details')->with('success', $message);
+            return redirect('/tracking/detail/'.$trackingHistory->id.'/edit')->with('success', $message);
         }
 
-        return redirect('/tracking/details')->with('error', $errorMessage);
+        return redirect('/tracking/detail/'.$trackingHistory->id.'/edit')->with('error', $errorMessage);
     }
 
     public function deleteTrackingDetail(TrackingHistory $trackingHistory)
