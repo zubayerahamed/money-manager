@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\IncomeSourceController;
@@ -53,6 +54,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/wallet/{wallet}', [WalletController::class, 'updateWallet'])->name('wallet.update');
     Route::delete('/wallet/{wallet}/delete', [WalletController::class, 'deleteWallet'])->name('wallet.delete');
 
+    // Budget
+    Route::get('/budget/all', [BudgetController::class, 'budgets'])->name('budgets');
+
     // Income Source
     Route::get('/income-source/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('income-source.status');
     Route::get('/income-source/all', [IncomeSourceController::class, 'incomeSources'])->name('income-sources');
@@ -62,7 +66,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/income-source/{incomeSource}', [IncomeSourceController::class, 'updateIncomeSource'])->name('income-sources.update');
     Route::delete('/income-source/{incomeSource}/delete', [IncomeSourceController::class, 'deleteIncomeSource'])->name('income-sources.delete');
 
-    // Wallets
+    // Expense Type
     Route::get('/expense-type/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('expense-type.status');
     Route::get('/expense-type/all', [ExpenseTypeController::class, 'expenseTypes'])->name('expense-types');
     Route::get('/expense-type', [ExpenseTypeController::class, 'showCreateExpenseTypePage'])->name('expense-type.create.page');
@@ -70,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/expense-type', [ExpenseTypeController::class, 'createExpenseType'])->name('expense-type.create');
     Route::put('/expense-type/{expenseType}', [ExpenseTypeController::class, 'updateExpenseType'])->name('expense-type.update');
     Route::delete('/expense-type/{expenseType}/delete', [ExpenseTypeController::class, 'deleteExpenseType'])->name('expense-type.delete');
+    
 
     // Transactions
     Route::get('/transaction/add-income', [TrackingHistoryController::class, 'showAddIncomePage'])->name('add-income.page');
