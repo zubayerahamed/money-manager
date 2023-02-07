@@ -13,11 +13,16 @@ class BudgetController extends Controller
     public function monthlyBudgetList($month, $year){
         $expenseTypes = ExpenseType::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
+        $totalBudget = 0;
+        $totalSpent = 0;
+
         foreach($expenseTypes as $expenseType){
             $budget = $this->getBudget($expenseType, $year, $month);
             $expenseType['budget_id'] = $budget != null ? $budget->id : 0;
             $expenseType['budget'] = $budget != null ? $budget->amount : 0;
+            $totalBudget = $totalBudget + $expenseType['budget'];
             $expenseType['spent'] = $this->getMonthlyExpenseAmount($expenseType, $year, $month);
+            $totalSpent = $totalSpent + $expenseType['spent'];
             $expenseType['remaining'] = $expenseType['budget'] - $expenseType['spent'] > 0 ? $expenseType['budget'] - $expenseType['spent'] : 0;
             $expenseType['percent'] = 100;
             $expenseType['exced_amount'] = $expenseType['spent'] - $expenseType['budget'];
@@ -31,6 +36,8 @@ class BudgetController extends Controller
             'month' => $month,
             'monthText' => date("F", mktime(0, 0, 0, $month, 10)),
             'year' => $year,
+            'totalBudget' => $totalBudget,
+            'totalSpent' => $totalSpent
         ]);
     }
 
