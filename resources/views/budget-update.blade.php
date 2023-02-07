@@ -10,11 +10,11 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="mb-0">Update Budget Limit for {{ $budget->expenseType->name }} - <span class="text-primary">{{ date('M, Y') }}</span></h5>
+                                <h5 class="mb-0">Update Budget Limit for {{ $budget->expenseType->name }} - <span class="text-primary">{{ $monthText }}, {{ $year }}</span></h5>
         
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="{{ url('/expense-type/all') }}" class="btn btn-primary" style="margin-left: 10px;">
-                                        Back To Expense Types List
+                                    <a href="{{ url('/budget/'.$month.'/'.$year.'/list') }}" class="btn btn-primary" style="margin-left: 10px;">
+                                        Back To Budget List
                                     </a>
                                 </div>
                             </div>

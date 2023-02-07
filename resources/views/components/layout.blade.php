@@ -154,14 +154,11 @@
                 <!-- Sidebar header -->
                 <div class="sidebar-section">
                     <div class="sidebar-section-body d-flex justify-content-center">
-                        <h5 class="sidebar-resize-hide flex-grow-1 my-auto">Navigation</h5>
-
                         <div>
                             <button type="button"
                                 class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
                                 <i class="ph-arrows-left-right"></i>
                             </button>
-
                             <button type="button"
                                 class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
                                 <i class="ph-x"></i>
@@ -218,6 +215,14 @@
 							</ul>
 						</li>
 
+                        <li class="nav-item">
+                            <a href="{{ url('/budget/'.date('m').'/'.date('Y').'/list') }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
+                                <i class="fas fa-calculator"></i>
+                                <span>
+                                    Budget - {{ date('M, Y') }}
+                                </span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ url('/tracking/details/today') }}" class="nav-link {{ Request::is('/tracking/details/today') ? 'active' : '' }}">
                                 <i class="far fa-calendar-check"></i>
