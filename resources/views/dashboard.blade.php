@@ -20,7 +20,7 @@
                     <ul class="nav nav-tabs nav-tabs-underline nav-justified">
                         <li class="nav-item">
                             <a href="#messages-monthly" class="nav-link active" data-bs-toggle="tab">
-                                Monthly
+                                {{ date('M, Y') }}
                             </a>
                         </li>
 
@@ -38,7 +38,7 @@
                     <div class="tab-content card-body">
 
                         <div class="tab-pane active fade show" id="messages-monthly">
-                            <a href="{{ url('/tracking/details/month/'.date('m').'/'.date('Y')) }}" class="btn btn-success btn-sm">View Current Monthly Details</a>
+                            <a href="{{ url('/tracking/details/month/'.date('m').'/'.date('Y')) }}" class="btn btn-success btn-sm">View Details</a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic" style="height: 440px;"></div>
                             </div>
@@ -85,38 +85,40 @@
             </div>
 
             @foreach ($monthWiseGroup as $key => $val)
-            <div class="col-xl-3">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <div class="col-md-10">
-                            <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
+                @if ($val['month'] != date('m'))
+                <div class="col-xl-3">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center">
+                            <div class="col-md-10">
+                                <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
+                            </div>
+                            <div class="col-md-2" style="text-align:right">
+                                <a href="{{ url('/tracking/details/month/'.$val['month'].'/'.date('Y')) }}"><i class="far fa-eye"></i></a>
+                            </div>
                         </div>
-                        <div class="col-md-2" style="text-align:right">
-                            <a href="{{ url('/tracking/details/month/'.$val['month'].'/'.date('Y')) }}"><i class="far fa-eye"></i></a>
-                        </div>
-                    </div>
-                    <div class="card-body border-top">
-                        <div class="list-group">
-                            <div class="list-group-item d-flex">
-                                Income
-                                <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }}/-</span>
-                            </div>
-                            <div class="list-group-item d-flex">
-                                Expense
-                                <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }}/-</span>
-                            </div>
-                            <div class="list-group-item d-flex">
-                                Transaction Charge
-                                <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }}/-</span>
-                            </div>
-                            <div class="list-group-item d-flex">
-                                Saving
-                                <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }}/-</span>
+                        <div class="card-body border-top">
+                            <div class="list-group">
+                                <div class="list-group-item d-flex">
+                                    Income
+                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }}/-</span>
+                                </div>
+                                <div class="list-group-item d-flex">
+                                    Expense
+                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }}/-</span>
+                                </div>
+                                <div class="list-group-item d-flex">
+                                    Transaction Charge
+                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }}/-</span>
+                                </div>
+                                <div class="list-group-item d-flex">
+                                    Saving
+                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }}/-</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                @endif
             @endforeach
             
 

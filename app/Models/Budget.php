@@ -10,4 +10,9 @@ class Budget extends Model
     use HasFactory;
 
     protected $fillable = ['amount', 'expense_type', 'note', 'user_id', 'month', 'year'];
+
+    public function expenseType()
+    {
+        return $this->belongsTo(ExpenseType::class, 'expense_type', 'id');
+    }
 }

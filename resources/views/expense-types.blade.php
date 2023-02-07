@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>Expense Type</th>
                                     <th class="text-center">Expense (TK)</th>
+                                    <th>Budget Details - {{ date('M, Y') }}</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -53,7 +54,37 @@
                                         <td>
                                             <h6 class="mb-0 text-center">{{ $expenseType->totalExpense }}</h6>
                                         </td>
+                                        <td>
+                                            @if ($expenseType->budget->amount)
+                                                <div>
+                                                    Limit : {{ $expenseType->budget->amount }} 
+                                                    <a href="{{ url('/budget') . '/' . $expenseType->budget->id . '/update' }}" style="margin-left: 10px; line-height: 25px;" title="Update Limit">Update Limit</a>
+                                                </div>    
+                                                <div>Spent : {{ $expenseType->currentMonthExpense }}</div>    
+                                                <div>
+                                                    Remaining : 
+                                                    @if ($expenseType->budget->amount - $expenseType->currentMonthExpense > 0)
+                                                        <b class="text-success">{{ $expenseType->budget->amount - $expenseType->currentMonthExpense }}</b>
+                                                        <div class="progress" style="margin-top: 10px;">
+                                                            <div class="progress-bar bg-teal" style="width: {{ (100 * $expenseType->currentMonthExpense) / $expenseType->budget->amount }}%" aria-valuenow="{{ (100 * $expenseType->currentMonthExpense) / $expenseType->budget->amount }}" aria-valuemin="0" aria-valuemax="100">{{ (100 * $expenseType->currentMonthExpense) / $expenseType->budget->amount }}% complete</div>
+                                                        </div>
+                                                    @else
+                                                        <b class="text-danger">0</b>
+                                                        <div class="progress" style="margin-top: 10px;">
+                                                            <div class="progress-bar bg-teal bg-danger" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                                Limit exceeded {{ $expenseType->currentMonthExpense - $expenseType->budget->amount }}TK
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>    
+                                            @else
+                                                <a href="{{ url('/budget') . '/' . $expenseType->id }}" class="btn btn-success btn-labeled btn-labeled-start btn-sm" title="Add budget">
+                                                    <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="fas fa-calculator"></i> </span> Add Budget
+                                                </a>
+                                            @endif
+                                        </td>
                                         <td style="text-align: right;">
+                                            
                                             <a href="{{ url('/expense-type') . '/' . $expenseType->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>

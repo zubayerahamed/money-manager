@@ -28,4 +28,29 @@ class ExpenseType extends Model
     {
         return $this->hasMany(TrackingHistory::class, 'expense_type', 'id');
     }
+
+    public function getBudgetAttribute(){
+        $budgets = $this->hasMany(Budget::class, 'expense_type', 'id');
+
+        $currentMonthBudget = new Budget();
+        foreach($budgets->get() as $budget){
+            if($budget->month == date('m') && $budget->year == date('Y')){
+                $currentMonthBudget =  $budget;
+            }
+        }
+
+        return $currentMonthBudget;
+    }
+
+    public function getCurrentMonthExpenseAttribute(){
+        $totalExpense = DB::table('tracking_history')
+            ->selectRaw("SUM(amount) as totalExpense")
+            ->where('expense_type', '=', $this->id)
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('transaction_type', '=', 'EXPENSE')
+            ->where('year', '=', date('Y'))
+            ->where('month', '=', date('m'))
+            ->get();
+        return $totalExpense[0]->totalExpense == null ? 0 : $totalExpense[0]->totalExpense;
+    }
 }

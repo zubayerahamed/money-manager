@@ -55,7 +55,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/wallet/{wallet}/delete', [WalletController::class, 'deleteWallet'])->name('wallet.delete');
 
     // Budget
-    Route::get('/budget/all', [BudgetController::class, 'budgets'])->name('budgets');
+    Route::get('/budget/{expenseType}', [BudgetController::class, 'showCreateBudgetPage'])->name('budget.create.page');
+    Route::post('/budget', [BudgetController::class, 'createBudget'])->name('budget.create');
+    Route::get('/budget/{budget}/update', [BudgetController::class, 'showUpdateBudgetPage'])->name('budget.update.page');
+    Route::put('/budget/{budget}', [BudgetController::class, 'updateBudget'])->name('budget.update');
 
     // Income Source
     Route::get('/income-source/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('income-source.status');
