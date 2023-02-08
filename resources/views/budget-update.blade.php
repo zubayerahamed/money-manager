@@ -42,7 +42,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Amount:</label>
                                         <div class="form-group">
-                                            <input type="number" name="amount" class="form-control" value="{{ old('amount', $budget->amount) }}" min="0" required>
+                                            <input type="number" name="amount" class="form-control" value="{{ old('amount', $budget->amount) }}" min="0" step="any" required>
                                         </div>
                                         @error('amount')
                                             <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    

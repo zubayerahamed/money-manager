@@ -23,18 +23,19 @@
                             <div class="col-md-4 text-center">Total Spent : <span class="text-danger">{{ $totalSpent }}/-</span></div>
                             <div class="col-md-4" style="text-align: right">Remaining :  <span class="text-success">{{ ($totalBudget - $totalSpent) > 0 ? $totalBudget - $totalSpent : 0 }}/- </span></div>
                         </div>
-                        @if ($totalBudget - $totalSpent > 0)
-                        <div class="progress" style="margin-top: 10px;">
-                            <div class="progress-bar bg-teal" style="width: {{ round((100*$totalSpent) / $totalBudget, 2) }}%" aria-valuenow="{{ round((100*$totalSpent) / $totalBudget, 2) }}" aria-valuemin="0" aria-valuemax="100">{{ round((100*$totalSpent) / $totalBudget, 2) }}% complete</div>
-                        </div>
-                        @else
-                        <div class="progress" style="margin-top: 10px;">
-                            <div class="progress-bar bg-teal bg-danger" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                Limit exceeded {{ $totalSpent - $totalBudget}}/-
+                        @if($totalBudget != 0 or $totalSpent != 0)
+                            @if ($totalBudget - $totalSpent > 0)
+                            <div class="progress" style="margin-top: 10px;">
+                                <div class="progress-bar bg-teal" style="width: {{ round((100*$totalSpent) / $totalBudget, 2) }}%" aria-valuenow="{{ round((100*$totalSpent) / $totalBudget, 2) }}" aria-valuemin="0" aria-valuemax="100">{{ round((100*$totalSpent) / $totalBudget, 2) }}% complete</div>
                             </div>
-                        </div>
+                            @else
+                            <div class="progress" style="margin-top: 10px;">
+                                <div class="progress-bar bg-teal bg-danger" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                    Limit exceeded {{ $totalSpent - $totalBudget}}/-
+                                </div>
+                            </div>
+                            @endif
                         @endif
-                        
                     </div>
 
                     <div class="table-responsive">

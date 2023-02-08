@@ -50,7 +50,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Current Balance:</label>
                                         <div class="form-group">
-                                            <input type="number" name="current_balance" class="form-control" value="{{ old('current_balance', 0.00) }}" min="0" required>
+                                            <input type="number" name="current_balance" class="form-control" value="{{ old('current_balance', 0.00) }}" min="0" step="any" required>
                                         </div>
                                     </div>
 
