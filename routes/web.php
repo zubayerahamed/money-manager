@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DreamController;
 use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\IncomeSourceController;
 use App\Http\Controllers\LoginController;
@@ -94,6 +95,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/tracking/detail/{trackingHistory}/update', [TrackingHistoryController::class, 'updateTrackingDetail'])->name('tracking.update');
     Route::delete('/tracking/detail/{trackingHistory}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('tracking.delete');
 
+    // Goal
+
     // Logout
-    Route::get('/logout', [LogoutController::class, 'doLogout'])->middleware('auth');
+    Route::get('/dream/all', [DreamController::class, 'dreams'])->name('dreams');
+    Route::get('/dream', [DreamController::class, 'showCreateDreamPage'])->name('dream.create.page');
 });

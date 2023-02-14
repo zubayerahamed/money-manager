@@ -231,6 +231,14 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/dream/all') }}" class="nav-link {{ Request::is('/dream/**') ? 'active' : '' }}">
+                                <i class="fas fa-allergies"></i>
+                                <span>
+                                    Dreams
+                                </span>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>

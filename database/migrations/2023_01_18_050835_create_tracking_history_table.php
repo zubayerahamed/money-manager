@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('transaction_date');
             $table->time('transaction_time', $precision = 0);
             $table->text('note')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('month');
             $table->integer('year');
             $table->timestamps();
