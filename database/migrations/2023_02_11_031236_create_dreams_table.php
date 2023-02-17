@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('image')->nullable(true);
             $table->integer('target_year');
-            $table->double('amount_needed', 8, 2)->default('0');
-            $table->double('achieve_amount', 8, 2)->default('0');
-            $table->boolean('active')->default(true);
+            $table->float('amount_needed', 15, 2)->default('0');
+            $table->text('note')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
             $table->unique(['name', 'user_id']);
             $table->timestamps();

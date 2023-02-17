@@ -69,7 +69,7 @@
             margin: 0;
         }
 
-        input#avatar{
+        input#avatar, input.dream-image{
             display: none;
         }
         #image {
@@ -236,6 +236,14 @@
                                 <i class="fas fa-allergies"></i>
                                 <span>
                                     Dreams
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/account/all') }}" class="nav-link {{ Request::is('/account/**') ? 'active' : '' }}">
+                                <i class="fas fa-piggy-bank"></i>
+                                <span>
+                                    Accounts
                                 </span>
                             </a>
                         </li>

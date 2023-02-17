@@ -11,7 +11,6 @@
                         <div class="card">
                             <div class="sidebar-section-body text-center" style="padding: 20px;">
                                 <div class="card-img-actions d-inline-block mb-3">
-                                    {{-- <img class="img-fluid rounded-circle" src="/assets/images/demo/users/face11.jpg" width="150" height="150" alt=""> --}}
                                     <img class="img-fluid rounded-circle" src="{{ auth()->user()->avatar }}" width="150" height="150" alt="">
                                     <div class="card-img-actions-overlay card-img rounded-circle">
                                         <input type="file" name="avatar" class="form-control" id="avatar" accept="image/*">

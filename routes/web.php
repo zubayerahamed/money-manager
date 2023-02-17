@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DreamController;
@@ -95,9 +96,23 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/tracking/detail/{trackingHistory}/update', [TrackingHistoryController::class, 'updateTrackingDetail'])->name('tracking.update');
     Route::delete('/tracking/detail/{trackingHistory}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('tracking.delete');
 
-    // Goal
-
-    // Logout
+    // Dream
     Route::get('/dream/all', [DreamController::class, 'dreams'])->name('dreams');
     Route::get('/dream', [DreamController::class, 'showCreateDreamPage'])->name('dream.create.page');
+    Route::post('/dream', [DreamController::class, 'createDream'])->name('dream.create');
+    Route::get('/dream/{dream}/edit', [DreamController::class, 'showEditDreamPage'])->name('dream.edit.page');
+    Route::put('/dream/{dream}', [DreamController::class, 'updateDream'])->name('dream.update');
+    Route::post('/dream/image/{dream}', [DreamController::class, 'updateImage'])->name('dream.image');
+    Route::delete('/dream/{dream}/delete', [DreamController::class, 'deleteDream'])->name('dream.delete');
+
+    // Account
+    Route::get('/account/all', [AccountController::class, 'accounts'])->name('accounts');
+    Route::get('/account', [AccountController::class, 'showCreateAccountPage'])->name('account.create.page');
+    Route::post('/account', [AccountController::class, 'createAccount'])->name('account.create');
+    Route::get('/account/{account}/edit', [AccountController::class, 'showEditAccountPage'])->name('account.edit.page');
+    Route::put('/account/{account}', [AccountController::class, 'updateAccount'])->name('account.update');
+    Route::delete('/account/{account}/delete', [AccountController::class, 'deleteAccount'])->name('account.delete');
+
+    // Logout
+    Route::get('/logout', [LogoutController::class, 'doLogout'])->name('logout');
 });

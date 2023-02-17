@@ -55,7 +55,7 @@
                                                     <a href="{{ url('/tracking/detail/' . $trn->id . '/edit') }}"
                                                         title="Edit"><i class="far fa-edit"></i></a>
                                                     <form id="form-id"
-                                                        action="{{ url('/tracking/detail/' . $trn->id . '/delete') }}"
+                                                        action="{{ url('/tracking/detail/' . $`->id . '/delete') }}"
                                                         method="POST" style="display: inline-block;">
                                                         @method('DELETE')
                                                         @csrf
