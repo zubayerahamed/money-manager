@@ -54,13 +54,13 @@
                                                 <td style="text-align: right">
                                                     <a href="{{ url('/tracking/detail/' . $trn->id . '/edit') }}"
                                                         title="Edit"><i class="far fa-edit"></i></a>
-                                                    <form id="form-id"
-                                                        action="{{ url('/tracking/detail/' . $`->id . '/delete') }}"
+                                                    <form id="form-id{{ $trn->id }}"
+                                                        action="{{ url('/tracking/detail/' . $trn->id . '/delete') }}"
                                                         method="POST" style="display: inline-block;">
                                                         @method('DELETE')
                                                         @csrf
                                                         <a href="#"
-                                                            onclick="document.getElementById('form-id').submit();"
+                                                            onclick="document.getElementById({{ 'form-id'.$trn->id }}).submit();"
                                                             class="text-danger" title="Delete"><i
                                                                 class="far fa-trash-alt"></i></a>
                                                     </form>
