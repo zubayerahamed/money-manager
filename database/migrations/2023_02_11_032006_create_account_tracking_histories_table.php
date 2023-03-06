@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('acount_tracking_histories', function (Blueprint $table) {
+        Schema::create('account_tracking_histories', function (Blueprint $table) {
             $table->id();
             $table->enum('transaction_type', ['IN', 'OUT', 'OPENING']);
             $table->double('amount', 15, 2)->default('0');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('acount_tracking_histories');
+        Schema::dropIfExists('account_tracking_histories');
     }
 };

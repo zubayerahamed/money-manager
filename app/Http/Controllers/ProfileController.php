@@ -21,11 +21,13 @@ class ProfileController extends Controller
 
         $incomingFields = $request->validate([
             'name' => 'required',
+            'currency' => 'required'
         ]);
 
         $user = User::find(auth()->user()->id);
 
         $user->name = $incomingFields['name'];
+        $user->currency = $incomingFields['currency'];
         $user->update();
 
         return redirect('/profile')->with('success', "Profile updated successfully");

@@ -60,7 +60,7 @@
                                                         @method('DELETE')
                                                         @csrf
                                                         <a href="#"
-                                                            onclick="document.getElementById({{ 'form-id'.$trn->id }}).submit();"
+                                                            onclick="document.getElementById('{{ 'form-id'.$trn->id }}').submit();"
                                                             class="text-danger" title="Delete"><i
                                                                 class="far fa-trash-alt"></i></a>
                                                     </form>

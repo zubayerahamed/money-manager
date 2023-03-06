@@ -23,7 +23,9 @@ class TrackingHistory extends Model
         'user_id',
         'month',
         'year',
-        'note'
+        'note',
+        'account_id',
+        'account_tracking_historie_id'
     ];
 
     public function fromWallet()

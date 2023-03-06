@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //$table->string('avatar')->nullable();
+        Schema::table('tracking_history', function (Blueprint $table) {
+            $table->foreignId('account_id')->nullable()->references('id')->on('accounts')->onDelete('cascade');
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('tracking_history', function (Blueprint $table) {
             //
         });
     }

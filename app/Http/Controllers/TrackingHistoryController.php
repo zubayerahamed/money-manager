@@ -169,6 +169,7 @@ class TrackingHistoryController extends Controller
 
         $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('transaction_date', '=', date('Y/m/d'))
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
             ->orderBy('id', 'desc')
             ->get();
 
@@ -206,6 +207,7 @@ class TrackingHistoryController extends Controller
     {
         $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('year', '=', $year)
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
             ->orderBy('transaction_date', 'desc')
             ->get();
 
@@ -245,6 +247,7 @@ class TrackingHistoryController extends Controller
         $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('month', '=', $monthno)
             ->where('year', '=', $year)
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
             ->orderBy('transaction_date', 'desc')
             ->get();
 

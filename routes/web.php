@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountTrackingController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DreamController;
@@ -112,6 +113,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account/{account}/edit', [AccountController::class, 'showEditAccountPage'])->name('account.edit.page');
     Route::put('/account/{account}', [AccountController::class, 'updateAccount'])->name('account.update');
     Route::delete('/account/{account}/delete', [AccountController::class, 'deleteAccount'])->name('account.delete');
+
+    // Account Tracking
+    Route::post('/ac-tracking/saving', [AccountTrackingController::class, 'save'])->name('do.ac.transaction.saving');
+    Route::post('/ac-tracking/withdraw', [AccountTrackingController::class, 'withdraw'])->name('do.ac.transaction.withdraw');
 
     // Logout
     Route::get('/logout', [LogoutController::class, 'doLogout'])->name('logout');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Dream;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class DreamController extends Controller
@@ -12,8 +14,14 @@ class DreamController extends Controller
 
         $dreams = Dream::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
+        $totalSavingAmount = DB::table('account_tracking_histories')
+            ->selectRaw("SUM(amount * row_sign) as totalSavingAmount")
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+
         return view('dreams', [
-            'dreams' => $dreams
+            'dreams' => $dreams,
+            'totalSavingAmount' => $totalSavingAmount[0]->totalSavingAmount == null ? 0 : $totalSavingAmount[0]->totalSavingAmount,
         ]);
     }
 

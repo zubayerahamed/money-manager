@@ -30,6 +30,7 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
+    <script src="/assets/js/vendor/forms/selects/select2.min.js"></script>
     <script src="/assets/js/vendor/notifications/noty.min.js"></script>
     <script src="/assets/js/vendor/visualization/echarts/echarts.min.js"></script>
     <script src="/assets/js/vendor/visualization/d3/d3.min.js"></script>
@@ -38,6 +39,7 @@
     <script src="/assets/js/app.js"></script>
 
     <script src="/assets/demo/charts/echarts/pies/pie_donut.js"></script>
+    <script src="/assets/demo/pages/form_select2.js"></script>
     <!-- /theme JS files -->
 
     <style>

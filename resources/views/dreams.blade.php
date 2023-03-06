@@ -19,16 +19,16 @@
 
                     <div class="table-responsive">
                         <table class="table text-nowrap">
-                            <tbody>
-                                <thead>
-                                    <tr>
-                                        <th>Dream</th>
-                                        <th class="text-center">Target Year</th>
-                                        <th class="text-center">Amount Needed</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
+                            <thead>
+                                <tr>
+                                    <th>Dream</th>
+                                    <th class="text-center">Target Year</th>
+                                    <th class="text-center">Amount Needed</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
                                 @foreach ($dreams as $dream)
                                     <tr>
                                         <td>
@@ -47,6 +47,15 @@
                                                     <div class="text-muted fs-sm">
                                                         <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> Created on : {{ $dream->created_at->format('d/m/Y H:i:s') }}
                                                     </div>
+                                                    @if ($totalSavingAmount > 0)
+                                                        <div class="progress" style="margin-top: 10px;">
+                                                            @if ($totalSavingAmount > $dream->amount_needed)
+                                                                <div class="progress-bar bg-teal" style="width:100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100% complete</div>
+                                                            @else 
+                                                                <div class="progress-bar bg-teal" style="width: {{ round((100 * $totalSavingAmount) / $dream->amount_needed, 2) }}%" aria-valuenow="{{ round((100 * $totalSavingAmount) / $dream->amount_needed, 2) }}" aria-valuemin="0" aria-valuemax="100">{{ round((100 * $totalSavingAmount) / $dream->amount_needed, 2) }}% complete</div>
+                                                            @endif
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>
@@ -70,7 +79,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
