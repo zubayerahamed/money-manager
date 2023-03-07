@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="_token" content="{{ csrf_token() }}">
     <title>
-    @isset($pageTitle)
-        {{ $pageTitle }}    
-    @else
-        Money Manager
-    @endisset
+        @isset($pageTitle)
+            {{ $pageTitle }}
+        @else
+            Money Manager
+        @endisset
     </title>
 
     <!-- Global stylesheets -->
@@ -19,7 +19,7 @@
     <link href="/assets/icons/phosphor/styles.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/ltr/all.min.css" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="/assets/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -43,7 +43,7 @@
     <!-- /theme JS files -->
 
     <style>
-        .box-item{
+        .box-item {
             width: 48%;
             margin-left: 1%;
             margin-right: 1%;
@@ -54,42 +54,51 @@
             margin-bottom: 10px;
             margin-top: 20px;
         }
-        .box-item-success{
+
+        .box-item-success {
             color: #fff;
             background-color: #059669;
         }
-        .box-item-danger{
+
+        .box-item-danger {
             color: #fff;
             background-color: #EF4444
         }
-        .box-item-primary{
+
+        .box-item-primary {
             color: #fff;
             background-color: #0c83ff;
         }
-        .box-item h2, .box-item h3{
-            padding: 0; 
+
+        .box-item h2,
+        .box-item h3 {
+            padding: 0;
             margin: 0;
         }
 
-        input#avatar, input.dream-image{
+        input#avatar,
+        input.dream-image {
             display: none;
         }
+
         #image {
             display: block;
             max-width: 100%;
         }
+
         .preview {
             text-align: center;
             overflow: hidden;
-            width: 160px; 
+            width: 160px;
             height: 160px;
             margin: 0 auto;
             border: 1px solid red;
         }
-        .section{
-            margin-top:150px;
-            background:#fff;
-            padding:50px 30px;
+
+        .section {
+            margin-top: 150px;
+            background: #fff;
+            padding: 50px 30px;
         }
     </style>
 </head>
@@ -118,10 +127,10 @@
             <ul class="nav flex-row justify-content-end order-1 order-lg-2">
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
                     <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1"
-                        data-bs-toggle="dropdown">
+                       data-bs-toggle="dropdown">
                         <div class="status-indicator-container">
                             <img src="{{ auth()->user()->avatar }}" class="w-32px h-32px rounded-pill"
-                                alt="">
+                                 alt="">
                             <span class="status-indicator bg-success"></span>
                         </div>
                         <span class="d-none d-lg-inline-block mx-lg-2">{{ auth()->user()->name }}</span>
@@ -158,11 +167,11 @@
                     <div class="sidebar-section-body d-flex justify-content-center">
                         <div>
                             <button type="button"
-                                class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                                    class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
                                 <i class="ph-arrows-left-right"></i>
                             </button>
                             <button type="button"
-                                class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
+                                    class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
                                 <i class="ph-x"></i>
                             </button>
                         </div>
@@ -185,40 +194,40 @@
                         </li>
 
                         <li class="nav-item nav-item-submenu {{ Request::is('wallet/**') || Request::is('wallet') ? 'nav-item-expanded nav-item-open' : '' }}">
-							<a href="#" class="nav-link">
-								<i class="ph-wallet"></i>
-								<span>Wallet</span>
-							</a>
-							<ul class="nav-group-sub collapse {{ Request::is('wallet/**') || Request::is('wallet') ? 'show' : '' }}">
-								<li class="nav-item"><a href="{{ url('/wallet/all') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-								<li class="nav-item"><a href="{{ url('/wallet') }}" class="nav-link {{ Request::is('wallet') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
-							</ul>
-						</li>
+                            <a href="#" class="nav-link">
+                                <i class="ph-wallet"></i>
+                                <span>Wallet</span>
+                            </a>
+                            <ul class="nav-group-sub collapse {{ Request::is('wallet/**') || Request::is('wallet') ? 'show' : '' }}">
+                                <li class="nav-item"><a href="{{ url('/wallet/all') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+                                <li class="nav-item"><a href="{{ url('/wallet') }}" class="nav-link {{ Request::is('wallet') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+                            </ul>
+                        </li>
 
                         <li class="nav-item nav-item-submenu {{ Request::is('income-source/**') || Request::is('income-source') ? 'nav-item-expanded nav-item-open' : '' }}">
-							<a href="#" class="nav-link">
-								<i class="ph-trend-up"></i>
-								<span>Income Source</span>
-							</a>
-							<ul class="nav-group-sub collapse {{ Request::is('income-source/**') || Request::is('income-source') ? 'show' : '' }}">
-								<li class="nav-item"> <a href="{{ url('/income-source/all') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-								<li class="nav-item"> <a href="{{ url('/income-source') }}" class="nav-link {{ Request::is('income-source') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
-							</ul>
-						</li>
-                        
+                            <a href="#" class="nav-link">
+                                <i class="ph-trend-up"></i>
+                                <span>Income Source</span>
+                            </a>
+                            <ul class="nav-group-sub collapse {{ Request::is('income-source/**') || Request::is('income-source') ? 'show' : '' }}">
+                                <li class="nav-item"> <a href="{{ url('/income-source/all') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+                                <li class="nav-item"> <a href="{{ url('/income-source') }}" class="nav-link {{ Request::is('income-source') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item nav-item-submenu {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'nav-item-expanded nav-item-open' : '' }}">
-							<a href="#" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="ph-trend-down"></i>
-								<span>Expense Type</span>
-							</a>
-							<ul class="nav-group-sub collapse {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'show' : '' }}">
-								<li class="nav-item"> <a href="{{ url('/expense-type/all') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-								<li class="nav-item"> <a href="{{ url('/expense-type') }}" class="nav-link {{ Request::is('expense-type') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
-							</ul>
-						</li>
+                                <span>Expense Type</span>
+                            </a>
+                            <ul class="nav-group-sub collapse {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'show' : '' }}">
+                                <li class="nav-item"> <a href="{{ url('/expense-type/all') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
+                                <li class="nav-item"> <a href="{{ url('/expense-type') }}" class="nav-link {{ Request::is('expense-type') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
+                            </ul>
+                        </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('/budget/'.date('m').'/'.date('Y').'/list') }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
+                            <a href="{{ url('/budget/' . date('m') . '/' . date('Y') . '/list') }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
                                 <i class="fas fa-calculator"></i>
                                 <span>
                                     Budget - {{ date('M, Y') }}
@@ -269,27 +278,27 @@
                 <!-- Page header -->
                 <div class="page-header page-header-light shadow">
                     <div class="page-header-content d-lg-flex">
-                       
-                            <h4 class="page-title text-center" style="margin: 0px;">
-                                
-                                <div class="d-inline-flex ms-auto" style="width: 100%">
-                                    <a href="{{ url('/transaction/add-income') }}" class="btn btn-success">
-                                       <i class="fas fa-plus-circle"></i> &nbsp; Add Income
-                                    </a>
-                                    <a href="{{ url('/transaction/add-expense') }}" class="btn btn-danger" style="margin-left: 10px;">
-                                        <i class="fas fa-minus-circle"></i> &nbsp;  Add Expense
-                                    </a>
-                                    <a href="{{ url('/transaction/do-transfer') }}" class="btn btn-primary" style="margin-left: 10px;">
-                                        <i class="fas fa-retweet"></i> &nbsp; Transfer
-                                    </a>
-                                </div>
 
-                            </h4>
-                        
+                        <h4 class="page-title text-center" style="margin: 0px;">
+
+                            <div class="d-inline-flex ms-auto" style="width: 100%">
+                                <a href="{{ url('/transaction/add-income') }}" class="btn btn-success">
+                                    <i class="fas fa-plus-circle"></i> &nbsp; Add Income
+                                </a>
+                                <a href="{{ url('/transaction/add-expense') }}" class="btn btn-danger" style="margin-left: 10px;">
+                                    <i class="fas fa-minus-circle"></i> &nbsp; Add Expense
+                                </a>
+                                <a href="{{ url('/transaction/do-transfer') }}" class="btn btn-primary" style="margin-left: 10px;">
+                                    <i class="fas fa-retweet"></i> &nbsp; Transfer
+                                </a>
+                            </div>
+
+                        </h4>
+
 
                     </div>
 
-                    
+
                 </div>
                 <!-- /page header -->
 
@@ -309,7 +318,7 @@
                         </div>
                     </div>
                 @endif
-                
+
 
                 {{ $slot }}
 

@@ -28,5 +28,4 @@ class ExpenseType extends Model
     {
         return $this->hasMany(TrackingHistory::class, 'expense_type', 'id');
     }
-
 }

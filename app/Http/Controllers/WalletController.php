@@ -36,12 +36,10 @@ class WalletController extends Controller
             ->selectRaw("SUM(transaction_charge) as totalTrnCharge")
             ->where('user_id', '=', auth()->user()->id)
             ->get();
-        
+
         $accounts = DB::table('accounts')
-                        ->where('user_id', '=', auth()->user()->id)
-                        ->get();
-
-
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
 
         return view('wallets', [
             'wallets' => $wallets,
@@ -70,7 +68,7 @@ class WalletController extends Controller
         ]);
 
         $incomingFields['user_id'] = auth()->user()->id;
-        
+
         $wallet = Wallet::create($incomingFields);
 
         if ($wallet && $requset->get('current_balance') != 0) {

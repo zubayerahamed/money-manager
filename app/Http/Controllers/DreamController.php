@@ -10,7 +10,8 @@ use Illuminate\Validation\Rule;
 
 class DreamController extends Controller
 {
-    public function dreams(){
+    public function dreams()
+    {
 
         $dreams = Dream::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
@@ -25,18 +26,20 @@ class DreamController extends Controller
         ]);
     }
 
-    public function showCreateDreamPage(){
+    public function showCreateDreamPage()
+    {
         return view('dream-create');
     }
 
-    public function createDream(Request $request){
+    public function createDream(Request $request)
+    {
 
         //dd($request->all());
 
         $incomingFields = $request->validate([
             'name' => 'required',
             'target_year' => ['required'],
-            'amount_needed' => ['required','min:0']
+            'amount_needed' => ['required', 'min:0']
         ]);
 
         $incomingFields['user_id'] = auth()->user()->id;
@@ -48,16 +51,18 @@ class DreamController extends Controller
         return redirect('/dream')->with('error', "Can't create dream");
     }
 
-    public function showEditDreamPage(Dream $dream){
-        return view('dream-update', ['dream'=>$dream]);
+    public function showEditDreamPage(Dream $dream)
+    {
+        return view('dream-update', ['dream' => $dream]);
     }
 
-    public function updateDream(Dream $dream, Request $request){
+    public function updateDream(Dream $dream, Request $request)
+    {
 
         $incomingFields = $request->validate([
             'name' => ['required'],
             'target_year' => ['required'],
-            'amount_needed' =>  ['required','min:0']
+            'amount_needed' =>  ['required', 'min:0']
         ]);
 
         $udream = $dream->update($incomingFields);
@@ -65,7 +70,6 @@ class DreamController extends Controller
         if ($udream) return redirect('/dream/' . $dream->id . '/edit')->with('success', $dream->name . ' dream updated successfully');
 
         return redirect('/dream/' . $dream->id . '/edit')->with('error', $dream->name . ' dream update failed');
-
     }
 
     public function updateImage(Dream $dream, Request $request)

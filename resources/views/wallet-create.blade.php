@@ -15,7 +15,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Create Wallet</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
                                     <a href="{{ url('/wallet/all') }}" class="btn btn-success" style="margin-left: 10px;">
                                         Back To Wallet Lists
@@ -42,7 +42,7 @@
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                                             @error('name')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Current Balance:</label>
                                         <div class="form-group">
-                                            <input type="number" name="current_balance" class="form-control" value="{{ old('current_balance', 0.00) }}" min="0" step="any" required>
+                                            <input type="number" name="current_balance" class="form-control" value="{{ old('current_balance', 0.0) }}" min="0" step="any" required>
                                         </div>
                                     </div>
 

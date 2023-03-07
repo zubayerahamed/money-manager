@@ -15,7 +15,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Create Expense Type</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
                                     <a href="{{ url('/expense-type/all') }}" class="btn btn-success" style="margin-left: 10px;">
                                         Back To Expense Types List
@@ -42,7 +42,7 @@
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                                             @error('name')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>

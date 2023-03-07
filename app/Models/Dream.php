@@ -9,7 +9,7 @@ class Dream extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','image','target_year','amount_needed','user_id','note'];
+    protected $fillable = ['name', 'image', 'target_year', 'amount_needed', 'user_id', 'note'];
 
     public function getImageAttribute($value)
     {

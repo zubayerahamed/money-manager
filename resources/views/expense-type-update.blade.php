@@ -15,7 +15,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Update Expense Type</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
                                     <a href="{{ url('/expense-type/all') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Expense Types List
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/expense-type').'/'.$expenseType->id }}" method="POST">
+                                <form action="{{ url('/expense-type') . '/' . $expenseType->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
 
@@ -45,9 +45,9 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Expense Type Name:</label>
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" value="{{ old('name', $expenseType->name ) }}" required>
+                                            <input type="text" name="name" class="form-control" value="{{ old('name', $expenseType->name) }}" required>
                                             @error('name')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>

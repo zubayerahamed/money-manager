@@ -26,7 +26,7 @@
                             <div class="card-body border-top">
                                 <form action="{{ url('/income-source') }}" method="POST">
                                     @csrf
-                                    
+
                                     <i class="{{ old('icon', 'fab fa-korvue') }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
 
                                     <div class="row mb-3">

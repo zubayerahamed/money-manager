@@ -15,7 +15,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Update Wallet</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
                                     <a href="{{ url('/wallet/all') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Wallet Lists
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/wallet').'/'.$wallet->id }}" method="POST">
+                                <form action="{{ url('/wallet') . '/' . $wallet->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
 
@@ -40,13 +40,13 @@
                                             <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
                                         </div>
                                     </div>
-                        
+
                                     <div class="row mb-3">
                                         <label class="form-label">Wallet name:</label>
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" value="{{ old('name', $wallet->name ) }}">
+                                            <input type="text" name="name" class="form-control" value="{{ old('name', $wallet->name) }}">
                                             @error('name')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>

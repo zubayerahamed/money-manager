@@ -1,4 +1,4 @@
-<x-layout pageTitle="Wallets Status">
+<x-layout pageTitle="Dreams">
 
     <!-- Content area -->
     <div class="content">
@@ -13,7 +13,7 @@
                         <h5 class="mb-0">Dreams</h5>
 
                         <div class="d-inline-flex ms-auto">
-                            <a href="{{ url('/dream')  }}" class="btn btn-success" style="margin-left: 10px;">Create Dream</a>
+                            <a href="{{ url('/dream') }}" class="btn btn-success" style="margin-left: 10px;">Create Dream</a>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@
                                                         <div class="progress" style="margin-top: 10px;">
                                                             @if ($totalSavingAmount > $dream->amount_needed)
                                                                 <div class="progress-bar bg-teal" style="width:100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100% complete</div>
-                                                            @else 
+                                                            @else
                                                                 <div class="progress-bar bg-teal" style="width: {{ round((100 * $totalSavingAmount) / $dream->amount_needed, 2) }}%" aria-valuenow="{{ round((100 * $totalSavingAmount) / $dream->amount_needed, 2) }}" aria-valuemin="0" aria-valuemax="100">{{ round((100 * $totalSavingAmount) / $dream->amount_needed, 2) }}% complete</div>
                                                             @endif
                                                         </div>
@@ -66,10 +66,10 @@
                                             <h6 class="mb-0 text-center">{{ $dream->amount_needed }}</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="{{ url('/dream').'/'.$dream->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
+                                            <a href="{{ url('/dream') . '/' . $dream->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
-                                            <form action="{{ url('/dream').'/'.$dream->id }}/delete" style="display: inline-block" method="POST">
+                                            <form action="{{ url('/dream') . '/' . $dream->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm" title="Delete">
@@ -89,18 +89,18 @@
         </div>
         <!-- /dashboard content -->
     </div>
-    
+
 
     <div id="modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Crop & Resize your avatar</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crop & Resize your avatar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-				<div class="modal-body">
-					<div class="img-container">
+                <div class="modal-body">
+                    <div class="img-container">
                         <div class="row">
                             <div class="col-md-8">
                                 <img id="image" src="{{ auth()->user()->avatar }}">
@@ -110,19 +110,18 @@
                             </div>
                         </div>
                     </div>
-				</div>
+                </div>
 
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger crop-cancel" data-bs-dismiss="modal">Close</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger crop-cancel" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="crop">Crop</button>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-
-        $('.avatar-upload').off('click').on('click', function(e){
+        $('.avatar-upload').off('click').on('click', function(e) {
             e.preventDefault();
             $(this).siblings(".dream-image:hidden").trigger('click');
         });
@@ -132,11 +131,11 @@
         var image = document.getElementById('image');
         var cropper;
 
-        $("body").on("change", ".dream-image", function(e){
+        $("body").on("change", ".dream-image", function(e) {
 
             dreamId = e.target.id;
             var files = e.target.files;
-            var done = function (url) {
+            var done = function(url) {
                 image.src = url;
                 $modal.modal('show');
             };
@@ -152,7 +151,7 @@
                     done(URL.createObjectURL(file));
                 } else if (FileReader) {
                     reader = new FileReader();
-                    reader.onload = function (e) {
+                    reader.onload = function(e) {
                         done(reader.result);
                     };
                     reader.readAsDataURL(file);
@@ -161,23 +160,23 @@
         });
 
         // Init cropper js when modal show and destroy cropper js when modal hide
-        $modal.on('shown.bs.modal', function () {
+        $modal.on('shown.bs.modal', function() {
             cropper = new Cropper(image, {
                 aspectRatio: 1,
                 viewMode: 3,
                 preview: '.preview'
             });
-        }).on('hidden.bs.modal', function () {
+        }).on('hidden.bs.modal', function() {
             cropper.destroy();
             cropper = null;
         });
 
 
-        $('.crop-cancel').off('click').on('click', function(){
+        $('.crop-cancel').off('click').on('click', function() {
             $modal.modal('hide');
         });
 
-        $("#crop").click(function(){
+        $("#crop").click(function() {
             canvas = cropper.getCroppedCanvas({
                 width: 160,
                 height: 160,
@@ -188,13 +187,16 @@
                 var reader = new FileReader();
                 reader.readAsDataURL(blob);
                 reader.onloadend = function() {
-                    var base64data = reader.result; 
+                    var base64data = reader.result;
                     $.ajax({
                         type: "POST",
                         dataType: "json",
                         url: $('.basePath').attr('href') + "/dream/image/" + dreamId,
-                        data: {'_token': $('meta[name="_token"]').attr('content'), 'image': base64data},
-                        success: function(data){
+                        data: {
+                            '_token': $('meta[name="_token"]').attr('content'),
+                            'image': base64data
+                        },
+                        success: function(data) {
                             $modal.modal('hide');
                             location.reload();
                         }
@@ -202,7 +204,6 @@
                 }
             });
         });
-
     </script>
 
 </x-layout>

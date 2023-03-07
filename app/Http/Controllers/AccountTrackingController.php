@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class AccountTrackingController extends Controller
 {
-    public function save(Request $request){
+    public function save(Request $request)
+    {
 
         $incomingFields = $request->validate([
             'transaction_type' => 'required',
@@ -18,19 +19,17 @@ class AccountTrackingController extends Controller
             'account_id' => 'required',
         ]);
 
-
         $incomingFields['user_id'] = auth()->user()->id;
         $incomingFields['transaction_date'] = date('Y-m-d');
         $incomingFields['transaction_time'] = date('H:i');
-        $incomingFields['note'] = "Saving from wallet " . $incomingFields['wallet_id']. " to account ". $incomingFields['account_id'];
+        $incomingFields['note'] = "Saving from wallet " . $incomingFields['wallet_id'] . " to account " . $incomingFields['account_id'];
         $incomingFields['row_sign'] = +1;
         $incomingFields['month'] = date('m');
         $incomingFields['year'] = date('Y');
-        
 
         $acth = AccountTrackingHistory::create($incomingFields);
 
-        if($acth){
+        if ($acth) {
             $incomingFields['account_tracking_historie_id'] = $acth->id;
             $incomingFields['transaction_type'] = "SAVING";
             $incomingFields['transaction_charge'] = 0;
@@ -47,35 +46,33 @@ class AccountTrackingController extends Controller
 
                 $savedArhead = Arhead::create($arhead);
 
-                if($savedArhead){
+                if ($savedArhead) {
                     return response()->json([
-                        'status'=>'success', 
-                        'message'=>'Saving created successfully'
+                        'status' => 'success',
+                        'message' => 'Saving created successfully'
                     ]);
                 }
-               
-                return response()->json([
-                    'status'=>'error', 
-                    'message'=>'Arhead not created'
-                ]);
 
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Arhead not created'
+                ]);
             }
 
             return response()->json([
-                'status'=>'error', 
-                'message'=>'Tracking History not created'
+                'status' => 'error',
+                'message' => 'Tracking History not created'
             ]);
         }
 
         return response()->json([
-            'status'=>'error', 
-            'message'=>'Transaction not created'
+            'status' => 'error',
+            'message' => 'Transaction not created'
         ]);
-
-
     }
 
-    public function withdraw(Request $request){
+    public function withdraw(Request $request)
+    {
 
         $incomingFields = $request->validate([
             'transaction_type' => 'required',
@@ -84,19 +81,17 @@ class AccountTrackingController extends Controller
             'account_id' => 'required',
         ]);
 
-
         $incomingFields['user_id'] = auth()->user()->id;
         $incomingFields['transaction_date'] = date('Y-m-d');
         $incomingFields['transaction_time'] = date('H:i');
-        $incomingFields['note'] = "Withdraw from account " . $incomingFields['account_id']. " to wallet ". $incomingFields['wallet_id'];
+        $incomingFields['note'] = "Withdraw from account " . $incomingFields['account_id'] . " to wallet " . $incomingFields['wallet_id'];
         $incomingFields['row_sign'] = -1;
         $incomingFields['month'] = date('m');
         $incomingFields['year'] = date('Y');
-        
 
         $acth = AccountTrackingHistory::create($incomingFields);
 
-        if($acth){
+        if ($acth) {
             $incomingFields['account_tracking_historie_id'] = $acth->id;
             $incomingFields['transaction_type'] = "SAVING";
             $incomingFields['transaction_charge'] = 0;
@@ -113,31 +108,28 @@ class AccountTrackingController extends Controller
 
                 $savedArhead = Arhead::create($arhead);
 
-                if($savedArhead){
+                if ($savedArhead) {
                     return response()->json([
-                        'status'=>'success', 
-                        'message'=>'Withdraw created successfully'
+                        'status' => 'success',
+                        'message' => 'Withdraw created successfully'
                     ]);
                 }
-               
-                return response()->json([
-                    'status'=>'error', 
-                    'message'=>'Arhead not created'
-                ]);
 
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Arhead not created'
+                ]);
             }
 
             return response()->json([
-                'status'=>'error', 
-                'message'=>'Tracking History not created'
+                'status' => 'error',
+                'message' => 'Tracking History not created'
             ]);
         }
 
         return response()->json([
-            'status'=>'error', 
-            'message'=>'Transaction not created'
+            'status' => 'error',
+            'message' => 'Transaction not created'
         ]);
-
     }
-
 }

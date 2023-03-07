@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class BudgetController extends Controller
 {
-    
-    public function monthlyBudgetList($month, $year){
+
+    public function monthlyBudgetList($month, $year)
+    {
         $expenseTypes = ExpenseType::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
         $totalBudget = 0;
         $totalSpent = 0;
 
-        foreach($expenseTypes as $expenseType){
+        foreach ($expenseTypes as $expenseType) {
             $budget = $this->getBudget($expenseType, $year, $month);
             $expenseType['budget_id'] = $budget != null ? $budget->id : 0;
             $expenseType['budget'] = $budget != null ? $budget->amount : 0;
@@ -26,7 +27,7 @@ class BudgetController extends Controller
             $expenseType['remaining'] = $expenseType['budget'] - $expenseType['spent'] > 0 ? $expenseType['budget'] - $expenseType['spent'] : 0;
             $expenseType['percent'] = 100;
             $expenseType['exced_amount'] = $expenseType['spent'] - $expenseType['budget'];
-            if($expenseType['remaining'] > 0){
+            if ($expenseType['remaining'] > 0) {
                 $expenseType['percent'] = round((100 * $expenseType['spent']) / $expenseType['budget'], 2);
             }
         }
@@ -41,19 +42,21 @@ class BudgetController extends Controller
         ]);
     }
 
-    private function getMonthlyExpenseAmount($expenseType, $year, $month){
+    private function getMonthlyExpenseAmount($expenseType, $year, $month)
+    {
         $amount = DB::table('tracking_history')
-                        ->selectRaw("SUM(amount) as amount")
-                        ->where('expense_type', '=', $expenseType->id)
-                        ->where('user_id', '=', auth()->user()->id)
-                        ->where('transaction_type', '=', 'EXPENSE')
-                        ->where('year', '=', $year)
-                        ->where('month', '=', $month)
-                        ->get();
+            ->selectRaw("SUM(amount) as amount")
+            ->where('expense_type', '=', $expenseType->id)
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('transaction_type', '=', 'EXPENSE')
+            ->where('year', '=', $year)
+            ->where('month', '=', $month)
+            ->get();
         return $amount[0]->amount == null ? 0 : $amount[0]->amount;
     }
 
-    private function getBudget($expenseType, $year, $month){
+    private function getBudget($expenseType, $year, $month)
+    {
         $budget = DB::table('budgets')
             ->selectRaw("*")
             ->where('expense_type', '=', $expenseType->id)
@@ -65,7 +68,8 @@ class BudgetController extends Controller
         return $budget;
     }
 
-    public function showCreateBudgetPage(ExpenseType $expenseType, $month, $year){
+    public function showCreateBudgetPage(ExpenseType $expenseType, $month, $year)
+    {
         return view('budget-create', [
             'expenseType' => $expenseType,
             'month' => $month,
@@ -74,7 +78,8 @@ class BudgetController extends Controller
         ]);
     }
 
-    public function createBudget(Request $request){
+    public function createBudget(Request $request)
+    {
         $incomingFields = $request->validate([
             'expense_type' => 'required',
             'amount' => ['required', 'min:0'],
@@ -85,14 +90,15 @@ class BudgetController extends Controller
         $incomingFields['user_id'] = auth()->user()->id;
 
         $budget = Budget::create($incomingFields);
-        if(!$budget){
-            return back()->with('error', "Can't create budget");    
+        if (!$budget) {
+            return back()->with('error', "Can't create budget");
         }
 
         return back()->with('success', 'Budget added successfully');
     }
 
-    public function showUpdateBudgetPage(Budget $budget){
+    public function showUpdateBudgetPage(Budget $budget)
+    {
         return view('budget-update', [
             'budget' => $budget,
             'month' => $budget->month,
@@ -101,25 +107,25 @@ class BudgetController extends Controller
         ]);
     }
 
-    public function updateBudget(Budget $budget, Request $request){
+    public function updateBudget(Budget $budget, Request $request)
+    {
 
         $incomingFields = $request->validate([
             'expense_type' => 'required',
             'amount' => ['required', 'min:0']
         ]);
 
-        if($incomingFields['amount'] <= 0){
+        if ($incomingFields['amount'] <= 0) {
             return back()->with('error', "Budget can't be zero");
         }
 
         $budget->amount = $incomingFields['amount'];
         $updateStatus = $budget->update();
 
-        if($updateStatus){
+        if ($updateStatus) {
             return back()->with('success', 'Budget updated successfully');
         }
 
         return back()->with('error', 'Budget limit update failed');
     }
-
 }

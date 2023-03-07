@@ -10,7 +10,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','note','user_id'];
+    protected $fillable = ['name', 'note', 'user_id'];
 
     public function getCurrentBalanceAttribute()
     {

@@ -9878,9 +9878,9 @@
 </div>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
 
-        $('.icon-item').off('click').on('click', function(){
+        $('.icon-item').off('click').on('click', function() {
 
             var classList = $(this).find('i').attr('class');
             classList = classList.replace(" me-3 fa-2x", "");

@@ -14,7 +14,7 @@
 
                         <div class="d-inline-flex ms-auto">
                             <a href="#" class="btn btn-danger" title="Total transaction charge">TRNC: {{ $totalTrnCharge }} TK</a>
-                            <a href="{{ url('/wallet')  }}" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
+                            <a href="{{ url('/wallet') }}" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
                         </div>
                     </div>
 
@@ -54,13 +54,13 @@
                                             <h6 class="mb-0 text-center">{{ $wallet->currentBalance }}</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="{{ url('/wallet').'/'.$wallet->id }}/saving }}" data-wallet-id="{{ $wallet->id }}" data-wallet-name="{{ $wallet->name }}" data-wallet-amount="{{ $wallet->currentBalance }}" class="btn-saving btn btn-success btn-labeled btn-labeled-start btn-sm" title="Do Saving">
+                                            <a href="{{ url('/wallet') . '/' . $wallet->id }}/saving }}" data-wallet-id="{{ $wallet->id }}" data-wallet-name="{{ $wallet->name }}" data-wallet-amount="{{ $wallet->currentBalance }}" class="btn-saving btn btn-success btn-labeled btn-labeled-start btn-sm" title="Do Saving">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="far fa-save"></i></span> Do Savings
                                             </a>
-                                            <a href="{{ url('/wallet').'/'.$wallet->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
+                                            <a href="{{ url('/wallet') . '/' . $wallet->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
-                                            <form action="{{ url('/wallet').'/'.$wallet->id }}/delete" style="display: inline-block" method="POST">
+                                            <form action="{{ url('/wallet') . '/' . $wallet->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm" title="Delete">
@@ -87,13 +87,13 @@
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-    
+
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Make Saving</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-    
+
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row">
@@ -103,12 +103,12 @@
                                 @csrf
 
                                 <input type="hidden" name="transaction_type" value="IN" />
-                                <input type="hidden" name="wallet_id" id="wallet_id"/>
+                                <input type="hidden" name="wallet_id" id="wallet_id" />
 
                                 <div class="row mb-3">
                                     <label class="form-label">From Wallet:</label>
                                     <div class="form-group">
-                                        <input type="text"  class="form-control from-wallet">
+                                        <input type="text" class="form-control from-wallet">
                                     </div>
                                 </div>
 
@@ -130,28 +130,28 @@
                                         </select>
                                     </div>
                                 </div>
-                            
+
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary submit-btn">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                 </div>
-                                
+
                             </form>
 
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
-  
+
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
 
 
-            $('.btn-saving').off('click').on('click', function(e){
+            $('.btn-saving').off('click').on('click', function(e) {
                 e.preventDefault();
 
                 $('#myModal').modal('show');
@@ -166,16 +166,16 @@
                 $('input#amount').attr('max', walletAmount);
             });
 
-            $('button.submit-btn').off('click').on('click', function(e){
+            $('button.submit-btn').off('click').on('click', function(e) {
                 e.preventDefault();
 
                 $.ajax({
-                    'type' : 'POST',
+                    'type': 'POST',
                     'url': $('#ac-transaction-form').attr('action'),
                     'data': $('#ac-transaction-form').serialize(),
                     'dataType': 'json',
-                    'success': function(data){
-                        if(data.status == 'success'){
+                    'success': function(data) {
+                        if (data.status == 'success') {
                             $('#myModal').modal('hide');
                             location.reload();
                         } else {
@@ -189,19 +189,19 @@
 
 
             $.ajax({
-                url : $('.basePath').attr('href') + "/wallet/status",
-                type : 'GET',
-                success : function(data) {
+                url: $('.basePath').attr('href') + "/wallet/status",
+                type: 'GET',
+                success: function(data) {
                     preparePieChart(data);
-                }, 
-                error : function(jqXHR, status, errorThrown){
+                },
+                error: function(jqXHR, status, errorThrown) {
                     showMessage(status, "Something went wrong .... ");
                     loadingMask2.hide();
                 }
             });
 
 
-            function preparePieChart(data){
+            function preparePieChart(data) {
 
                 if (typeof echarts == 'undefined') {
                     console.warn('Warning - echarts.min.js is not loaded.');
@@ -218,13 +218,15 @@
                     // extract data first
                     // create name array
                     var labels = [];
-                    for(var i = 0; i < data.length; i++){
+                    for (var i = 0; i < data.length; i++) {
                         labels.push(data[i].name);
                     }
 
 
                     // Initialize chart
-                    var pie_rose_labels = echarts.init(pie_rose_labels_element, null, { renderer: 'svg' });
+                    var pie_rose_labels = echarts.init(pie_rose_labels_element, null, {
+                        renderer: 'svg'
+                    });
                     //
                     // Chart config
                     //
@@ -234,10 +236,10 @@
 
                         // Colors
                         color: [
-                            '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
-                            '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
-                            '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
-                            '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+                            '#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80',
+                            '#8d98b3', '#e5cf0d', '#97b552', '#95706d', '#dc69aa',
+                            '#07a2a4', '#9a7fd1', '#588dd5', '#f5994e', '#c05050',
+                            '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089'
                         ],
 
                         // Global text styles
@@ -313,7 +315,7 @@
                     });
 
                 }
-                    
+
             }
 
         })

@@ -25,7 +25,7 @@
 
 <body>
 
-   
+
 
     <!-- Page content -->
     <div class="page-content">
@@ -64,9 +64,9 @@
                                         </div>
                                     </div>
                                     @error('name')
-                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
-                                    
+
                                 </div>
 
                                 <div class="mb-3">
@@ -78,7 +78,7 @@
                                         </div>
                                     </div>
                                     @error('email')
-                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -91,10 +91,10 @@
                                         </div>
                                     </div>
                                     @error('password')
-                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
+
 
                                 <div class="mb-3">
                                     <label class="form-label">Confirm Password</label>
@@ -105,7 +105,7 @@
                                         </div>
                                     </div>
                                     @error('password_confirmation')
-                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -114,8 +114,8 @@
                                 </div>
 
                                 <div class="text-center">
-									Already have an account? <a href="{{ url('/login') }}">Login here</a>
-								</div>
+                                    Already have an account? <a href="{{ url('/login') }}">Login here</a>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -136,7 +136,7 @@
     <!-- /page content -->
 
 
-   
+
 
 </body>
 

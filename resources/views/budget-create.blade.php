@@ -11,9 +11,9 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Create Budget for {{ $expenseType->name }} - <span class="text-primary">{{ $monthText }}, {{ $year }}</span></h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
-                                    <a href="{{ url('/budget/'.$month.'/'.$year.'/list') }}" class="btn btn-primary" style="margin-left: 10px;">
+                                    <a href="{{ url('/budget/' . $month . '/' . $year . '/list') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Budget List
                                     </a>
                                 </div>
@@ -30,12 +30,12 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Expense Type:</label>
                                         <div class="form-group">
-                                            <input type="hidden" name="expense_type" value="{{ $expenseType->id }}"/>
-                                            <input type="hidden" name="month" value="{{ $month }}"/>
-                                            <input type="hidden" name="year" value="{{ $year }}"/>
+                                            <input type="hidden" name="expense_type" value="{{ $expenseType->id }}" />
+                                            <input type="hidden" name="month" value="{{ $month }}" />
+                                            <input type="hidden" name="year" value="{{ $year }}" />
                                             <input type="text" class="form-control" value="{{ $expenseType->name }}" readonly>
                                             @error('expense_type')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -43,10 +43,10 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Amount:</label>
                                         <div class="form-group">
-                                            <input type="number" name="amount" class="form-control" value="{{ old('amount', 0.00) }}" min="0" step="any" required>
+                                            <input type="number" name="amount" class="form-control" value="{{ old('amount', 0.0) }}" min="0" step="any" required>
                                         </div>
                                         @error('amount')
-                                            <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                            <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                         @enderror
                                     </div>
 

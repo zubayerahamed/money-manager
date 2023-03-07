@@ -13,7 +13,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Create Account</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
                                     <a href="{{ url('/account/all') }}" class="btn btn-success" style="margin-left: 10px;">
                                         Back To Account List
@@ -30,7 +30,7 @@
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                                             @error('name')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -38,7 +38,7 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Opening Balance:</label>
                                         <div class="form-group">
-                                            <input type="number" name="opening_balance" class="form-control" value="{{ old('opening_balance', 0.00) }}" min="0" step="any" required>
+                                            <input type="number" name="opening_balance" class="form-control" value="{{ old('opening_balance', 0.0) }}" min="0" step="any" required>
                                         </div>
                                     </div>
 

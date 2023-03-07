@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     @error('email')
-                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                     @error('password')
-                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -82,8 +82,8 @@
                                 </div>
 
                                 <div class="text-center">
-									Don't have an account? <a href="{{ url('/register') }}">Register here</a>
-								</div>
+                                    Don't have an account? <a href="{{ url('/register') }}">Register here</a>
+                                </div>
                             </div>
                         </div>
                     </form>

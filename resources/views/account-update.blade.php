@@ -13,7 +13,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Edit Account</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
                                     <a href="{{ url('/account/all') }}" class="btn btn-success" style="margin-left: 10px;">
                                         Back To Account List
@@ -22,7 +22,7 @@
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/account/'.$account->id) }}" method="POST">
+                                <form action="{{ url('/account/' . $account->id) }}" method="POST">
                                     @method('PUT')
                                     @csrf
 
@@ -31,7 +31,7 @@
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control" value="{{ old('name', $account->name) }}" required>
                                             @error('name')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
-    public function accounts(){
+    public function accounts()
+    {
 
         $accounts = Account::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
         $wallets = Wallet::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
@@ -27,11 +28,13 @@ class AccountController extends Controller
         ]);
     }
 
-    public function showCreateAccountPage(){
+    public function showCreateAccountPage()
+    {
         return view('account-create');
     }
 
-    public function createAccount(Request $request){
+    public function createAccount(Request $request)
+    {
 
         $incomingFields = $request->validate([
             'name' => 'required'
@@ -60,11 +63,13 @@ class AccountController extends Controller
         return redirect('/account')->with('error', "Can't create account");
     }
 
-    public function showEditAccountPage(Account $account){
-        return view('account-update', ['account'=>$account]);
+    public function showEditAccountPage(Account $account)
+    {
+        return view('account-update', ['account' => $account]);
     }
 
-    public function updateAccount(Account $account, Request $request){
+    public function updateAccount(Account $account, Request $request)
+    {
 
         $incomingFields = $request->validate([
             'name' => ['required']
@@ -75,16 +80,15 @@ class AccountController extends Controller
         if ($uaccount) return redirect('/account/' . $account->id . '/edit')->with('success', $account->name . ' account updated successfully');
 
         return redirect('/account/' . $account->id . '/edit')->with('error', $account->name . ' account update failed');
-
     }
 
     public function deleteAccount(Account $account)
     {
-        
+
         if ($account->currentBalance > 0) {
             return back()->with('error', $account->name . ' already has transaction');
         }
-        
+
         $accountName = $account->name;
 
         $deleted = $account->delete();

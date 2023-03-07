@@ -15,7 +15,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Update Income Source</h5>
-        
+
                                 <div class="d-inline-flex ms-auto">
                                     <a href="{{ url('/income-source/all') }}" class="btn btn-primary" style="margin-left: 10px;">
                                         Back To Income Sources List
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/income-source').'/'.$incomeSource->id }}" method="POST">
+                                <form action="{{ url('/income-source') . '/' . $incomeSource->id }}" method="POST">
                                     @method('PUT')
                                     @csrf
 
@@ -44,9 +44,9 @@
                                     <div class="row mb-3">
                                         <label class="form-label">Income Source Name:</label>
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" value="{{ old('name', $incomeSource->name ) }}" required>
+                                            <input type="text" name="name" class="form-control" value="{{ old('name', $incomeSource->name) }}" required>
                                             @error('name')
-                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>    
+                                                <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>

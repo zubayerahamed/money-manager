@@ -15,7 +15,7 @@
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/tracking/detail/'.$trackingHistory->id.'/update') }}" method="POST">
+                                <form action="{{ url('/tracking/detail/' . $trackingHistory->id . '/update') }}" method="POST">
                                     @method('PUT')
                                     @csrf
 
@@ -47,7 +47,7 @@
                                             <select class="form-control" name="from_wallet" required>
                                                 <option value="">-- Select Wallet --</option>
                                                 @foreach ($wallets as $wallet)
-                                                    <option value="{{ $wallet->id }}" {{ old('from_wallet', $trackingHistory->from_wallet) == $wallet->id ? "selected" : "" }}>{{ $wallet->name }}</option>
+                                                    <option value="{{ $wallet->id }}" {{ old('from_wallet', $trackingHistory->from_wallet) == $wallet->id ? 'selected' : '' }}>{{ $wallet->name }}</option>
                                                 @endforeach
                                             </select>
                                             <a href="/wallet" target="_blank" class="btn btn-light" type="button">Create Wallet</a>
@@ -63,7 +63,7 @@
                                             <select class="form-control" name="to_wallet" required>
                                                 <option value="">-- Select Wallet --</option>
                                                 @foreach ($wallets as $wallet)
-                                                    <option value="{{ $wallet->id }}" {{ old('to_wallet', $trackingHistory->to_wallet) == $wallet->id ? "selected" : "" }}>{{ $wallet->name }}</option>
+                                                    <option value="{{ $wallet->id }}" {{ old('to_wallet', $trackingHistory->to_wallet) == $wallet->id ? 'selected' : '' }}>{{ $wallet->name }}</option>
                                                 @endforeach
                                             </select>
                                             <a href="/wallet" target="_blank" class="btn btn-light" type="button">Create Wallet</a>

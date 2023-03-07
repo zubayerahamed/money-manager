@@ -12,8 +12,8 @@
                     <div class="card-header d-flex align-items-center">
                         <div class="text-center col-md-12">
                             <h3 class="mb-0">Budget Details</h3>
-                            <h4 class="mb-0"><a href="{{ url('/budget/'.$month.'/'.$year-1 .'/list') }}"><i class="fas fa-arrow-alt-circle-left"></i></a> {{ $year }} <a href="{{ url('/budget/'.$month.'/'.$year+1 . '/list') }}"><i class="fas fa-arrow-alt-circle-right"></i></a></h4>
-                            <h4 class="mb-0"><a href="{{ url('/budget/'. ($month == 1 ? $month : $month-1) .'/'.$year . '/list') }}"><i class="fas fa-arrow-alt-circle-left"></i></a> {{ $monthText }} <a href="{{ url('/budget/'. ($month == 12 ? $month : $month+1) .'/'.$year . '/list') }}"><i class="fas fa-arrow-alt-circle-right"></i></a></h4>
+                            <h4 class="mb-0"><a href="{{ url('/budget/' . $month . '/' . $year - 1 . '/list') }}"><i class="fas fa-arrow-alt-circle-left"></i></a> {{ $year }} <a href="{{ url('/budget/' . $month . '/' . $year + 1 . '/list') }}"><i class="fas fa-arrow-alt-circle-right"></i></a></h4>
+                            <h4 class="mb-0"><a href="{{ url('/budget/' . ($month == 1 ? $month : $month - 1) . '/' . $year . '/list') }}"><i class="fas fa-arrow-alt-circle-left"></i></a> {{ $monthText }} <a href="{{ url('/budget/' . ($month == 12 ? $month : $month + 1) . '/' . $year . '/list') }}"><i class="fas fa-arrow-alt-circle-right"></i></a></h4>
                         </div>
                     </div>
 
@@ -21,19 +21,19 @@
                         <div class="row">
                             <div class="col-md-4">Total Budget : <span class="text-success">{{ $totalBudget }}/-</span></div>
                             <div class="col-md-4 text-center">Total Spent : <span class="text-danger">{{ $totalSpent }}/-</span></div>
-                            <div class="col-md-4" style="text-align: right">Remaining :  <span class="text-success">{{ ($totalBudget - $totalSpent) > 0 ? $totalBudget - $totalSpent : 0 }}/- </span></div>
+                            <div class="col-md-4" style="text-align: right">Remaining : <span class="text-success">{{ $totalBudget - $totalSpent > 0 ? $totalBudget - $totalSpent : 0 }}/- </span></div>
                         </div>
-                        @if($totalBudget != 0 or $totalSpent != 0)
+                        @if ($totalBudget != 0 or $totalSpent != 0)
                             @if ($totalBudget - $totalSpent > 0)
-                            <div class="progress" style="margin-top: 10px;">
-                                <div class="progress-bar bg-teal" style="width: {{ round((100*$totalSpent) / $totalBudget, 2) }}%" aria-valuenow="{{ round((100*$totalSpent) / $totalBudget, 2) }}" aria-valuemin="0" aria-valuemax="100">{{ round((100*$totalSpent) / $totalBudget, 2) }}% complete</div>
-                            </div>
-                            @else
-                            <div class="progress" style="margin-top: 10px;">
-                                <div class="progress-bar bg-teal bg-danger" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                    Limit exceeded {{ $totalSpent - $totalBudget}}/-
+                                <div class="progress" style="margin-top: 10px;">
+                                    <div class="progress-bar bg-teal" style="width: {{ round((100 * $totalSpent) / $totalBudget, 2) }}%" aria-valuenow="{{ round((100 * $totalSpent) / $totalBudget, 2) }}" aria-valuemin="0" aria-valuemax="100">{{ round((100 * $totalSpent) / $totalBudget, 2) }}% complete</div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="progress" style="margin-top: 10px;">
+                                    <div class="progress-bar bg-teal bg-danger" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                        Limit exceeded {{ $totalSpent - $totalBudget }}/-
+                                    </div>
+                                </div>
                             @endif
                         @endif
                     </div>
@@ -66,12 +66,12 @@
                                         <td>
                                             @if ($expenseType->budget)
                                                 <div>
-                                                    Limit : <span class="text-success">{{ $expenseType->budget }}/-</span> 
+                                                    Limit : <span class="text-success">{{ $expenseType->budget }}/-</span>
                                                     <a href="{{ url('/budget') . '/' . $expenseType->budget_id . '/update' }}" style="margin-left: 10px; line-height: 25px;" title="Update Limit">Update Limit</a>
-                                                </div>    
-                                                <div>Spent : <span class="text-danger">{{ $expenseType->spent }}/-</div>    
+                                                </div>
+                                                <div>Spent : <span class="text-danger">{{ $expenseType->spent }}/-</div>
                                                 <div>
-                                                    Remaining : 
+                                                    Remaining :
                                                     @if ($expenseType->remaining > 0)
                                                         <b class="text-success">{{ $expenseType->remaining }}/-</b>
                                                         <div class="progress" style="margin-top: 10px;">
@@ -85,10 +85,10 @@
                                                             </div>
                                                         </div>
                                                     @endif
-                                                </div>    
+                                                </div>
                                             @else
-                                                <div class="mb-2">Spent : <span class="text-danger">{{ $expenseType->spent }}/-</span></div>  
-                                                <a href="{{ url('/budget') . '/' . $expenseType->id . '/'.$month.'/'.$year }}" class="btn btn-success btn-labeled btn-labeled-start btn-sm" title="Add budget">
+                                                <div class="mb-2">Spent : <span class="text-danger">{{ $expenseType->spent }}/-</span></div>
+                                                <a href="{{ url('/budget') . '/' . $expenseType->id . '/' . $month . '/' . $year }}" class="btn btn-success btn-labeled btn-labeled-start btn-sm" title="Add budget">
                                                     <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="fas fa-calculator"></i> </span> Add Budget
                                                 </a>
                                             @endif

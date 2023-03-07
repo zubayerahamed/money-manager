@@ -25,7 +25,7 @@
                                             <th>{{ $key }}</th>
                                             <th style="text-align: right;">
                                                 <span
-                                                    style="color: green; font-weight: bold">{{ $val['income'] }}</span>
+                                                      style="color: green; font-weight: bold">{{ $val['income'] }}</span>
                                                 <span style="color: rgb(9, 31, 238); font-weight: bold">/</span>
                                                 <span style="color: red; font-weight: bold">{{ $val['expense'] }}</span>
                                             </th>
@@ -37,32 +37,32 @@
                                                 @if ($trn->transaction_type == 'INCOME')
                                                     <td class="text-success"><b>{{ $trn->amount }} TK</b> income from
                                                         <b
-                                                            style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b>
+                                                           style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b>
                                                     </td>
                                                 @elseif ($trn->transaction_type == 'EXPENSE')
                                                     <td class="text-danger"><b>{{ $trn->amount }} TK</b> expense for <b
-                                                            style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b>
+                                                           style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b>
                                                     </td>
                                                 @else
                                                     <td class="text-primary"><b>{{ $trn->amount }} TK</b> transfer from
                                                         <b
-                                                            style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b>
+                                                           style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b>
                                                         to <b
-                                                            style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b>
+                                                           style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b>
                                                     </td>
                                                 @endif
                                                 <td style="text-align: right">
                                                     <a href="{{ url('/tracking/detail/' . $trn->id . '/edit') }}"
-                                                        title="Edit"><i class="far fa-edit"></i></a>
+                                                       title="Edit"><i class="far fa-edit"></i></a>
                                                     <form id="form-id{{ $trn->id }}"
-                                                        action="{{ url('/tracking/detail/' . $trn->id . '/delete') }}"
-                                                        method="POST" style="display: inline-block;">
+                                                          action="{{ url('/tracking/detail/' . $trn->id . '/delete') }}"
+                                                          method="POST" style="display: inline-block;">
                                                         @method('DELETE')
                                                         @csrf
                                                         <a href="#"
-                                                            onclick="document.getElementById('{{ 'form-id'.$trn->id }}').submit();"
-                                                            class="text-danger" title="Delete"><i
-                                                                class="far fa-trash-alt"></i></a>
+                                                           onclick="document.getElementById('{{ 'form-id' . $trn->id }}').submit();"
+                                                           class="text-danger" title="Delete"><i
+                                                               class="far fa-trash-alt"></i></a>
                                                     </form>
                                                 </td>
                                             </tr>

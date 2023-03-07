@@ -38,11 +38,11 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                
+
                                                 <div style="width: 60px; text-align: left;">
                                                     <i class="{{ $incomeSource->icon }} fa-2x me-3"></i>
                                                 </div>
-                                                
+
                                                 <div>
                                                     <div style="text-transform: uppercase; font-weight: bold;">{{ $incomeSource->name }}</div>
                                                     <div class="text-muted fs-sm">
@@ -55,10 +55,10 @@
                                             <h6 class="mb-0 text-center">{{ $incomeSource->totalIncome }}</h6>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="{{ url('/income-source').'/'.$incomeSource->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
+                                            <a href="{{ url('/income-source') . '/' . $incomeSource->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
                                                 <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
                                             </a>
-                                            <form action="{{ url('/income-source').'/'.$incomeSource->id }}/delete" style="display: inline-block" method="POST">
+                                            <form action="{{ url('/income-source') . '/' . $incomeSource->id }}/delete" style="display: inline-block" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm" title="Delete">
@@ -82,22 +82,22 @@
     <!-- /content area -->
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
 
             $.ajax({
-                url : $('.basePath').attr('href') + "/income-source/status",
-                type : 'GET',
-                success : function(data) {
+                url: $('.basePath').attr('href') + "/income-source/status",
+                type: 'GET',
+                success: function(data) {
                     preparePieChart(data);
-                }, 
-                error : function(jqXHR, status, errorThrown){
+                },
+                error: function(jqXHR, status, errorThrown) {
                     showMessage(status, "Something went wrong .... ");
                     loadingMask2.hide();
                 }
             });
 
 
-            function preparePieChart(data){
+            function preparePieChart(data) {
 
                 if (typeof echarts == 'undefined') {
                     console.warn('Warning - echarts.min.js is not loaded.');
@@ -114,13 +114,15 @@
                     // extract data first
                     // create name array
                     var labels = [];
-                    for(var i = 0; i < data.length; i++){
+                    for (var i = 0; i < data.length; i++) {
                         labels.push(data[i].name);
                     }
 
 
                     // Initialize chart
-                    var pie_rose_labels = echarts.init(pie_rose_labels_element, null, { renderer: 'svg' });
+                    var pie_rose_labels = echarts.init(pie_rose_labels_element, null, {
+                        renderer: 'svg'
+                    });
                     //
                     // Chart config
                     //
@@ -130,10 +132,10 @@
 
                         // Colors
                         color: [
-                            '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
-                            '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
-                            '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
-                            '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+                            '#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80',
+                            '#8d98b3', '#e5cf0d', '#97b552', '#95706d', '#dc69aa',
+                            '#07a2a4', '#9a7fd1', '#588dd5', '#f5994e', '#c05050',
+                            '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089'
                         ],
 
                         // Global text styles
@@ -209,7 +211,7 @@
                     });
 
                 }
-                    
+
             }
 
         })

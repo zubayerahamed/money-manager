@@ -38,41 +38,41 @@
                     <div class="tab-content card-body">
 
                         <div class="tab-pane active fade show" id="messages-monthly">
-                            <a href="{{ url('/tracking/details/month/'.date('m').'/'.date('Y')) }}" class="btn btn-success btn-sm">View Details</a>
+                            <a href="{{ url('/tracking/details/month/' . date('m') . '/' . date('Y')) }}" class="btn btn-success btn-sm">View Details</a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic" style="height: 440px;"></div>
                             </div>
 
                             @foreach ($monthWiseGroup as $key => $val)
                                 @if ($val['month'] == date('m'))
-                                <div class="row">
-                                    <div class="text-center box-item box-item-success">
-                                        <h2>Monthly Income</h2>
-                                        <h3>{{ $val['income'] }} TK</h3>
+                                    <div class="row">
+                                        <div class="text-center box-item box-item-success">
+                                            <h2>Monthly Income</h2>
+                                            <h3>{{ $val['income'] }} TK</h3>
+                                        </div>
+                                        <div class="text-center box-item box-item-danger">
+                                            <h2>Monthly Expense</h2>
+                                            <h3>Expense : {{ $val['expense'] }} TK , TRNC : {{ $val['trancharge'] }} TK</h3>
+                                        </div>
                                     </div>
-                                    <div class="text-center box-item box-item-danger">
-                                        <h2>Monthly Expense</h2>
-                                        <h3>Expense : {{ $val['expense'] }} TK , TRNC : {{ $val['trancharge'] }} TK</h3>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="text-center box-item box-item-primary">
-                                        <h2>Monthly Saving</h2>
-                                        <h3>{{ $val['saving'] }} TK</h3>
+                                    <div class="row">
+                                        <div class="text-center box-item box-item-primary">
+                                            <h2>Monthly Saving</h2>
+                                            <h3>{{ $val['saving'] }} TK</h3>
+                                        </div>
+                                        <div class="text-center box-item box-item-success">
+                                            <h2>Current Balance</h2>
+                                            <h3>{{ $currentBalance }} TK</h3>
+                                        </div>
                                     </div>
-                                    <div class="text-center box-item box-item-success">
-                                        <h2>Current Balance</h2>
-                                        <h3>{{ $currentBalance }} TK</h3>
-                                    </div>
-                                </div>
                                 @endif
                             @endforeach
 
                         </div>
 
                         <div class="tab-pane fade" id="messages-yearly">
-                            <a href="{{ url('/tracking/details/year/'.date('Y')) }}" class="btn btn-success btn-sm">View Yearly Details</a>
+                            <a href="{{ url('/tracking/details/year/' . date('Y')) }}" class="btn btn-success btn-sm">View Yearly Details</a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic_yearly" style="height: 440px;"></div>
                             </div>
@@ -86,41 +86,41 @@
 
             @foreach ($monthWiseGroup as $key => $val)
                 @if ($val['month'] != date('m'))
-                <div class="col-xl-3">
-                    <div class="card">
-                        <div class="card-header d-flex align-items-center">
-                            <div class="col-md-10">
-                                <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
+                    <div class="col-xl-3">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <div class="col-md-10">
+                                    <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
+                                </div>
+                                <div class="col-md-2" style="text-align:right">
+                                    <a href="{{ url('/tracking/details/month/' . $val['month'] . '/' . date('Y')) }}"><i class="far fa-eye"></i></a>
+                                </div>
                             </div>
-                            <div class="col-md-2" style="text-align:right">
-                                <a href="{{ url('/tracking/details/month/'.$val['month'].'/'.date('Y')) }}"><i class="far fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="card-body border-top">
-                            <div class="list-group">
-                                <div class="list-group-item d-flex">
-                                    Income
-                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }}/-</span>
-                                </div>
-                                <div class="list-group-item d-flex">
-                                    Expense
-                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }}/-</span>
-                                </div>
-                                <div class="list-group-item d-flex">
-                                    Transaction Charge
-                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }}/-</span>
-                                </div>
-                                <div class="list-group-item d-flex">
-                                    Saving
-                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }}/-</span>
+                            <div class="card-body border-top">
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex">
+                                        Income
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }}/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Expense
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }}/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Transaction Charge
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }}/-</span>
+                                    </div>
+                                    <div class="list-group-item d-flex">
+                                        Saving
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }}/-</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endif
             @endforeach
-            
+
 
 
         </div>
@@ -130,35 +130,35 @@
     <!-- /content area -->
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
 
             $.ajax({
-                url : $('.basePath').attr('href') + "/current-month/line-chart",
-                type : 'GET',
-                success : function(data) {
+                url: $('.basePath').attr('href') + "/current-month/line-chart",
+                type: 'GET',
+                success: function(data) {
                     prepareCurrentMonthLineChart(data);
-                }, 
-                error : function(jqXHR, status, errorThrown){
-                    
+                },
+                error: function(jqXHR, status, errorThrown) {
+
                 }
             });
 
             $.ajax({
-                url : $('.basePath').attr('href') + "/current-year/line-chart",
-                type : 'GET',
-                success : function(data) {
+                url: $('.basePath').attr('href') + "/current-year/line-chart",
+                type: 'GET',
+                success: function(data) {
                     prepareYearlyLineChart(data);
-                }, 
-                error : function(jqXHR, status, errorThrown){
-                    
+                },
+                error: function(jqXHR, status, errorThrown) {
+
                 }
             });
 
-            function prepareYearlyLineChart(data){
+            function prepareYearlyLineChart(data) {
                 var labels = [];
                 var incomeAmounts = [];
                 var expenseAmounts = [];
-                for(var i = 0; i < data.length; i++){
+                for (var i = 0; i < data.length; i++) {
                     labels.push(data[i].month);
                     incomeAmounts.push(data[i].income_amount);
                     expenseAmounts.push(data[i].expense_amount);
@@ -180,7 +180,9 @@
                 if (line_stacked_element_yearly) {
 
                     // Initialize chart
-                    var line_stacked = echarts.init(line_stacked_element_yearly, null, { renderer: 'svg' });
+                    var line_stacked = echarts.init(line_stacked_element_yearly, null, {
+                        renderer: 'svg'
+                    });
 
 
                     //
@@ -225,18 +227,16 @@
                         },
 
                         // Title
-                        title: [
-                            {
-                                left: 'center',
-                                text: 'Income Vs Expense monthly increment',
-                                top: 380,
-                                textStyle: {
-                                    fontSize: 15,
-                                    fontWeight: 500,
-                                    color: 'var(--body-color)'
-                                }
+                        title: [{
+                            left: 'center',
+                            text: 'Income Vs Expense monthly increment',
+                            top: 380,
+                            textStyle: {
+                                fontSize: 15,
+                                fontWeight: 500,
+                                color: 'var(--body-color)'
                             }
-                        ],
+                        }],
 
                         // Add tooltip
                         tooltip: {
@@ -304,8 +304,7 @@
                         }],
 
                         // Add series
-                        series: [
-                            {
+                        series: [{
                                 name: 'Income',
                                 type: 'line',
                                 data: incomeAmounts,
@@ -330,7 +329,7 @@
                                         opacity: 0.25
                                     }
                                 },
-                            }    
+                            }
                         ]
                     });
                 }
@@ -359,25 +358,25 @@
                     });
                 }
 
-                
+
 
                 // On window resize
                 var resizeCharts;
                 window.addEventListener('resize', function() {
                     clearTimeout(resizeCharts);
-                    resizeCharts = setTimeout(function () {
+                    resizeCharts = setTimeout(function() {
                         triggerChartResize();
                     }, 200);
                 });
             }
 
 
-            function prepareCurrentMonthLineChart(data){
+            function prepareCurrentMonthLineChart(data) {
 
                 var labels = [];
                 var incomeAmounts = [];
                 var expenseAmounts = [];
-                for(var i = 0; i < data.length; i++){
+                for (var i = 0; i < data.length; i++) {
                     labels.push(data[i].date);
                     incomeAmounts.push(data[i].income_amount);
                     expenseAmounts.push(data[i].expense_amount);
@@ -399,7 +398,9 @@
                 if (line_stacked_element) {
 
                     // Initialize chart
-                    var line_stacked = echarts.init(line_stacked_element, null, { renderer: 'svg' });
+                    var line_stacked = echarts.init(line_stacked_element, null, {
+                        renderer: 'svg'
+                    });
 
 
                     //
@@ -444,18 +445,16 @@
                         },
 
                         // Title
-                        title: [
-                            {
-                                left: 'center',
-                                text: 'Income Vs Expense daily increment',
-                                top: 380,
-                                textStyle: {
-                                    fontSize: 15,
-                                    fontWeight: 500,
-                                    color: 'var(--body-color)'
-                                }
+                        title: [{
+                            left: 'center',
+                            text: 'Income Vs Expense daily increment',
+                            top: 380,
+                            textStyle: {
+                                fontSize: 15,
+                                fontWeight: 500,
+                                color: 'var(--body-color)'
                             }
-                        ],
+                        }],
 
                         // Add tooltip
                         tooltip: {
@@ -523,8 +522,7 @@
                         }],
 
                         // Add series
-                        series: [
-                            {
+                        series: [{
                                 name: 'Income',
                                 type: 'line',
                                 data: incomeAmounts,
@@ -549,8 +547,8 @@
                                         opacity: 0.25
                                     }
                                 },
-                            }    
-                        
+                            }
+
                         ]
                     });
                 }
@@ -583,15 +581,14 @@
                 var resizeCharts;
                 window.addEventListener('resize', function() {
                     clearTimeout(resizeCharts);
-                    resizeCharts = setTimeout(function () {
+                    resizeCharts = setTimeout(function() {
                         triggerChartResize();
                     }, 200);
                 });
-                    
+
             }
 
         })
-
     </script>
 
 
