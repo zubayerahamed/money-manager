@@ -1,14 +1,12 @@
 <x-layout pageTitle="Wallets Status">
-
     <!-- Content area -->
     <div class="content">
         <!-- Dashboard content -->
         <div class="row">
-
             <div class="col-xl-12">
                 <!-- Marketing campaigns -->
                 <div class="card">
-
+                    
                     <div class="card-header d-flex align-items-center">
                         <h5 class="mb-0">Total Balance</h5><a href="#" class="btn btn-indigo" style="margin-left: 10px;">{{ $totalBalance }} TK</a>
 

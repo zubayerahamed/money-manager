@@ -20,25 +20,17 @@
     <!-- Theme JS files -->
     <script src="/assets/js/app.js"></script>
     <!-- /theme JS files -->
-
 </head>
 
 <body>
-
-
-
     <!-- Page content -->
     <div class="page-content">
-
         <!-- Main content -->
         <div class="content-wrapper">
-
             <!-- Inner content -->
             <div class="content-inner">
-
                 <!-- Content area -->
                 <div class="content d-flex justify-content-center align-items-center">
-
                     <!-- Registration form -->
                     <form class="login-form" action="{{ url('/register') }}" method="POST">
                         @csrf
@@ -50,11 +42,9 @@
                                     </div>
                                     <h5 class="mb-0">Create account</h5>
                                 </div>
-
                                 <div class="text-center text-muted content-divider mb-3">
                                     <span class="px-2">Your Details</span>
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Name</label>
                                     <div class="form-control-feedback form-control-feedback-start">
@@ -66,9 +56,7 @@
                                     @error('name')
                                         <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
-
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Your email</label>
                                     <div class="form-control-feedback form-control-feedback-start">
@@ -81,7 +69,6 @@
                                         <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Password</label>
                                     <div class="form-control-feedback form-control-feedback-start">
@@ -94,8 +81,6 @@
                                         <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
-
-
                                 <div class="mb-3">
                                     <label class="form-label">Confirm Password</label>
                                     <div class="form-control-feedback form-control-feedback-start">
@@ -108,11 +93,9 @@
                                         <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-teal w-100">Register</button>
                                 </div>
-
                                 <div class="text-center">
                                     Already have an account? <a href="{{ url('/login') }}">Login here</a>
                                 </div>
@@ -120,24 +103,14 @@
                         </div>
                     </form>
                     <!-- /registration form -->
-
                 </div>
                 <!-- /content area -->
-
-
-
             </div>
             <!-- /inner content -->
-
         </div>
         <!-- /main content -->
-
     </div>
     <!-- /page content -->
-
-
-
-
 </body>
 
 </html>

@@ -20,24 +20,17 @@
     <!-- Theme JS files -->
     <script src="/assets/js/app.js"></script>
     <!-- /theme JS files -->
-
 </head>
 
 <body>
-
-
     <!-- Page content -->
     <div class="page-content">
-
         <!-- Main content -->
         <div class="content-wrapper">
-
             <!-- Inner content -->
             <div class="content-inner">
-
                 <!-- Content area -->
                 <div class="content d-flex justify-content-center align-items-center">
-
                     <!-- Login form -->
                     <form class="login-form" action="{{ url('/login') }}" method="POST">
                         @csrf
@@ -50,7 +43,6 @@
                                     <h5 class="mb-0">Login to your account</h5>
                                     <span class="d-block text-muted">Enter your credentials below</span>
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
                                     <div class="form-control-feedback form-control-feedback-start">
@@ -63,7 +55,6 @@
                                         <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Password</label>
                                     <div class="form-control-feedback form-control-feedback-start">
@@ -76,11 +67,9 @@
                                         <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-100">Sign in</button>
                                 </div>
-
                                 <div class="text-center">
                                     Don't have an account? <a href="{{ url('/register') }}">Register here</a>
                                 </div>
@@ -88,20 +77,14 @@
                         </div>
                     </form>
                     <!-- /login form -->
-
                 </div>
                 <!-- /content area -->
-
-
             </div>
             <!-- /inner content -->
-
         </div>
         <!-- /main content -->
-
     </div>
     <!-- /page content -->
-
 </body>
 
 </html>
