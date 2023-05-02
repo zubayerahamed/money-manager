@@ -38,7 +38,7 @@
                     <div class="tab-content card-body">
 
                         <div class="tab-pane active fade show" id="messages-monthly">
-                            <a href="{{ url('/tracking/details/month/' . date('m') . '/' . date('Y')) }}" class="btn btn-success btn-sm">View Details</a>
+                            <a href="{{ url('/tracking/details/month/' . date('m') . '/' . date('Y')) }}" class="btn btn-light btn-sm float-end mb-2"><i class="far fa-eye"></i></a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic" style="height: 440px;"></div>
                             </div>
@@ -46,25 +46,10 @@
                             @foreach ($monthWiseGroup as $key => $val)
                                 @if ($val['month'] == date('m'))
                                     <div class="row">
-                                        <div class="text-center box-item box-item-success">
-                                            <h2>Monthly Income</h2>
-                                            <h3>{{ $val['income'] }} TK</h3>
-                                        </div>
-                                        <div class="text-center box-item box-item-danger">
-                                            <h2>Monthly Expense</h2>
-                                            <h3>Expense : {{ $val['expense'] }} TK , TRNC : {{ $val['trancharge'] }} TK</h3>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="text-center box-item box-item-primary">
-                                            <h2>Monthly Saving</h2>
-                                            <h3>{{ $val['saving'] }} TK</h3>
-                                        </div>
-                                        <div class="text-center box-item box-item-success">
-                                            <h2>Current Balance</h2>
-                                            <h3>{{ $currentBalance }} TK</h3>
-                                        </div>
+                                        <div class="col-md-3 mt-2"><button class="btn btn-light btn-sm w-100"><h5 class="m-0">Current Balance <br/> {{ $currentBalance }} TK</h5></button></div>
+                                        <div class="col-md-3 mt-2"><button class="btn btn-light btn-sm w-100"><h5 class="m-0 text-success">Income <br/> {{ $val['income'] }} TK</h5></button></div>
+                                        <div class="col-md-3 mt-2"><button class="btn btn-light btn-sm w-100"><h5 class="m-0 text-danger">Expense <br/> {{ $val['expense'] + $val['trancharge'] }} TK</h5></button></div>
+                                        <div class="col-md-3 mt-2"><button class="btn btn-light btn-sm w-100"><h5 class="m-0 text-primary">Saving <br/> {{ $val['saving'] }} TK</h5></button></div>
                                     </div>
                                 @endif
                             @endforeach
@@ -72,7 +57,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="messages-yearly">
-                            <a href="{{ url('/tracking/details/year/' . date('Y')) }}" class="btn btn-success btn-sm">View Yearly Details</a>
+                            <a href="{{ url('/tracking/details/year/' . date('Y')) }}" class="btn btn-light btn-sm float-end mb-2"><i class="far fa-eye"></i></a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic_yearly" style="height: 440px;"></div>
                             </div>
@@ -88,11 +73,11 @@
                 @if ($val['month'] != date('m'))
                     <div class="col-xl-3">
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
-                                <div class="col-md-10">
+                            <div class="card-header">
+                                <div class="col-md-10 float-start">
                                     <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
                                 </div>
-                                <div class="col-md-2" style="text-align:right">
+                                <div class="col-md-2 float-end text-end">
                                     <a href="{{ url('/tracking/details/month/' . $val['month'] . '/' . date('Y')) }}"><i class="far fa-eye"></i></a>
                                 </div>
                             </div>
@@ -100,19 +85,19 @@
                                 <div class="list-group">
                                     <div class="list-group-item d-flex">
                                         Income
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }}/-</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} TK</span>
                                     </div>
                                     <div class="list-group-item d-flex">
                                         Expense
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }}/-</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} TK</span>
                                     </div>
                                     <div class="list-group-item d-flex">
                                         Transaction Charge
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }}/-</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} TK</span>
                                     </div>
                                     <div class="list-group-item d-flex">
                                         Saving
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }}/-</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} TK</span>
                                     </div>
                                 </div>
                             </div>

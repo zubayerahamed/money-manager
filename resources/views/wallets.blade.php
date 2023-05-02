@@ -9,8 +9,7 @@
 
                     <div class="card-header">
                         <div class="col-md-6 float-start text-start">
-                            <p class="mb-0">Balance : {{ $totalBalance }} TK</p>
-                            <p class="mb-0">Transaction Charge : {{ $totalTrnCharge }} TK</p>
+                            <h5 class="mb-0">Balance : {{ $totalBalance }} TK</h5>
                         </div>
 
                         <div class="col-md-6 float-end text-end">
