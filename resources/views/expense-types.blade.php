@@ -9,12 +9,16 @@
                 <!-- Marketing campaigns -->
                 <div class="card">
 
-                    <div class="card-header d-flex align-items-center">
-                        <h5 class="mb-0">Total Expense</h5>
+                    <div class="card-header">
+                        <div class="col-md-6 float-start text-start">
+                            <h5 class="mb-0">Total Expense : {{ $totalExpense }} TK</h5>
+                        </div>
 
-                        <div class="d-inline-flex ms-auto">
-                            <a href="#" class="btn btn-danger" style="margin-left: 10px;" title="Total Expense">{{ $totalExpense }} TK</a>
-                            <a href="{{ url('/expense-type') }}" class="btn btn-success" style="margin-left: 10px;" title="Create Expense Type">Create Expense Type</a>
+                        <div class="col-md-6 float-end text-end">
+                            <a href="{{ url('/expense-type') }}" class="btn btn-success btn-sm" title="Create expense type">
+                                <i class="fas fa-plus"></i>
+                                <div class="d-none d-md-block ms-1">Create expense type</div>
+                            </a>
                         </div>
                     </div>
 

@@ -193,37 +193,22 @@
                             </a>
                         </li>
 
-                        <li class="nav-item nav-item-submenu {{ Request::is('wallet/**') || Request::is('wallet') ? 'nav-item-expanded nav-item-open' : '' }}">
-                            <a href="#" class="nav-link">
-                                <i class="ph-wallet"></i>
-                                <span>Wallet</span>
+                        <li class="nav-item">
+                            <a href="{{ url('/wallet/all') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}">
+                                <i class="fas fa-chart-line"></i> Wallet Status
                             </a>
-                            <ul class="nav-group-sub collapse {{ Request::is('wallet/**') || Request::is('wallet') ? 'show' : '' }}">
-                                <li class="nav-item"><a href="{{ url('/wallet/all') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-                                <li class="nav-item"><a href="{{ url('/wallet') }}" class="nav-link {{ Request::is('wallet') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
-                            </ul>
                         </li>
 
-                        <li class="nav-item nav-item-submenu {{ Request::is('income-source/**') || Request::is('income-source') ? 'nav-item-expanded nav-item-open' : '' }}">
-                            <a href="#" class="nav-link">
-                                <i class="ph-trend-up"></i>
-                                <span>Income Source</span>
+                        <li class="nav-item">
+                            <a href="{{ url('/income-source/all') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}">
+                                <i class="fas fa-chart-line"></i> Income Status
                             </a>
-                            <ul class="nav-group-sub collapse {{ Request::is('income-source/**') || Request::is('income-source') ? 'show' : '' }}">
-                                <li class="nav-item"> <a href="{{ url('/income-source/all') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-                                <li class="nav-item"> <a href="{{ url('/income-source') }}" class="nav-link {{ Request::is('income-source') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
-                            </ul>
                         </li>
 
-                        <li class="nav-item nav-item-submenu {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'nav-item-expanded nav-item-open' : '' }}">
-                            <a href="#" class="nav-link">
-                                <i class="ph-trend-down"></i>
-                                <span>Expense Type</span>
+                        <li class="nav-item">
+                            <a href="{{ url('/expense-type/all') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}">
+                                <i class="fas fa-chart-line"></i> Expense Status
                             </a>
-                            <ul class="nav-group-sub collapse {{ Request::is('expense-type/**') || Request::is('expense-type') ? 'show' : '' }}">
-                                <li class="nav-item"> <a href="{{ url('/expense-type/all') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}"><i class="fas fa-chart-line"></i> Status</a></li>
-                                <li class="nav-item"> <a href="{{ url('/expense-type') }}" class="nav-link {{ Request::is('expense-type') ? 'active' : '' }}"><i class="fas fa-plus-square"></i> Create</a></li>
-                            </ul>
                         </li>
 
                         <li class="nav-item">
@@ -279,26 +264,26 @@
                 <div class="page-header page-header-light shadow">
                     <div class="page-header-content d-lg-flex">
 
-                        <h4 class="page-title text-center" style="margin: 0px;">
+                        <h4 class="page-title text-center m-0">
 
-                            <div class="d-inline-flex ms-auto" style="width: 100%">
-                                <a href="{{ url('/transaction/add-income') }}" class="btn btn-success">
-                                    <i class="fas fa-plus-circle"></i> &nbsp; Add Income
+                            <div class="btn-group" role="group">
+                                <a href="{{ url('/transaction/add-income') }}" class="btn btn-light text-success" title="Add Income">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <div class="d-none d-md-block ms-2">Add Income</div>
                                 </a>
-                                <a href="{{ url('/transaction/add-expense') }}" class="btn btn-danger" style="margin-left: 10px;">
-                                    <i class="fas fa-minus-circle"></i> &nbsp; Add Expense
+                                <a href="{{ url('/transaction/add-expense') }}" class="btn btn-light text-danger" title="Add Expense">
+                                    <i class="fas fa-minus-circle"></i>
+                                    <div class="d-none d-md-block ms-2">Add Expense</div>
                                 </a>
-                                <a href="{{ url('/transaction/do-transfer') }}" class="btn btn-primary" style="margin-left: 10px;">
-                                    <i class="fas fa-retweet"></i> &nbsp; Transfer
+                                <a href="{{ url('/transaction/do-transfer') }}" class="btn btn-light text-primary" title="Do Transfer">
+                                    <i class="fas fa-retweet"></i>
+                                    <div class="d-none d-md-block ms-2">Transfer</div>
                                 </a>
                             </div>
 
                         </h4>
 
-
                     </div>
-
-
                 </div>
                 <!-- /page header -->
 

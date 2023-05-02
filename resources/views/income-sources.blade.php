@@ -9,12 +9,16 @@
                 <!-- Marketing campaigns -->
                 <div class="card">
 
-                    <div class="card-header d-flex align-items-center">
-                        <h5 class="mb-0">Total Income</h5>
+                    <div class="card-header">
+                        <div class="col-md-6 float-start text-start">
+                            <h5 class="mb-0">Total Income : {{ $totalIncome }} TK</h5>
+                        </div>
 
-                        <div class="d-inline-flex ms-auto">
-                            <a href="#" class="btn btn-success" style="margin-left: 10px;">{{ $totalIncome }} TK</a>
-                            <a href="{{ url('/income-source') }}" class="btn btn-success" style="margin-left: 10px;">Create Income Source</a>
+                        <div class="col-md-6 float-end text-end">
+                            <a href="{{ url('/income-source') }}" class="btn btn-success btn-sm" title="Add income source">
+                                <i class="fas fa-plus"></i>
+                                <div class="d-none d-md-block ms-1">Add income source</div>
+                            </a>
                         </div>
                     </div>
 

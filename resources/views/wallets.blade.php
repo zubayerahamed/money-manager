@@ -6,13 +6,18 @@
             <div class="col-xl-12">
                 <!-- Marketing campaigns -->
                 <div class="card">
-                    
-                    <div class="card-header d-flex align-items-center">
-                        <h5 class="mb-0">Total Balance</h5><a href="#" class="btn btn-indigo" style="margin-left: 10px;">{{ $totalBalance }} TK</a>
 
-                        <div class="d-inline-flex ms-auto">
-                            <a href="#" class="btn btn-danger" title="Total transaction charge">TRNC: {{ $totalTrnCharge }} TK</a>
-                            <a href="{{ url('/wallet') }}" class="btn btn-success" style="margin-left: 10px;">Create Wallet</a>
+                    <div class="card-header">
+                        <div class="col-md-6 float-start text-start">
+                            <p class="mb-0">Balance : {{ $totalBalance }} TK</p>
+                            <p class="mb-0">Transaction Charge : {{ $totalTrnCharge }} TK</p>
+                        </div>
+
+                        <div class="col-md-6 float-end text-end">
+                            <a href="{{ url('/wallet') }}" class="btn btn-success btn-sm" title="Create wallet">
+                                <i class="fas fa-plus"></i>
+                                <div class="d-none d-md-block ms-1">Create wallet</div>
+                            </a>
                         </div>
                     </div>
 
@@ -83,6 +88,70 @@
 
 
     <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Title</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <form id="create-wallet-form-modal" action="{{ url('/wallet') }}" method="POST">
+                                @csrf
+
+                                <i class="fab fa-korvue fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
+
+                                <div class="row mb-3">
+                                    <label class="form-label">Icon:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="icon" id="icon" value="fab fa-korvue" readonly>
+                                        <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="form-label">Wallet name:</label>
+                                    <div class="form-group">
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="form-label">Current Balance:</label>
+                                    <div class="form-group">
+                                        <input type="number" name="current_balance" class="form-control" value="0" min="0" step="any" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="form-label">Note:</label>
+                                    <div class="form-group">
+                                        <textarea rows="3" cols="3" class="form-control" name="note"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="smyModal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
