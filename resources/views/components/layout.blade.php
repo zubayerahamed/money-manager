@@ -20,6 +20,7 @@
     <link href="/assets/css/ltr/all.min.css" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="/assets/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
+    <link rel="stylesheet" href="{{ asset('/assets/css/toastr.min.css') }}">
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -35,14 +36,69 @@
     <script src="/assets/js/vendor/visualization/echarts/echarts.min.js"></script>
     <script src="/assets/js/vendor/visualization/d3/d3.min.js"></script>
     <script src="/assets/js/vendor/visualization/d3/d3_tooltip.js"></script>
+    <script src="{{ asset('/assets/js/toastr.min.js') }}"></script>
 
     <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/custom.js"></script>
 
     <script src="/assets/demo/charts/echarts/pies/pie_donut.js"></script>
     <script src="/assets/demo/pages/form_select2.js"></script>
+
+    <script>
+        /**
+         * Loading mask object
+         * function1 : show  -- Show loading mask
+         * function2 : hide  -- Hide loading mask
+         */
+        var loadingMask2 = {
+            show: function() {
+                $("div#loadingmask2, div.loadingdots, div#loadingdots").removeClass(
+                    "nodisplay"
+                );
+            },
+            hide: function() {
+                $("div#loadingmask2, div.loadingdots, div#loadingdots").addClass(
+                    "nodisplay"
+                );
+            },
+        };
+
+
+        // Toaster message
+        function showMessage(type, message) {
+            if (type == undefined || type == "") return;
+
+            var className = "";
+            if (type.toUpperCase() == "SUCCESS") {
+                className = "bg-success";
+            } else if (type.toUpperCase() == "ERROR") {
+                className = "bg-danger";
+            } else if (type.toUpperCase() == "INFO") {
+                className = "bg-info";
+            } else if (type.toUpperCase() == "WARNING") {
+                className = "bg-warning";
+            }
+
+            if (className == "") return;
+
+            console.log('here');
+
+            $(document).Toasts("create", {
+                class: className,
+                title: type.toUpperCase(),
+                autohide: true,
+                delay: 3000,
+                body: message,
+            });
+        }
+    </script>
     <!-- /theme JS files -->
 
     <style>
+        .nodisplay {
+            display: none;
+        }
+
         .box-item {
             width: 48%;
             margin-left: 1%;
@@ -99,6 +155,221 @@
             margin-top: 150px;
             background: #fff;
             padding: 50px 30px;
+        }
+
+
+        /* ===============
+=== Loading mask 2
+================== */
+        #loadingdots {
+            position: relative;
+            height: 100px;
+            width: 200px;
+            top: calc(50% - 50px);
+            left: calc(50% - 100px);
+        }
+
+        #loadingdots_1 {
+            left: 0;
+            -moz-animation-delay: 0s;
+            -webkit-animation-delay: 0s;
+            -ms-animation-delay: 0s;
+            -o-animation-delay: 0s;
+            animation-delay: 0s;
+        }
+
+        #loadingdots_2 {
+            left: 30px;
+            -moz-animation-delay: 0.2s;
+            -webkit-animation-delay: 0.2s;
+            -ms-animation-delay: 0.2s;
+            -o-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+        #loadingdots_3 {
+            left: 60px;
+            -moz-animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+            -ms-animation-delay: 0.4s;
+            -o-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+
+        #loadingdots_4 {
+            left: 90px;
+            -moz-animation-delay: 0.6s;
+            -webkit-animation-delay: 0.6s;
+            -ms-animation-delay: 0.6s;
+            -o-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+        }
+
+        #loadingdots_5 {
+            left: 120px;
+            -moz-animation-delay: 0.8s;
+            -webkit-animation-delay: 0.8s;
+            -ms-animation-delay: 0.8s;
+            -o-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+        }
+
+        #loadingdots_6 {
+            left: 150px;
+            -moz-animation-delay: 1s;
+            -webkit-animation-delay: 1s;
+            -ms-animation-delay: 1s;
+            -o-animation-delay: 1s;
+            animation-delay: 1s;
+        }
+
+        #loadingdots_7 {
+            left: 180px;
+            -moz-animation-delay: 1.2s;
+            -webkit-animation-delay: 1.2s;
+            -ms-animation-delay: 1.2s;
+            -o-animation-delay: 1.2s;
+            animation-delay: 1.2s;
+        }
+
+        @-moz-keyframes bounce_loadingdots {
+            0% {
+                -moz-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            25% {
+                -moz-transform: scale(1.5);
+                opacity: 1;
+            }
+
+            50% {
+                -moz-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                -moz-transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @-webkit-keyframes bounce_loadingdots {
+            0% {
+                -webkit-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            25% {
+                -webkit-transform: scale(1.5);
+                opacity: 1;
+            }
+
+            50% {
+                -webkit-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                -webkit-transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @-ms-keyframes bounce_loadingdots {
+            0% {
+                -ms-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            25% {
+                -ms-transform: scale(1.5);
+                opacity: 1;
+            }
+
+            50% {
+                -ms-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                -ms-transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @-o-keyframes bounce_loadingdots {
+            0% {
+                -o-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            25% {
+                -o-transform: scale(1.5);
+                opacity: 1;
+            }
+
+            50% {
+                -o-transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                -o-transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes bounce_loadingdots {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            25% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        .loadingdots {
+            -webkit-animation-duration: 1.5s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-name: bounce_loadingdots;
+            -moz-animation-duration: 1.5s;
+            -moz-animation-iteration-count: infinite;
+            -moz-animation-name: bounce_loadingdots;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-name: bounce_loadingdots;
+            background-color: #FF6C60;
+            border-radius: 2px;
+            position: absolute;
+            top: 0;
+            color: #fff;
+            padding: 40px 5px;
+            text-align: center;
+            padding: 5px 5px;
+        }
+
+        #loadingmask2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
         }
     </style>
 </head>
@@ -267,15 +538,15 @@
                         <h4 class="page-title text-center m-0">
 
                             <div class="btn-group" role="group">
-                                <a href="{{ url('/transaction/add-income') }}" class="btn btn-light text-success" title="Add Income">
+                                <a href="{{ url('/transaction/add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income">
                                     <i class="fas fa-plus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Income</div>
                                 </a>
-                                <a href="{{ url('/transaction/add-expense') }}" class="btn btn-light text-danger" title="Add Expense">
+                                <a href="{{ url('/transaction/add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense">
                                     <i class="fas fa-minus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Expense</div>
                                 </a>
-                                <a href="{{ url('/transaction/do-transfer') }}" class="btn btn-light text-primary" title="Do Transfer">
+                                <a href="{{ url('/transaction/do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer">
                                     <i class="fas fa-retweet"></i>
                                     <div class="d-none d-md-block ms-2">Transfer</div>
                                 </a>
@@ -323,6 +594,104 @@
     </div>
     <!-- /page content -->
 
+
+    <!-- Transaction Modal -->
+    <div class="modal fade" id="transaction-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title transaction-modal-title">Modal Title</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 transaction-form-wrapper">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Mask -->
+    <div>
+        <div id="loadingmask2" class="nodisplay">
+            <div id="loadingdots" class="nodisplay">
+                <div id="loadingdots_1" class="loadingdots nodisplay">L</div>
+                <div id="loadingdots_2" class="loadingdots nodisplay">O</div>
+                <div id="loadingdots_3" class="loadingdots nodisplay">A</div>
+                <div id="loadingdots_4" class="loadingdots nodisplay">D</div>
+                <div id="loadingdots_5" class="loadingdots nodisplay">I</div>
+                <div id="loadingdots_6" class="loadingdots nodisplay">N</div>
+                <div id="loadingdots_7" class="loadingdots nodisplay">G</div>
+            </div>
+        </div>
+    </div>
+    <!-- ./Loading Mask -->
+
+    <script>
+        $(document).ready(function() {
+
+            $('body').on('click', '.transaction-btn', function(e) {
+                e.preventDefault();
+
+                var url = $(this).attr("href");
+                var modalTitle = $(this).data('title');
+                $('.transaction-modal-title').html(modalTitle);
+
+                loadingMask2.show();
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function(data) {
+                        loadingMask2.hide();
+                        $(".transaction-form-wrapper").html("");
+                        $('#transaction-modal').modal('show');
+                        $(".transaction-form-wrapper").append(data);
+                    },
+                    error: function(jqXHR, status, errorThrown) {
+                        loadingMask2.hide();
+                        showMessage("error", jqXHR.responseJSON.message);
+                    },
+                });
+            });
+
+            $('body').on('click', '.transaction-submit-btn', function(e) {
+                e.preventDefault();
+
+                var url = $('#transaction-form').attr('action');
+                var data = $('#transaction-form').serializeArray();
+
+                loadingMask2.show();
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="_token"]').attr("content"),
+                    },
+                    data: data,
+                    success: function(data) {
+                        console.log({
+                            data
+                        });
+                        loadingMask2.hide();
+                        $(".transaction-form-wrapper").html("");
+                        $('#transaction-modal').modal('hide');
+                    },
+                    error: function(jqXHR, status, errorThrown) {
+                        loadingMask2.hide();
+                        showMessage("error", jqXHR.responseJSON.message);
+                    },
+                });
+            })
+        })
+    </script>
 </body>
 
 </html>

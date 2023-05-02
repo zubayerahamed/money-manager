@@ -7,17 +7,27 @@ use App\Models\ExpenseType;
 use App\Models\IncomeSource;
 use App\Models\TrackingHistory;
 use App\Models\Wallet;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Undefined;
 
 class TrackingHistoryController extends Controller
 {
+    use HttpResponses;
 
     public function showAddIncomePage()
     {
         $incomeSources = IncomeSource::where('user_id', auth()->user()->id)->get();
         $wallets = Wallet::where('user_id', auth()->user()->id)->get();
+
+        if (request()->ajax()) {
+            return view('layouts.transactions.transaction-create-form', [
+                'incomeSources' => $incomeSources,
+                'wallets' => $wallets,
+                'transaction_type' => 'INCOME'
+            ]);
+        }
 
         return view('add-income', [
             'incomeSources' => $incomeSources,
@@ -30,6 +40,14 @@ class TrackingHistoryController extends Controller
         $wallets = Wallet::where('user_id', auth()->user()->id)->get();
         $expenseTypes = ExpenseType::where('user_id', auth()->user()->id)->get();
 
+        if (request()->ajax()) {
+            return view('layouts.transactions.transaction-create-form', [
+                'expenseTypes' => $expenseTypes,
+                'wallets' => $wallets,
+                'transaction_type' => 'EXPENSE'
+            ]);
+        }
+
         return view('add-expense', [
             'expenseTypes' => $expenseTypes,
             'wallets' => $wallets
@@ -39,6 +57,14 @@ class TrackingHistoryController extends Controller
     public function showDoTransferPage()
     {
         $wallets = Wallet::where('user_id', auth()->user()->id)->get();
+
+        if (request()->ajax()) {
+            return view('layouts.transactions.transaction-create-form', [
+                'wallets' => $wallets,
+                'transaction_type' => 'TRANSFER'
+            ]);
+        }
+
         return view('do-transfer', [
             'wallets' => $wallets
         ]);
@@ -87,6 +113,11 @@ class TrackingHistoryController extends Controller
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
+
+                if (request()->ajax()) {
+                    return $this->error(null, $wallet->name . ' has insufficient balance for transaction', 200);
+                }
+
                 return back()->with('error', $wallet->name . ' has insufficient balance for transaction');
             }
         } else {
@@ -105,6 +136,11 @@ class TrackingHistoryController extends Controller
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
+
+                if (request()->ajax()) {
+                    return $this->error(null, $wallet->name . ' has insufficient balance for transaction', 200);
+                }
+
                 return back()->with('error', $wallet->name . ' has insufficient balance for transaction');
             }
         }
@@ -151,7 +187,15 @@ class TrackingHistoryController extends Controller
                 $savedArhead = Arhead::create($arhead);
             }
 
+            if (request()->ajax()) {
+                return $this->success(null, $message);
+            }
+
             return redirect('/transaction/' . $redirectUrl)->with('success', $message);
+        }
+
+        if (request()->ajax()) {
+            return $this->error(null, $errorMessage, 200);
         }
 
         return redirect('/transaction/' . $redirectUrl)->with('error', $errorMessage);
