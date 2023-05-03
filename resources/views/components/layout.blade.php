@@ -47,13 +47,13 @@
             display: none;
         }
 
-.toast-msg-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    min-width: 350px;
-    z-index: 9999999;
-}
+        .toast-msg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 350px;
+            z-index: 9999999;
+        }
 
         .box-item {
             width: 48%;
@@ -646,10 +646,16 @@
                             $(".transaction-form-wrapper").html("");
                             $('#transaction-modal').modal('hide');
                         }
-                        if(data.reload == true){
-                            setTimeout(() => {
-                                location.reload();
-                            }, 500);
+                        if (data.reload == true) {
+                            if (data.sections.length > 0) {
+                                $.each(data.sections, function(ind, section) {
+                                    sectionReloadAjaxReq(section);
+                                });
+                            } else {
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 500);
+                            }
                         }
                     },
                     error: function(jqXHR, status, errorThrown) {
@@ -657,7 +663,27 @@
                         showMessage("error", jqXHR.responseJSON.message);
                     },
                 });
-            })
+            });
+
+            function sectionReloadAjaxReq(section) {
+                var elementClass = section[0];
+                var url = section[1];
+
+                loadingMask2.show();
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function(data) {
+                        loadingMask2.hide();
+                        $("." + elementClass).html("");
+                        $("." + elementClass).append(data);
+                    },
+                    error: function(jqXHR, status, errorThrown) {
+                        loadingMask2.hide();
+                        showMessage("error", jqXHR.responseJSON.message);
+                    },
+                });
+            }
         })
     </script>
 </body>

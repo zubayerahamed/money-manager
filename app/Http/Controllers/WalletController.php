@@ -44,6 +44,15 @@ class WalletController extends Controller
             ->where('user_id', '=', auth()->user()->id)
             ->get();
 
+        if(request()->ajax()){
+            return view('layouts.wallets.wallets-accordion', [
+                'wallets' => $wallets,
+                'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
+                'totalTrnCharge' => $totalTransactionCharge[0]->totalTrnCharge == null ? 0 : $totalTransactionCharge[0]->totalTrnCharge,
+                'accounts' => $accounts
+            ]);
+        }
+
         return view('wallets', [
             'wallets' => $wallets,
             'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
@@ -110,7 +119,7 @@ class WalletController extends Controller
 
         if ($wallet) {
             if (request()->ajax()) {
-                return $this->success(null, $wallet->name . ' wallet created successfully', 200, true);
+                return $this->successWithReloadSections(null, $wallet->name . ' wallet created successfully', 200, [['wallets-accordion', route('wallets')]]);
             }
             return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
         }
@@ -133,7 +142,7 @@ class WalletController extends Controller
 
         if ($uWallet) {
             if (request()->ajax()) {
-                return $this->success(null, $wallet->name . ' wallet updated successfully', 200, true);
+                return $this->successWithReloadSections(null, $wallet->name . ' wallet updated successfully', 200, [['wallets-accordion', route('wallets')]]);
             }
 
             return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
