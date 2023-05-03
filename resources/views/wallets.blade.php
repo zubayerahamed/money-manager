@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="col-md-6 float-end text-end">
-                            <a href="{{ url('/wallet') }}" class="btn btn-success btn-sm" title="Create wallet">
+                            <a href="{{ url('/wallet') }}" class="btn btn-success btn-sm create-wallet-btn" data-title="Create wallet">
                                 <i class="fas fa-plus"></i>
                                 <div class="d-none d-md-block ms-1">Create wallet</div>
                             </a>
@@ -56,7 +56,7 @@
                                                 <a href="{{ url('/wallet') . '/' . $wallet->id }}/saving }}" class="btn-saving m-2 text-success" data-wallet-id="{{ $wallet->id }}" data-wallet-name="{{ $wallet->name }}" data-wallet-amount="{{ $wallet->currentBalance }}" title="Do Saving">
                                                     <i class="far fa-save"></i>
                                                 </a>
-                                                <a href="{{ url('/wallet') . '/' . $wallet->id }}/edit" class="m-2 text-primary" title="Edit">
+                                                <a href="{{ url('/wallet') . '/' . $wallet->id }}/edit" class="m-2 text-primary wallet-edit-btn" data-title="Edit wallet">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <form action="{{ url('/wallet') . '/' . $wallet->id }}/delete" style="display: inline-block" method="POST">
@@ -79,70 +79,6 @@
         <!-- /dashboard content -->
     </div>
     <!-- /content area -->
-
-
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Modal Title</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-
-                            <form id="create-wallet-form-modal" action="{{ url('/wallet') }}" method="POST">
-                                @csrf
-
-                                <i class="fab fa-korvue fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
-
-                                <div class="row mb-3">
-                                    <label class="form-label">Icon:</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="icon" id="icon" value="fab fa-korvue" readonly>
-                                        <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="form-label">Wallet name:</label>
-                                    <div class="form-group">
-                                        <input type="text" name="name" class="form-control" required>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="form-label">Current Balance:</label>
-                                    <div class="form-group">
-                                        <input type="number" name="current_balance" class="form-control" value="0" min="0" step="any" required>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="form-label">Note:</label>
-                                    <div class="form-group">
-                                        <textarea rows="3" cols="3" class="form-control" name="note"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-primary">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
-                                </div>
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 
     <div class="modal fade" id="smyModal">
@@ -211,6 +147,29 @@
     <script>
         $(document).ready(function() {
 
+            $('body').on('click', '.create-wallet-btn, .wallet-edit-btn', function(e){
+                e.preventDefault();
+
+                var url = $(this).attr("href");
+                var modalTitle = $(this).data('title');
+                $('.transaction-modal-title').html(modalTitle);
+
+                loadingMask2.show();
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function(data) {
+                        loadingMask2.hide();
+                        $(".transaction-form-wrapper").html("");
+                        $('#transaction-modal').modal('show');
+                        $(".transaction-form-wrapper").append(data);
+                    },
+                    error: function(jqXHR, status, errorThrown) {
+                        loadingMask2.hide();
+                        showMessage("error", jqXHR.responseJSON.message);
+                    },
+                });
+            })
 
             $('.btn-saving').off('click').on('click', function(e) {
                 e.preventDefault();

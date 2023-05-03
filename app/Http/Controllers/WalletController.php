@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Arhead;
 use App\Models\TrackingHistory;
 use App\Models\Wallet;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class WalletController extends Controller
 {
+
+    use HttpResponses;
 
     public function walletStatusPieChart()
     {
@@ -51,11 +54,18 @@ class WalletController extends Controller
 
     public function showCreateWalletPage()
     {
+        if (request()->ajax()) {
+            return view('layouts.wallets.wallet-form', ['wallet' => new Wallet()]);
+        }
         return view('wallet-create');
     }
 
     public function showUpdateWalletPage(Wallet $wallet)
     {
+        if (request()->ajax()) {
+            return view('layouts.wallets.wallet-form', ['wallet' => $wallet]);
+        }
+
         return view('wallet-update', ['wallet' => $wallet]);
     }
 
@@ -98,9 +108,17 @@ class WalletController extends Controller
             }
         }
 
-        if ($wallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
+        if ($wallet) {
+            if (request()->ajax()) {
+                return $this->success(null, $wallet->name . ' wallet created successfully', 200, true);
+            }
+            return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
+        }
 
-        return redirect('/wallet')->with('error', "Can't create wallet");
+        if (request()->ajax()) {
+            return $this->error(null, "Something went wrong, please try again later.", 200);
+        }
+        return redirect('/wallet')->with('error', "Something went wrong, please try again later.");
     }
 
     public function updateWallet(Wallet $wallet, Request $requset)
@@ -113,8 +131,17 @@ class WalletController extends Controller
 
         $uWallet = $wallet->update($requset->all());
 
-        if ($uWallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
+        if ($uWallet) {
+            if (request()->ajax()) {
+                return $this->success(null, $wallet->name . ' wallet updated successfully', 200, true);
+            }
 
+            return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
+        }
+
+        if (request()->ajax()) {
+            return $this->error(null, $wallet->name . ' wallet update failed', 200);
+        }
         return redirect('/wallet/' . $wallet->id . '/edit')->with('error', $wallet->name . ' wallet update failed');
     }
 

@@ -641,10 +641,15 @@
                     data: data,
                     success: function(data) {
                         loadingMask2.hide();
-                        showMessage(data.status, data.message);
+                        showMessage(data.status, data.message, data.reload);
                         if (data.status == 'success') {
                             $(".transaction-form-wrapper").html("");
                             $('#transaction-modal').modal('hide');
+                        }
+                        if(data.reload == true){
+                            setTimeout(() => {
+                                location.reload();
+                            }, 500);
                         }
                     },
                     error: function(jqXHR, status, errorThrown) {

@@ -12,12 +12,13 @@ trait HttpResponses
      * @param integer $code
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function success($data, $message = null, $code = 200)
+    protected function success($data, $message = null, $code = 200, $reload = false)
     {
         return response()->json([
             'status' => 'success',
             'message' => $message,
-            'data' => $data
+            'data' => $data,
+            'reload' => $reload
         ], $code);
     }
 
