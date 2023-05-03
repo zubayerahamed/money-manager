@@ -38,14 +38,14 @@
                     <div class="tab-content card-body">
 
                         <div class="tab-pane active fade show" id="messages-monthly">
-                            <a href="{{ url('/tracking/details/month/' . date('m') . '/' . date('Y')) }}" class="btn btn-light btn-sm float-end mb-2"><i class="far fa-eye"></i></a>
+                            <a href="{{ url('/tracking/details/month/' . date('m') . '/' . date('Y')) }}" class="btn btn-light btn-sm mb-2"><i class="far fa-eye"></i></a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic" style="height: 440px;"></div>
                             </div>
 
                             @foreach ($monthWiseGroup as $key => $val)
                                 @if ($val['month'] == date('m'))
-                                    <div class="row">
+                                    <div class="row mt-2">
                                         <div class="col-md-3 mt-2"><button class="btn btn-light btn-sm w-100"><h5 class="m-0">Current Balance <br/> {{ $currentBalance }} TK</h5></button></div>
                                         <div class="col-md-3 mt-2"><button class="btn btn-light btn-sm w-100"><h5 class="m-0 text-success">Income <br/> {{ $val['income'] }} TK</h5></button></div>
                                         <div class="col-md-3 mt-2"><button class="btn btn-light btn-sm w-100"><h5 class="m-0 text-danger">Expense <br/> {{ $val['expense'] + $val['trancharge'] }} TK</h5></button></div>
@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="messages-yearly">
-                            <a href="{{ url('/tracking/details/year/' . date('Y')) }}" class="btn btn-light btn-sm float-end mb-2"><i class="far fa-eye"></i></a>
+                            <a href="{{ url('/tracking/details/year/' . date('Y')) }}" class="btn btn-light btn-sm mb-2"><i class="far fa-eye"></i></a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic_yearly" style="height: 440px;"></div>
                             </div>

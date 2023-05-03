@@ -26,55 +26,50 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table text-nowrap">
-                            <tbody>
-                                <thead>
-                                    <tr>
-                                        <th>Wallet</th>
-                                        <th class="text-center">Balance (TK)</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-
-                                @foreach ($wallets as $wallet)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div style="width: 70px; text-align: center;">
-                                                    <i class="{{ $wallet->icon }} fa-2x me-3"></i>
-                                                </div>
-                                                <div>
-                                                    <div style="text-transform: uppercase; font-weight: bold;">{{ $wallet->name }}</div>
-                                                    <div class="text-muted fs-sm">
-                                                        <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> Created on : {{ $wallet->created_at->format('d/m/Y H:i:s') }}
-                                                    </div>
+                    <div class="accordion accordion-flush" id="accordion_flush">
+                        @foreach ($wallets as $wallet)
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $wallet->id }}">
+                                        <div class="d-flex align-items-center">
+                                            <div style="width: 70px; text-align: center;">
+                                                <i class="{{ $wallet->icon }} fa-2x me-3"></i>
+                                            </div>
+                                            <div>
+                                                <div style="text-transform: uppercase; font-weight: bold;">{{ $wallet->name }}</div>
+                                                <div class="text-muted fs-sm">
+                                                    <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $wallet->currentBalance }} TK</span>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <h6 class="mb-0 text-center">{{ $wallet->currentBalance }}</h6>
-                                        </td>
-                                        <td style="text-align: right;">
-                                            <a href="{{ url('/wallet') . '/' . $wallet->id }}/saving }}" data-wallet-id="{{ $wallet->id }}" data-wallet-name="{{ $wallet->name }}" data-wallet-amount="{{ $wallet->currentBalance }}" class="btn-saving btn btn-success btn-labeled btn-labeled-start btn-sm" title="Do Saving">
-                                                <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="far fa-save"></i></span> Do Savings
-                                            </a>
-                                            <a href="{{ url('/wallet') . '/' . $wallet->id }}/edit" class="btn btn-primary btn-labeled btn-labeled-start btn-sm" title="Edit">
-                                                <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-pencil ph-sm"></i> </span> Edit
-                                            </a>
-                                            <form action="{{ url('/wallet') . '/' . $wallet->id }}/delete" style="display: inline-block" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-labeled btn-labeled-start btn-sm" title="Delete">
-                                                    <span class="btn-labeled-icon bg-black bg-opacity-20"> <i class="ph-trash ph-sm"></i> </span> Delete
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush_item{{ $wallet->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush">
+                                    <div class="accordion-body">
+                                        <div class="col-md-12 text-center">
+                                            @if ($wallet->note != '')
+                                                <div class="col-md-12 text-center mb-2">
+                                                    <span class="fw-semibold">{{ $wallet->note }}</span>
+                                                </div>
+                                            @endif
+                                            <span class="badge border border-teal text-teal rounded-pill m-auto">
+                                                <a href="{{ url('/wallet') . '/' . $wallet->id }}/saving }}" class="btn-saving m-2 text-success" data-wallet-id="{{ $wallet->id }}" data-wallet-name="{{ $wallet->name }}" data-wallet-amount="{{ $wallet->currentBalance }}" title="Do Saving">
+                                                    <i class="far fa-save"></i>
+                                                </a>
+                                                <a href="{{ url('/wallet') . '/' . $wallet->id }}/edit" class="m-2 text-primary" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ url('/wallet') . '/' . $wallet->id }}/delete" style="display: inline-block" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <a href="" class="m-2 text-danger"><i class="fas fa-trash"></i></a>
+                                                </form>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
 
                 </div>

@@ -111,7 +111,7 @@ class WalletController extends Controller
             'icon' => 'required'
         ]);
 
-        $uWallet = $wallet->update($incomingFields);
+        $uWallet = $wallet->update($requset->all());
 
         if ($uWallet) return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
 

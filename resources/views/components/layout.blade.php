@@ -15,89 +15,45 @@
     </title>
 
     <!-- Global stylesheets -->
-    <link href="/assets/fonts/inter/inter.css" rel="stylesheet" type="text/css">
-    <link href="/assets/icons/phosphor/styles.min.css" rel="stylesheet" type="text/css">
-    <link href="/assets/css/ltr/all.min.css" id="stylesheet" rel="stylesheet" type="text/css">
-    <link href="/assets/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
-    <link rel="stylesheet" href="{{ asset('/assets/css/toastr.min.css') }}">
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
+    <script src="{{ asset('/assets/js/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/popper/popper.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="/assets/js/vendor/forms/selects/select2.min.js"></script>
-    <script src="/assets/js/vendor/notifications/noty.min.js"></script>
-    <script src="/assets/js/vendor/visualization/echarts/echarts.min.js"></script>
-    <script src="/assets/js/vendor/visualization/d3/d3.min.js"></script>
-    <script src="/assets/js/vendor/visualization/d3/d3_tooltip.js"></script>
-    <script src="{{ asset('/assets/js/toastr.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
+    <script src="{{ asset('/assets/js/vendor/forms/selects/select2.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/vendor/visualization/echarts/echarts.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
 
-    <script src="/assets/js/app.js"></script>
-    <script src="/assets/js/custom.js"></script>
+    <script src="{{ asset('/assets/js/app.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom.js') }}"></script>
 
-    <script src="/assets/demo/charts/echarts/pies/pie_donut.js"></script>
-    <script src="/assets/demo/pages/form_select2.js"></script>
-
-    <script>
-        /**
-         * Loading mask object
-         * function1 : show  -- Show loading mask
-         * function2 : hide  -- Hide loading mask
-         */
-        var loadingMask2 = {
-            show: function() {
-                $("div#loadingmask2, div.loadingdots, div#loadingdots").removeClass(
-                    "nodisplay"
-                );
-            },
-            hide: function() {
-                $("div#loadingmask2, div.loadingdots, div#loadingdots").addClass(
-                    "nodisplay"
-                );
-            },
-        };
-
-
-        // Toaster message
-        function showMessage(type, message) {
-            if (type == undefined || type == "") return;
-
-            var className = "";
-            if (type.toUpperCase() == "SUCCESS") {
-                className = "bg-success";
-            } else if (type.toUpperCase() == "ERROR") {
-                className = "bg-danger";
-            } else if (type.toUpperCase() == "INFO") {
-                className = "bg-info";
-            } else if (type.toUpperCase() == "WARNING") {
-                className = "bg-warning";
-            }
-
-            if (className == "") return;
-
-            console.log('here');
-
-            $(document).Toasts("create", {
-                class: className,
-                title: type.toUpperCase(),
-                autohide: true,
-                delay: 3000,
-                body: message,
-            });
-        }
-    </script>
+    <script src="{{ asset('/assets/demo/charts/echarts/pies/pie_donut.js') }}"></script>
+    <script src="{{ asset('/assets/demo/pages/form_select2.js') }}"></script>
     <!-- /theme JS files -->
 
     <style>
         .nodisplay {
             display: none;
         }
+
+.toast-msg-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 350px;
+    z-index: 9999999;
+}
 
         .box-item {
             width: 48%;
@@ -156,7 +112,6 @@
             background: #fff;
             padding: 50px 30px;
         }
-
 
         /* ===============
 === Loading mask 2
@@ -558,6 +513,14 @@
                 </div>
                 <!-- /page header -->
 
+                <!-- Notification Message -->
+                <div class="col-md-12 toast-msg-wrapper d-none" style="padding: 20px; padding-bottom: 0px;">
+                    <div class="alert alert-dismissible fade show toast-msg" style="margin-bottom: 0px;">
+                        <span class="fw-semibold toast-msg-status"></span> <span class="toast-msg-body"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                </div>
+
                 @if (Session::has('success'))
                     <div class="col-md-12" style="padding: 20px; padding-bottom: 0px;">
                         <div class="alert alert-success alert-dismissible fade show" style="margin-bottom: 0px;">
@@ -594,7 +557,6 @@
     </div>
     <!-- /page content -->
 
-
     <!-- Transaction Modal -->
     <div class="modal fade" id="transaction-modal">
         <div class="modal-dialog">
@@ -618,6 +580,7 @@
             </div>
         </div>
     </div>
+    <!-- ./Transaction Modal -->
 
     <!-- Loading Mask -->
     <div>
@@ -677,12 +640,12 @@
                     },
                     data: data,
                     success: function(data) {
-                        console.log({
-                            data
-                        });
                         loadingMask2.hide();
-                        $(".transaction-form-wrapper").html("");
-                        $('#transaction-modal').modal('hide');
+                        showMessage(data.status, data.message);
+                        if (data.status == 'success') {
+                            $(".transaction-form-wrapper").html("");
+                            $('#transaction-modal').modal('hide');
+                        }
                     },
                     error: function(jqXHR, status, errorThrown) {
                         loadingMask2.hide();
