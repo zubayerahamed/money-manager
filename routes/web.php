@@ -57,6 +57,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/wallet/{wallet}', [WalletController::class, 'updateWallet'])->name('wallet.update');
     Route::delete('/wallet/{wallet}/delete', [WalletController::class, 'deleteWallet'])->name('wallet.delete');
 
+    Route::get('/wallet/piechart', [WalletController::class, 'piechart'])->name('wallet.piechart');
+    Route::get('/wallet/header', [WalletController::class, 'header'])->name('wallet.header');
+
     // Budget
     Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'monthlyBudgetList'])->name('budget.list');
     Route::get('/budget/{expenseType}/{month}/{year}', [BudgetController::class, 'showCreateBudgetPage'])->name('budget.create.page');

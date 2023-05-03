@@ -20,6 +20,7 @@
     <link href="{{ asset('/assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
+    <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" />
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -34,6 +35,8 @@
     <script src="{{ asset('/assets/js/vendor/visualization/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
     <script src="{{ asset('/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+    
 
     <script src="{{ asset('/assets/js/app.js') }}"></script>
     <script src="{{ asset('/assets/js/custom.js') }}"></script>
@@ -666,17 +669,14 @@
             });
 
             function sectionReloadAjaxReq(section) {
-                var elementClass = section[0];
-                var url = section[1];
-
                 loadingMask2.show();
                 $.ajax({
-                    url: url,
+                    url: section[1],
                     type: "GET",
                     success: function(data) {
                         loadingMask2.hide();
-                        $("." + elementClass).html("");
-                        $("." + elementClass).append(data);
+                        $("." + section[0]).html("");
+                        $("." + section[0]).append(data);
                     },
                     error: function(jqXHR, status, errorThrown) {
                         loadingMask2.hide();

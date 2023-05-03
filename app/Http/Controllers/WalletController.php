@@ -44,7 +44,7 @@ class WalletController extends Controller
             ->where('user_id', '=', auth()->user()->id)
             ->get();
 
-        if(request()->ajax()){
+        if (request()->ajax()) {
             return view('layouts.wallets.wallets-accordion', [
                 'wallets' => $wallets,
                 'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
@@ -119,7 +119,11 @@ class WalletController extends Controller
 
         if ($wallet) {
             if (request()->ajax()) {
-                return $this->successWithReloadSections(null, $wallet->name . ' wallet created successfully', 200, [['wallets-accordion', route('wallets')]]);
+                return $this->successWithReloadSections(null, $wallet->name . ' wallet created successfully', 200, [
+                    ['wallets-accordion', route('wallets')],
+                    ['wallets-pie-chart', route('wallet.piechart')],
+                    ['wallets-header', route('wallet.header')]
+                ]);
             }
             return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
         }
@@ -128,6 +132,23 @@ class WalletController extends Controller
             return $this->error(null, "Something went wrong, please try again later.", 200);
         }
         return redirect('/wallet')->with('error', "Something went wrong, please try again later.");
+    }
+
+    public function piechart()
+    {
+        return view('layouts.wallets.wallets-pie-chart');
+    }
+
+    public function header()
+    {
+        $totalBalance = DB::table('arhead')
+            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+
+        return view('layouts.wallets.wallets-header', [
+            'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
+        ]);
     }
 
     public function updateWallet(Wallet $wallet, Request $requset)
@@ -142,7 +163,11 @@ class WalletController extends Controller
 
         if ($uWallet) {
             if (request()->ajax()) {
-                return $this->successWithReloadSections(null, $wallet->name . ' wallet updated successfully', 200, [['wallets-accordion', route('wallets')]]);
+                return $this->successWithReloadSections(null, $wallet->name . ' wallet updated successfully', 200, [
+                    ['wallets-accordion', route('wallets')],
+                    ['wallets-pie-chart', route('wallet.piechart')],
+                    ['wallets-header', route('wallet.header')]
+                ]);
             }
 
             return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');

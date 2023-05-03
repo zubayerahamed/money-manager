@@ -33,7 +33,7 @@
                                         <label class="form-label">Icon:</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="icon" id="icon" value="{{ old('icon', 'fab fa-korvue') }}" readonly>
-                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
+                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#icon-modal">Choose</button>
                                         </div>
                                     </div>
 

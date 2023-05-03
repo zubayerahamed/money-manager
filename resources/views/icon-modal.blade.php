@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="icon-modal">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
 
@@ -9885,13 +9885,13 @@
             var classList = $(this).find('i').attr('class');
             classList = classList.replace(" me-3 fa-2x", "");
 
-            $('#myModal').modal('hide');
+            $('#icon-modal').modal('hide');
 
             $('#icon').val(classList);
 
             $('#replacable-icon').removeClass($('#replacable-icon').attr('class'));
             $('#replacable-icon').addClass(classList + ' fa-2x');
-        })
+        });
 
     })
 </script>

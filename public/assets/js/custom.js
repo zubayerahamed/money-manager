@@ -1,15 +1,15 @@
 /**
-         * Loading mask object
-         * function1 : show  -- Show loading mask
-         * function2 : hide  -- Hide loading mask
-         */
+ * Loading mask object
+ * function1 : show  -- Show loading mask
+ * function2 : hide  -- Hide loading mask
+ */
 var loadingMask2 = {
-    show: function() {
+    show: function () {
         $("div#loadingmask2, div.loadingdots, div#loadingdots").removeClass(
             "nodisplay"
         );
     },
-    hide: function() {
+    hide: function () {
         $("div#loadingmask2, div.loadingdots, div#loadingdots").addClass(
             "nodisplay"
         );
@@ -45,4 +45,8 @@ function showMessage(type, message) {
         $('.toast-msg-status').html("");
         $('.toast-msg-body').html("");
     }, 5000);
+}
+
+function openIconModal(){
+    $('#icon-modal').modal('show');
 }

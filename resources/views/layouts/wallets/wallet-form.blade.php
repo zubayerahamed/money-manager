@@ -1,7 +1,7 @@
 <form id="transaction-form" action="{{ $wallet->id == null ? url('/wallet') : url('/wallet') . '/' . $wallet->id }}" method="POST">
     @csrf
     @if ($wallet->id != null)
-        @method("PUT")
+        @method('PUT')
     @endif
 
     <i class="{{ $wallet->id == null || $wallet->icon == null ? 'fab fa-korvue' : $wallet->icon }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
@@ -10,7 +10,7 @@
         <label class="form-label">Icon:</label>
         <div class="input-group">
             <input type="text" class="form-control" name="icon" id="icon" value="{{ $wallet->id == null || $wallet->icon == null ? 'fab fa-korvue' : $wallet->icon }}" readonly>
-            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Choose</button>
+            <button class="btn btn-light" onclick="openIconModal()" type="button">Choose</button>
         </div>
     </div>
 
@@ -24,7 +24,7 @@
     <div class="row mb-3">
         <label class="form-label">Current Balance:</label>
         <div class="form-group">
-            <input type="number" name="current_balance" class="form-control" value="{{ $wallet->currentBalance }}" min="0" step="any" required>
+            <input type="number" name="current_balance" class="form-control" value="{{ $wallet->currentBalance }}" min="0" step="any" required {{ $wallet->id != null ? 'disabled' : '' }}>
         </div>
     </div>
 
@@ -39,3 +39,5 @@
         <button type="submit" class="btn btn-primary transaction-submit-btn">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
     </div>
 </form>
+
+@include('icon-modal');
