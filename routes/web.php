@@ -77,13 +77,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/income-source/section/accordion', [IncomeSourceController::class, 'accordion'])->name('income-source.section.accordion');
 
     // Expense Type
-    Route::get('/expense-type/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('expense-type.status');
-    Route::get('/expense-type/all', [ExpenseTypeController::class, 'expenseTypes'])->name('expense-types');
-    Route::get('/expense-type', [ExpenseTypeController::class, 'showCreateExpenseTypePage'])->name('expense-type.create.page');
-    Route::get('/expense-type/{expenseType}/edit', [ExpenseTypeController::class, 'showUpdateExpenseTypePage'])->name('expense-type.update.page');
-    Route::post('/expense-type', [ExpenseTypeController::class, 'createExpenseType'])->name('expense-type.create');
-    Route::put('/expense-type/{expenseType}', [ExpenseTypeController::class, 'updateExpenseType'])->name('expense-type.update');
-    Route::delete('/expense-type/{expenseType}/delete', [ExpenseTypeController::class, 'deleteExpenseType'])->name('expense-type.delete');
+    Route::get('/expense-type/all', [ExpenseTypeController::class, 'index'])->name('expense-type.index');
+    Route::get('/expense-type', [ExpenseTypeController::class, 'create'])->name('expense-type.create');
+    Route::get('/expense-type/{id}/edit', [ExpenseTypeController::class, 'edit'])->name('expense-type.edit');
+    Route::post('/expense-type', [ExpenseTypeController::class, 'store'])->name('expense-type.store');
+    Route::put('/expense-type/{expenseType}', [ExpenseTypeController::class, 'update'])->name('expense-type.update');
+    Route::delete('/expense-type/{expenseType}', [ExpenseTypeController::class, 'destroy'])->name('expense-type.destroy');
+
+    Route::get('/expense-type/data/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('expense-type.data.status');
+
+    Route::get('/expense-type/section/piechart', [ExpenseTypeController::class, 'piechart'])->name('expense-type.section.piechart');
+    Route::get('/expense-type/section/header', [ExpenseTypeController::class, 'header'])->name('expense-type.section.header');
+    Route::get('/expense-type/section/accordion', [ExpenseTypeController::class, 'accordion'])->name('expense-type.section.accordion');
     
     
     // Budget

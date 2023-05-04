@@ -148,7 +148,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('/expense-type/all') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}">
+                            <a href="{{ route('expense-type.index') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}">
                                 <i class="fas fa-chart-line"></i> Expense Status
                             </a>
                         </li>

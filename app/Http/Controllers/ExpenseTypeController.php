@@ -3,12 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExpenseType;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ExpenseTypeController extends Controller
 {
+
+    use HttpResponses;
+
+    private  $section_accordion, $section_piechart, $section_header;
+
+    public function __construct()
+    {
+        $this->section_accordion = ['expense-types-accordion', route('expense-type.section.accordion')];
+        $this->section_piechart = ['expense-types-pie-chart', route('expense-type.section.piechart')];
+        $this->section_header = ['expense-types-header', route('expense-type.section.header')];
+    }
 
     public function expenseTypeStatusPieChart()
     {
@@ -23,9 +35,8 @@ class ExpenseTypeController extends Controller
             ->get();
     }
 
-    public function expenseTypes()
+    public function index()
     {
-
         $expenseTypes = ExpenseType::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
         $totalExpense = DB::table('tracking_history')
@@ -40,17 +51,18 @@ class ExpenseTypeController extends Controller
         ]);
     }
 
-    public function showCreateExpenseTypePage()
+    public function create()
     {
-        return view('expense-type-create');
+        return view('layouts.expense-types.expense-type-form', ['expenseType' => new ExpenseType()]);
     }
 
-    public function showUpdateExpenseTypePage(ExpenseType $expenseType)
+    public function edit($id)
     {
-        return view('expense-type-update', ['expenseType' => $expenseType]);
+        $expenseTypes = ExpenseType::where('id', '=', $id)->where('user_id', '=', auth()->user()->id)->get();
+        return view('layouts.expense-types.expense-type-form', ['expenseType' => $expenseTypes->first()]);
     }
 
-    public function createExpenseType(Request $requset)
+    public function store(Request $requset)
     {
 
         $incomingFields = $requset->validate([
@@ -62,38 +74,79 @@ class ExpenseTypeController extends Controller
 
         $expenseType = ExpenseType::create($incomingFields);
 
-        if ($expenseType) return redirect('/expense-type/' . $expenseType->id . '/edit')->with('success', $expenseType->name . ' expense type created successfully');
+        if ($expenseType) {
+            return $this->successWithReloadSections(null, $expenseType->name . ' expense type created successfully', 200, [
+                $this->section_accordion,
+                $this->section_header,
+                $this->section_piechart,
+            ]);
+        }
 
-        return redirect('/expense-type')->with('error', "Can't create expense type");
+        return $this->error(null, "Something went wrong, please try again later.", 200);
     }
 
-    public function updateExpenseType(ExpenseType $expenseType, Request $requset)
+    public function piechart()
     {
+        return view('layouts.expense-types.expense-types-pie-chart');
+    }
 
+    public function header()
+    {
+        $totalExpense = DB::table('tracking_history')
+            ->selectRaw("SUM(amount) as totalExpense")
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('transaction_type', '=', 'EXPENSE')
+            ->get();
+
+        return view('layouts.expense-types.expense-types-header', [
+            'totalExpense' => $totalExpense[0]->totalExpense == null ? 0 : $totalExpense[0]->totalExpense
+        ]);
+    }
+
+    public function accordion()
+    {
+        $expenseTypes = ExpenseType::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
+
+        return view('layouts.expense-types.expense-types-accordion', [
+            'expenseTypes' => $expenseTypes
+        ]);
+    }
+
+    public function update(ExpenseType $expenseType, Request $requset)
+    {
         $incomingFields = $requset->validate([
             'name' => ['required', Rule::unique('expense_type')->ignore($expenseType->id)],
             'icon' => 'required'
         ]);
 
-        $uExpenseType = $expenseType->update($incomingFields);
+        $updated = $expenseType->update($incomingFields);
 
-        if ($uExpenseType) return redirect('/expense-type/' . $expenseType->id . '/edit')->with('success', $expenseType->name . ' expense type updated successfully');
+        if ($updated) {
+            return $this->successWithReloadSections(null, $expenseType->name . ' expense type updated successfully', 200, [
+                $this->section_accordion,
+                $this->section_header,
+                $this->section_piechart,
+            ]);
+        }
 
-        return redirect('/expense-type/' . $expenseType->id . '/edit')->with('error', $expenseType->name . ' expense type update failed');
+        return $this->error(null, $expenseType->name . ' expense type update failed', 200);
     }
 
-    public function deleteExpenseType(ExpenseType $expenseType)
+    public function destroy(ExpenseType $expenseType)
     {
-
         if ($expenseType->trackingHistory()->count() > 0) {
-            return back()->with('error', $expenseType->name . ' already has transaction');
+            return $this->error(null, $expenseType->name . ' already has transaction', 200);
         }
 
         $expenseTypeName = $expenseType->name;
         $deleted = $expenseType->delete();
 
-        if ($deleted) return redirect('/expense-type/all')->with('success', $expenseTypeName . ' expense type deleted successfully');
+        if ($deleted) {
+            return $this->successWithReloadSections(null, $expenseTypeName . ' expense type deleted successfully', 200, [
+                $this->section_accordion,
+            ]);
+        }
 
-        return redirect('/expense-type/all')->with('error', "Can't delete expense type");
+        return $this->error(null, 'Something went wrong, please try again later', 200);
     }
 }
