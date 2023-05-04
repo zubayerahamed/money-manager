@@ -142,7 +142,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('/income-source/all') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}">
+                            <a href="{{ route('income-source.index') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}">
                                 <i class="fas fa-chart-line"></i> Income Status
                             </a>
                         </li>

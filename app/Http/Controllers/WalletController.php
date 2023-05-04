@@ -15,9 +15,14 @@ class WalletController extends Controller
 
     use HttpResponses;
 
-    private $section_accordion = ['wallets-accordion', route('wallet.section.accordion')];
-    private$section_piechart = ['wallets-pie-chart', route('wallet.section.piechart')];
-    private $section_header = ['wallets-header', route('wallet.section.header')];
+    private  $section_accordion, $section_piechart, $section_header;
+
+    public function __construct()
+    {
+        $this->section_accordion = ['wallets-accordion', route('wallet.section.accordion')];
+        $this->section_piechart = ['wallets-pie-chart', route('wallet.section.piechart')];
+        $this->section_header = ['wallets-header', route('wallet.section.header')];
+    }
 
     public function walletStatusPieChart()
     {
@@ -96,9 +101,9 @@ class WalletController extends Controller
 
         if ($wallet) {
             return $this->successWithReloadSections(null, $wallet->name . ' wallet created successfully', 200, [
-                ['wallets-accordion', route('wallet.index')],
-                ['wallets-pie-chart', route('wallet.section.piechart')],
-                ['wallets-header', route('wallet.header')]
+                $this->section_accordion,
+                $this->section_header,
+                $this->section_piechart,
             ]);
         }
 
@@ -126,11 +131,9 @@ class WalletController extends Controller
     {
         $wallets = Wallet::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
-        if (request()->ajax()) {
-            return view('layouts.wallets.wallets-accordion', [
-                'wallets' => $wallets
-            ]);
-        }
+        return view('layouts.wallets.wallets-accordion', [
+            'wallets' => $wallets
+        ]);
     }
 
     public function update(Wallet $wallet, Request $requset)
@@ -140,13 +143,13 @@ class WalletController extends Controller
             'icon' => 'required'
         ]);
 
-        $uWallet = $wallet->update($requset->all());
+        $updated = $wallet->update($requset->all());
 
-        if ($uWallet) {
+        if ($updated) {
             return $this->successWithReloadSections(null, $wallet->name . ' wallet updated successfully', 200, [
-                ['wallets-accordion', route('wallet.index')],
-                ['wallets-pie-chart', route('wallet.piechart')],
-                ['wallets-header', route('wallet.header')]
+                $this->section_accordion,
+                $this->section_header,
+                $this->section_piechart,
             ]);
         }
 
@@ -165,6 +168,10 @@ class WalletController extends Controller
             })
             ->count();
 
+        if ($incomeCount > 0) {
+            return $this->error(null, $wallet->name . ' already has transaction', 200);
+        }
+
         $expenseCount =  DB::table('tracking_history')
             ->selectRaw("count(*)")
             ->where('user_id', '=', auth()->user()->id)
@@ -175,7 +182,7 @@ class WalletController extends Controller
             })
             ->count();
 
-        if ($incomeCount > 0 || $expenseCount > 0) {
+        if ($expenseCount > 0) {
             return $this->error(null, $wallet->name . ' already has transaction', 200);
         }
 
@@ -184,7 +191,7 @@ class WalletController extends Controller
 
         if ($deleted) {
             return $this->successWithReloadSections(null, $walletName . ' wallet deleted successfully', 200, [
-                ['wallets-accordion', route('wallet.index')]
+                $this->section_accordion,
             ]);
         }
 

@@ -1,13 +1,13 @@
 <div class="chart-container">
     <div class="chart has-fixed-height" id="pie_rose_labels"></div>
 </div>
-<a class="wallet-status-link" href="{{ route('wallet.data.status') }}"></a>
+<a class="income-source-status-link" href="{{ route('income-source.data.status') }}"></a>
 
 <script>
     $(document).ready(function() {
 
         $.ajax({
-            url: $('.wallet-status-link').attr('href'),
+            url: $('.income-source-status-link').attr('href'),
             type: 'GET',
             success: function(data) {
                 preparePieChart(data);
@@ -64,7 +64,7 @@
 
                     // Add title
                     title: {
-                        text: 'Wallet Status',
+                        text: 'Income Status',
                         subtext: '',
                         left: 'center',
                         textStyle: {
@@ -109,7 +109,7 @@
 
                     // Add series
                     series: [{
-                        name: 'Wallets',
+                        name: 'Income Source',
                         type: 'pie',
                         top: 20,
                         radius: ['15%', '80%'],
@@ -156,5 +156,6 @@
                 }, 200);
             });
         }
+
     })
 </script>

@@ -62,21 +62,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/wallet/section/header', [WalletController::class, 'header'])->name('wallet.section.header');
     Route::get('/wallet/section/accordion', [WalletController::class, 'accordion'])->name('wallet.section.accordion');
 
-    // Budget
-    Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'monthlyBudgetList'])->name('budget.list');
-    Route::get('/budget/{expenseType}/{month}/{year}', [BudgetController::class, 'showCreateBudgetPage'])->name('budget.create.page');
-    Route::post('/budget', [BudgetController::class, 'createBudget'])->name('budget.create');
-    Route::get('/budget/{budget}/update', [BudgetController::class, 'showUpdateBudgetPage'])->name('budget.update.page');
-    Route::put('/budget/{budget}', [BudgetController::class, 'updateBudget'])->name('budget.update');
-
     // Income Source
-    Route::get('/income-source/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('income-source.status');
-    Route::get('/income-source/all', [IncomeSourceController::class, 'incomeSources'])->name('income-sources');
-    Route::get('/income-source', [IncomeSourceController::class, 'showCreateIncomeSourcePage'])->name('income-sources.create.page');
-    Route::get('/income-source/{incomeSource}/edit', [IncomeSourceController::class, 'showUpdateIncomeSourcePage'])->name('income-sources.update.page');
-    Route::post('/income-source', [IncomeSourceController::class, 'createIncomeSource'])->name('income-sources.create');
-    Route::put('/income-source/{incomeSource}', [IncomeSourceController::class, 'updateIncomeSource'])->name('income-sources.update');
-    Route::delete('/income-source/{incomeSource}/delete', [IncomeSourceController::class, 'deleteIncomeSource'])->name('income-sources.delete');
+    Route::get('/income-source/all', [IncomeSourceController::class, 'index'])->name('income-source.index');
+    Route::get('/income-source', [IncomeSourceController::class, 'create'])->name('income-source.create');
+    Route::get('/income-source/{id}/edit', [IncomeSourceController::class, 'edit'])->name('income-source.edit');
+    Route::post('/income-source', [IncomeSourceController::class, 'store'])->name('income-source.store');
+    Route::put('/income-source/{incomeSource}', [IncomeSourceController::class, 'update'])->name('income-source.update');
+    Route::delete('/income-source/{incomeSource}', [IncomeSourceController::class, 'destroy'])->name('income-source.destroy');
+
+    Route::get('/income-source/data/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('income-source.data.status');
+
+    Route::get('/income-source/section/piechart', [IncomeSourceController::class, 'piechart'])->name('income-source.section.piechart');
+    Route::get('/income-source/section/header', [IncomeSourceController::class, 'header'])->name('income-source.section.header');
+    Route::get('/income-source/section/accordion', [IncomeSourceController::class, 'accordion'])->name('income-source.section.accordion');
 
     // Expense Type
     Route::get('/expense-type/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('expense-type.status');
@@ -86,6 +84,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/expense-type', [ExpenseTypeController::class, 'createExpenseType'])->name('expense-type.create');
     Route::put('/expense-type/{expenseType}', [ExpenseTypeController::class, 'updateExpenseType'])->name('expense-type.update');
     Route::delete('/expense-type/{expenseType}/delete', [ExpenseTypeController::class, 'deleteExpenseType'])->name('expense-type.delete');
+    
+    
+    // Budget
+    Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'monthlyBudgetList'])->name('budget.list');
+    Route::get('/budget/{expenseType}/{month}/{year}', [BudgetController::class, 'showCreateBudgetPage'])->name('budget.create.page');
+    Route::post('/budget', [BudgetController::class, 'createBudget'])->name('budget.create');
+    Route::get('/budget/{budget}/update', [BudgetController::class, 'showUpdateBudgetPage'])->name('budget.update.page');
+    Route::put('/budget/{budget}', [BudgetController::class, 'updateBudget'])->name('budget.update');
+
     
 
     // Transactions
