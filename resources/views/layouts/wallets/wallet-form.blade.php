@@ -1,4 +1,4 @@
-<form id="transaction-form" action="{{ $wallet->id == null ? url('/wallet') : url('/wallet') . '/' . $wallet->id }}" method="POST">
+<form id="transaction-form" action="{{ $wallet->id == null ? route('wallet.store') : route('wallet.update', $wallet->id) }}" method="POST">
     @csrf
     @if ($wallet->id != null)
         @method('PUT')

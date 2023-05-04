@@ -21,6 +21,7 @@
     <link href="{{ asset('/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}" />
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -37,299 +38,12 @@
     <script src="{{ asset('/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
     
-
     <script src="{{ asset('/assets/js/app.js') }}"></script>
     <script src="{{ asset('/assets/js/custom.js') }}"></script>
 
     <script src="{{ asset('/assets/demo/charts/echarts/pies/pie_donut.js') }}"></script>
     <script src="{{ asset('/assets/demo/pages/form_select2.js') }}"></script>
     <!-- /theme JS files -->
-
-    <style>
-        .nodisplay {
-            display: none;
-        }
-
-        .toast-msg-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            min-width: 350px;
-            z-index: 9999999;
-        }
-
-        .box-item {
-            width: 48%;
-            margin-left: 1%;
-            margin-right: 1%;
-            border-radius: 10px;
-            padding: 10px !important;
-            box-sizing: border-box;
-            box-shadow: 0px 0px 5px #ddd;
-            margin-bottom: 10px;
-            margin-top: 20px;
-        }
-
-        .box-item-success {
-            color: #fff;
-            background-color: #059669;
-        }
-
-        .box-item-danger {
-            color: #fff;
-            background-color: #EF4444
-        }
-
-        .box-item-primary {
-            color: #fff;
-            background-color: #0c83ff;
-        }
-
-        .box-item h2,
-        .box-item h3 {
-            padding: 0;
-            margin: 0;
-        }
-
-        input#avatar,
-        input.dream-image {
-            display: none;
-        }
-
-        #image {
-            display: block;
-            max-width: 100%;
-        }
-
-        .preview {
-            text-align: center;
-            overflow: hidden;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto;
-            border: 1px solid red;
-        }
-
-        .section {
-            margin-top: 150px;
-            background: #fff;
-            padding: 50px 30px;
-        }
-
-        /* ===============
-=== Loading mask 2
-================== */
-        #loadingdots {
-            position: relative;
-            height: 100px;
-            width: 200px;
-            top: calc(50% - 50px);
-            left: calc(50% - 100px);
-        }
-
-        #loadingdots_1 {
-            left: 0;
-            -moz-animation-delay: 0s;
-            -webkit-animation-delay: 0s;
-            -ms-animation-delay: 0s;
-            -o-animation-delay: 0s;
-            animation-delay: 0s;
-        }
-
-        #loadingdots_2 {
-            left: 30px;
-            -moz-animation-delay: 0.2s;
-            -webkit-animation-delay: 0.2s;
-            -ms-animation-delay: 0.2s;
-            -o-animation-delay: 0.2s;
-            animation-delay: 0.2s;
-        }
-
-        #loadingdots_3 {
-            left: 60px;
-            -moz-animation-delay: 0.4s;
-            -webkit-animation-delay: 0.4s;
-            -ms-animation-delay: 0.4s;
-            -o-animation-delay: 0.4s;
-            animation-delay: 0.4s;
-        }
-
-        #loadingdots_4 {
-            left: 90px;
-            -moz-animation-delay: 0.6s;
-            -webkit-animation-delay: 0.6s;
-            -ms-animation-delay: 0.6s;
-            -o-animation-delay: 0.6s;
-            animation-delay: 0.6s;
-        }
-
-        #loadingdots_5 {
-            left: 120px;
-            -moz-animation-delay: 0.8s;
-            -webkit-animation-delay: 0.8s;
-            -ms-animation-delay: 0.8s;
-            -o-animation-delay: 0.8s;
-            animation-delay: 0.8s;
-        }
-
-        #loadingdots_6 {
-            left: 150px;
-            -moz-animation-delay: 1s;
-            -webkit-animation-delay: 1s;
-            -ms-animation-delay: 1s;
-            -o-animation-delay: 1s;
-            animation-delay: 1s;
-        }
-
-        #loadingdots_7 {
-            left: 180px;
-            -moz-animation-delay: 1.2s;
-            -webkit-animation-delay: 1.2s;
-            -ms-animation-delay: 1.2s;
-            -o-animation-delay: 1.2s;
-            animation-delay: 1.2s;
-        }
-
-        @-moz-keyframes bounce_loadingdots {
-            0% {
-                -moz-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            25% {
-                -moz-transform: scale(1.5);
-                opacity: 1;
-            }
-
-            50% {
-                -moz-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            100% {
-                -moz-transform: scale(1);
-                opacity: 0.5;
-            }
-        }
-
-        @-webkit-keyframes bounce_loadingdots {
-            0% {
-                -webkit-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            25% {
-                -webkit-transform: scale(1.5);
-                opacity: 1;
-            }
-
-            50% {
-                -webkit-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            100% {
-                -webkit-transform: scale(1);
-                opacity: 0.5;
-            }
-        }
-
-        @-ms-keyframes bounce_loadingdots {
-            0% {
-                -ms-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            25% {
-                -ms-transform: scale(1.5);
-                opacity: 1;
-            }
-
-            50% {
-                -ms-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            100% {
-                -ms-transform: scale(1);
-                opacity: 0.5;
-            }
-        }
-
-        @-o-keyframes bounce_loadingdots {
-            0% {
-                -o-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            25% {
-                -o-transform: scale(1.5);
-                opacity: 1;
-            }
-
-            50% {
-                -o-transform: scale(1);
-                opacity: 0.5;
-            }
-
-            100% {
-                -o-transform: scale(1);
-                opacity: 0.5;
-            }
-        }
-
-        @keyframes bounce_loadingdots {
-            0% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-
-            25% {
-                transform: scale(1.5);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-        }
-
-        .loadingdots {
-            -webkit-animation-duration: 1.5s;
-            -webkit-animation-iteration-count: infinite;
-            -webkit-animation-name: bounce_loadingdots;
-            -moz-animation-duration: 1.5s;
-            -moz-animation-iteration-count: infinite;
-            -moz-animation-name: bounce_loadingdots;
-            animation-duration: 1.5s;
-            animation-iteration-count: infinite;
-            animation-name: bounce_loadingdots;
-            background-color: #FF6C60;
-            border-radius: 2px;
-            position: absolute;
-            top: 0;
-            color: #fff;
-            padding: 40px 5px;
-            text-align: center;
-            padding: 5px 5px;
-        }
-
-        #loadingmask2 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            width: 100%;
-            height: 100%;
-            z-index: 99999;
-        }
-    </style>
 </head>
 
 <body>
@@ -381,7 +95,6 @@
     </div>
     <!-- /main navbar -->
 
-
     <!-- Page content -->
     <div class="page-content">
 
@@ -423,7 +136,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('/wallet/all') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}">
+                            <a href="{{ route('wallet.index') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}">
                                 <i class="fas fa-chart-line"></i> Wallet Status
                             </a>
                         </li>
@@ -601,91 +314,5 @@
     </div>
     <!-- ./Loading Mask -->
 
-    <script>
-        $(document).ready(function() {
-
-            $('body').on('click', '.transaction-btn', function(e) {
-                e.preventDefault();
-
-                var url = $(this).attr("href");
-                var modalTitle = $(this).data('title');
-                $('.transaction-modal-title').html(modalTitle);
-
-                loadingMask2.show();
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    success: function(data) {
-                        loadingMask2.hide();
-                        $(".transaction-form-wrapper").html("");
-                        $('#transaction-modal').modal('show');
-                        $(".transaction-form-wrapper").append(data);
-                    },
-                    error: function(jqXHR, status, errorThrown) {
-                        loadingMask2.hide();
-                        showMessage("error", jqXHR.responseJSON.message);
-                    },
-                });
-            });
-
-            $('body').on('click', '.transaction-submit-btn', function(e) {
-                e.preventDefault();
-
-                var url = $('#transaction-form').attr('action');
-                var data = $('#transaction-form').serializeArray();
-
-                loadingMask2.show();
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="_token"]').attr("content"),
-                    },
-                    data: data,
-                    success: function(data) {
-                        loadingMask2.hide();
-                        showMessage(data.status, data.message, data.reload);
-                        if (data.status == 'success') {
-                            $(".transaction-form-wrapper").html("");
-                            $('#transaction-modal').modal('hide');
-                        }
-                        if (data.reload == true) {
-                            if (data.sections.length > 0) {
-                                $.each(data.sections, function(ind, section) {
-                                    sectionReloadAjaxReq(section);
-                                });
-                            } else {
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 500);
-                            }
-                        }
-                    },
-                    error: function(jqXHR, status, errorThrown) {
-                        loadingMask2.hide();
-                        showMessage("error", jqXHR.responseJSON.message);
-                    },
-                });
-            });
-
-            function sectionReloadAjaxReq(section) {
-                loadingMask2.show();
-                $.ajax({
-                    url: section[1],
-                    type: "GET",
-                    success: function(data) {
-                        loadingMask2.hide();
-                        $("." + section[0]).html("");
-                        $("." + section[0]).append(data);
-                    },
-                    error: function(jqXHR, status, errorThrown) {
-                        loadingMask2.hide();
-                        showMessage("error", jqXHR.responseJSON.message);
-                    },
-                });
-            }
-        })
-    </script>
 </body>
-
 </html>

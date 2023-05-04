@@ -24,16 +24,20 @@
                         </div>
                     @endif
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
-                        <a href="{{ url('/wallet') . '/' . $wallet->id }}/saving }}" class="btn-saving m-2 text-success" data-wallet-id="{{ $wallet->id }}" data-wallet-name="{{ $wallet->name }}" data-wallet-amount="{{ $wallet->currentBalance }}" title="Do Saving">
-                            <i class="far fa-save"></i>
-                        </a>
-                        <a href="{{ url('/wallet') . '/' . $wallet->id }}/edit" class="m-2 text-primary wallet-edit-btn" data-title="Edit wallet">
+                        <a href="{{ route('wallet.edit', $wallet->id) }}" class="m-2 text-primary transaction-btn" data-title="Edit wallet">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form action="{{ url('/wallet') . '/' . $wallet->id }}/delete" style="display: inline-block" method="POST">
+                        <form id="form-id{{ $wallet->id }}"
+                              action="{{ route('wallet.destroy', $wallet->id) }}"
+                              method="POST" style="display: inline-block;">
                             @method('DELETE')
                             @csrf
-                            <a href="" class="m-2 text-danger"><i class="fas fa-trash"></i></a>
+                            <a href="#" class="delete-btn text-danger m-2"
+                               onclick="deleteData(this)"
+                               data-form-id="{{ 'form-id' . $wallet->id }}"
+                               title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </form>
                     </span>
                 </div>

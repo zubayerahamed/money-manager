@@ -1,11 +1,13 @@
 <div class="chart-container">
     <div class="chart has-fixed-height" id="pie_rose_labels"></div>
 </div>
+<a class="wallet-status-link" href="{{ route('wallet.status') }}"></a>
 
 <script>
     $(document).ready(function() {
+
         $.ajax({
-            url: $('.basePath').attr('href') + "/wallet/status",
+            url: $('.wallet-status-link').attr('href'),
             type: 'GET',
             success: function(data) {
                 preparePieChart(data);
@@ -26,9 +28,7 @@
             // Define element
             var pie_rose_labels_element = document.getElementById('pie_rose_labels');
 
-
             if (pie_rose_labels_element) {
-
 
                 // extract data first
                 // create name array
@@ -37,14 +37,10 @@
                     labels.push(data[i].name);
                 }
 
-
                 // Initialize chart
                 var pie_rose_labels = echarts.init(pie_rose_labels_element, null, {
                     renderer: 'svg'
                 });
-                //
-                // Chart config
-                //
 
                 // Options
                 pie_rose_labels.setOption({
@@ -131,7 +127,6 @@
 
             }
 
-
             // Resize function
             var triggerChartResize = function() {
                 pie_rose_labels_element && pie_rose_labels.resize();
@@ -144,6 +139,7 @@
                     togglers.addEventListener('click', triggerChartResize);
                 });
             }
+
             var tabToggle = document.querySelectorAll('.nav-link');
             if (tabToggle) {
                 tabToggle.forEach(function(togglers) {
@@ -159,7 +155,6 @@
                     triggerChartResize();
                 }, 200);
             });
-
         }
     })
 </script>

@@ -15,6 +15,10 @@ class WalletController extends Controller
 
     use HttpResponses;
 
+    private $section_accordion = ['wallets-accordion', route('wallet.section.accordion')];
+    private$section_piechart = ['wallets-pie-chart', route('wallet.section.piechart')];
+    private $section_header = ['wallets-header', route('wallet.section.header')];
+
     public function walletStatusPieChart()
     {
         return DB::table('arhead')
@@ -26,7 +30,7 @@ class WalletController extends Controller
             ->get();
     }
 
-    public function wallets()
+    public function index()
     {
         $wallets = Wallet::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
@@ -35,52 +39,25 @@ class WalletController extends Controller
             ->where('user_id', '=', auth()->user()->id)
             ->get();
 
-        $totalTransactionCharge = DB::table('arhead')
-            ->selectRaw("SUM(transaction_charge) as totalTrnCharge")
-            ->where('user_id', '=', auth()->user()->id)
-            ->get();
-
-        $accounts = DB::table('accounts')
-            ->where('user_id', '=', auth()->user()->id)
-            ->get();
-
-        if (request()->ajax()) {
-            return view('layouts.wallets.wallets-accordion', [
-                'wallets' => $wallets,
-                'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
-                'totalTrnCharge' => $totalTransactionCharge[0]->totalTrnCharge == null ? 0 : $totalTransactionCharge[0]->totalTrnCharge,
-                'accounts' => $accounts
-            ]);
-        }
-
         return view('wallets', [
             'wallets' => $wallets,
-            'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
-            'totalTrnCharge' => $totalTransactionCharge[0]->totalTrnCharge == null ? 0 : $totalTransactionCharge[0]->totalTrnCharge,
-            'accounts' => $accounts
+            'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance
         ]);
     }
 
-    public function showCreateWalletPage()
+    public function create()
     {
-        if (request()->ajax()) {
-            return view('layouts.wallets.wallet-form', ['wallet' => new Wallet()]);
-        }
-        return view('wallet-create');
+        return view('layouts.wallets.wallet-form', ['wallet' => new Wallet()]);
     }
 
-    public function showUpdateWalletPage(Wallet $wallet)
+    public function edit($id)
     {
-        if (request()->ajax()) {
-            return view('layouts.wallets.wallet-form', ['wallet' => $wallet]);
-        }
-
-        return view('wallet-update', ['wallet' => $wallet]);
+        $wallets = Wallet::where('id', '=', $id)->where('user_id', '=', auth()->user()->id)->get();
+        return view('layouts.wallets.wallet-form', ['wallet' => $wallets->first()]);
     }
 
-    public function createWallet(Request $requset)
+    public function store(Request $requset)
     {
-
         $incomingFields = $requset->validate([
             'name' => ['required', Rule::unique('wallet')],
             'icon' => 'required'
@@ -118,20 +95,14 @@ class WalletController extends Controller
         }
 
         if ($wallet) {
-            if (request()->ajax()) {
-                return $this->successWithReloadSections(null, $wallet->name . ' wallet created successfully', 200, [
-                    ['wallets-accordion', route('wallets')],
-                    ['wallets-pie-chart', route('wallet.piechart')],
-                    ['wallets-header', route('wallet.header')]
-                ]);
-            }
-            return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet created successfully');
+            return $this->successWithReloadSections(null, $wallet->name . ' wallet created successfully', 200, [
+                ['wallets-accordion', route('wallet.index')],
+                ['wallets-pie-chart', route('wallet.section.piechart')],
+                ['wallets-header', route('wallet.header')]
+            ]);
         }
 
-        if (request()->ajax()) {
-            return $this->error(null, "Something went wrong, please try again later.", 200);
-        }
-        return redirect('/wallet')->with('error', "Something went wrong, please try again later.");
+        return $this->error(null, "Something went wrong, please try again later.", 200);
     }
 
     public function piechart()
@@ -151,9 +122,19 @@ class WalletController extends Controller
         ]);
     }
 
-    public function updateWallet(Wallet $wallet, Request $requset)
+    public function accordion()
     {
+        $wallets = Wallet::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
+        if (request()->ajax()) {
+            return view('layouts.wallets.wallets-accordion', [
+                'wallets' => $wallets
+            ]);
+        }
+    }
+
+    public function update(Wallet $wallet, Request $requset)
+    {
         $incomingFields = $requset->validate([
             'name' => ['required', Rule::unique('wallet')->ignore($wallet->id)],
             'icon' => 'required'
@@ -162,26 +143,18 @@ class WalletController extends Controller
         $uWallet = $wallet->update($requset->all());
 
         if ($uWallet) {
-            if (request()->ajax()) {
-                return $this->successWithReloadSections(null, $wallet->name . ' wallet updated successfully', 200, [
-                    ['wallets-accordion', route('wallets')],
-                    ['wallets-pie-chart', route('wallet.piechart')],
-                    ['wallets-header', route('wallet.header')]
-                ]);
-            }
-
-            return redirect('/wallet/' . $wallet->id . '/edit')->with('success', $wallet->name . ' wallet updated successfully');
+            return $this->successWithReloadSections(null, $wallet->name . ' wallet updated successfully', 200, [
+                ['wallets-accordion', route('wallet.index')],
+                ['wallets-pie-chart', route('wallet.piechart')],
+                ['wallets-header', route('wallet.header')]
+            ]);
         }
 
-        if (request()->ajax()) {
-            return $this->error(null, $wallet->name . ' wallet update failed', 200);
-        }
-        return redirect('/wallet/' . $wallet->id . '/edit')->with('error', $wallet->name . ' wallet update failed');
+        return $this->error(null, $wallet->name . ' wallet update failed', 200);
     }
 
-    public function deleteWallet(Wallet $wallet)
+    public function destroy(Wallet $wallet)
     {
-
         $incomeCount =  DB::table('tracking_history')
             ->selectRaw("count(*)")
             ->where('user_id', '=', auth()->user()->id)
@@ -203,14 +176,18 @@ class WalletController extends Controller
             ->count();
 
         if ($incomeCount > 0 || $expenseCount > 0) {
-            return back()->with('error', $wallet->name . ' already has transaction');
+            return $this->error(null, $wallet->name . ' already has transaction', 200);
         }
 
         $walletName = $wallet->name;
         $deleted = $wallet->delete();
 
-        if ($deleted) return redirect('/wallet/all')->with('success', $walletName . ' wallet deleted successfully');
+        if ($deleted) {
+            return $this->successWithReloadSections(null, $walletName . ' wallet deleted successfully', 200, [
+                ['wallets-accordion', route('wallet.index')]
+            ]);
+        }
 
-        return redirect('/wallet/all')->with('error', "Can't delete wallet");
+        return $this->error(null, 'Something went wrong, please try again later', 200);
     }
 }

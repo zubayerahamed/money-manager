@@ -49,16 +49,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
 
     // Wallets
-    Route::get('/wallet/status', [WalletController::class, 'walletStatusPieChart'])->name('wallet.status');
-    Route::get('/wallet/all', [WalletController::class, 'wallets'])->name('wallets');
-    Route::get('/wallet', [WalletController::class, 'showCreateWalletPage'])->name('wallet.create.page');
-    Route::get('/wallet/{wallet}/edit', [WalletController::class, 'showUpdateWalletPage'])->name('wallet.update.page');
-    Route::post('/wallet', [WalletController::class, 'createWallet'])->name('wallet.create');
-    Route::put('/wallet/{wallet}', [WalletController::class, 'updateWallet'])->name('wallet.update');
-    Route::delete('/wallet/{wallet}/delete', [WalletController::class, 'deleteWallet'])->name('wallet.delete');
+    Route::get('/wallet/all', [WalletController::class, 'index'])->name('wallet.index');
+    Route::get('/wallet', [WalletController::class, 'create'])->name('wallet.create');
+    Route::get('/wallet/{id}/edit', [WalletController::class, 'edit'])->name('wallet.edit');
+    Route::post('/wallet', [WalletController::class, 'store'])->name('wallet.store');
+    Route::put('/wallet/{wallet}', [WalletController::class, 'update'])->name('wallet.update');
+    Route::delete('/wallet/{wallet}', [WalletController::class, 'destroy'])->name('wallet.destroy');
 
-    Route::get('/wallet/piechart', [WalletController::class, 'piechart'])->name('wallet.piechart');
-    Route::get('/wallet/header', [WalletController::class, 'header'])->name('wallet.header');
+    Route::get('/wallet/data/status', [WalletController::class, 'walletStatusPieChart'])->name('wallet.data.status');
+
+    Route::get('/wallet/section/piechart', [WalletController::class, 'piechart'])->name('wallet.section.piechart');
+    Route::get('/wallet/section/header', [WalletController::class, 'header'])->name('wallet.section.header');
+    Route::get('/wallet/section/accordion', [WalletController::class, 'accordion'])->name('wallet.section.accordion');
 
     // Budget
     Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'monthlyBudgetList'])->name('budget.list');
