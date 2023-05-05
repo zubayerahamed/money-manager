@@ -15,11 +15,7 @@
                         </div>
                     </div>
 
-                    <div class="card-body budgets-body">
-                        @include('layouts.budgets.budgets-body')
-                    </div>
-
-                    <div class="accordion accordion-flush budgets-accordion" id="accordion_flush">
+                    <div class="budgets-accordion">
                         @include('layouts.budgets.budgets-accordion')
                     </div>
 

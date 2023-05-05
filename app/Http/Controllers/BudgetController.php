@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Budget;
 use App\Models\ExpenseType;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BudgetController extends Controller
 {
+    use HttpResponses;
 
     public function index($month, $year)
     {
@@ -30,6 +32,17 @@ class BudgetController extends Controller
             if ($expenseType['remaining'] > 0) {
                 $expenseType['percent'] = round((100 * $expenseType['spent']) / $expenseType['budget'], 2);
             }
+        }
+
+        if (request()->ajax()) {
+            return view('layouts.budgets.budgets-accordion', [
+                'expenseTypes' => $expenseTypes,
+                'month' => $month,
+                'monthText' => date("F", mktime(0, 0, 0, $month, 10)),
+                'year' => $year,
+                'totalBudget' => $totalBudget,
+                'totalSpent' => $totalSpent
+            ]);
         }
 
         return view('budgets', [
@@ -70,8 +83,9 @@ class BudgetController extends Controller
 
     public function create(ExpenseType $expenseType, $month, $year)
     {
-        return view('budget-create', [
+        return view('layouts.budgets.budget-form', [
             'expenseType' => $expenseType,
+            'budget' => new Budget(),
             'month' => $month,
             'monthText' => date("F", mktime(0, 0, 0, $month, 10)),
             'year' => $year
@@ -91,15 +105,17 @@ class BudgetController extends Controller
 
         $budget = Budget::create($incomingFields);
         if (!$budget) {
-            return back()->with('error', "Can't create budget");
+            return $this->error(null, "Something went wrong, please try again later.", 200);
         }
 
-        return back()->with('success', 'Budget added successfully');
+        return $this->successWithReloadSections(null, 'Budget created successfully', 200, [
+            ['budgets-accordion', route('budget.index', [$request->get('month'), $request->get('year')])]
+        ]);
     }
 
     public function edit(Budget $budget)
     {
-        return view('budget-update', [
+        return view('layouts.budgets.budget-form', [
             'budget' => $budget,
             'month' => $budget->month,
             'monthText' => date("F", mktime(0, 0, 0, $budget->month, 10)),
@@ -109,7 +125,6 @@ class BudgetController extends Controller
 
     public function update(Budget $budget, Request $request)
     {
-
         $incomingFields = $request->validate([
             'expense_type' => 'required',
             'amount' => ['required', 'min:0']
@@ -123,9 +138,11 @@ class BudgetController extends Controller
         $updateStatus = $budget->update();
 
         if ($updateStatus) {
-            return back()->with('success', 'Budget updated successfully');
+            return $this->successWithReloadSections(null, 'Budget updated successfully', 200, [
+                ['budgets-accordion', route('budget.index', [$budget->month, $budget->year])]
+            ]);
         }
 
-        return back()->with('error', 'Budget limit update failed');
+        return $this->error(null, 'Budget update failed', 200);
     }
 }

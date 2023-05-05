@@ -89,16 +89,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/expense-type/section/piechart', [ExpenseTypeController::class, 'piechart'])->name('expense-type.section.piechart');
     Route::get('/expense-type/section/header', [ExpenseTypeController::class, 'header'])->name('expense-type.section.header');
     Route::get('/expense-type/section/accordion', [ExpenseTypeController::class, 'accordion'])->name('expense-type.section.accordion');
-    
-    
+
     // Budget
     Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'index'])->name('budget.index');
     Route::get('/budget/{expenseType}/{month}/{year}', [BudgetController::class, 'create'])->name('budget.create');
     Route::post('/budget', [BudgetController::class, 'store'])->name('budget.store');
     Route::get('/budget/{budget}', [BudgetController::class, 'edit'])->name('budget.edit');
     Route::put('/budget/{budget}', [BudgetController::class, 'update'])->name('budget.update');
-
-    
 
     // Transactions
     Route::get('/transaction/add-income', [TrackingHistoryController::class, 'showAddIncomePage'])->name('add-income.page');
