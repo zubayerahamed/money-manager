@@ -92,11 +92,11 @@ Route::middleware(['auth'])->group(function () {
     
     
     // Budget
-    Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'monthlyBudgetList'])->name('budget.list');
-    Route::get('/budget/{expenseType}/{month}/{year}', [BudgetController::class, 'showCreateBudgetPage'])->name('budget.create.page');
-    Route::post('/budget', [BudgetController::class, 'createBudget'])->name('budget.create');
-    Route::get('/budget/{budget}/update', [BudgetController::class, 'showUpdateBudgetPage'])->name('budget.update.page');
-    Route::put('/budget/{budget}', [BudgetController::class, 'updateBudget'])->name('budget.update');
+    Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'index'])->name('budget.index');
+    Route::get('/budget/{expenseType}/{month}/{year}', [BudgetController::class, 'create'])->name('budget.create');
+    Route::post('/budget', [BudgetController::class, 'store'])->name('budget.store');
+    Route::get('/budget/{budget}', [BudgetController::class, 'edit'])->name('budget.edit');
+    Route::put('/budget/{budget}', [BudgetController::class, 'update'])->name('budget.update');
 
     
 

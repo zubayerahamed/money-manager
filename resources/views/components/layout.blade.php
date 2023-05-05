@@ -154,7 +154,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('/budget/' . date('m') . '/' . date('Y') . '/list') }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
+                            <a href="{{ route('budget.index', [date('m') , date('Y')]) }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
                                 <i class="fas fa-calculator"></i>
                                 <span>
                                     Budget - {{ date('M, Y') }}

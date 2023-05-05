@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class BudgetController extends Controller
 {
 
-    public function monthlyBudgetList($month, $year)
+    public function index($month, $year)
     {
         $expenseTypes = ExpenseType::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
 
@@ -68,7 +68,7 @@ class BudgetController extends Controller
         return $budget;
     }
 
-    public function showCreateBudgetPage(ExpenseType $expenseType, $month, $year)
+    public function create(ExpenseType $expenseType, $month, $year)
     {
         return view('budget-create', [
             'expenseType' => $expenseType,
@@ -78,7 +78,7 @@ class BudgetController extends Controller
         ]);
     }
 
-    public function createBudget(Request $request)
+    public function store(Request $request)
     {
         $incomingFields = $request->validate([
             'expense_type' => 'required',
@@ -97,7 +97,7 @@ class BudgetController extends Controller
         return back()->with('success', 'Budget added successfully');
     }
 
-    public function showUpdateBudgetPage(Budget $budget)
+    public function edit(Budget $budget)
     {
         return view('budget-update', [
             'budget' => $budget,
@@ -107,7 +107,7 @@ class BudgetController extends Controller
         ]);
     }
 
-    public function updateBudget(Budget $budget, Request $request)
+    public function update(Budget $budget, Request $request)
     {
 
         $incomingFields = $request->validate([
