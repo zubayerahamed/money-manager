@@ -38,7 +38,7 @@ Route::post('/login', [LoginController::class, 'doLogin']);
 
 Route::middleware(['auth'])->group(function () {
     // Home
-    Route::get('/', [DashboardController::class, 'showDashboardPage']);
+    Route::get('/', [DashboardController::class, 'showDashboardPage'])->name('home');
     Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData']);
     Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
 

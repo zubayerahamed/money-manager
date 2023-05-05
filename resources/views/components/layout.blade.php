@@ -60,12 +60,10 @@
             </div>
 
             <div class="navbar-brand flex-1 flex-lg-0">
-                <a href="{{ url('/') }}" class="d-inline-flex align-items-center" style="text-decoration: none;">
-                    <img src="/assets/images/logo_icon.png" alt="">
-                    <h1 style="margin: 0; padding: 0; padding-left: 15px; color: #fff;">Money Manager</h1>
+                <a href="{{ route('home') }}" class="d-inline-flex align-items-center" style="text-decoration: none;">
+                    <h1 class="m-0" style="color: #fff;">Money Manager</h1>
                 </a>
             </div>
-
 
             <ul class="nav flex-row justify-content-end order-1 order-lg-2">
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
@@ -218,8 +216,12 @@
                                     <div class="d-none d-md-block ms-2">Add Expense</div>
                                 </a>
                                 <a href="{{ url('/transaction/do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer">
-                                    <i class="fas fa-retweet"></i>
+                                    <i class="fas fa-exchange-alt"></i>
                                     <div class="d-none d-md-block ms-2">Transfer</div>
+                                </a>
+                                <a href="#" class="btn btn-light text-warning" onclick="location.reload()" title="Reload Page">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <div class="d-none d-md-block ms-2">Reload Page</div>
                                 </a>
                             </div>
 

@@ -40,4 +40,4 @@
     </div>
 </form>
 
-@include('icon-modal');
+@include('icon-modal')

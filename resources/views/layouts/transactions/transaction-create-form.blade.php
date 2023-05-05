@@ -32,7 +32,7 @@
                         <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="/wallet" target="_blank" class="btn btn-light" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="Add wallet" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
@@ -46,7 +46,7 @@
                             <option value="{{ $expenseType->id }}">{{ $expenseType->name }}</option>
                         @endforeach
                     </select>
-                    <a href="/expense-type" target="_blank" class="btn btn-light" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('expense-type.create') }}" class="btn btn-light transaction-btn" data-title="Create expense type" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
@@ -62,7 +62,7 @@
                         <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="/wallet" target="_blank" class="btn btn-light" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="Add wallet" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
@@ -76,7 +76,7 @@
                             <option value="{{ $incomeSource->id }}">{{ $incomeSource->name }}</option>
                         @endforeach
                     </select>
-                    <a href="/income-source" target="_blank" class="btn btn-light" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('income-source.create') }}" class="btn btn-light transaction-btn" data-title="Create income source" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
