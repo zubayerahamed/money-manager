@@ -121,6 +121,26 @@ function submitForm(formEl, method) {
 }
 
 
+function modalWidget(url, elementClass) {
+
+
+    loadingMask2.show();
+    $.ajax({
+        url: url,
+        type: "GET",
+        success: function (data) {
+            loadingMask2.hide();
+            $("." + elementClass + "-form-wrapper").html("");
+            $('#' + elementClass + '-modal').modal('show');
+            $("." + elementClass + "-form-wrapper").append(data);
+        },
+        error: function (jqXHR, status, errorThrown) {
+            loadingMask2.hide();
+            showMessage("error", jqXHR.responseJSON.message);
+        },
+    });
+}
+
 $(document).ready(function () {
 
     $('body').on('click', '.transaction-btn', function (e) {
@@ -128,23 +148,10 @@ $(document).ready(function () {
 
         var url = $(this).attr("href");
         var modalTitle = $(this).data('title');
+
         $('.transaction-modal-title').html(modalTitle);
 
-        loadingMask2.show();
-        $.ajax({
-            url: url,
-            type: "GET",
-            success: function (data) {
-                loadingMask2.hide();
-                $(".transaction-form-wrapper").html("");
-                $('#transaction-modal').modal('show');
-                $(".transaction-form-wrapper").append(data);
-            },
-            error: function (jqXHR, status, errorThrown) {
-                loadingMask2.hide();
-                showMessage("error", jqXHR.responseJSON.message);
-            },
-        });
+        modalWidget(url, 'transaction');
     });
 
     $('body').on('click', '.transaction-submit-btn', function (e) {

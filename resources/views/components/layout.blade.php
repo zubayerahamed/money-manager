@@ -277,7 +277,7 @@
 
     <!-- Transaction Modal -->
     <div class="modal fade" id="transaction-modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <!-- Modal Header -->
@@ -289,9 +289,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 transaction-form-wrapper">
-
-                        </div>
+                        <div class="col-md-12 transaction-form-wrapper"></div>
                     </div>
                 </div>
 
