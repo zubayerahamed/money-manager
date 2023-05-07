@@ -107,9 +107,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tracking/details/today', [TrackingHistoryController::class, 'showAllTodaysTransactions'])->name('tracking.today');
     Route::get('/tracking/details/month/{monthno}/{year}', [TrackingHistoryController::class, 'showMonthWiseTransactions'])->name('tracking.monthly');
     Route::get('/tracking/details/year/{year}', [TrackingHistoryController::class, 'showYearWiseTransactions'])->name('tracking.yearly');
-    Route::get('/tracking/detail/{trackingHistory}/edit', [TrackingHistoryController::class, 'editTrackingDetailPage'])->name('tracking.edit.page');
+    Route::get('/tracking/detail/{trackingHistory}/edit', [TrackingHistoryController::class, 'editTrackingDetailPage'])->name('tracking.edit');
     Route::put('/tracking/detail/{trackingHistory}/update', [TrackingHistoryController::class, 'updateTrackingDetail'])->name('tracking.update');
-    Route::delete('/tracking/detail/{trackingHistory}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('tracking.delete');
+    Route::delete('/tracking/detail/{trackingHistory}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('tracking.destroy');
 
     // Dream
     Route::get('/dream/all', [DreamController::class, 'dreams'])->name('dreams');
