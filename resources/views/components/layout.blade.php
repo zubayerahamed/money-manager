@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="_token" content="{{ csrf_token() }}">
+
     <title>
         @isset($pageTitle)
             {{ $pageTitle }}
@@ -17,11 +18,11 @@
     <!-- Global stylesheets -->
     <link href="{{ asset('/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
-    <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" />
-    <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}" />
+    <link href="{{ asset('/assets/css/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/css/cropper.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/assets/css/custom.css') }}" rel="stylesheet" />
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -31,18 +32,15 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
-    <script src="{{ asset('/assets/js/vendor/forms/selects/select2.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/vendor/visualization/echarts/echarts.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
-    
+    <script src="{{ asset('/assets/js/cropper.js') }}"></script>
+    <script src="{{ asset('/assets/js/select2.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/echarts.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/d3.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/d3_tooltip.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+
     <script src="{{ asset('/assets/js/app.js') }}"></script>
     <script src="{{ asset('/assets/js/custom.js') }}"></script>
-
-    <script src="{{ asset('/assets/demo/charts/echarts/pies/pie_donut.js') }}"></script>
-    <script src="{{ asset('/assets/demo/pages/form_select2.js') }}"></script>
     <!-- /theme JS files -->
 </head>
 
@@ -152,7 +150,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('budget.index', [date('m') , date('Y')]) }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
+                            <a href="{{ route('budget.index', [date('m'), date('Y')]) }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
                                 <i class="fas fa-calculator"></i>
                                 <span>
                                     Budget - {{ date('M, Y') }}
@@ -315,4 +313,5 @@
     <!-- ./Loading Mask -->
 
 </body>
+
 </html>

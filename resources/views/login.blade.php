@@ -8,17 +8,17 @@
     <title>Login - Money Manager</title>
 
     <!-- Global stylesheets -->
-    <link href="/assets/fonts/inter/inter.css" rel="stylesheet" type="text/css">
-    <link href="/assets/icons/phosphor/styles.min.css" rel="stylesheet" type="text/css">
-    <link href="/assets/css/ltr/all.min.css" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/css/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
-    <script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="/assets/js/app.js"></script>
+    <script src="{{ asset('/assets/js/app.js') }}"></script>
     <!-- /theme JS files -->
 </head>
 
