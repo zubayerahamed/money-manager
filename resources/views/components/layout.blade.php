@@ -135,19 +135,19 @@
 
                         <li class="nav-item">
                             <a href="{{ route('wallet.index') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}">
-                                <i class="fas fa-chart-line"></i> Wallet Status
+                                <i class="fas fa-wallet"></i> <span>Wallet Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('income-source.index') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}">
-                                <i class="fas fa-chart-line"></i> Income Status
+                                <i class="fas fa-chart-line"></i> <span>Income Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('expense-type.index') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}">
-                                <i class="fas fa-chart-line"></i> Expense Status
+                                <i class="fas fa-chart-area"></i> <span>Expense Status</span>
                             </a>
                         </li>
 

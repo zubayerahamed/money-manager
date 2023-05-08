@@ -251,6 +251,7 @@ class TrackingHistoryController extends Controller
             ->where('year', '=', $year)
             ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
             ->orderBy('transaction_date', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         $dateWiseGroup = [];
@@ -291,6 +292,7 @@ class TrackingHistoryController extends Controller
             ->where('year', '=', $year)
             ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
             ->orderBy('transaction_date', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         $dateWiseGroup = [];
