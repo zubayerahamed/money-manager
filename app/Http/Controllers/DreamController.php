@@ -4,38 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Dream;
+use App\Models\Wallet;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class DreamController extends Controller
 {
-    public function dreams()
+
+    use HttpResponses;
+
+    public function index()
     {
-
-        $dreams = Dream::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
-
-        $totalSavingAmount = DB::table('account_tracking_histories')
-            ->selectRaw("SUM(amount * row_sign) as totalSavingAmount")
-            ->where('user_id', '=', auth()->user()->id)
-            ->get();
+        $dreams = Dream::with('wallet')->where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get();
 
         return view('dreams', [
-            'dreams' => $dreams,
-            'totalSavingAmount' => $totalSavingAmount[0]->totalSavingAmount == null ? 0 : $totalSavingAmount[0]->totalSavingAmount,
+            'dreams' => $dreams
         ]);
     }
 
-    public function showCreateDreamPage()
+    public function create()
     {
-        return view('dream-create');
+        return view('layouts.dreams.dream-form', [
+            'dream' => new Dream(),
+            'wallets' => Wallet::where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get()
+        ]);
     }
 
-    public function createDream(Request $request)
+    public function store(Request $request)
     {
-
-        //dd($request->all());
-
         $incomingFields = $request->validate([
             'name' => 'required',
             'target_year' => ['required'],
@@ -43,33 +41,57 @@ class DreamController extends Controller
         ]);
 
         $incomingFields['user_id'] = auth()->user()->id;
+        $incomingFields['wallet_id'] = $request['wallet_id'];
+        $incomingFields['note'] = $request['note'];
 
         $dream = Dream::create($incomingFields);
 
-        if ($dream) return redirect('/dream/' . $dream->id . '/edit')->with('success', $dream->name . ' dream created successfully');
+        if ($dream) {
+            return $this->successWithReloadSections(null, $dream->name . ' dream created successfully', 200, [
+                ['dreams-accordion', route('dream.section.accordion')]
+            ]);
+        }
 
-        return redirect('/dream')->with('error', "Can't create dream");
+        return $this->error(null, "Something went wrong, please try again later", 200);
     }
 
-    public function showEditDreamPage(Dream $dream)
+    public function accordion()
     {
-        return view('dream-update', ['dream' => $dream]);
+        $dreams = Dream::with('wallet')->where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get();
+
+        return view('layouts.dreams.dreams-accordion', [
+            'dreams' => $dreams
+        ]);
     }
 
-    public function updateDream(Dream $dream, Request $request)
+    public function edit(Dream $dream)
     {
+        return view('layouts.dreams.dream-form', [
+            'dream' => $dream,
+            'wallets' => Wallet::where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get()
+        ]);
+    }
 
+    public function update(Dream $dream, Request $request)
+    {
         $incomingFields = $request->validate([
             'name' => ['required'],
             'target_year' => ['required'],
             'amount_needed' =>  ['required', 'min:0']
         ]);
 
-        $udream = $dream->update($incomingFields);
+        $incomingFields['wallet_id'] = $request['wallet_id'];
+        $incomingFields['note'] = $request['note'];
 
-        if ($udream) return redirect('/dream/' . $dream->id . '/edit')->with('success', $dream->name . ' dream updated successfully');
+        $updated = $dream->update($incomingFields);
 
-        return redirect('/dream/' . $dream->id . '/edit')->with('error', $dream->name . ' dream update failed');
+        if ($updated) {
+            return $this->successWithReloadSections(null, $dream->name . ' dream updated successfully', 200, [
+                ['dreams-accordion', route('dream.section.accordion')]
+            ]);
+        }
+
+        return $this->error(null, "Something went wrong, please try again later", 200);
     }
 
     public function updateImage(Dream $dream, Request $request)
@@ -105,7 +127,7 @@ class DreamController extends Controller
         return response()->json(['success' => 'Image updated sucessfully']);
     }
 
-    public function deleteDream(Dream $dream)
+    public function destroy(Dream $dream)
     {
         $dreamName = $dream->name;
 
@@ -117,8 +139,12 @@ class DreamController extends Controller
         }
         $deleted = $dream->delete();
 
-        if ($deleted) return redirect('/dream/all')->with('success', $dreamName . ' dream deleted successfully');
+        if ($deleted){
+            return $this->successWithReloadSections(null, $dream->name . ' dream deleted successfully', 200, [
+                ['dreams-accordion', route('dream.section.accordion')]
+            ]);
+        }
 
-        return redirect('/dream/all')->with('error', "Can't delete dream");
+        return $this->error(null, "Something went wrong, please try again later", 200);
     }
 }

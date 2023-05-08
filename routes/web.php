@@ -112,13 +112,15 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tracking/detail/{trackingHistory}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('tracking.destroy');
 
     // Dream
-    Route::get('/dream/all', [DreamController::class, 'dreams'])->name('dreams');
-    Route::get('/dream', [DreamController::class, 'showCreateDreamPage'])->name('dream.create.page');
-    Route::post('/dream', [DreamController::class, 'createDream'])->name('dream.create');
-    Route::get('/dream/{dream}/edit', [DreamController::class, 'showEditDreamPage'])->name('dream.edit.page');
-    Route::put('/dream/{dream}', [DreamController::class, 'updateDream'])->name('dream.update');
+    Route::get('/dream/all', [DreamController::class, 'index'])->name('dream.index');
+    Route::get('/dream', [DreamController::class, 'create'])->name('dream.create');
+    Route::post('/dream', [DreamController::class, 'store'])->name('dream.store');
+    Route::get('/dream/{dream}/edit', [DreamController::class, 'edit'])->name('dream.edit');
+    Route::put('/dream/{dream}', [DreamController::class, 'update'])->name('dream.update');
     Route::post('/dream/image/{dream}', [DreamController::class, 'updateImage'])->name('dream.image');
-    Route::delete('/dream/{dream}/delete', [DreamController::class, 'deleteDream'])->name('dream.delete');
+    Route::delete('/dream/{dream}/delete', [DreamController::class, 'destroy'])->name('dream.destroy');
+
+    Route::get('/dream/section/accordion', [DreamController::class, 'accordion'])->name('dream.section.accordion');
 
     // Account
     Route::get('/account/all', [AccountController::class, 'accounts'])->name('accounts');

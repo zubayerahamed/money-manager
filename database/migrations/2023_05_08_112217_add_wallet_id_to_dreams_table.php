@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('note')->nullable();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
-            $table->unique(['name', 'user_id']);
-            $table->timestamps();
+        Schema::table('dreams', function (Blueprint $table) {
+            $table->foreignId('wallet_id')->nullable()->references('id')->on('wallet')->onDelete('cascade');
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('acounts');
+        Schema::table('dreams', function (Blueprint $table) {
+            //
+        });
     }
 };

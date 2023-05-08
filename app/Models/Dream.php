@@ -9,10 +9,14 @@ class Dream extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'image', 'target_year', 'amount_needed', 'user_id', 'note'];
+    protected $fillable = ['name', 'image', 'target_year', 'amount_needed', 'user_id', 'note', 'wallet_id'];
 
     public function getImageAttribute($value)
     {
         return $value ? '/upload/dream/' . $value : "/assets/images/demo/users/face11.jpg";
+    }
+
+    public function wallet(){
+        return $this->hasOne(Wallet::class, 'id', 'wallet_id');
     }
 }

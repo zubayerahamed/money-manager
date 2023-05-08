@@ -166,22 +166,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/dream/all') }}" class="nav-link {{ Request::is('/dream/**') ? 'active' : '' }}">
+                            <a href="{{ route('dream.index') }}" class="nav-link {{ Request::is('/dream/**') ? 'active' : '' }}">
                                 <i class="fas fa-allergies"></i>
                                 <span>
                                     Dreams
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/account/all') }}" class="nav-link {{ Request::is('/account/**') ? 'active' : '' }}">
-                                <i class="fas fa-piggy-bank"></i>
-                                <span>
-                                    Accounts
-                                </span>
-                            </a>
-                        </li>
-
                     </ul>
                 </div>
                 <!-- /main navigation -->
