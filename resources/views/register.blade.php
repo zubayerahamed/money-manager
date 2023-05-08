@@ -9,13 +9,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/images/favicon-32x32.png') }}">
 
     <!-- Global stylesheets -->
-    <link href="{{ asset('/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/fonts/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
-    <script src="{{ asset('/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -33,7 +32,7 @@
                 <!-- Content area -->
                 <div class="content d-flex justify-content-center align-items-center">
                     <!-- Registration form -->
-                    <form class="login-form" action="{{ url('/register') }}" method="POST">
+                    <form class="login-form" action="{{ route('register') }}" method="POST">
                         @csrf
                         <div class="card mb-0">
                             <div class="card-body">
@@ -98,7 +97,7 @@
                                     <button type="submit" class="btn btn-teal w-100">Register</button>
                                 </div>
                                 <div class="text-center">
-                                    Already have an account? <a href="{{ url('/login') }}">Login here</a>
+                                    Already have an account? <a href="{{ route('login') }}">Login here</a>
                                 </div>
                             </div>
                         </div>

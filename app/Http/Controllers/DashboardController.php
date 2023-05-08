@@ -125,7 +125,7 @@ class DashboardController extends Controller
         return $array;
     }
 
-    public function showDashboardPage()
+    public function index()
     {
 
         // Current balance

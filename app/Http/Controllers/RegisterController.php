@@ -8,12 +8,12 @@ use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
-    public function showRegisterPage()
+    public function index()
     {
         return view('register');
     }
 
-    public function doRegistration(Request $request)
+    public function store(Request $request)
     {
         $incomingFields = $request->validate([
             'name' => 'required',

@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function showLoginPage()
+    public function index()
     {
         return view('login');
     }
 
-    public function doLogin(Request $request)
+    public function store(Request $request)
     {
-
         $incomingFileds = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required'

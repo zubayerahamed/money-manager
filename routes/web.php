@@ -29,16 +29,16 @@ use Illuminate\Support\Facades\Route;
 
 
 // Registration
-Route::get('/register', [RegisterController::class, 'showRegisterPage'])->name('register');
-Route::post('/register', [RegisterController::class, 'doRegistration']);
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('register');
 
 // Login
-Route::get('/login', [LoginController::class, 'showLoginPage'])->name('login');
-Route::post('/login', [LoginController::class, 'doLogin']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
     // Home
-    Route::get('/', [DashboardController::class, 'showDashboardPage'])->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData']);
     Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
 

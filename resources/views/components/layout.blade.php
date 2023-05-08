@@ -17,9 +17,10 @@
     </title>
 
     <!-- Global stylesheets -->
-    <link href="{{ asset('/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/fonts/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/fonts/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/fonts/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/fonts/material/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/cropper.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" rel="stylesheet" />
@@ -27,9 +28,9 @@
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
-    <script src="{{ asset('/assets/js/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/popper/popper.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -58,9 +59,9 @@
                 </button>
             </div>
 
-            <div class="navbar-brand flex-1 flex-lg-0">
+            <div class="navbar-brand flex-1 flex-lg-0 justify-content-center justify-content-md-start">
                 <a href="{{ route('home') }}"><img src="{{ asset('/assets/images/money-manager-logo-light.png') }}" class="h-40px me-2" alt=""></a>
-                <a href="{{ route('home') }}" class="d-inline-flex align-items-center" style="text-decoration: none;">
+                <a href="{{ route('home') }}" class="d-inline-flex align-items-center d-none d-md-block" style="text-decoration: none;">
                     <h1 class="m-0" style="color: #fff;">Money Manager</h1>
                 </a>
             </div>
@@ -103,13 +104,9 @@
             <div class="sidebar-content">
 
                 <!-- Sidebar header -->
-                <div class="sidebar-section">
+                <div class="sidebar-section d-block d-lg-none">
                     <div class="sidebar-section-body d-flex justify-content-center">
                         <div>
-                            <button type="button"
-                                    class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
-                                <i class="ph-arrows-left-right"></i>
-                            </button>
                             <button type="button"
                                     class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
                                 <i class="ph-x"></i>
@@ -119,13 +116,12 @@
                 </div>
                 <!-- /sidebar header -->
 
-
                 <!-- Main navigation -->
                 <div class="sidebar-section">
                     <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                         <li class="nav-item">
-                            <a href="{{ url('/') }}" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
+                            <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
                                 <span>
                                     Home
@@ -135,25 +131,25 @@
 
                         <li class="nav-item">
                             <a href="{{ route('wallet.index') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}">
-                                <i class="fas fa-wallet"></i> <span>Wallet Status</span>
+                                <i class="ph-wallet"></i> <span>Wallet Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('income-source.index') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}">
-                                <i class="fas fa-chart-line"></i> <span>Income Status</span>
+                                <i class="ph-chart-line-up"></i> <span>Income Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('expense-type.index') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}">
-                                <i class="fas fa-chart-area"></i> <span>Expense Status</span>
+                                <i class="ph-chart-bar-horizontal"></i> <span>Expense Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('budget.index', [date('m'), date('Y')]) }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
-                                <i class="fas fa-calculator"></i>
+                                <i class="ph-calculator"></i>
                                 <span>
                                     Budget - {{ date('M, Y') }}
                                 </span>
@@ -161,7 +157,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/tracking/details/today') }}" class="nav-link {{ Request::is('/tracking/details/today') ? 'active' : '' }}">
-                                <i class="far fa-calendar-check"></i>
+                                <i class="ph-calendar-check"></i>
                                 <span>
                                     Today's History
                                 </span>
@@ -169,7 +165,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dream.index') }}" class="nav-link {{ Request::is('/dream/**') ? 'active' : '' }}">
-                                <i class="fas fa-allergies"></i>
+                                <i class="ph-cloud-moon"></i>
                                 <span>
                                     Dreams
                                 </span>
@@ -252,8 +248,8 @@
 
                 <!-- Footer -->
                 <div class="navbar navbar-sm navbar-footer border-top">
-                    <div class="container-fluid text-center">
-                        <span>&copy; {{ date('Y') }} <a href="https://www.karigorit.com" target="_blank">Karigor IT</a></span>
+                    <div class="container-fluid justify-content-center">
+                        Copyright <span>&copy; {{ date('Y') }} <a href="https://www.karigorit.com" target="_blank">Karigor IT</a></span>
                     </div>
                 </div>
                 <!-- /footer -->
