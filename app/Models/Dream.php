@@ -13,10 +13,11 @@ class Dream extends Model
 
     public function getImageAttribute($value)
     {
-        return $value ? '/upload/dream/' . $value : "/assets/images/demo/users/face11.jpg";
+        return $value ? '/upload/dream/' . $value : "/assets/images/no-image.png";
     }
 
-    public function wallet(){
+    public function wallet()
+    {
         return $this->hasOne(Wallet::class, 'id', 'wallet_id');
     }
 }

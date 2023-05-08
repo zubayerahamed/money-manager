@@ -120,11 +120,13 @@ class DreamController extends Controller
 
         // Delete previous avatar
         $prevImagePath = public_path() . $previousAvatar;
-        if ($previousAvatar != '/assets/images/demo/users/face11.jpg') {
+        if ($previousAvatar != '/assets/images/no-image.png') {
             unlink($prevImagePath);
         }
 
-        return response()->json(['success' => 'Image updated sucessfully']);
+        return $this->successWithReloadSections(null, $dream->name . ' dream deleted successfully', 200, [
+            ['dreams-accordion', route('dream.section.accordion')]
+        ]);
     }
 
     public function destroy(Dream $dream)
@@ -134,7 +136,7 @@ class DreamController extends Controller
         // Delete previous avatar
         $previousAvatar = $dream->image;
         $prevImagePath = public_path() . $previousAvatar;
-        if ($previousAvatar != '/assets/images/demo/users/face11.jpg') {
+        if ($previousAvatar != '/assets/images/no-image.png') {
             unlink($prevImagePath);
         }
         $deleted = $dream->delete();

@@ -76,7 +76,7 @@ class ProfileController extends Controller
 
         // Delete previous avatar
         $prevImagePath = public_path() . $previousAvatar;
-        if ($previousAvatar != '/assets/images/demo/users/face11.jpg') {
+        if ($previousAvatar != '/assets/images/no-image.png') {
             unlink($prevImagePath);
         }
 

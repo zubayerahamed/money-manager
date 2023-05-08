@@ -117,8 +117,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dream', [DreamController::class, 'store'])->name('dream.store');
     Route::get('/dream/{dream}/edit', [DreamController::class, 'edit'])->name('dream.edit');
     Route::put('/dream/{dream}', [DreamController::class, 'update'])->name('dream.update');
-    Route::post('/dream/image/{dream}', [DreamController::class, 'updateImage'])->name('dream.image');
     Route::delete('/dream/{dream}/delete', [DreamController::class, 'destroy'])->name('dream.destroy');
+    Route::post('/dream/image/{dream}', [DreamController::class, 'updateImage'])->name('dream.image');
 
     Route::get('/dream/section/accordion', [DreamController::class, 'accordion'])->name('dream.section.accordion');
 

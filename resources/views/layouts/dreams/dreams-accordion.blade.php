@@ -10,8 +10,8 @@
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $dream->name }}</div>
                         <div class="text-muted fs-sm">
                             <p class="m-0">Value : {{ $dream->amount_needed }} TK</p>
-                            @if ($dream->amount_needed > 0)
-                            <p class="m-0">Achieved : {{ $dream->amount_needed <= $dream->wallet->currentBalance ? '' : $dream->wallet->currentBalance . ' TK' }} ({{ $dream->amount_needed <= $dream->wallet->currentBalance ? '100%' : round((100 * $dream->wallet->currentBalance) / $dream->amount_needed, 2) . '%' }})</p>    
+                            @if ($dream->amount_needed > 0 && $dream->wallet != null)
+                                <p class="m-0">Achieved : {{ $dream->amount_needed <= $dream->wallet->currentBalance ? '' : $dream->wallet->currentBalance . ' TK' }} ({{ $dream->amount_needed <= $dream->wallet->currentBalance ? '100%' : round((100 * $dream->wallet->currentBalance) / $dream->amount_needed, 2) . '%' }})</p>
                             @endif
                             <p class="m-0">Target : {{ $dream->target_year }}</p>
                         </div>
@@ -28,6 +28,10 @@
                         </div>
                     @endif
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
+                        <input type="file" name="image" class="form-control avatar-image" id="{{ $dream->id }}" accept="image/*">
+                        <a href="{{ route('dream.image', $dream->id) }}" class="m-2 text-primary avatar-upload" title="Edit Image">
+                            <i class="fas fa-images"></i>
+                        </a>
                         <a href="{{ route('dream.edit', $dream->id) }}" class="m-2 text-primary transaction-btn" data-title="Edit Dream">
                             <i class="fas fa-edit"></i>
                         </a>

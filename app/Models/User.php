@@ -29,7 +29,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
-        return $value ? '/upload/avatar/' . $value : "/assets/images/demo/users/face11.jpg";
+        return $value ? '/upload/avatar/' . $value : "/assets/images/no-image.png";
     }
 
 
