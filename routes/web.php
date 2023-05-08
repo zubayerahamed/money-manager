@@ -122,18 +122,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dream/section/accordion', [DreamController::class, 'accordion'])->name('dream.section.accordion');
 
-    // Account
-    Route::get('/account/all', [AccountController::class, 'accounts'])->name('accounts');
-    Route::get('/account', [AccountController::class, 'showCreateAccountPage'])->name('account.create.page');
-    Route::post('/account', [AccountController::class, 'createAccount'])->name('account.create');
-    Route::get('/account/{account}/edit', [AccountController::class, 'showEditAccountPage'])->name('account.edit.page');
-    Route::put('/account/{account}', [AccountController::class, 'updateAccount'])->name('account.update');
-    Route::delete('/account/{account}/delete', [AccountController::class, 'deleteAccount'])->name('account.delete');
-
-    // Account Tracking
-    Route::post('/ac-tracking/saving', [AccountTrackingController::class, 'save'])->name('do.ac.transaction.saving');
-    Route::post('/ac-tracking/withdraw', [AccountTrackingController::class, 'withdraw'])->name('do.ac.transaction.withdraw');
-
     // Logout
     Route::get('/logout', [LogoutController::class, 'doLogout'])->name('logout');
 });

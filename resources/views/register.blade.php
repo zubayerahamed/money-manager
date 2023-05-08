@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Registration - Money Manager</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/images/favicon-32x32.png') }}">
 
     <!-- Global stylesheets -->
     <link href="{{ asset('/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
@@ -38,7 +39,7 @@
                             <div class="card-body">
                                 <div class="text-center mb-3">
                                     <div class="d-inline-flex align-items-center justify-content-center mb-4 mt-2">
-                                        <img src="/assets/images/logo_icon.svg" class="h-48px" alt="">
+                                        <img src="{{ asset('/assets/images/money-manager-logo.png') }}" class="h-48px" alt="">
                                     </div>
                                     <h5 class="mb-0">Create account</h5>
                                 </div>

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="_token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/images/favicon-32x32.png') }}">
 
     <title>
         @isset($pageTitle)
@@ -58,6 +59,7 @@
             </div>
 
             <div class="navbar-brand flex-1 flex-lg-0">
+                <a href="{{ route('home') }}"><img src="{{ asset('/assets/images/money-manager-logo-light.png') }}" class="h-40px me-2" alt=""></a>
                 <a href="{{ route('home') }}" class="d-inline-flex align-items-center" style="text-decoration: none;">
                     <h1 class="m-0" style="color: #fff;">Money Manager</h1>
                 </a>

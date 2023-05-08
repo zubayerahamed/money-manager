@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+    use HttpResponses;
+
     public function showProfilePage()
     {
 
@@ -80,6 +83,6 @@ class ProfileController extends Controller
             unlink($prevImagePath);
         }
 
-        return response()->json(['success' => $prevImagePath]);
+        return $this->successWithReload(null, 'Profile picture updated successfully');
     }
 }

@@ -14,7 +14,7 @@
     <div class="row mb-3">
         <label class="form-label">Amount Needed:</label>
         <div class="form-group">
-            <input type="number" name="amount_needed" class="form-control" value="{{ $dream->amount_needed }}" min="0" step="any" required>
+            <input type="number" name="amount_needed" class="form-control" value="{{ $dream->amount_needed == null ? '0.0' : $dream->amount_needed }}" min="0" step="any" required>
         </div>
     </div>
 

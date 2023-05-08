@@ -16,7 +16,6 @@ var loadingMask2 = {
     },
 };
 
-
 // Toaster message
 function showMessage(type, message) {
     if (type == undefined || type == "") return;
@@ -158,4 +157,13 @@ $(document).ready(function () {
         e.preventDefault();
         submitForm($('#transaction-form'), 'POST');
     });
-})
+
+    //Initialize Select2 Elements
+    $(document).on("select2:open", () => {
+        document.querySelector(".select2-search__field").focus();
+    });
+    if ($(".select2").length > 0) {
+        $(".select2").select2();
+    }
+
+});
