@@ -11,6 +11,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SetupController;
 use App\Http\Controllers\TrackingHistoryController;
 use App\Http\Controllers\WalletController;
 use GuzzleHttp\Middleware;
@@ -27,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Setup
+Route::get('/setup', [SetupController::class, 'index'])->name('setup');
 
 // Registration
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
