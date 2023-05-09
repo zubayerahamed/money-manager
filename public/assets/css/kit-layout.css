@@ -143,8 +143,8 @@ body {
 
 .btn-to-top {
     position: absolute;
-    bottom: var(--spacer);
-    right: 1.25rem;
+    bottom: 1rem !important;
+    right: 1rem;
     -ms-flex-item-align: end;
     align-self: flex-end;
     opacity: 0;

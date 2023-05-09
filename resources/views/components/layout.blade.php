@@ -190,7 +190,7 @@
 
         <!-- Content Wrapper -->
         <div class="content-wrapper">
-            <!-- Content Innder -->
+            <!-- Content Inner -->
             <div class="content-inner">
 
                 <!-- Page header -->
@@ -257,7 +257,7 @@
                 <!-- /Footer -->
 
             </div>
-            <!-- ./Content Innder -->
+            <!-- ./Content Inner -->
         </div>
         <!-- ./Content Wrapper -->
 
