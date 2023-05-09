@@ -60,13 +60,13 @@
     <div class="navbar navbar-dark navbar-expand-lg navbar-static border-bottom border-bottom-white border-opacity-10">
         <div class="container-fluid">
 
-            <!-- Sidebar close button for mobile view -->
+            <!-- Sidebar Toggle Button -->
             <div class="d-flex d-lg-none me-2">
                 <button type="button" class="navbar-toggler sidebar-mobile-main-toggle rounded-pill">
                     <i class="ph-list"></i>
                 </button>
             </div>
-            <!-- ./Sidebar close button for mobile view -->
+            <!-- ./Sidebar Toggle Button -->
 
             <!-- Logo and Site Title -->
             <div class="navbar-brand flex-1 flex-lg-0 justify-content-center justify-content-md-start">
@@ -109,11 +109,9 @@
 
         <!-- Main sidebar -->
         <div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
-
             <!-- Sidebar content -->
             <div class="sidebar-content">
-
-                <!-- Sidebar header -->
+                <!-- Sidebar Close Button -->
                 <div class="sidebar-section d-block d-lg-none">
                     <div class="sidebar-section-body d-flex justify-content-center">
                         <div>
@@ -123,12 +121,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- /sidebar header -->
+                <!-- ./Sidebar Close Button -->
 
-                <!-- Main navigation -->
+                <!-- Sidebar Main Navigation -->
                 <div class="sidebar-section">
                     <ul class="nav nav-sidebar" data-nav-type="accordion">
-
                         <li class="nav-item">
                             <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
@@ -163,12 +160,14 @@
                                 <span>Budget - {{ date('M, Y') }}</span>
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="{{ url('/tracking/details/today') }}" class="nav-link {{ Request::is('/tracking/details/today') ? 'active' : '' }}">
+                            <a href="{{ route('tracking.today') }}" class="nav-link {{ Request::is('/tracking/details/today') ? 'active' : '' }}">
                                 <i class="ph-calendar-check"></i>
                                 <span>Today's History</span>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a href="{{ route('dream.index') }}" class="nav-link {{ Request::is('/dream/**') ? 'active' : '' }}">
                                 <i class="ph-cloud-moon"></i>
@@ -177,59 +176,59 @@
                         </li>
                     </ul>
                 </div>
-                <!-- /main navigation -->
-
+                <!-- ./Sidebar Main Navigation -->
             </div>
-            <!-- /sidebar content -->
-
+            <!-- ./Sidebar content -->
         </div>
-        <!-- /main sidebar -->
+        <!-- ./Main sidebar -->
 
-        <!-- Main content -->
+        <!-- Content Wrapper -->
         <div class="content-wrapper">
-
-            <!-- Inner content -->
+            <!-- Content Innder -->
             <div class="content-inner">
 
                 <!-- Page header -->
                 <div class="page-header page-header-light shadow">
                     <div class="page-header-content d-lg-flex">
 
+                        <!-- Transaction Action Buttons -->
                         <h4 class="page-title text-center m-0">
-
                             <div class="btn-group" role="group">
                                 <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income" title="Add Income">
                                     <i class="fas fa-plus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Income</div>
                                 </a>
+
                                 <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense" title="Add Expense">
                                     <i class="fas fa-minus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Expense</div>
                                 </a>
+
                                 <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer" title="Do Transfer">
                                     <i class="fas fa-exchange-alt"></i>
                                     <div class="d-none d-md-block ms-2">Transfer</div>
                                 </a>
+
                                 <a href="#" class="btn btn-light text-warning" onclick="location.reload()" title="Reload Page">
                                     <i class="fas fa-sync-alt"></i>
                                     <div class="d-none d-md-block ms-2">Reload Page</div>
                                 </a>
                             </div>
-
                         </h4>
+                        <!-- ./Transaction Action Buttons -->
 
                     </div>
                 </div>
-                <!-- /page header -->
+                <!-- ./Page header -->
 
-                <!-- Notification Message For Ajax -->
+                <!-- Notification Message For Ajax Request -->
                 <div class="col-md-12 toast-msg-wrapper d-none" style="padding: 20px; padding-bottom: 0px;">
                     <div class="alert alert-dismissible fade show toast-msg" style="margin-bottom: 0px;">
                         <span class="fw-semibold toast-msg-status"></span> <span class="toast-msg-body"></span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 </div>
-                <!-- ./Notification Message For Ajax -->
+                <!-- ./Notification Message For Ajax Request -->
 
                 <!-- Notification Message -->
                 @if (Session::has('success'))
@@ -261,9 +260,9 @@
                 <!-- /Footer -->
 
             </div>
-            <!-- /inner content -->
-
+            <!-- ./Content Innder -->
         </div>
+        <!-- ./Content Wrapper -->
 
     </div>
     <!-- /Page content -->
@@ -278,6 +277,7 @@
                     <h4 class="modal-title transaction-modal-title">Modal Title</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+                <!-- ./Modal Header -->
 
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -285,6 +285,7 @@
                         <div class="col-md-12 transaction-form-wrapper"></div>
                     </div>
                 </div>
+                <!-- ./Modal body -->
 
             </div>
         </div>
@@ -295,10 +296,13 @@
     <div id="avatar-modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+
+                <!-- Modal Header -->
                 <div class="modal-header">
                     <h5 class="modal-title">Crop & Resize your avatar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+                <!-- ./Modal Header -->
 
                 <div class="modal-body">
                     <div class="img-container">
@@ -312,11 +316,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- ./Modal body -->
 
+                <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger crop-cancel" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="crop">Crop</button>
                 </div>
+                <!-- ./Modal footer -->
+
             </div>
         </div>
     </div>
@@ -351,7 +359,7 @@
         </div>
         <div id="floating-button">
             <p class="plus">+</p>
-            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+            <img class="edit" src="{{ asset('/assets/images/bt_edit.png') }}">
         </div>
     </div>
     <!-- ./Floating Action Btn -->

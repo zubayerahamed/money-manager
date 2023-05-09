@@ -1,11 +1,10 @@
 <x-layout pageTitle="Dreams">
-    <!-- Content area -->
+    <!-- Content -->
     <div class="content">
-        <!-- Dashboard content -->
         <div class="row">
-
             <div class="col-xl-12">
-                <!-- Marketing campaigns -->
+
+                <!-- Dreams Section -->
                 <div class="card">
 
                     <div class="card-header">
@@ -26,9 +25,10 @@
                     </div>
 
                 </div>
-                <!-- /marketing campaigns -->
+                <!-- ./Dreams Section -->
+
             </div>
         </div>
-        <!-- /dashboard content -->
     </div>
+    <!-- ./Content -->
 </x-layout>

@@ -1,10 +1,10 @@
 <x-layout pageTitle="Income Sources Status">
-    <!-- Content area -->
+    <!-- Content -->
     <div class="content">
-        <!-- Dashboard content -->
         <div class="row">
             <div class="col-xl-12">
-                <!-- Marketing campaigns -->
+
+                <!-- Income Source Section -->
                 <div class="card">
 
                     <div class="card-header income-sources-header">
@@ -20,10 +20,10 @@
                     </div>
 
                 </div>
-                <!-- /marketing campaigns -->
+                <!-- ./Income Source Section -->
+
             </div>
         </div>
-        <!-- /dashboard content -->
     </div>
-    <!-- /content area -->
+    <!-- ./Content -->
 </x-layout>

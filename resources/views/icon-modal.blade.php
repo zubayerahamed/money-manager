@@ -1,3 +1,4 @@
+<!-- Font Awesome Icon Modal -->
 <div class="modal fade" id="icon-modal">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -9876,12 +9877,12 @@
         </div>
     </div>
 </div>
+<!-- ./Font Awesome Icon Modal -->
 
 <script>
     $(document).ready(function() {
 
         $('.icon-item').off('click').on('click', function() {
-
             var classList = $(this).find('i').attr('class');
             classList = classList.replace(" me-3 fa-2x", "");
 

@@ -1,10 +1,10 @@
 <x-layout pageTitle="Wallets Status">
-    <!-- Content area -->
+    <!-- Content -->
     <div class="content">
-        <!-- Dashboard content -->
         <div class="row">
             <div class="col-xl-12">
-                <!-- Marketing campaigns -->
+
+                <!-- Wallet Section -->
                 <div class="card">
 
                     <div class="card-header wallets-header">
@@ -20,10 +20,10 @@
                     </div>
 
                 </div>
-                <!-- /marketing campaigns -->
+                <!-- ./Wallet Section -->
+
             </div>
         </div>
-        <!-- /dashboard content -->
     </div>
-    <!-- /content area -->
+    <!-- ./Content -->
 </x-layout>

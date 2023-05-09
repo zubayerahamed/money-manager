@@ -1,10 +1,10 @@
 <x-layout pageTitle="Expense Types Status">
-    <!-- Content area -->
+    <!-- Content -->
     <div class="content">
-        <!-- Dashboard content -->
         <div class="row">
             <div class="col-xl-12">
-                <!-- Marketing campaigns -->
+
+                <!-- Expense Type Section -->
                 <div class="card">
 
                     <div class="card-header expense-types-header">
@@ -20,10 +20,10 @@
                     </div>
 
                 </div>
-                <!-- /marketing campaigns -->
+                <!-- ./Expense Type Section -->
+
             </div>
         </div>
-        <!-- /dashboard content -->
     </div>
-    <!-- /content area -->
+    <!-- ./Content -->
 </x-layout>

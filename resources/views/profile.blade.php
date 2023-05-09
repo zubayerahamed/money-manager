@@ -1,13 +1,14 @@
 <x-layout pageTitle="Profile">
-    <!-- Content area -->
+    <!-- Content -->
     <div class="content">
-
-        <!-- Dashboard content -->
         <div class="row">
             <div class="col-xl-12">
 
                 <div class="row">
+
+                    <!-- Profile Photo Section -->
                     <div class="col-lg-4">
+
                         <div class="card">
                             <div class="sidebar-section-body text-center" style="padding: 20px;">
                                 <div class="card-img-actions d-inline-block mb-3">
@@ -23,17 +24,25 @@
                                 <h6 class="mb-0">{{ $user->name }}</h6>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
+                    <!-- ./Profile Photo Section -->
+
+                    <!-- Profile Info Section -->
                     <div class="col-lg-8">
+
+                        <!-- Update Profile -->
                         <div class="card">
+
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Update Profile</h5>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/profile') }}" method="POST">
+                                <form action="{{ route('profile.update') }}" method="POST">
                                     @csrf
+                                    @method('PUT')
+
                                     <div class="row mb-3">
                                         <label class="form-label">Name:</label>
                                         <div class="form-group">
@@ -225,17 +234,21 @@
                                     </div>
                                 </form>
                             </div>
+
                         </div>
+                        <!-- ./Update Profile -->
 
-
+                        <!-- Update Password -->
                         <div class="card">
+
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0">Update Password</h5>
                             </div>
 
                             <div class="card-body border-top">
-                                <form action="{{ url('/profile/password') }}" method="POST">
+                                <form action="{{ route('profile.password') }}" method="POST">
                                     @csrf
+                                    @method('PUT')
 
                                     <div class="row mb-3">
                                         <label class="form-label">Password:</label>
@@ -262,14 +275,17 @@
                                     </div>
                                 </form>
                             </div>
+
                         </div>
+                        <!-- ./Update Password -->
+
                     </div>
+                    <!-- ./Profile Info Section -->
+
                 </div>
-                <!-- /centered card -->
 
             </div>
         </div>
-        <!-- /dashboard content -->
-
     </div>
+    <!-- ./Content -->
 </x-layout>
