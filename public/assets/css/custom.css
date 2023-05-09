@@ -296,7 +296,9 @@ input.avatar-image {
 
 
 
-
+/*
+Floating Action Btn
+*/
 #floating-button {
     width: 55px;
     height: 55px;
@@ -458,7 +460,8 @@ input.avatar-image {
     animation-fill-mode: forwards;
     color: #fff;
 }
-.nd1 a, .nd3 a, .nd4 a{
+
+.letter a{
     text-decoration: none;
     color: #fff;
 }
@@ -487,7 +490,6 @@ input.avatar-image {
 }
 
 #container-floating:hover .nds {
-
     animation: bounce-nds 0.1s linear;
     animation-fill-mode: forwards;
 }
@@ -498,10 +500,6 @@ input.avatar-image {
 
 #container-floating:hover .nd4 {
     animation-delay: 0.15s;
-}
-
-#container-floating:hover .nd5 {
-    animation-delay: 0.2s;
 }
 
 .letter {
@@ -518,22 +516,5 @@ input.avatar-image {
     line-height: 40px;
 }
 
-.reminder {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    line-height: 40px;
-}
 
-.profile {
-    border-radius: 50%;
-    width: 40px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    right: 20px;
-}
+

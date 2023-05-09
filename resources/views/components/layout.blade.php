@@ -6,17 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="_token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/images/favicon-32x32.png') }}">
 
     <title>
         @isset($pageTitle)
-            {{ $pageTitle }}
+            MM | {{ $pageTitle }}
         @else
-            Money Manager
+            MM - Money Manager
         @endisset
     </title>
 
-    <!-- Global stylesheets -->
+    <!-- Favicon icon -->
+    <link href="{{ asset('/assets/images/favicon-32x32.png') }}" rel="icon" type="image/png" sizes="32x32">
+
+    <!-- Stylesheets -->
     <link href="{{ asset('/assets/fonts/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/fonts/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/fonts/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
@@ -25,74 +27,82 @@
     <link href="{{ asset('/assets/css/cropper.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" rel="stylesheet" />
     <link href="{{ asset('/assets/css/custom.css') }}" rel="stylesheet" />
-    <!-- /global stylesheets -->
+    <!-- /Stylesheets -->
 
     <!-- Core JS files -->
     <script src="{{ asset('/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('/assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- /core JS files -->
+    <!-- /Core JS files -->
 
-    <!-- Theme JS files -->
+    <!-- Vendor JS files -->
     <script src="{{ asset('/assets/js/cropper.js') }}"></script>
     <script src="{{ asset('/assets/js/select2.min.js') }}"></script>
     <script src="{{ asset('/assets/js/echarts.min.js') }}"></script>
     <script src="{{ asset('/assets/js/d3.min.js') }}"></script>
     <script src="{{ asset('/assets/js/d3_tooltip.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+    <!-- ./Vendor JS files -->
 
+    <!-- Custom Js Files -->
     <script src="{{ asset('/assets/js/app.js') }}"></script>
     <script src="{{ asset('/assets/js/custom.js') }}"></script>
-    <!-- /theme JS files -->
+    <script src="{{ asset('/assets/js/image-upload.js') }}"></script>
+    <!-- ./Custom Js Files -->
 </head>
 
 <body>
 
+    <!-- Project Base Path -->
     <a href="{{ url('/') }}" class="basePath"></a>
 
-    <!-- Main navbar -->
+    <!-- Top Navbar -->
     <div class="navbar navbar-dark navbar-expand-lg navbar-static border-bottom border-bottom-white border-opacity-10">
         <div class="container-fluid">
+
+            <!-- Sidebar close button for mobile view -->
             <div class="d-flex d-lg-none me-2">
                 <button type="button" class="navbar-toggler sidebar-mobile-main-toggle rounded-pill">
                     <i class="ph-list"></i>
                 </button>
             </div>
+            <!-- ./Sidebar close button for mobile view -->
 
+            <!-- Logo and Site Title -->
             <div class="navbar-brand flex-1 flex-lg-0 justify-content-center justify-content-md-start">
                 <a href="{{ route('home') }}"><img src="{{ asset('/assets/images/money-manager-logo-light.png') }}" class="h-40px me-2" alt=""></a>
                 <a href="{{ route('home') }}" class="d-inline-flex align-items-center d-none d-md-block" style="text-decoration: none;">
                     <h1 class="m-0" style="color: #fff;">Money Manager</h1>
                 </a>
             </div>
+            <!-- ./Logo and Site Title -->
 
+            <!-- User Profile Section -->
             <ul class="nav flex-row justify-content-end order-1 order-lg-2">
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
                     <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1"
                        data-bs-toggle="dropdown">
                         <div class="status-indicator-container">
-                            <img src="{{ auth()->user()->avatar }}" class="w-32px h-32px rounded-pill"
-                                 alt="">
+                            <img src="{{ auth()->user()->avatar }}" class="w-32px h-32px rounded-pill" alt="{{ auth()->user()->name }}">
                             <span class="status-indicator bg-success"></span>
                         </div>
                         <span class="d-none d-lg-inline-block mx-lg-2">{{ auth()->user()->name }}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a href="{{ url('/profile') }}" class="dropdown-item">
-                            <i class="ph-user-circle me-2"></i>
-                            My profile
+                        <a href="{{ route('profile.index') }}" class="dropdown-item">
+                            <i class="ph-user-circle me-2"></i> My profile
                         </a>
-                        <a href="{{ url('/logout') }}" class="dropdown-item">
-                            <i class="ph-sign-out me-2"></i>
-                            Logout
+                        <a href="{{ route('logout') }}" class="dropdown-item">
+                            <i class="ph-sign-out me-2"></i> Logout
                         </a>
                     </div>
                 </li>
             </ul>
+            <!-- ./User Profile Section -->
         </div>
     </div>
-    <!-- /main navbar -->
+    <!-- ./Top Navbar -->
 
     <!-- Page content -->
     <div class="page-content">
@@ -107,8 +117,7 @@
                 <div class="sidebar-section d-block d-lg-none">
                     <div class="sidebar-section-body d-flex justify-content-center">
                         <div>
-                            <button type="button"
-                                    class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
+                            <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
                                 <i class="ph-x"></i>
                             </button>
                         </div>
@@ -123,52 +132,47 @@
                         <li class="nav-item">
                             <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
-                                <span>
-                                    Home
-                                </span>
+                                <span>Home</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('wallet.index') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}">
-                                <i class="ph-wallet"></i> <span>Wallet Status</span>
+                                <i class="ph-wallet"></i>
+                                <span>Wallet Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('income-source.index') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}">
-                                <i class="ph-chart-line-up"></i> <span>Income Status</span>
+                                <i class="ph-chart-line-up"></i>
+                                <span>Income Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('expense-type.index') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}">
-                                <i class="ph-chart-bar-horizontal"></i> <span>Expense Status</span>
+                                <i class="ph-chart-bar-horizontal"></i>
+                                <span>Expense Status</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('budget.index', [date('m'), date('Y')]) }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
                                 <i class="ph-calculator"></i>
-                                <span>
-                                    Budget - {{ date('M, Y') }}
-                                </span>
+                                <span>Budget - {{ date('M, Y') }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/tracking/details/today') }}" class="nav-link {{ Request::is('/tracking/details/today') ? 'active' : '' }}">
                                 <i class="ph-calendar-check"></i>
-                                <span>
-                                    Today's History
-                                </span>
+                                <span>Today's History</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dream.index') }}" class="nav-link {{ Request::is('/dream/**') ? 'active' : '' }}">
                                 <i class="ph-cloud-moon"></i>
-                                <span>
-                                    Dreams
-                                </span>
+                                <span>Dreams</span>
                             </a>
                         </li>
                     </ul>
@@ -194,15 +198,15 @@
                         <h4 class="page-title text-center m-0">
 
                             <div class="btn-group" role="group">
-                                <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income">
+                                <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income" title="Add Income">
                                     <i class="fas fa-plus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Income</div>
                                 </a>
-                                <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense">
+                                <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense" title="Add Expense">
                                     <i class="fas fa-minus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Expense</div>
                                 </a>
-                                <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer">
+                                <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer" title="Do Transfer">
                                     <i class="fas fa-exchange-alt"></i>
                                     <div class="d-none d-md-block ms-2">Transfer</div>
                                 </a>
@@ -218,14 +222,16 @@
                 </div>
                 <!-- /page header -->
 
-                <!-- Notification Message -->
+                <!-- Notification Message For Ajax -->
                 <div class="col-md-12 toast-msg-wrapper d-none" style="padding: 20px; padding-bottom: 0px;">
                     <div class="alert alert-dismissible fade show toast-msg" style="margin-bottom: 0px;">
                         <span class="fw-semibold toast-msg-status"></span> <span class="toast-msg-body"></span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 </div>
+                <!-- ./Notification Message For Ajax -->
 
+                <!-- Notification Message -->
                 @if (Session::has('success'))
                     <div class="col-md-12" style="padding: 20px; padding-bottom: 0px;">
                         <div class="alert alert-success alert-dismissible fade show" style="margin-bottom: 0px;">
@@ -242,7 +248,7 @@
                         </div>
                     </div>
                 @endif
-
+                <!-- ./Notification Message -->
 
                 {{ $slot }}
 
@@ -252,7 +258,7 @@
                         Copyright <span>&copy; {{ date('Y') }} <a href="https://www.karigorit.com" target="_blank">Karigor IT</a></span>
                     </div>
                 </div>
-                <!-- /footer -->
+                <!-- /Footer -->
 
             </div>
             <!-- /inner content -->
@@ -260,7 +266,7 @@
         </div>
 
     </div>
-    <!-- /page content -->
+    <!-- /Page content -->
 
     <!-- Transaction Modal -->
     <div class="modal fade" id="transaction-modal">
@@ -332,133 +338,24 @@
     </div>
     <!-- ./Loading Mask -->
 
-
-
+    <!-- Floating Action Btn -->
     <div id="container-floating">
         <div class="nd4 nds">
             <p class="letter"><a href="{{ route('add-income') }}" class="transaction-btn" data-title="Add Income"><i class="fas fa-plus-circle"></i></a></p>
         </div>
-
         <div class="nd3 nds">
             <p class="letter"><a href="{{ route('add-expense') }}" class="transaction-btn" data-title="Add Expense"><i class="fas fa-minus-circle"></i></a></p>
         </div>
-
         <div class="nd1 nds">
             <p class="letter"><a href="{{ route('do-transfer') }}" class="transaction-btn" data-title="Do Transfer"><i class="fas fa-exchange-alt"></i></a></p>
         </div>
-
         <div id="floating-button">
             <p class="plus">+</p>
             <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
         </div>
     </div>
+    <!-- ./Floating Action Btn -->
 
-
-    <script>
-        $('body').on('click', '.avatar-upload', function(e) {
-            e.preventDefault();
-            $(this).siblings(".avatar-image:hidden").trigger('click');
-            submitUrl = $(this).attr('href');
-        });
-
-        var $modal = $('#avatar-modal');
-        var image = document.getElementById('image');
-        var cropper;
-        var submitUrl;
-
-        $("body").on("change", ".avatar-image", function(e) {
-
-            var files = e.target.files;
-            var done = function(url) {
-                image.src = url;
-                $modal.modal('show');
-            };
-
-            var reader;
-            var file;
-            var url;
-
-            if (files && files.length > 0) {
-                file = files[0];
-
-                if (URL) {
-                    done(URL.createObjectURL(file));
-                } else if (FileReader) {
-                    reader = new FileReader();
-                    reader.onload = function(e) {
-                        done(reader.result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-        });
-
-        // Init cropper js when modal show and destroy cropper js when modal hide
-        $modal.on('shown.bs.modal', function() {
-            cropper = new Cropper(image, {
-                aspectRatio: 1,
-                viewMode: 1,
-                preview: '.preview'
-            });
-        }).on('hidden.bs.modal', function() {
-            cropper.destroy();
-            cropper = null;
-        });
-
-
-        $('.crop-cancel').off('click').on('click', function() {
-            $modal.modal('hide');
-        });
-
-        $("#crop").click(function() {
-            canvas = cropper.getCroppedCanvas({
-                width: 160,
-                height: 160,
-            });
-
-            canvas.toBlob(function(blob) {
-                url = URL.createObjectURL(blob);
-                var reader = new FileReader();
-                reader.readAsDataURL(blob);
-
-                reader.onloadend = function() {
-                    var base64data = reader.result;
-                    loadingMask2.show();
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        url: submitUrl,
-                        data: {
-                            '_token': $('meta[name="_token"]').attr('content'),
-                            'image': base64data
-                        },
-                        success: function(data) {
-                            loadingMask2.hide();
-                            showMessage(data.status, data.message, data.reload);
-                            if (data.status == 'success') {
-                                $modal.modal('hide');
-                            }
-                            if (data.reload == true) {
-                                if (data.sections.length > 0) {
-                                    $.each(data.sections, function(ind, section) {
-                                        sectionReloadAjaxReq(section);
-                                    });
-                                } else {
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 500);
-                                }
-                            }
-                        },
-                        error: function(jqXHR, status, errorThrown) {
-                            loadingMask2.hide();
-                            showMessage("error", jqXHR.responseJSON.message);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

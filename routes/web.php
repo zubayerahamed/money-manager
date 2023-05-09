@@ -43,8 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
 
     // Profile
-    Route::get('/profile', [ProfileController::class, 'showProfilePage'])->name('profile.page');
-    Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('profile');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
 

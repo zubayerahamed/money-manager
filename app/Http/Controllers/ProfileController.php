@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     use HttpResponses;
 
-    public function showProfilePage()
+    public function index()
     {
 
         return view('profile', [
@@ -19,7 +19,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function updateProfile(Request $request)
+    public function update(Request $request)
     {
 
         $incomingFields = $request->validate([
