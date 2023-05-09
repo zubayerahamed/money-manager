@@ -16,34 +16,22 @@ var loadingMask2 = {
     },
 };
 
+// Override Noty defaults
+Noty.overrideDefaults({
+    theme: 'kit',
+    layout: 'topRight',
+    type: 'alert',
+    timeout: 2500
+});
+
 // Toaster message
 function showMessage(type, message) {
     if (type == undefined || type == "") return;
 
-    var className = "";
-    if (type.toUpperCase() == "SUCCESS") {
-        className = "success";
-    } else if (type.toUpperCase() == "ERROR") {
-        className = "danger";
-    } else if (type.toUpperCase() == "INFO") {
-        className = "info";
-    } else if (type.toUpperCase() == "WARNING") {
-        className = "warning";
-    }
-
-    if (className == "") return;
-
-    $('.toast-msg-wrapper').removeClass('d-none');
-    $('.toast-msg').addClass('alert-' + className);
-    $('.toast-msg-status').html(type.toUpperCase() + " ! ");
-    $('.toast-msg-body').html(message);
-
-    setTimeout(() => {
-        $('.toast-msg-wrapper').addClass('d-none');
-        $('.toast-msg').removeClass('alert-' + className);
-        $('.toast-msg-status').html("");
-        $('.toast-msg-body').html("");
-    }, 5000);
+    new Noty({
+        text: message,
+        type: type
+    }).show();
 }
 
 function openIconModal() {

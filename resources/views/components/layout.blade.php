@@ -23,10 +23,15 @@
     <link href="{{ asset('/assets/fonts/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/fonts/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/fonts/material/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/assets/css/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/css/bootstrap.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+
+    <link href="{{ asset('/assets/css/kit-bootstrap.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/css/kit-components.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/assets/css/kit-layout.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+
     <link href="{{ asset('/assets/css/cropper.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/assets/css/kit-custom.css') }}" rel="stylesheet" />
     <!-- /Stylesheets -->
 
     <!-- Core JS files -->
@@ -42,12 +47,13 @@
     <script src="{{ asset('/assets/js/d3.min.js') }}"></script>
     <script src="{{ asset('/assets/js/d3_tooltip.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/noty.min.js') }}"></script>
     <!-- ./Vendor JS files -->
 
     <!-- Custom Js Files -->
-    <script src="{{ asset('/assets/js/app.js') }}"></script>
-    <script src="{{ asset('/assets/js/custom.js') }}"></script>
-    <script src="{{ asset('/assets/js/image-upload.js') }}"></script>
+    <script src="{{ asset('/assets/js/kit.js') }}"></script>
+    <script src="{{ asset('/assets/js/kit-custom.js') }}"></script>
+    <script src="{{ asset('/assets/js/kit-image-upload.js') }}"></script>
     <!-- ./Custom Js Files -->
 </head>
 
@@ -220,15 +226,6 @@
                     </div>
                 </div>
                 <!-- ./Page header -->
-
-                <!-- Notification Message For Ajax Request -->
-                <div class="col-md-12 toast-msg-wrapper d-none" style="padding: 20px; padding-bottom: 0px;">
-                    <div class="alert alert-dismissible fade show toast-msg" style="margin-bottom: 0px;">
-                        <span class="fw-semibold toast-msg-status"></span> <span class="toast-msg-body"></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                </div>
-                <!-- ./Notification Message For Ajax Request -->
 
                 <!-- Notification Message -->
                 @if (Session::has('success'))
