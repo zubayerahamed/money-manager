@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fd8fa1ed6344893af372bd8ebbd6d8a",
+    "content-hash": "2c62210a3894e78eae80241a348f3ff4",
     "packages": [
         {
             "name": "brick/math",
@@ -60,6 +60,68 @@
                 }
             ],
             "time": "2023-01-15T23:15:59+00:00"
+        },
+        {
+            "name": "creative-syntax/artisan-ui",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dev-arindam-roy/artisan-ui.git",
+                "reference": "a20b00119e1aaa8771a408e26e1c08507dc55fb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dev-arindam-roy/artisan-ui/zipball/a20b00119e1aaa8771a408e26e1c08507dc55fb7",
+                "reference": "a20b00119e1aaa8771a408e26e1c08507dc55fb7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.*|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "laravel/framework": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "php": ">=5.4.0"
+            },
+            "type": "laravel-package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CreativeSyntax\\ArtisanUi\\CreativeSyntaxArtisanUi"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CreativeSyntax\\ArtisanUi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arindam Roy",
+                    "email": "arindam.roy.developer@gmail.com"
+                }
+            ],
+            "description": "A simple laravel package for artisan commands with user interface",
+            "keywords": [
+                "arindam-roy",
+                "artisan",
+                "artisan-commands",
+                "artisan-gui",
+                "artisan-ui",
+                "artisan-user-interface",
+                "artisan-web",
+                "creative-syntax",
+                "laravel-commands",
+                "onexcrm",
+                "web-artisan"
+            ],
+            "support": {
+                "issues": "https://github.com/dev-arindam-roy/artisan-ui/issues",
+                "source": "https://github.com/dev-arindam-roy/artisan-ui/tree/v2.1.0"
+            },
+            "time": "2023-03-12T09:18:56+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

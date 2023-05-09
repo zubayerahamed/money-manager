@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-
+        CreativeSyntax\ArtisanUi\CreativeSyntaxArtisanUi::class,
     ],
 
     /*
