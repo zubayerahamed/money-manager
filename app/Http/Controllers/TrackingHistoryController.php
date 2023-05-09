@@ -16,7 +16,7 @@ class TrackingHistoryController extends Controller
 {
     use HttpResponses;
 
-    public function showAddIncomePage()
+    public function addIncome()
     {
         $incomeSources = IncomeSource::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
         $wallets = Wallet::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
@@ -35,7 +35,7 @@ class TrackingHistoryController extends Controller
         ]);
     }
 
-    public function showAddExpensePage()
+    public function addExpense()
     {
         $wallets = Wallet::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
         $expenseTypes = ExpenseType::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
@@ -54,7 +54,7 @@ class TrackingHistoryController extends Controller
         ]);
     }
 
-    public function showDoTransferPage()
+    public function doTransfer()
     {
         $wallets = Wallet::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
 

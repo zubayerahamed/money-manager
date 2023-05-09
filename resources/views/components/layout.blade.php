@@ -194,15 +194,15 @@
                         <h4 class="page-title text-center m-0">
 
                             <div class="btn-group" role="group">
-                                <a href="{{ url('/transaction/add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income">
+                                <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income">
                                     <i class="fas fa-plus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Income</div>
                                 </a>
-                                <a href="{{ url('/transaction/add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense">
+                                <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense">
                                     <i class="fas fa-minus-circle"></i>
                                     <div class="d-none d-md-block ms-2">Add Expense</div>
                                 </a>
-                                <a href="{{ url('/transaction/do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer">
+                                <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer">
                                     <i class="fas fa-exchange-alt"></i>
                                     <div class="d-none d-md-block ms-2">Transfer</div>
                                 </a>
@@ -331,6 +331,28 @@
         </div>
     </div>
     <!-- ./Loading Mask -->
+
+
+
+    <div id="container-floating">
+        <div class="nd4 nds">
+            <p class="letter"><a href="{{ route('add-income') }}" class="transaction-btn" data-title="Add Income"><i class="fas fa-plus-circle"></i></a></p>
+        </div>
+
+        <div class="nd3 nds">
+            <p class="letter"><a href="{{ route('add-expense') }}" class="transaction-btn" data-title="Add Expense"><i class="fas fa-minus-circle"></i></a></p>
+        </div>
+
+        <div class="nd1 nds">
+            <p class="letter"><a href="{{ route('do-transfer') }}" class="transaction-btn" data-title="Do Transfer"><i class="fas fa-exchange-alt"></i></a></p>
+        </div>
+
+        <div id="floating-button">
+            <p class="plus">+</p>
+            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+        </div>
+    </div>
+
 
     <script>
         $('body').on('click', '.avatar-upload', function(e) {

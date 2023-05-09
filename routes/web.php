@@ -98,9 +98,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/budget/{budget}', [BudgetController::class, 'update'])->name('budget.update');
 
     // Transactions
-    Route::get('/transaction/add-income', [TrackingHistoryController::class, 'showAddIncomePage'])->name('add-income.page');
-    Route::get('/transaction/add-expense', [TrackingHistoryController::class, 'showAddExpensePage'])->name('add-expense.page');
-    Route::get('/transaction/do-transfer', [TrackingHistoryController::class, 'showDoTransferPage'])->name('do-transfer.page');
+    Route::get('/transaction/add-income', [TrackingHistoryController::class, 'addIncome'])->name('add-income');
+    Route::get('/transaction/add-expense', [TrackingHistoryController::class, 'addExpense'])->name('add-expense');
+    Route::get('/transaction/do-transfer', [TrackingHistoryController::class, 'doTransfer'])->name('do-transfer');
     Route::post('/transaction', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
 
     // Tracking
