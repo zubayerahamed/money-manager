@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class SetupController extends Controller
 {
-    public function index(){
+    public function welcome(){
         return view('setup');
     }
 }

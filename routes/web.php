@@ -28,103 +28,134 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Setup
-Route::get('/setup', [SetupController::class, 'index'])->name('setup');
-
 // Registration
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::post('/register', [RegisterController::class, 'store'])->name('register');
+Route::get('/register', [RegisterController::class, 'index'])->name('register')->middleware('setup');
+Route::post('/register', [RegisterController::class, 'store'])->name('register')->middleware('setup');
 
 // Login
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'store'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('setup');
+Route::post('/login', [LoginController::class, 'store'])->name('login')->middleware('setup');
 
-Route::middleware(['auth'])->group(function () {
+Route::group(['middleware' => ['auth', 'setup']], function () {
     // Home
     Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData']);
     Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
 
     // Profile
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+    Route::group([
+        'prefix' => 'profile',
+        'as' => 'profile.'
+    ], function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('index');
+        Route::put('/', [ProfileController::class, 'update'])->name('update');
+        Route::post('/password', [ProfileController::class, 'updatePassword'])->name('password');
+        Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar');
+    });
 
     // Wallets
-    Route::get('/wallet/all', [WalletController::class, 'index'])->name('wallet.index');
-    Route::get('/wallet', [WalletController::class, 'create'])->name('wallet.create');
-    Route::get('/wallet/{id}/edit', [WalletController::class, 'edit'])->name('wallet.edit');
-    Route::post('/wallet', [WalletController::class, 'store'])->name('wallet.store');
-    Route::put('/wallet/{wallet}', [WalletController::class, 'update'])->name('wallet.update');
-    Route::delete('/wallet/{wallet}', [WalletController::class, 'destroy'])->name('wallet.destroy');
+    Route::group([
+        'prefix' => 'wallet',
+        'as' => 'wallet.'
+    ], function () {
+        Route::get('/all', [WalletController::class, 'index'])->name('index');
+        Route::get('/', [WalletController::class, 'create'])->name('create');
+        Route::get('/{id}/edit', [WalletController::class, 'edit'])->name('edit');
+        Route::post('/', [WalletController::class, 'store'])->name('store');
+        Route::put('/{wallet}', [WalletController::class, 'update'])->name('update');
+        Route::delete('/{wallet}', [WalletController::class, 'destroy'])->name('destroy');
+        Route::get('/data/status', [WalletController::class, 'walletStatusPieChart'])->name('data.status');
+        Route::get('/section/piechart', [WalletController::class, 'piechart'])->name('section.piechart');
+        Route::get('/section/header', [WalletController::class, 'header'])->name('section.header');
+        Route::get('/section/accordion', [WalletController::class, 'accordion'])->name('section.accordion');
+    });
 
-    Route::get('/wallet/data/status', [WalletController::class, 'walletStatusPieChart'])->name('wallet.data.status');
-
-    Route::get('/wallet/section/piechart', [WalletController::class, 'piechart'])->name('wallet.section.piechart');
-    Route::get('/wallet/section/header', [WalletController::class, 'header'])->name('wallet.section.header');
-    Route::get('/wallet/section/accordion', [WalletController::class, 'accordion'])->name('wallet.section.accordion');
-
-    // Income Source
-    Route::get('/income-source/all', [IncomeSourceController::class, 'index'])->name('income-source.index');
-    Route::get('/income-source', [IncomeSourceController::class, 'create'])->name('income-source.create');
-    Route::get('/income-source/{id}/edit', [IncomeSourceController::class, 'edit'])->name('income-source.edit');
-    Route::post('/income-source', [IncomeSourceController::class, 'store'])->name('income-source.store');
-    Route::put('/income-source/{incomeSource}', [IncomeSourceController::class, 'update'])->name('income-source.update');
-    Route::delete('/income-source/{incomeSource}', [IncomeSourceController::class, 'destroy'])->name('income-source.destroy');
-
-    Route::get('/income-source/data/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('income-source.data.status');
-
-    Route::get('/income-source/section/piechart', [IncomeSourceController::class, 'piechart'])->name('income-source.section.piechart');
-    Route::get('/income-source/section/header', [IncomeSourceController::class, 'header'])->name('income-source.section.header');
-    Route::get('/income-source/section/accordion', [IncomeSourceController::class, 'accordion'])->name('income-source.section.accordion');
+    // Income source
+    Route::group([
+        'prefix' => 'income-source',
+        'as' => 'income-source.'
+    ], function () {
+        Route::get('/all', [IncomeSourceController::class, 'index'])->name('index');
+        Route::get('/', [IncomeSourceController::class, 'create'])->name('create');
+        Route::get('/{id}/edit', [IncomeSourceController::class, 'edit'])->name('edit');
+        Route::post('/', [IncomeSourceController::class, 'store'])->name('store');
+        Route::put('/{incomeSource}', [IncomeSourceController::class, 'update'])->name('update');
+        Route::delete('/{incomeSource}', [IncomeSourceController::class, 'destroy'])->name('.destroy');
+        Route::get('/data/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('data.status');
+        Route::get('/section/piechart', [IncomeSourceController::class, 'piechart'])->name('section.piechart');
+        Route::get('/section/header', [IncomeSourceController::class, 'header'])->name('section.header');
+        Route::get('/section/accordion', [IncomeSourceController::class, 'accordion'])->name('section.accordion');
+    });
 
     // Expense Type
-    Route::get('/expense-type/all', [ExpenseTypeController::class, 'index'])->name('expense-type.index');
-    Route::get('/expense-type', [ExpenseTypeController::class, 'create'])->name('expense-type.create');
-    Route::get('/expense-type/{id}/edit', [ExpenseTypeController::class, 'edit'])->name('expense-type.edit');
-    Route::post('/expense-type', [ExpenseTypeController::class, 'store'])->name('expense-type.store');
-    Route::put('/expense-type/{expenseType}', [ExpenseTypeController::class, 'update'])->name('expense-type.update');
-    Route::delete('/expense-type/{expenseType}', [ExpenseTypeController::class, 'destroy'])->name('expense-type.destroy');
-
-    Route::get('/expense-type/data/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('expense-type.data.status');
-
-    Route::get('/expense-type/section/piechart', [ExpenseTypeController::class, 'piechart'])->name('expense-type.section.piechart');
-    Route::get('/expense-type/section/header', [ExpenseTypeController::class, 'header'])->name('expense-type.section.header');
-    Route::get('/expense-type/section/accordion', [ExpenseTypeController::class, 'accordion'])->name('expense-type.section.accordion');
+    Route::group([
+        'prefix' => 'expense-type',
+        'as' => 'expense-type.'
+    ], function () {
+        Route::get('/all', [ExpenseTypeController::class, 'index'])->name('index');
+        Route::get('/', [ExpenseTypeController::class, 'create'])->name('create');
+        Route::get('/{id}/edit', [ExpenseTypeController::class, 'edit'])->name('edit');
+        Route::post('/', [ExpenseTypeController::class, 'store'])->name('store');
+        Route::put('/{expenseType}', [ExpenseTypeController::class, 'update'])->name('update');
+        Route::delete('/{expenseType}', [ExpenseTypeController::class, 'destroy'])->name('destroy');
+        Route::get('/data/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('data.status');
+        Route::get('/section/piechart', [ExpenseTypeController::class, 'piechart'])->name('section.piechart');
+        Route::get('/section/header', [ExpenseTypeController::class, 'header'])->name('section.header');
+        Route::get('/section/accordion', [ExpenseTypeController::class, 'accordion'])->name('section.accordion');
+    });
 
     // Budget
-    Route::get('/budget/{month}/{year}/list', [BudgetController::class, 'index'])->name('budget.index');
-    Route::get('/budget/{expenseType}/{month}/{year}', [BudgetController::class, 'create'])->name('budget.create');
-    Route::post('/budget', [BudgetController::class, 'store'])->name('budget.store');
-    Route::get('/budget/{budget}', [BudgetController::class, 'edit'])->name('budget.edit');
-    Route::put('/budget/{budget}', [BudgetController::class, 'update'])->name('budget.update');
+    Route::group([
+        'prefix' => 'budget',
+        'as' => 'budget.'
+    ], function () {
+        Route::get('/{month}/{year}/list', [BudgetController::class, 'index'])->name('index');
+        Route::get('/{expenseType}/{month}/{year}', [BudgetController::class, 'create'])->name('create');
+        Route::post('/', [BudgetController::class, 'store'])->name('store');
+        Route::get('/{budget}', [BudgetController::class, 'edit'])->name('edit');
+        Route::put('/{budget}', [BudgetController::class, 'update'])->name('update');
+    });
 
     // Transactions
-    Route::get('/transaction/add-income', [TrackingHistoryController::class, 'addIncome'])->name('add-income');
-    Route::get('/transaction/add-expense', [TrackingHistoryController::class, 'addExpense'])->name('add-expense');
-    Route::get('/transaction/do-transfer', [TrackingHistoryController::class, 'doTransfer'])->name('do-transfer');
-    Route::post('/transaction', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
+    Route::group([
+        'prefix' => 'transaction',
+    ], function () {
+        Route::get('/add-income', [TrackingHistoryController::class, 'addIncome'])->name('add-income');
+        Route::get('/add-expense', [TrackingHistoryController::class, 'addExpense'])->name('add-expense');
+        Route::get('/do-transfer', [TrackingHistoryController::class, 'doTransfer'])->name('do-transfer');
+        Route::post('/', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
+    });
 
     // Tracking
-    Route::get('/tracking/details/today', [TrackingHistoryController::class, 'showAllTodaysTransactions'])->name('tracking.today');
-    Route::get('/tracking/details/month/{monthno}/{year}', [TrackingHistoryController::class, 'showMonthWiseTransactions'])->name('tracking.monthly');
-    Route::get('/tracking/details/year/{year}', [TrackingHistoryController::class, 'showYearWiseTransactions'])->name('tracking.yearly');
-    Route::get('/tracking/detail/{trackingHistory}/edit', [TrackingHistoryController::class, 'editTrackingDetailPage'])->name('tracking.edit');
-    Route::put('/tracking/detail/{trackingHistory}/update', [TrackingHistoryController::class, 'updateTrackingDetail'])->name('tracking.update');
-    Route::delete('/tracking/detail/{trackingHistory}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('tracking.destroy');
+    Route::group([
+        'prefix' => 'tracking',
+        'as' => 'tracking.'
+    ], function () {
+        Route::get('/details/today', [TrackingHistoryController::class, 'showAllTodaysTransactions'])->name('today');
+        Route::get('/details/month/{monthno}/{year}', [TrackingHistoryController::class, 'showMonthWiseTransactions'])->name('monthly');
+        Route::get('/details/year/{year}', [TrackingHistoryController::class, 'showYearWiseTransactions'])->name('yearly');
+        Route::get('/detail/{trackingHistory}/edit', [TrackingHistoryController::class, 'editTrackingDetailPage'])->name('edit');
+        Route::put('/detail/{trackingHistory}/update', [TrackingHistoryController::class, 'updateTrackingDetail'])->name('update');
+        Route::delete('/detail/{trackingHistory}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('destroy');
+    });
 
     // Dream
-    Route::get('/dream/all', [DreamController::class, 'index'])->name('dream.index');
-    Route::get('/dream', [DreamController::class, 'create'])->name('dream.create');
-    Route::post('/dream', [DreamController::class, 'store'])->name('dream.store');
-    Route::get('/dream/{dream}/edit', [DreamController::class, 'edit'])->name('dream.edit');
-    Route::put('/dream/{dream}', [DreamController::class, 'update'])->name('dream.update');
-    Route::delete('/dream/{dream}/delete', [DreamController::class, 'destroy'])->name('dream.destroy');
-    Route::post('/dream/image/{dream}', [DreamController::class, 'updateImage'])->name('dream.image');
-
-    Route::get('/dream/section/accordion', [DreamController::class, 'accordion'])->name('dream.section.accordion');
+    Route::group([
+        'prefix' => 'dream',
+        'as' => 'dream.'
+    ], function () {
+        Route::get('/all', [DreamController::class, 'index'])->name('index');
+        Route::get('/', [DreamController::class, 'create'])->name('create');
+        Route::post('/', [DreamController::class, 'store'])->name('store');
+        Route::get('/{dream}/edit', [DreamController::class, 'edit'])->name('edit');
+        Route::put('/{dream}', [DreamController::class, 'update'])->name('update');
+        Route::delete('/{dream}/delete', [DreamController::class, 'destroy'])->name('destroy');
+        Route::post('/image/{dream}', [DreamController::class, 'updateImage'])->name('image');
+        Route::get('/section/accordion', [DreamController::class, 'accordion'])->name('section.accordion');
+    });
 
     // Logout
     Route::get('/logout', [LogoutController::class, 'doLogout'])->name('logout');
 });
+
+require __DIR__ . '/setup.php';

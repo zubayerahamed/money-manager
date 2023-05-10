@@ -60,7 +60,7 @@
 <body>
 
     <!-- Project Base Path -->
-    <a href="{{ url('/') }}" class="basePath"></a>
+    <a href="{{ route('home') }}" class="basePath"></a>
 
     <!-- Top Navbar -->
     <div class="navbar navbar-dark navbar-expand-lg navbar-static border-bottom border-bottom-white border-opacity-10">
@@ -133,51 +133,51 @@
                 <div class="sidebar-section">
                     <ul class="nav nav-sidebar" data-nav-type="accordion">
                         <li class="nav-item">
-                            <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') || Request::is('transaction/**') ? 'active' : '' }}">
+                            <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                                 <i class="ph-house"></i>
-                                <span>Home</span>
+                                <span>{{ __('menu.home') }}</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('wallet.index') }}" class="nav-link {{ Request::is('wallet/all') ? 'active' : '' }}">
                                 <i class="ph-wallet"></i>
-                                <span>Wallet Status</span>
+                                <span>{{ __('menu.wallet.status') }}</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('income-source.index') }}" class="nav-link {{ Request::is('income-source/all') ? 'active' : '' }}">
                                 <i class="ph-chart-line-up"></i>
-                                <span>Income Status</span>
+                                <span>{{ __('menu.income.status') }}</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('expense-type.index') }}" class="nav-link {{ Request::is('expense-type/all') ? 'active' : '' }}">
                                 <i class="ph-chart-bar-horizontal"></i>
-                                <span>Expense Status</span>
+                                <span>{{ __('menu.expense.status') }}</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('budget.index', [date('m'), date('Y')]) }}" class="nav-link {{ Request::is('budget/**') ? 'active' : '' }}">
                                 <i class="ph-calculator"></i>
-                                <span>Budget - {{ date('M, Y') }}</span>
+                                <span>{{ __('menu.budget') }}</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('tracking.today') }}" class="nav-link {{ Request::is('/tracking/details/today') ? 'active' : '' }}">
                                 <i class="ph-calendar-check"></i>
-                                <span>Today's History</span>
+                                <span>{{ __('menu.day.history') }}</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('dream.index') }}" class="nav-link {{ Request::is('/dream/**') ? 'active' : '' }}">
                                 <i class="ph-cloud-moon"></i>
-                                <span>Dreams</span>
+                                <span>{{ __('menu.dreams') }}</span>
                             </a>
                         </li>
                     </ul>
