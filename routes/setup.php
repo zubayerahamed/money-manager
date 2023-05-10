@@ -18,8 +18,6 @@ Route::group(['middleware' => ['setup.block']], function () {
         Route::get('requirements', [SetupController::class, 'requirements'])->name('requirements');
         Route::get('database', [SetupController::class, 'database'])->name('database');
         Route::post('database', [SetupController::class, 'configure'])->name('save-database');
-        Route::get('account', [SetupController::class, 'account'])->name('account');
-        Route::post('account', [SetupController::class, 'register'])->name('save-account');
         Route::get('complete', [SetupController::class, 'complete'])->name('complete');
     });
 });

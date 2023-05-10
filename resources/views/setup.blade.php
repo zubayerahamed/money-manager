@@ -26,6 +26,7 @@
     <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('/assets/js/steps.min.js') }}"></script>
     <script src="{{ asset('/assets/js/noty.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/js.cookie.min.js') }}"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -54,12 +55,13 @@
                                 <h6 class="mb-0">Installation Wizard</h6>
                             </div>
 
-                            <form class="wizard-form steps-basic" action="#">
+                            <form class="wizard-form steps-basic" action="{{ route('setup.save-database') }}">
+                                @csrf
                                 <h6>Welcome</h6>
                                 <fieldset>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="mb-5 step-0">
+                                            <div class="p-5 step-0">
                                                 @include('layouts.setup.welcome')
                                             </div>
                                         </div>
@@ -69,8 +71,8 @@
                                 <h6>Requirements</h6>
                                 <fieldset>
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-5 step-1">
+                                        <div class="col-lg-12">
+                                            <div class="p-5 step-1">
                                                 
                                             </div>
                                         </div>
@@ -80,8 +82,8 @@
                                 <h6>Database Configuration</h6>
                                 <fieldset>
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-5 step-2">
+                                        <div class="col-lg-12">
+                                            <div class="p-5 step-2">
                                                 
                                             </div>
                                         </div>

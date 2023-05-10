@@ -38,10 +38,15 @@ const FormWizard = function () {
             onStepChanging: function (event, currentIndex, newIndex) {
                 // Always allow going backward even if the current step contains invalid fields!
                 var loadurl = $('.next-url').attr('href');
+                var successStatus = $('input[name="success-status"]').val();
 
-                if(currentIndex > newIndex){
+                if (currentIndex < newIndex && successStatus == false) {
+                    return false;
+                }
+
+                if (currentIndex > newIndex) {
                     loadurl = $('.prev-url').attr('href');
-                } 
+                }
 
                 loadingMask2.show();
                 $.ajax({
@@ -65,10 +70,16 @@ const FormWizard = function () {
                 return true;
             },
             onFinishing: function (event, currentIndex) {
-                alert('Finishing');
+                var form = $(this);
+
+                // Submit form input
+                form.submit();
+                //alert('Finishing');
+                return true;
             },
             onFinished: function (event, currentIndex) {
-                alert('Form submitted.');
+                location.reload();
+                //alert('Form submitted.');
             }
         });
 
