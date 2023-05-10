@@ -17,9 +17,9 @@ class Setup
     public function handle(Request $request, Closure $next)
     {
         // Check setup is completed or not
-        // if (!setupCompleted()) {
-        //     return redirect()->route("setup.welcome");
-        // }
+        if (!setupCompleted()) {
+            return redirect()->route("setup.welcome");
+        }
 
         return $next($request);
     }
