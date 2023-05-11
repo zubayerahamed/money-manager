@@ -13,6 +13,9 @@ return [
     |
     */
 
+    'save.success' => ':name wallet created successfully.',
+    'update.success' => ':name wallet updated successfully.',
+    'delete.success' => ':name wallet deleted successfully.',
     
 
 ];

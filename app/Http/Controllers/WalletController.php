@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Arhead;
 use App\Models\TrackingHistory;
 use App\Models\Wallet;
+use App\Rules\IsCompositeUnique;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class WalletController extends Controller
 {
@@ -37,7 +37,7 @@ class WalletController extends Controller
 
     public function index()
     {
-        $wallets = Wallet::where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get();
+        $wallets = Wallet::orderBy('name', 'asc')->get();
 
         $totalBalance = DB::table('arhead')
             ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
@@ -55,24 +55,18 @@ class WalletController extends Controller
         return view('layouts.wallets.wallet-form', ['wallet' => new Wallet()]);
     }
 
-    public function edit($id)
-    {
-        $wallets = Wallet::where('id', '=', $id)->where('user_id', '=', auth()->user()->id)->get();
-        return view('layouts.wallets.wallet-form', ['wallet' => $wallets->first()]);
-    }
-
     public function store(Request $requset)
     {
-        $incomingFields = $requset->validate([
-            'name' => ['required', Rule::unique('wallet')],
+        $requset->validate([
+            'name' => ['required', new IsCompositeUnique('wallet', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Wallet name must be unique")],
             'icon' => 'required'
         ]);
 
-        $incomingFields['user_id'] = auth()->user()->id;
+        $wallet = Wallet::create($requset->only([
+            'name', 'icon', 'note', 'user_id'
+        ]));
 
-        $wallet = Wallet::create($incomingFields);
-
-        if ($wallet && $requset->get('current_balance') != 0) {
+        if ($wallet->exists && $requset->get('current_balance') != 0) {
             // Add to tracking 
             $trackingFields['transaction_type'] = 'OPENING';
             $trackingFields['amount'] = $requset->get('current_balance');
@@ -95,65 +89,52 @@ class WalletController extends Controller
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
 
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
             }
         }
 
-        if ($wallet) {
-            return $this->successWithReloadSections(null, $wallet->name . ' wallet created successfully', 200, [
-                $this->section_accordion,
-                $this->section_header,
-                $this->section_piechart,
-            ]);
+        if ($wallet->exists) {
+            return $this->successWithReloadSections(
+                null,
+                __('wallet.save.success', ['name' => $wallet->name]),
+                200,
+                [
+                    $this->section_accordion,
+                    $this->section_header,
+                    $this->section_piechart
+                ]
+            );
         }
 
-        return $this->error(null, "Something went wrong, please try again later.", 200);
+        return $this->error(null, __('common.process.error'), 200);
     }
 
-    public function piechart()
+    public function edit($id)
     {
-        return view('layouts.wallets.wallets-pie-chart');
-    }
-
-    public function header()
-    {
-        $totalBalance = DB::table('arhead')
-            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
-            ->where('user_id', '=', auth()->user()->id)
-            ->get();
-
-        return view('layouts.wallets.wallets-header', [
-            'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
-        ]);
-    }
-
-    public function accordion()
-    {
-        $wallets = Wallet::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
-
-        return view('layouts.wallets.wallets-accordion', [
-            'wallets' => $wallets
-        ]);
+        $wallets = Wallet::where('id', '=', $id)->get();
+        return view('layouts.wallets.wallet-form', ['wallet' => $wallets->first()]);
     }
 
     public function update(Wallet $wallet, Request $requset)
     {
-        $incomingFields = $requset->validate([
-            'name' => ['required', Rule::unique('wallet')->ignore($wallet->id)],
+        $requset->validate([
+            'name' => ['required', new IsCompositeUnique('wallet', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Wallet name must be unique", $wallet->id)],
             'icon' => 'required'
         ]);
 
-        $updated = $wallet->update($requset->all());
+        $updated = $wallet->update($requset->only([
+            'name', 'icon', 'note', 'user_id'
+        ]));
 
         if ($updated) {
-            return $this->successWithReloadSections(null, $wallet->name . ' wallet updated successfully', 200, [
+            return $this->successWithReloadSections(null, __('wallet.update.success', ['name' => $wallet->name]), 200, [
                 $this->section_accordion,
                 $this->section_header,
                 $this->section_piechart,
             ]);
         }
 
-        return $this->error(null, $wallet->name . ' wallet update failed', 200);
+        return $this->error(null, __('common.process.error'), 200);
     }
 
     public function destroy(Wallet $wallet)
@@ -196,5 +177,31 @@ class WalletController extends Controller
         }
 
         return $this->error(null, 'Something went wrong, please try again later', 200);
+    }
+
+    public function piechart()
+    {
+        return view('layouts.wallets.wallets-pie-chart');
+    }
+
+    public function header()
+    {
+        $totalBalance = DB::table('arhead')
+            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+
+        return view('layouts.wallets.wallets-header', [
+            'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance,
+        ]);
+    }
+
+    public function accordion()
+    {
+        $wallets = Wallet::orderBy('name', 'asc')->get();
+
+        return view('layouts.wallets.wallets-accordion', [
+            'wallets' => $wallets
+        ]);
     }
 }

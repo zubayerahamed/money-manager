@@ -7,8 +7,6 @@ use App\Models\Dream;
 use App\Models\Wallet;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class DreamController extends Controller
 {

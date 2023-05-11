@@ -14,7 +14,7 @@
 
                         <div class="col-md-6 float-end text-end">
                             <a href="{{ route('dream.create') }}" class="btn btn-success btn-sm transaction-btn" data-title="Create Dream">
-                                <i class="fas fa-plus"></i>
+                                <i class="ph-plus"></i>
                                 <div class="d-none d-md-block ms-1">Create dream</div>
                             </a>
                         </div>

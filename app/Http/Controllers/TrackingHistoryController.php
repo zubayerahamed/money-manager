@@ -9,8 +9,6 @@ use App\Models\TrackingHistory;
 use App\Models\Wallet;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Mockery\Undefined;
 
 class TrackingHistoryController extends Controller
 {

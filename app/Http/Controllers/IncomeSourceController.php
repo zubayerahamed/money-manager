@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\IncomeSource;
+use App\Rules\IsCompositeUnique;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class IncomeSourceController extends Controller
 {
@@ -24,7 +24,6 @@ class IncomeSourceController extends Controller
 
     public function incomeSourceStatusPieChart()
     {
-
         return DB::table('tracking_history')
             ->leftjoin('income_source', 'income_source.id', '=', 'tracking_history.income_source')
             ->selectRaw("income_source.name, SUM(tracking_history.amount) as value")
@@ -65,7 +64,7 @@ class IncomeSourceController extends Controller
     public function store(Request $requset)
     {
         $incomingFields = $requset->validate([
-            'name' => ['required', Rule::unique('income_source')],
+            'name' => ['required', new IsCompositeUnique('income_source', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Income source name must be unique")],
             'icon' => 'required'
         ]);
 
@@ -115,7 +114,7 @@ class IncomeSourceController extends Controller
     public function update(IncomeSource $incomeSource, Request $requset)
     {
         $incomingFields = $requset->validate([
-            'name' => ['required', Rule::unique('income_source')->ignore($incomeSource->id)],
+            'name' => ['required', new IsCompositeUnique('income_source', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Income source name must be unique", $incomeSource->id)],
             'icon' => 'required'
         ]);
 

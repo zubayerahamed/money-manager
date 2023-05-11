@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExpenseType;
+use App\Rules\IsCompositeUnique;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class ExpenseTypeController extends Controller
 {
@@ -66,7 +66,7 @@ class ExpenseTypeController extends Controller
     {
 
         $incomingFields = $requset->validate([
-            'name' => ['required', Rule::unique('expense_type')],
+            'name' => ['required', new IsCompositeUnique('expense-type', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Expense type name must be unique")],
             'icon' => 'required'
         ]);
 
@@ -115,7 +115,7 @@ class ExpenseTypeController extends Controller
     public function update(ExpenseType $expenseType, Request $requset)
     {
         $incomingFields = $requset->validate([
-            'name' => ['required', Rule::unique('expense_type')->ignore($expenseType->id)],
+            'name' => ['required', new IsCompositeUnique('expense-type', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Expense type name must be unique", $expenseType->id)],
             'icon' => 'required'
         ]);
 

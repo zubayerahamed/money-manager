@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Exception;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
 use PDOException;
 
 class SetupController extends Controller

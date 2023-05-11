@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\FilterByuser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class IncomeSource extends Model
 {
-    use HasFactory;
+    use HasFactory, FilterByuser;
 
     protected $table = "income_source";
     protected $fillable = ['name', 'icon', 'note', 'user_id'];

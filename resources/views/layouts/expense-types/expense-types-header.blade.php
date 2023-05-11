@@ -4,7 +4,7 @@
 
 <div class="col-md-6 float-end text-end">
     <a href="{{ route('expense-type.create') }}" class="btn btn-success btn-sm transaction-btn" data-title="Create expense type">
-        <i class="fas fa-plus"></i>
+        <i class="ph-plus"></i>
         <div class="d-none d-md-block ms-1">Create expense type</div>
     </a>
 </div>

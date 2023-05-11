@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\FilterByuser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Arhead extends Model
 {
-    use HasFactory;
+    use HasFactory, FilterByuser;
 
     protected $table = "arhead";
 

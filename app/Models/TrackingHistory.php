@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\FilterByuser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TrackingHistory extends Model
 {
-    use HasFactory;
+    use HasFactory, FilterByuser;
 
     protected $table = "tracking_history";
     protected $fillable = [
