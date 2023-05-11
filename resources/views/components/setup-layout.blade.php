@@ -6,7 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Setup</title>
+    <title>
+        @isset($pageTitle)
+            Setup | {{ $pageTitle }}
+        @else
+            Setup
+        @endisset
+    </title>
 
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/images/favicon-32x32.png') }}">
 
@@ -24,15 +30,12 @@
     <script src="{{ asset('/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('/assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/steps.min.js') }}"></script>
     <script src="{{ asset('/assets/js/noty.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/js.cookie.min.js') }}"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
     <script src="{{ asset('/assets/js/kit.js') }}"></script>
     <script src="{{ asset('/assets/js/kit-custom.js') }}"></script>
-    <script src="{{ asset('/assets/js/form_wizard.js') }}"></script>
     <!-- /theme JS files -->
 </head>
 
@@ -55,41 +58,8 @@
                                 <h6 class="mb-0">Installation Wizard</h6>
                             </div>
 
-                            <form class="wizard-form steps-basic" action="{{ route('setup.save-database') }}">
-                                @csrf
-                                <h6>Welcome</h6>
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="p-5 step-0">
-                                                @include('layouts.setup.welcome')
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
+                            {{ $slot }}
 
-                                <h6>Requirements</h6>
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="p-5 step-1">
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <h6>Database Configuration</h6>
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="p-5 step-2">
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </form>
                         </div>
                     </div>
                     <!-- /login form -->

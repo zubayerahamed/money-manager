@@ -22,29 +22,16 @@ class SetupController extends Controller
 
     public function welcome()
     {
-
-        if (request()->ajax()) {
-            return view('layouts.setup.welcome', [
-                'success' => true,
-                'nextUrl' => route('setup.requirements')
-            ]);
-        }
-
-        return view('setup', [
-            'success' => true,
-            'nextUrl' => route('setup.requirements')
-        ]);
+        return view('setup.welcome');
     }
 
     public function requirements()
     {
         [$success, $results] = $this->checkRequirements();
 
-        return view('layouts.setup.requirements', [
+        return view('setup.requirements', [
             'success' => $success,
             'results' => $results,
-            'nextUrl' => route('setup.database'),
-            'prevUrl' => route('setup.welcome')
         ]);
     }
 
@@ -71,10 +58,7 @@ class SetupController extends Controller
 
     public function database()
     {
-        return view('layouts.setup.database', [
-            'success' => true,
-            'prevUrl' => route('setup.requirements')
-        ]);
+        return view('setup.database');
     }
 
     public function configure(Request $request)
@@ -82,7 +66,7 @@ class SetupController extends Controller
         $this->createTempDatabaseConnection($request->all());
 
         if ($this->databaseHasData() && !$request->has('overwrite_data')) {
-            //return redirect()->back()->with('data_present', true)->withInput();
+            return redirect()->back()->with('data_present', true)->withInput();
         }
 
         $migrationResult = $this->migrateDatabase();
@@ -168,6 +152,6 @@ class SetupController extends Controller
         Setting::create(['key' => 'system_setup_completed', 'value' => true]);
         Cache::forget('systemsettings');
 
-        return redirect('login');
+        return view('setup.complete');
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\SetupController;
 | Setup routes 
 |-------------
 */
+
 Route::group(['middleware' => ['setup.block']], function () {
     // Setup Route
     Route::group([
