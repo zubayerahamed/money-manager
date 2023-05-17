@@ -9,7 +9,7 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $wallet->name }}</div>
                         <div class="text-muted fs-sm">
-                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $wallet->currentBalance }} TK</span>
+                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $wallet->currentBalance }} {{ auth()->user()->currency }}</span>
                         </div>
                     </div>
                 </div>

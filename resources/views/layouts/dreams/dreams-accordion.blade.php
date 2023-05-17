@@ -9,9 +9,9 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $dream->name }}</div>
                         <div class="text-muted fs-sm">
-                            <p class="m-0">Value : {{ $dream->amount_needed }} TK</p>
+                            <p class="m-0">Value : {{ $dream->amount_needed }} {{ auth()->user()->currency }}</p>
                             @if ($dream->amount_needed > 0 && $dream->wallet != null)
-                                <p class="m-0">Achieved : {{ $dream->amount_needed <= $dream->wallet->currentBalance ? '' : $dream->wallet->currentBalance . ' TK' }} ({{ $dream->amount_needed <= $dream->wallet->currentBalance ? '100%' : round((100 * $dream->wallet->currentBalance) / $dream->amount_needed, 2) . '%' }})</p>
+                                <p class="m-0">Achieved : {{ $dream->amount_needed <= $dream->wallet->currentBalance ? '' : $dream->wallet->currentBalance . ' {{ auth()->user()->currency }}' }} ({{ $dream->amount_needed <= $dream->wallet->currentBalance ? '100%' : round((100 * $dream->wallet->currentBalance) / $dream->amount_needed, 2) . '%' }})</p>
                             @endif
                             <p class="m-0">Target : {{ $dream->target_year }}</p>
                         </div>

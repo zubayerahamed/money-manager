@@ -1,5 +1,5 @@
 <div class="col-md-6 float-start text-start">
-    <h5 class="mb-0">Total Income : {{ $totalIncome }} TK</h5>
+    <h5 class="mb-0">Total Income : {{ $totalIncome }} {{ auth()->user()->currency }}</h5>
 </div>
 
 <div class="col-md-6 float-end text-end">

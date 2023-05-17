@@ -76,9 +76,9 @@
 
             <!-- Logo and Site Title -->
             <div class="navbar-brand flex-1 flex-lg-0 justify-content-center justify-content-md-start">
-                <a href="{{ route('home') }}"><img src="{{ asset('/assets/images/money-manager-logo-light.png') }}" class="h-40px me-2" alt=""></a>
+                <a href="{{ route('home') }}"><img src="{{ systemsettingsNow('site_logo') }}" class="h-40px me-2" alt=""></a>
                 <a href="{{ route('home') }}" class="d-inline-flex align-items-center d-none d-md-block" style="text-decoration: none;">
-                    <h1 class="m-0" style="color: #fff;">Money Manager</h1>
+                    <h1 class="m-0 text-light">{{ systemsettingsNow('site_title') }}</h1>
                 </a>
             </div>
             <!-- ./Logo and Site Title -->
@@ -251,7 +251,7 @@
                 <!-- Footer -->
                 <div class="navbar navbar-sm navbar-footer border-top">
                     <div class="container-fluid justify-content-center">
-                        Copyright <span>&copy; {{ date('Y') }} <a href="https://www.karigorit.com" target="_blank">Karigor IT</a></span>
+                        {!! systemsettingsNow('copyright_text') !!}
                     </div>
                 </div>
                 <!-- /Footer -->

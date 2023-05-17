@@ -3,27 +3,6 @@
 use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-
-if (!function_exists('generateSlug')) {
-    /**
-     * Generate Slug Name
-     *
-     * @param string $slug
-     * @param string $name
-     * @return string
-     */
-    function generateSlug($slug, $name = null)
-    {
-        if (($slug == null || $slug == '') && ($name == null || $name == '')) return "";
-
-        if ($slug == '') {
-            return Str::slug($name, '-');
-        }
-
-        return Str::slug($slug, '-');
-    }
-}
 
 /**
  * Check if the setup was completed.
@@ -65,11 +44,12 @@ function systemsettings(string $key = '')
  * @param string $key
  * @return null|Collection|string
  */
-function systemsettingsNow(string $key = ''){
+function systemsettingsNow(string $key = '')
+{
     $settings = systemSettingsCollection();
 
-    foreach(defaultSettings() as $k => $v){
-        if(!$settings->has($k)){
+    foreach (defaultSettings() as $k => $v) {
+        if (!$settings->has($k)) {
             $settings[$k] = $v;
         }
     }
@@ -81,26 +61,18 @@ function systemsettingsNow(string $key = ''){
     return $settings[$key] ?? null;
 }
 
-function systemSettingsCollection(){
+function systemSettingsCollection()
+{
     return Setting::systemOnly()->get()->pluck('value', 'key');
 }
 
 
-function defaultSettings(){
+function defaultSettings()
+{
     return [
         // Site
-        'site_logo' => '',
-        'logo_display_option' => 2,
-        'site_title' => 'KIT Blog',
-        'tagline' => 'KIT Blog tagline',
-        'email' => 'contact@kit.com',
-        'copyright_text' => 'Copyright &copy; 2023 - '. date('Y') .' <b><a href="http://www.zubayerahamed.com" target="_blank">Zubayer Ahamed</a></b>. All rights reserved.',
-
-        // Social
-        'social_facebook' => '',
-        'social_instagram' => '',
-        'social_twitter' => '',
-        'social_whatsapp' => '',
-
+        'site_logo' => asset('/assets/images/money-manager-logo-light.png'),
+        'site_title' => 'Money Manager',
+        'copyright_text' => 'Copyright &copy; ' . date('Y') . ' &nbsp; <b><a href="http://www.zubayerahamed.com" target="_blank">Zubayer Ahamed</a></b>. All rights reserved.',
     ];
 }

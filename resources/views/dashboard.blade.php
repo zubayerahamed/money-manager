@@ -50,7 +50,7 @@
                                             <div class="card card-body bg-primary text-white">
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-fill">
-                                                        <h4 class="mb-0">{{ $currentBalance }} TK</h4>
+                                                        <h4 class="mb-0">{{ $currentBalance }} {{ auth()->user()->currency }}</h4>
                                                         Current Balance
                                                     </div>
 
@@ -65,7 +65,7 @@
                                                     <i class="ph-mask-happy ph-2x opacity-75 me-3"></i>
 
                                                     <div class="flex-fill text-end">
-                                                        <h4 class="mb-0">{{ $val['income'] }} TK</h4>
+                                                        <h4 class="mb-0">{{ $val['income'] }} {{ auth()->user()->currency }}</h4>
                                                         Income
                                                     </div>
                                                 </div>
@@ -76,7 +76,7 @@
                                             <div class="card card-body bg-danger text-white">
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-fill">
-                                                        <h4 class="mb-0">{{ $val['expense'] + $val['trancharge'] }} TK</h4>
+                                                        <h4 class="mb-0">{{ $val['expense'] + $val['trancharge'] }} {{ auth()->user()->currency }}</h4>
                                                         Expense
                                                     </div>
 
@@ -91,7 +91,7 @@
                                                     <i class="ph-bank ph-2x opacity-75 me-3"></i>
 
                                                     <div class="flex-fill text-end">
-                                                        <h4 class="mb-0">{{ $val['saving'] }} TK</h4>
+                                                        <h4 class="mb-0">{{ $val['saving'] }} {{ auth()->user()->currency }}</h4>
                                                         Saving
                                                     </div>
                                                 </div>
@@ -132,19 +132,19 @@
                                 <div class="list-group">
                                     <div class="list-group-item d-flex">
                                         Income
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} TK</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
                                     </div>
                                     <div class="list-group-item d-flex">
                                         Expense
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} TK</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} {{ auth()->user()->currency }}</span>
                                     </div>
                                     <div class="list-group-item d-flex">
                                         Transaction Charge
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} TK</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} {{ auth()->user()->currency }}</span>
                                     </div>
                                     <div class="list-group-item d-flex">
                                         Saving
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} TK</span>
+                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} {{ auth()->user()->currency }}</span>
                                     </div>
                                 </div>
                             </div>

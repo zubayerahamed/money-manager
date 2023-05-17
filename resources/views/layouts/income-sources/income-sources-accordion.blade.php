@@ -9,7 +9,7 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $incomeSource->name }}</div>
                         <div class="text-muted fs-sm">
-                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $incomeSource->totalIncome }} TK</span>
+                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $incomeSource->totalIncome }} {{ auth()->user()->currency }}</span>
                         </div>
                     </div>
                 </div>

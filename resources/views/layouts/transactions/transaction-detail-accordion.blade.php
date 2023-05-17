@@ -16,11 +16,11 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $trn->id }}">
                             @if ($trn->transaction_type == 'INCOME')
-                                <span class="text-success"><b>{{ $trn->amount }} TK</b> income from <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
+                                <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> income from <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
                             @elseif ($trn->transaction_type == 'EXPENSE')
-                                <span class="text-danger"><b>{{ $trn->amount }} TK</b> expense for <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
+                                <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> expense for <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
                             @else
-                                <span class="text-primary"><b>{{ $trn->amount }} TK</b> transfer from <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
+                                <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> transfer from <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
                             @endif
                         </button>
                     </h2>
