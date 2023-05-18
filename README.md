@@ -1,6 +1,4 @@
-<p align="center"><a href="https://zubayerahamed.com" target="_blank"><img src="https://img001.prntscr.com/file/img001/RfcNzmmwRhG4nxNxCdnucA.png" width="400" alt="Laravel Logo"></a></p>
-
-![plot](./public/assets/images/money-manager-logo.png)
+<p align="center"><a href="https://zubayerahamed.com" target="_blank"><img src="./public/assets/images/money-manager-logo.png" width="400" alt="Money Manager Logo"></a></p>
 
 ## About Money Manager
 
