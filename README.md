@@ -1,4 +1,6 @@
-<p align="center"><a href="https://karigorit.com" target="_blank"><img src="https://img001.prntscr.com/file/img001/RfcNzmmwRhG4nxNxCdnucA.png" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://zubayerahamed.com" target="_blank"><img src="https://img001.prntscr.com/file/img001/RfcNzmmwRhG4nxNxCdnucA.png" width="400" alt="Laravel Logo"></a></p>
+
+![plot](./public/assets/images/money-manager-logo.png)
 
 ## About Money Manager
 
