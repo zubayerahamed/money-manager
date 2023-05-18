@@ -1,4 +1,5 @@
-<p align="center"><a href="https://zubayerahamed.com" target="_blank"><img src="./public/assets/images/money-manager-logo.png" width="100" alt="Money Manager Logo"></a></p>
+<p align="center"><a href="https://zubayerahamed.com" target="_blank"><img src="./public/assets/images/money-manager-logo.png" width="70" alt="Money Manager Logo"></a></p>
+<h1 align="center">Money Manager</h1>
 
 ## About Money Manager
 
