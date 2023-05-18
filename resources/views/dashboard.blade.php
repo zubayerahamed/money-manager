@@ -77,7 +77,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-fill">
                                                         <h4 class="mb-0">{{ $val['expense'] + $val['trancharge'] }} {{ auth()->user()->currency }}</h4>
-                                                        Expense
+                                                        Expense + Charge({{ $val['trancharge'] }})
                                                     </div>
 
                                                     <i class="ph-mask-sad ph-2x opacity-75 ms-3"></i>
@@ -101,12 +101,89 @@
                                 @endif
                             @endforeach
 
+                            <div class="row mt-2">
+                                @foreach ($monthWiseGroup as $key => $val)
+                                    @if ($val['month'] != date('m'))
+                                        <div class="col-xl-3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="col-md-10 float-start">
+                                                        <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
+                                                    </div>
+                                                    <div class="col-md-2 float-end text-end">
+                                                        <a href="{{ url('/tracking/details/month/' . $val['month'] . '/' . date('Y')) }}"><i class="far fa-eye"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <div class="list-group">
+                                                        <div class="list-group-item d-flex">
+                                                            Income
+                                                            <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
+                                                        </div>
+                                                        <div class="list-group-item d-flex">
+                                                            Expense
+                                                            <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} {{ auth()->user()->currency }}</span>
+                                                        </div>
+                                                        <div class="list-group-item d-flex">
+                                                            Charge
+                                                            <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} {{ auth()->user()->currency }}</span>
+                                                        </div>
+                                                        <div class="list-group-item d-flex">
+                                                            Saving
+                                                            <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} {{ auth()->user()->currency }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+
+
                         </div>
 
                         <div class="tab-pane fade" id="messages-yearly">
                             <a href="{{ url('/tracking/details/year/' . date('Y')) }}" class="btn btn-light btn-sm mb-2"><i class="far fa-eye"></i></a>
                             <div class="chart-container">
                                 <div class="chart has-fixed-height" id="line_basic_yearly" style="height: 440px;"></div>
+                            </div>
+
+                            <div class="row mt-2">
+                                @foreach ($yearWiseGroup as $key => $val)
+                                    <div class="col-xl-3">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="col-md-10 float-start">
+                                                    <h5 class="mb-0">{{ $key }}</h5>
+                                                </div>
+                                                <div class="col-md-2 float-end text-end">
+                                                    <a href="{{ url('/tracking/details/year/' . $val['year']) }}"><i class="far fa-eye"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body p-0">
+                                                <div class="list-group">
+                                                    <div class="list-group-item d-flex">
+                                                        Income
+                                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
+                                                    </div>
+                                                    <div class="list-group-item d-flex">
+                                                        Expense
+                                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} {{ auth()->user()->currency }}</span>
+                                                    </div>
+                                                    <div class="list-group-item d-flex">
+                                                        Transaction Charge
+                                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} {{ auth()->user()->currency }}</span>
+                                                    </div>
+                                                    <div class="list-group-item d-flex">
+                                                        Saving
+                                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} {{ auth()->user()->currency }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -115,44 +192,6 @@
                 </div>
                 <!-- /my messages -->
             </div>
-
-            @foreach ($monthWiseGroup as $key => $val)
-                @if ($val['month'] != date('m'))
-                    <div class="col-xl-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="col-md-10 float-start">
-                                    <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
-                                </div>
-                                <div class="col-md-2 float-end text-end">
-                                    <a href="{{ url('/tracking/details/month/' . $val['month'] . '/' . date('Y')) }}"><i class="far fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="card-body border-top">
-                                <div class="list-group">
-                                    <div class="list-group-item d-flex">
-                                        Income
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
-                                    </div>
-                                    <div class="list-group-item d-flex">
-                                        Expense
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} {{ auth()->user()->currency }}</span>
-                                    </div>
-                                    <div class="list-group-item d-flex">
-                                        Transaction Charge
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} {{ auth()->user()->currency }}</span>
-                                    </div>
-                                    <div class="list-group-item d-flex">
-                                        Saving
-                                        <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} {{ auth()->user()->currency }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-            @endforeach
-
 
 
         </div>

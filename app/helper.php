@@ -76,3 +76,18 @@ function defaultSettings()
         'copyright_text' => 'Copyright &copy; ' . date('Y') . ' &nbsp; <b><a href="http://www.zubayerahamed.com" target="_blank">Zubayer Ahamed</a></b>. All rights reserved.',
     ];
 }
+
+
+/**
+ * Push new data to an array
+ *
+ * @param array $array
+ * @param string $key
+ * @param mixed $value
+ * @return array
+ */
+function array_push_assoc($array, $key, $value)
+{
+    $array[$key] = $value;
+    return $array;
+}

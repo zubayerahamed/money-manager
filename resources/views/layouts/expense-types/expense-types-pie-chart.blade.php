@@ -88,7 +88,7 @@
                         textStyle: {
                             color: '#000'
                         },
-                        formatter: '{a} <br/>{b}: {c}TK ({d}%)'
+                        formatter: '{a} <br/>{b}: {c} {{ auth()->user()->currency }} ({d}%)'
                     },
 
                     // Add legend

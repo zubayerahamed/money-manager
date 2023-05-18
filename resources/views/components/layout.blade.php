@@ -190,43 +190,43 @@
 
         <!-- Content Wrapper -->
         <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-light page-header-static shadow">
+                <div class="page-header-content d-lg-flex">
+
+                    <!-- Transaction Action Buttons -->
+                    <h4 class="page-title text-center m-0">
+                        <div class="btn-group" role="group">
+                            <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income" title="Add Income">
+                                <i class="fas fa-plus-circle"></i>
+                                <div class="d-none d-md-block ms-2">Add Income</div>
+                            </a>
+
+                            <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense" title="Add Expense">
+                                <i class="fas fa-minus-circle"></i>
+                                <div class="d-none d-md-block ms-2">Add Expense</div>
+                            </a>
+
+                            <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer" title="Do Transfer">
+                                <i class="fas fa-exchange-alt"></i>
+                                <div class="d-none d-md-block ms-2">Transfer</div>
+                            </a>
+
+                            <a href="#" class="btn btn-light text-warning" onclick="location.reload()" title="Reload Page">
+                                <i class="fas fa-sync-alt"></i>
+                                <div class="d-none d-md-block ms-2">Reload Page</div>
+                            </a>
+                        </div>
+                    </h4>
+                    <!-- ./Transaction Action Buttons -->
+
+                </div>
+            </div>
+            <!-- ./Page header -->
+
             <!-- Content Inner -->
             <div class="content-inner">
-
-                <!-- Page header -->
-                <div class="page-header page-header-light shadow">
-                    <div class="page-header-content d-lg-flex">
-
-                        <!-- Transaction Action Buttons -->
-                        <h4 class="page-title text-center m-0">
-                            <div class="btn-group" role="group">
-                                <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income" title="Add Income">
-                                    <i class="fas fa-plus-circle"></i>
-                                    <div class="d-none d-md-block ms-2">Add Income</div>
-                                </a>
-
-                                <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense" title="Add Expense">
-                                    <i class="fas fa-minus-circle"></i>
-                                    <div class="d-none d-md-block ms-2">Add Expense</div>
-                                </a>
-
-                                <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer" title="Do Transfer">
-                                    <i class="fas fa-exchange-alt"></i>
-                                    <div class="d-none d-md-block ms-2">Transfer</div>
-                                </a>
-
-                                <a href="#" class="btn btn-light text-warning" onclick="location.reload()" title="Reload Page">
-                                    <i class="fas fa-sync-alt"></i>
-                                    <div class="d-none d-md-block ms-2">Reload Page</div>
-                                </a>
-                            </div>
-                        </h4>
-                        <!-- ./Transaction Action Buttons -->
-
-                    </div>
-                </div>
-                <!-- ./Page header -->
-
                 <!-- Notification Message -->
                 @if (Session::has('success'))
                     <div class="col-md-12" style="padding: 20px; padding-bottom: 0px;">
@@ -342,24 +342,6 @@
         </div>
     </div>
     <!-- ./Loading Mask -->
-
-    <!-- Floating Action Btn -->
-    <div id="container-floating">
-        <div class="nd4 nds">
-            <p class="letter"><a href="{{ route('add-income') }}" class="transaction-btn" data-title="Add Income"><i class="fas fa-plus-circle"></i></a></p>
-        </div>
-        <div class="nd3 nds">
-            <p class="letter"><a href="{{ route('add-expense') }}" class="transaction-btn" data-title="Add Expense"><i class="fas fa-minus-circle"></i></a></p>
-        </div>
-        <div class="nd1 nds">
-            <p class="letter"><a href="{{ route('do-transfer') }}" class="transaction-btn" data-title="Do Transfer"><i class="fas fa-exchange-alt"></i></a></p>
-        </div>
-        <div id="floating-button">
-            <p class="plus">+</p>
-            <img class="edit" src="{{ asset('/assets/images/bt_edit.png') }}">
-        </div>
-    </div>
-    <!-- ./Floating Action Btn -->
 
 </body>
 

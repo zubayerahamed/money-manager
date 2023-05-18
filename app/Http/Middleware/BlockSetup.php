@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class BlockSetup
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request. Check Setup is completed or not
+     * If setup completed, then it will redirect to home route
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next

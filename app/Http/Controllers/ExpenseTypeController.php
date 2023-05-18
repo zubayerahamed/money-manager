@@ -66,7 +66,7 @@ class ExpenseTypeController extends Controller
     {
 
         $incomingFields = $requset->validate([
-            'name' => ['required', new IsCompositeUnique('expense-type', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Expense type name must be unique")],
+            'name' => ['required', new IsCompositeUnique('expense_type', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Expense type name must be unique")],
             'icon' => 'required'
         ]);
 
@@ -115,7 +115,7 @@ class ExpenseTypeController extends Controller
     public function update(ExpenseType $expenseType, Request $requset)
     {
         $incomingFields = $requset->validate([
-            'name' => ['required', new IsCompositeUnique('expense-type', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Expense type name must be unique", $expenseType->id)],
+            'name' => ['required', new IsCompositeUnique('expense_type', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Expense type name must be unique", $expenseType->id)],
             'icon' => 'required'
         ]);
 

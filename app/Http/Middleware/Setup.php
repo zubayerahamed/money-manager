@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class Setup
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request. Check Setup is completed or not
+     * If setup not completed, then it will redirect to setup welcome route
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next

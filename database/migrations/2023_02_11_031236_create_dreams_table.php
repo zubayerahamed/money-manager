@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
             $table->unique(['name', 'user_id']);
+            $table->foreignId('wallet_id')->nullable()->references('id')->on('wallet')->onDelete('cascade');
             $table->timestamps();
         });
     }
