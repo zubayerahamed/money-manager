@@ -6,10 +6,12 @@
 <script>
     $(document).ready(function() {
 
+        loadingMask2.show();
         $.ajax({
             url: $('.wallet-status-link').attr('href'),
             type: 'GET',
             success: function(data) {
+                loadingMask2.hide();
                 preparePieChart(data);
             },
             error: function(jqXHR, status, errorThrown) {

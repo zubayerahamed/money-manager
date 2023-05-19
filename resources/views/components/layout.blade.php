@@ -32,13 +32,13 @@
     <link href="{{ asset('/assets/css/cropper.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" rel="stylesheet" />
     <link href="{{ asset('/assets/css/kit-custom.css') }}" rel="stylesheet" />
-    <!-- /Stylesheets -->
+    <!-- ./Stylesheets -->
 
     <!-- Core JS files -->
     <script src="{{ asset('/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('/assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- /Core JS files -->
+    <!-- ./Core JS files -->
 
     <!-- Vendor JS files -->
     <script src="{{ asset('/assets/js/cropper.js') }}"></script>

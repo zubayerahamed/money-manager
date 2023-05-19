@@ -19,10 +19,11 @@ class ExpenseType extends Model
         $totalExpense = DB::table('tracking_history')
             ->selectRaw("SUM(amount) as totalExpense")
             ->where('expense_type', '=', $this->id)
-            ->where('user_id', '=', auth()->user()->id)
+            ->where('user_id', '=', auth()->id())
             ->where('transaction_type', '=', 'EXPENSE')
             ->get();
-        return $totalExpense[0]->totalExpense == null ? 0 : $totalExpense[0]->totalExpense;
+
+        return $totalExpense->isEmpty() ? 0 : $totalExpense->get(0)->totalExpense;
     }
 
     public function trackingHistory()

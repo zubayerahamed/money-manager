@@ -39,8 +39,8 @@ Route::post('/login', [LoginController::class, 'store'])->name('login')->middlew
 Route::group(['middleware' => ['auth', 'setup']], function () {
     // Home
     Route::get('/', [DashboardController::class, 'index'])->name('home');
-    Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData']);
-    Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData']);
+    Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData'])->name('month.line-chart');
+    Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData'])->name('year.line-chart');
 
     // Profile
     Route::group([

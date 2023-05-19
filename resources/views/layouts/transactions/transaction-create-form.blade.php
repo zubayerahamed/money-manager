@@ -4,6 +4,7 @@
     <input type="hidden" name="transaction_type" value="{{ $transaction_type }}" />
 
     <div class="row">
+
         <div class="col sm-6">
             <div class="row mb-3">
                 <label class="form-label">Amount:</label>
@@ -12,6 +13,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col sm-6">
             <div class="row mb-3">
                 <label class="form-label">Charge:</label>
@@ -20,6 +22,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     @if ($transaction_type == 'EXPENSE' || $transaction_type == 'TRANSFER')
@@ -83,6 +86,7 @@
     @endif
 
     <div class="row">
+
         <div class="col sm-6">
             <div class="row mb-3">
                 <label class="form-label">Date:</label>
@@ -91,6 +95,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col sm-6">
             <div class="row mb-3">
                 <label class="form-label">Time:</label>
@@ -99,6 +104,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="row mb-3">

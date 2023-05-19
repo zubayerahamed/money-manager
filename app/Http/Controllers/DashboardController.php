@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
 
+    /**
+     * Display dashboard for user
+     * 
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function index()
     {
         // Current balance
@@ -118,6 +123,9 @@ class DashboardController extends Controller
         ]);
     }
 
+    /**
+     * Get current year line chart data for dashboard
+     */
     public function getCurrentYearLineChartData()
     {
         $trackingHistoriesOfIncome = DB::table('tracking_history')
@@ -189,6 +197,9 @@ class DashboardController extends Controller
         return $month;
     }
 
+    /**
+     * Get current month line chart data for dashboard
+     */
     public function getCurrentMonthLineChartData()
     {
         $trackingHistoriesOfIncome = DB::table('tracking_history')

@@ -8,6 +8,7 @@
             <p class="text-center">Please select how you want to configure the apps <code>.env</code> file</p>
 
             <div class="row">
+
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="db_host" class="form-label">Database Host</label>
@@ -17,6 +18,7 @@
                         @enderror
                     </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="db_port" class="form-label">Database Port</label>
@@ -26,6 +28,7 @@
                         @enderror
                     </div>
                 </div>
+
             </div>
 
             <div class="mb-3">
@@ -69,7 +72,6 @@
 
         <div class="card-footer">
             <a href="{{ route('setup.requirements') }}" class="btn btn-sm btn-light"><i class="ph-arrow-fat-lines-left me-2"></i> Previous</a>
-            {{-- <a href="{{ route('setup.database') }}" class="btn btn-sm {{ $success ? 'btn-success' : ' btn-danger disabled' }} float-end">Next<i class="ph-arrow-fat-lines-right ms-2"></i></a> --}}
             <button type="submit" class="btn btn-success float-end">
                 @if ($errors->any())
                     Try again

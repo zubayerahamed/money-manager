@@ -11,6 +11,7 @@ class TrackingHistory extends Model
     use HasFactory, FilterByuser;
 
     protected $table = "tracking_history";
+
     protected $fillable = [
         'transaction_type',
         'amount',

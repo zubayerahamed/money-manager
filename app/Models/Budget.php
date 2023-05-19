@@ -10,7 +10,14 @@ class Budget extends Model
 {
     use HasFactory, FilterByuser;
 
-    protected $fillable = ['amount', 'expense_type', 'note', 'user_id', 'month', 'year'];
+    protected $fillable = [
+        'amount',
+        'expense_type',
+        'note',
+        'user_id',
+        'month',
+        'year'
+    ];
 
     public function expenseType()
     {

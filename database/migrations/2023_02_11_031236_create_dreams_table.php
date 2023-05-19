@@ -21,9 +21,9 @@ return new class extends Migration
             $table->float('amount_needed', 15, 2)->default('0');
             $table->text('note')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
-            $table->unique(['name', 'user_id']);
             $table->foreignId('wallet_id')->nullable()->references('id')->on('wallet')->onDelete('cascade');
             $table->timestamps();
+            $table->unique(['name', 'user_id']);
         });
     }
 

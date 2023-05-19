@@ -1,5 +1,6 @@
 @foreach ($thDetails as $key => $val)
     <div class="card">
+
         <div class="card-header">
             <div class="col-md-10 float-start">
                 <h5 class="mb-0">{{ $key }}</h5>
@@ -10,9 +11,11 @@
                 <span style="color: red; font-weight: bold">{{ $val['expense'] }}</span>
             </div>
         </div>
+
         <div class="accordion accordion-flush" id="accordion_flush">
             @foreach ($val['data'] as $trn)
                 <div class="accordion-item">
+
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $trn->id }}">
                             @if ($trn->transaction_type == 'INCOME')
@@ -24,13 +27,16 @@
                             @endif
                         </button>
                     </h2>
+
                     <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush">
                         <div class="accordion-body">
+
                             @if ($trn->note != '')
                                 <div class="col-md-12 text-center mb-2">
                                     <span class="fw-semibold">{{ $trn->note }}</span>
                                 </div>
                             @endif
+
                             <div class="col-md-12 text-center">
                                 <span class="badge border border-teal text-teal rounded-pill m-auto">
                                     <a href="{{ route('tracking.edit', $trn->id) }}" class="m-2 text-primary transaction-btn" title="Edit" data-title="Edit Transaction">
@@ -50,10 +56,13 @@
                                     </form>
                                 </span>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
             @endforeach
         </div>
+
     </div>
 @endforeach

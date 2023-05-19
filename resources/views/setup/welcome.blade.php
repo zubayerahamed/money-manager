@@ -1,6 +1,7 @@
 <x-setup-layout pageTitle="Welcome">
     <div class="card-body">
         <h6 class="text-center">Welcome</h6>
+
         <ol>
             <li>Check if all requirements are met.</li>
             <li>Setup up a database and check if the connection is successful.</li>

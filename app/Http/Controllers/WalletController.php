@@ -17,6 +17,9 @@ class WalletController extends Controller
 
     private  $section_accordion, $section_piechart, $section_header;
 
+    /**
+     * Constructor 
+     */
     public function __construct()
     {
         $this->section_accordion = ['wallets-accordion', route('wallet.section.accordion')];
@@ -24,12 +27,15 @@ class WalletController extends Controller
         $this->section_header = ['wallets-header', route('wallet.section.header')];
     }
 
+    /**
+     * Get wallet status pie chart data
+     */
     public function walletStatusPieChart()
     {
         return DB::table('arhead')
             ->leftjoin('wallet', 'wallet.id', '=', 'arhead.wallet_id')
             ->selectRaw("wallet.name, SUM(arhead.amount * arhead.row_sign)-SUM(arhead.transaction_charge) as value")
-            ->where('arhead.user_id', '=', auth()->user()->id)
+            ->where('arhead.user_id', '=', auth()->id())
             ->groupBy('arhead.wallet_id')
             ->groupBy('wallet.name')
             ->get();
@@ -41,18 +47,20 @@ class WalletController extends Controller
 
         $totalBalance = DB::table('arhead')
             ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
-            ->where('user_id', '=', auth()->user()->id)
+            ->where('user_id', '=', auth()->id())
             ->get();
 
         return view('wallets', [
             'wallets' => $wallets,
-            'totalBalance' => $totalBalance[0]->totalBalance == null ? 0 : $totalBalance[0]->totalBalance
+            'totalBalance' => $totalBalance->isEmpty() ? 0 : $totalBalance->get(0)->totalBalance
         ]);
     }
 
     public function create()
     {
-        return view('layouts.wallets.wallet-form', ['wallet' => new Wallet()]);
+        return view('layouts.wallets.wallet-form', [
+            'wallet' => new Wallet()
+        ]);
     }
 
     public function store(Request $requset)
@@ -67,7 +75,7 @@ class WalletController extends Controller
         ]));
 
         if ($wallet->exists && $requset->get('current_balance') != 0) {
-            // Add to tracking 
+            // Create tracking 
             $trackingFields['transaction_type'] = 'OPENING';
             $trackingFields['amount'] = $requset->get('current_balance');
             $trackingFields['transaction_charge'] = 0;
@@ -80,7 +88,7 @@ class WalletController extends Controller
 
             $trackingHistory = TrackingHistory::create($trackingFields);
 
-            // Add to arhead
+            // Create arhead
             if ($trackingHistory) {
                 $arhead['tracking_history_id'] = $trackingHistory->id;
                 $arhead['user_id'] = auth()->user()->id;

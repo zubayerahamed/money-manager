@@ -10,7 +10,14 @@ class Dream extends Model
 {
     use HasFactory, FilterByuser;
 
-    protected $fillable = ['name', 'image', 'target_year', 'amount_needed', 'user_id', 'note', 'wallet_id'];
+    protected $fillable = [
+        'name',
+        'image',
+        'target_year',
+        'amount_needed',
+        'user_id', 'note',
+        'wallet_id'
+    ];
 
     public function getImageAttribute($value)
     {

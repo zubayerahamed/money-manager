@@ -12,17 +12,24 @@ class IncomeSource extends Model
     use HasFactory, FilterByuser;
 
     protected $table = "income_source";
-    protected $fillable = ['name', 'icon', 'note', 'user_id'];
+
+    protected $fillable = [
+        'name',
+        'icon',
+        'note',
+        'user_id'
+    ];
 
     public function getTotalIncomeAttribute()
     {
         $totalIncome = DB::table('tracking_history')
             ->selectRaw("SUM(amount) as totalIncome")
             ->where('income_source', '=', $this->id)
-            ->where('user_id', '=', auth()->user()->id)
+            ->where('user_id', '=', auth()->id())
             ->where('transaction_type', '=', 'INCOME')
             ->get();
-        return $totalIncome[0]->totalIncome == null ? 0 : $totalIncome[0]->totalIncome;
+
+        return $totalIncome->isEmpty() ? 0 : $totalIncome->get(0)->totalIncome;
     }
 
     public function trackingHistory()
