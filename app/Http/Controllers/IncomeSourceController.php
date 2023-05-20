@@ -15,6 +15,9 @@ class IncomeSourceController extends Controller
 
     private  $section_accordion, $section_piechart, $section_header;
 
+    /**
+     * Constructor 
+     */
     public function __construct()
     {
         $this->section_accordion = ['income-sources-accordion', route('income-source.section.accordion')];
@@ -22,132 +25,202 @@ class IncomeSourceController extends Controller
         $this->section_header = ['income-sources-header', route('income-source.section.header')];
     }
 
+    /**
+     * Get income source status pie chart data
+     * 
+     * @return Renderable
+     */
     public function incomeSourceStatusPieChart()
     {
         return DB::table('tracking_history')
             ->leftjoin('income_source', 'income_source.id', '=', 'tracking_history.income_source')
             ->selectRaw("income_source.name, SUM(tracking_history.amount) as value")
-            ->where('tracking_history.user_id', '=', auth()->user()->id)
+            ->where('tracking_history.user_id', '=', auth()->id())
             ->where('tracking_history.transaction_type', '=', 'INCOME')
             ->groupBy('tracking_history.income_source')
             ->groupBy('income_source.name')
             ->get();
     }
 
+    /**
+     * Dislay the income source status page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
-        $incomeSources = IncomeSource::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
+        $incomeSources = IncomeSource::orderBy('name', 'asc')->get();
 
         $totalIncome = DB::table('tracking_history')
             ->selectRaw("SUM(amount) as totalIncome")
-            ->where('user_id', '=', auth()->user()->id)
+            ->where('user_id', '=', auth()->id())
             ->where('transaction_type', '=', 'INCOME')
             ->get();
 
         return view('income-sources', [
             'incomeSources' => $incomeSources,
-            'totalIncome' => $totalIncome[0]->totalIncome == null ? 0 : $totalIncome[0]->totalIncome
+            'totalIncome' => $totalIncome->isEmpty() ? 0 : $totalIncome->get(0)->totalIncome
         ]);
     }
 
+    /**
+     * Open income source create form in modal
+     *
+     * @return Renderable
+     */
     public function create()
     {
-        return view('layouts.income-sources.income-source-form', ['incomeSource' => new IncomeSource()]);
+        return view('layouts.income-sources.income-source-form', [
+            'incomeSource' => new IncomeSource()
+        ]);
     }
 
-    public function edit($id)
-    {
-        $incomeSources = IncomeSource::where('id', '=', $id)->where('user_id', '=', auth()->user()->id)->get();
-        return view('layouts.income-sources.income-source-form', ['incomeSource' => $incomeSources->first()]);
-    }
-
+    /**
+     * Store new income source in storage
+     *
+     * @param Request $requset
+     * @return Renderable
+     */
     public function store(Request $requset)
     {
-        $incomingFields = $requset->validate([
-            'name' => ['required', new IsCompositeUnique('income_source', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Income source name must be unique")],
+        $requset->validate([
+            'name' => ['required', new IsCompositeUnique('income_source', ['name' => $requset->get('name'), 'user_id' => auth()->id()], __('income-source.name.unique'))],
             'icon' => 'required'
         ]);
 
-        $incomingFields['note'] = $requset->get('note');
-        $incomingFields['user_id'] = auth()->user()->id;
-
-        $incomeSource = IncomeSource::create($incomingFields);
+        $incomeSource = IncomeSource::create($requset->only([
+            'name', 'icon', 'note', 'user_id'
+        ]));
 
         if ($incomeSource) {
-            return $this->successWithReloadSections(null, $incomeSource->name . ' income source created successfully', 200, [
+            return $this->successWithReloadSections(null, __('income-source.save.success', ['name' => $incomeSource->name]), 200, [
                 $this->section_accordion,
                 $this->section_header,
                 $this->section_piechart,
             ]);
         }
 
-        return $this->error(null, "Something went wrong, please try again later.", 200);
+        return $this->error(null, __('common.process.error'));
     }
 
-    public function piechart()
+    /**
+     * Open income source edit form in modal
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function edit($id)
     {
-        return view('layouts.income-sources.income-sources-pie-chart');
-    }
+        $incomeSources = IncomeSource::where('id', '=', $id)->get();
+        if ($incomeSources->isEmpty()) return $this->error(null, __('income-source.not.found'), 400);
 
-    public function header()
-    {
-        $totalIncome = DB::table('tracking_history')
-            ->selectRaw("SUM(amount) as totalIncome")
-            ->where('user_id', '=', auth()->user()->id)
-            ->where('transaction_type', '=', 'INCOME')
-            ->get();
-
-        return view('layouts.income-sources.income-sources-header', [
-            'totalIncome' => $totalIncome[0]->totalIncome == null ? 0 : $totalIncome[0]->totalIncome
+        return view('layouts.income-sources.income-source-form', [
+            'incomeSource' => $incomeSources->first()
         ]);
     }
 
-    public function accordion()
+    /**
+     * Update existing income source in storage
+     *
+     * @param int $id
+     * @param Request $requset
+     * @return Renderable
+     */
+    public function update($id, Request $requset)
     {
-        $incomeSources = IncomeSource::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
+        $incomeSources = IncomeSource::where('id', '=', $id)->get();
+        if ($incomeSources->isEmpty()) return $this->error(null, __('income-source.not.found'), 400);
 
-        return view('layouts.income-sources.income-sources-accordion', [
-            'incomeSources' => $incomeSources
-        ]);
-    }
+        $incomeSource = $incomeSources->get(0);
 
-    public function update(IncomeSource $incomeSource, Request $requset)
-    {
-        $incomingFields = $requset->validate([
-            'name' => ['required', new IsCompositeUnique('income_source', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], "Income source name must be unique", $incomeSource->id)],
+        $requset->validate([
+            'name' => ['required', new IsCompositeUnique('income_source', ['name' => $requset->get('name'), 'user_id' => auth()->id()], __('income-source.name.unique'), $incomeSource->id)],
             'icon' => 'required'
         ]);
 
-        $incomingFields['note'] = $requset->get('note');
-
-        $updated = $incomeSource->update($incomingFields);
+        $updated = $incomeSource->update($requset->only([
+            'name', 'icon', 'note', 'user_id'
+        ]));
 
         if ($updated) {
-            return $this->successWithReloadSections(null, $incomeSource->name . ' income source updated successfully', 200, [
+            return $this->successWithReloadSections(null, __('income-source.update.success', ['name' => $incomeSource->name]), 200, [
                 $this->section_accordion,
                 $this->section_header,
                 $this->section_piechart,
             ]);
         }
 
-        return $this->error(null, $incomeSource->name . ' income source update failed', 200);
+        return $this->error(null, __('common.process.error'));
     }
 
-    public function destroy(IncomeSource $incomeSource)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function destroy($id)
     {
+        $incomeSources = IncomeSource::where('id', '=', $id)->get();
+        if ($incomeSources->isEmpty()) return $this->error(null, __('income-source.not.found'), 400);
+
+        $incomeSource = $incomeSources->get(0);
+
         if ($incomeSource->trackingHistory()->count() > 0) {
-            return $this->error(null, $incomeSource->name . ' already has transaction', 200);
+            return $this->error(null, __('income-source.has.transaction', ['name' => $incomeSource->name]));
         }
 
         $incomeSourceName = $incomeSource->name;
         $deleted = $incomeSource->delete();
 
         if ($deleted) {
-            return $this->successWithReloadSections(null, $incomeSourceName . ' income source deleted successfully', 200, [
+            return $this->successWithReloadSections(null, __('income-source.delete.success', ['name' => $incomeSourceName]), 200, [
                 $this->section_accordion,
             ]);
         }
 
-        return $this->error(null, 'Something went wrong, please try again later', 200);
+        return $this->error(null, __('common.process.error'));
+    }
+
+    /**
+     * Income source page piechart section
+     *
+     * @return Renderable
+     */
+    public function piechart()
+    {
+        return view('layouts.income-sources.income-sources-pie-chart');
+    }
+
+    /**
+     * Income source page header section
+     *
+     * @return Renderable
+     */
+    public function header()
+    {
+        $totalIncome = DB::table('tracking_history')
+            ->selectRaw("SUM(amount) as totalIncome")
+            ->where('user_id', '=', auth()->id())
+            ->where('transaction_type', '=', 'INCOME')
+            ->get();
+
+        return view('layouts.income-sources.income-sources-header', [
+            'totalIncome' => $totalIncome->isEmpty() ? 0 : $totalIncome->get(0)->totalIncome
+        ]);
+    }
+
+    /**
+     * Income source page accordion section
+     *
+     * @return Renderable
+     */
+    public function accordion()
+    {
+        $incomeSources = IncomeSource::orderBy('name', 'asc')->get();
+
+        return view('layouts.income-sources.income-sources-accordion', [
+            'incomeSources' => $incomeSources
+        ]);
     }
 }

@@ -31,7 +31,7 @@
                     @endif
 
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
-                        <a href="{{ route('wallet.edit', $wallet->id) }}" class="m-2 text-primary transaction-btn" data-title="Edit wallet">
+                        <a href="{{ route('wallet.edit', $wallet->id) }}" class="m-2 text-primary transaction-btn" data-title="{{ __('wallet.btn.edit-wallet') }}" title="{{ __('wallet.btn.edit-wallet') }}">
                             <i class="fas fa-edit"></i>
                         </a>
 
@@ -43,7 +43,7 @@
                             <a href="#" class="delete-btn text-danger m-2"
                                onclick="deleteData(this)"
                                data-form-id="{{ 'form-id' . $wallet->id }}"
-                               title="Delete">
+                               title="{{ __('wallet.btn.delete-wallet') }}">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </form>

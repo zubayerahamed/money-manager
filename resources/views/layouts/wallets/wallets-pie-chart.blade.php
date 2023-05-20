@@ -15,8 +15,8 @@
                 preparePieChart(data);
             },
             error: function(jqXHR, status, errorThrown) {
-                showMessage(status, "Something went wrong .... ");
                 loadingMask2.hide();
+                showMessage(status, "Something went wrong .... ");
             }
         });
 
@@ -66,7 +66,7 @@
 
                     // Add title
                     title: {
-                        text: 'Wallet Status',
+                        text: "{{ __('wallet.piechart.title') }}",
                         subtext: '',
                         left: 'center',
                         textStyle: {

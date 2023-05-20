@@ -64,7 +64,7 @@
 
                     // Add title
                     title: {
-                        text: 'Income Status',
+                        text: "{{ __('income-source.piechart.title') }}",
                         subtext: '',
                         left: 'center',
                         textStyle: {

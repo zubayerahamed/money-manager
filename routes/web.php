@@ -79,8 +79,8 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/', [IncomeSourceController::class, 'create'])->name('create');
         Route::get('/{id}/edit', [IncomeSourceController::class, 'edit'])->name('edit');
         Route::post('/', [IncomeSourceController::class, 'store'])->name('store');
-        Route::put('/{incomeSource}', [IncomeSourceController::class, 'update'])->name('update');
-        Route::delete('/{incomeSource}', [IncomeSourceController::class, 'destroy'])->name('destroy');
+        Route::put('/{id}', [IncomeSourceController::class, 'update'])->name('update');
+        Route::delete('/{id}', [IncomeSourceController::class, 'destroy'])->name('destroy');
         Route::get('/data/status', [IncomeSourceController::class, 'incomeSourceStatusPieChart'])->name('data.status');
         Route::get('/section/piechart', [IncomeSourceController::class, 'piechart'])->name('section.piechart');
         Route::get('/section/header', [IncomeSourceController::class, 'header'])->name('section.header');

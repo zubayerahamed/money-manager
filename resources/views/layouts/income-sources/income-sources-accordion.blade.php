@@ -12,7 +12,7 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $incomeSource->name }}</div>
                         <div class="text-muted fs-sm">
-                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $incomeSource->totalIncome }} {{ auth()->user()->currency }}</span>
+                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $incomeSource->totalIncome == null ? 0 : $incomeSource->totalIncome }} {{ auth()->user()->currency }}</span>
                         </div>
                     </div>
 
@@ -31,9 +31,10 @@
                     @endif
 
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
-                        <a href="{{ route('income-source.edit', $incomeSource->id) }}" class="m-2 text-primary transaction-btn" data-title="Edit income source">
+                        <a href="{{ route('income-source.edit', $incomeSource->id) }}" class="m-2 text-primary transaction-btn" title="{{ __('income-source.btn.edit-income-source') }}" data-title="{{ __('income-source.btn.edit-income-source') }}">
                             <i class="fas fa-edit"></i>
                         </a>
+
                         <form id="form-id{{ $incomeSource->id }}"
                               action="{{ route('income-source.destroy', $incomeSource->id) }}"
                               method="POST" style="display: inline-block;">
@@ -42,7 +43,7 @@
                             <a href="#" class="delete-btn text-danger m-2"
                                onclick="deleteData(this)"
                                data-form-id="{{ 'form-id' . $incomeSource->id }}"
-                               title="Delete">
+                               title="{{ __('income-source.btn.delete-income-source') }}">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </form>
