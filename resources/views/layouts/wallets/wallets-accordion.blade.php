@@ -12,7 +12,7 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $wallet->name }}</div>
                         <div class="text-muted fs-sm">
-                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $wallet->currentBalance }} {{ auth()->user()->currency }}</span>
+                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $wallet->currentBalance == null ? 0 : $wallet->currentBalance }} {{ auth()->user()->currency }}</span>
                         </div>
                     </div>
 

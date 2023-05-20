@@ -1,5 +1,5 @@
 <div class="col-md-6 float-start text-start">
-    <h5 class="mb-0">Balance : {{ $totalBalance }} {{ auth()->user()->currency }}</h5>
+    <h5 class="mb-0">Balance : {{ $totalBalance == null ? 0 : $totalBalance }} {{ auth()->user()->currency }}</h5>
 </div>
 
 <div class="col-md-6 float-end text-end">

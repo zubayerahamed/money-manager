@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TrackingHistory;
+use DebugBar\DataCollector\Renderable;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -10,8 +11,8 @@ class DashboardController extends Controller
 
     /**
      * Display dashboard for user
-     * 
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -125,6 +126,7 @@ class DashboardController extends Controller
 
     /**
      * Get current year line chart data for dashboard
+     * @return Renderable
      */
     public function getCurrentYearLineChartData()
     {
@@ -199,6 +201,7 @@ class DashboardController extends Controller
 
     /**
      * Get current month line chart data for dashboard
+     * @return Renderable
      */
     public function getCurrentMonthLineChartData()
     {

@@ -62,8 +62,8 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/', [WalletController::class, 'create'])->name('create');
         Route::get('/{id}/edit', [WalletController::class, 'edit'])->name('edit');
         Route::post('/', [WalletController::class, 'store'])->name('store');
-        Route::put('/{wallet}', [WalletController::class, 'update'])->name('update');
-        Route::delete('/{wallet}', [WalletController::class, 'destroy'])->name('destroy');
+        Route::put('/{id}', [WalletController::class, 'update'])->name('update');
+        Route::delete('/{id}', [WalletController::class, 'destroy'])->name('destroy');
         Route::get('/data/status', [WalletController::class, 'walletStatusPieChart'])->name('data.status');
         Route::get('/section/piechart', [WalletController::class, 'piechart'])->name('section.piechart');
         Route::get('/section/header', [WalletController::class, 'header'])->name('section.header');

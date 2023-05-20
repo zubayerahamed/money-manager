@@ -24,7 +24,7 @@
     <div class="row mb-3">
         <label class="form-label">Current Balance:</label>
         <div class="form-group">
-            <input type="number" name="current_balance" class="form-control" value="{{ $wallet->currentBalance }}" min="0" step="any" required {{ $wallet->id != null ? 'disabled' : '' }}>
+            <input type="number" name="current_balance" class="form-control" value="{{ $wallet->currentBalance == null ? 0 : $wallet->currentBalance }}" min="0" step="any" required {{ $wallet->id != null ? 'disabled' : '' }}>
         </div>
     </div>
 

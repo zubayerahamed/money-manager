@@ -53,7 +53,7 @@ trait HttpResponses
      * @param [type] $code
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function error($data, $message = null, $code)
+    protected function error($data, $message = null, $code = 200)
     {
         return response()->json([
             'status' => 'error',

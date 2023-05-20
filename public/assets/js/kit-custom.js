@@ -110,7 +110,6 @@ function submitForm(formEl, method) {
 
 function modalWidget(url, elementClass) {
 
-
     loadingMask2.show();
     $.ajax({
         url: url,
@@ -150,6 +149,7 @@ $(document).ready(function () {
     $(document).on("select2:open", () => {
         document.querySelector(".select2-search__field").focus();
     });
+    
     if ($(".select2").length > 0) {
         $(".select2").select2();
     }
