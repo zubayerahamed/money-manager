@@ -35,5 +35,5 @@ return [
     'btn.edit-budget' => 'Update limit',
 
     'header.budget' => 'Budget Details',
-    'page.title' => 'Budget',
+    'page.title' => 'Budgets',
 ];

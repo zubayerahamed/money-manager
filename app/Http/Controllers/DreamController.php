@@ -15,7 +15,7 @@ class DreamController extends Controller
 
     public function index()
     {
-        $dreams = Dream::with('wallet')->where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get();
+        $dreams = Dream::with('wallet')->orderBy('name', 'asc')->get();
 
         return view('dreams', [
             'dreams' => $dreams
@@ -26,7 +26,7 @@ class DreamController extends Controller
     {
         return view('layouts.dreams.dream-form', [
             'dream' => new Dream(),
-            'wallets' => Wallet::where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get()
+            'wallets' => Wallet::orderBy('name', 'asc')->get()
         ]);
     }
 
@@ -55,7 +55,7 @@ class DreamController extends Controller
 
     public function accordion()
     {
-        $dreams = Dream::with('wallet')->where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get();
+        $dreams = Dream::with('wallet')->orderBy('name', 'asc')->get();
 
         return view('layouts.dreams.dreams-accordion', [
             'dreams' => $dreams
@@ -66,7 +66,7 @@ class DreamController extends Controller
     {
         return view('layouts.dreams.dream-form', [
             'dream' => $dream,
-            'wallets' => Wallet::where('user_id', '=', auth()->user()->id)->orderBy('name', 'asc')->get()
+            'wallets' => Wallet::orderBy('name', 'asc')->get()
         ]);
     }
 

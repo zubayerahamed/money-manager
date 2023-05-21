@@ -30,4 +30,5 @@ return [
 
     'piechart.title' => 'Income status',
     'header.income' => 'Total income',
+    'page.title' => 'Income sources status',
 ];

@@ -1,4 +1,4 @@
-<x-layout pageTitle="Home">
+<x-layout pageTitle="{{ __('home.page.title') }}">
     <!-- Content -->
     <div class="content">
         <div class="row">
@@ -19,7 +19,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#messages-yearly" class="nav-link" data-bs-toggle="tab">
-                                Yearly
+                                {{ __('home.text.yearly') }}
                             </a>
                         </li>
                     </ul>
@@ -30,7 +30,7 @@
 
                         <!-- Monthly Tab -->
                         <div class="tab-pane active fade show" id="messages-monthly">
-                            <a href="{{ url('/tracking/details/month/' . date('m') . '/' . date('Y')) }}" class="btn btn-light btn-sm mb-2"><i class="far fa-eye"></i></a>
+                            <a href="{{ route('tracking.monthly', [date('m'), date('Y')]) }}" class="btn btn-light btn-sm mb-2" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
 
                             <!-- Current Month Line Chart -->
                             <div class="chart-container">
@@ -49,7 +49,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-fill">
                                                         <h4 class="mb-0">{{ $currentBalance }} {{ auth()->user()->currency }}</h4>
-                                                        Current Balance
+                                                        {{ __('home.text.current-balance') }}
                                                     </div>
 
                                                     <i class="ph-wallet ph-2x opacity-75 ms-3"></i>
@@ -66,7 +66,7 @@
 
                                                     <div class="flex-fill text-end">
                                                         <h4 class="mb-0">{{ $val['income'] }} {{ auth()->user()->currency }}</h4>
-                                                        Income
+                                                        {{ __('home.text.income') }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -79,7 +79,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-fill">
                                                         <h4 class="mb-0">{{ $val['expense'] + $val['trancharge'] }} {{ auth()->user()->currency }}</h4>
-                                                        Expense + Charge({{ $val['trancharge'] }})
+                                                        {{ __('home.text.expense.charge') }} ({{ $val['trancharge'] }})
                                                     </div>
 
                                                     <i class="ph-mask-sad ph-2x opacity-75 ms-3"></i>
@@ -96,7 +96,7 @@
 
                                                     <div class="flex-fill text-end">
                                                         <h4 class="mb-0">{{ $val['saving'] }} {{ auth()->user()->currency }}</h4>
-                                                        Saving
+                                                        {{ __('home.text.saving') }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,24 +119,24 @@
                                                         <h5 class="mb-0">{{ $key }} {{ date('Y') }}</h5>
                                                     </div>
                                                     <div class="col-md-2 float-end text-end">
-                                                        <a href="{{ url('/tracking/details/month/' . $val['month'] . '/' . date('Y')) }}"><i class="far fa-eye"></i></a>
+                                                        <a href="{{ route('tracking.monthly', [$val['month'], date('Y')]) }}" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
                                                     </div>
                                                 </div>
                                                 <div class="list-group list-group-flush">
                                                     <div class="list-group-item d-flex">
-                                                        Income
+                                                        {{ __('home.text.income') }}
                                                         <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
                                                     </div>
                                                     <div class="list-group-item d-flex">
-                                                        Expense
+                                                        {{ __('home.text.expense') }}
                                                         <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} {{ auth()->user()->currency }}</span>
                                                     </div>
                                                     <div class="list-group-item d-flex">
-                                                        Charge
+                                                        {{ __('home.text.charge') }}
                                                         <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} {{ auth()->user()->currency }}</span>
                                                     </div>
                                                     <div class="list-group-item d-flex">
-                                                        Saving
+                                                        {{ __('home.text.saving') }}
                                                         <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} {{ auth()->user()->currency }}</span>
                                                     </div>
                                                 </div>
@@ -151,7 +151,7 @@
 
                         <!-- Yearly Tab -->
                         <div class="tab-pane fade" id="messages-yearly">
-                            <a href="{{ url('/tracking/details/year/' . date('Y')) }}" class="btn btn-light btn-sm mb-2"><i class="far fa-eye"></i></a>
+                            <a href="{{ route('tracking.yearly', date('Y')) }}" class="btn btn-light btn-sm mb-2" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
 
                             <!-- Current Year Line Chart -->
                             <div class="chart-container">
@@ -169,25 +169,25 @@
                                                     <h5 class="mb-0">{{ $key }}</h5>
                                                 </div>
                                                 <div class="col-md-2 float-end text-end">
-                                                    <a href="{{ url('/tracking/details/year/' . $val['year']) }}"><i class="far fa-eye"></i></a>
+                                                    <a href="{{ route('tracking.yearly' . $val['year']) }}" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
                                                 </div>
                                             </div>
 
                                             <div class="list-group list-group-flush">
                                                 <div class="list-group-item d-flex">
-                                                    Income
+                                                    {{ __('home.text.income') }}
                                                     <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
                                                 </div>
                                                 <div class="list-group-item d-flex">
-                                                    Expense
+                                                    {{ __('home.text.expense') }}
                                                     <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['expense'] }} {{ auth()->user()->currency }}</span>
                                                 </div>
                                                 <div class="list-group-item d-flex">
-                                                    Transaction Charge
+                                                    {{ __('home.text.charge') }}
                                                     <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['trancharge'] }} {{ auth()->user()->currency }}</span>
                                                 </div>
                                                 <div class="list-group-item d-flex">
-                                                    Saving
+                                                    {{ __('home.text.saving') }}
                                                     <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['saving'] }} {{ auth()->user()->currency }}</span>
                                                 </div>
                                             </div>
@@ -214,32 +214,26 @@
         $(document).ready(function() {
 
             // Calling month line chart
-            loadingMask2.show();
             $.ajax({
                 url: $('.month-line-chart-link').attr('href'),
                 type: 'GET',
                 success: function(data) {
-                    loadingMask2.hide();
                     prepareCurrentMonthLineChart(data);
                 },
                 error: function(jqXHR, status, errorThrown) {
                     showMessage(status, "Something went wrong .... ");
-                    loadingMask2.hide();
                 }
             });
 
             // Calling year line chart
-            loadingMask2.show();
             $.ajax({
                 url: $('.year-line-chart-link').attr('href'),
                 type: 'GET',
                 success: function(data) {
-                    loadingMask2.hide();
                     prepareYearlyLineChart(data);
                 },
                 error: function(jqXHR, status, errorThrown) {
                     showMessage(status, "Something went wrong .... ");
-                    loadingMask2.hide();
                 }
             });
 
@@ -300,7 +294,7 @@
 
                         // Add legend
                         legend: {
-                            data: ['Income', 'Expense'],
+                            data: ["{{ __('home.text.income') }}", "{{ __('home.text.expense') }}"],
                             itemHeight: 8,
                             itemGap: 30,
                             textStyle: {
@@ -311,7 +305,7 @@
                         // Title
                         title: [{
                             left: 'center',
-                            text: 'Income Vs Expense monthly increment',
+                            text: "{{ __('home.linechart.yearly.title') }}",
                             top: 380,
                             textStyle: {
                                 fontSize: 15,
@@ -504,7 +498,7 @@
 
                         // Add legend
                         legend: {
-                            data: ['Income', 'Expense'],
+                            data: ["{{ __('home.text.income') }}", "{{ __('home.text.expense') }}"],
                             itemHeight: 8,
                             itemGap: 30,
                             textStyle: {
@@ -515,7 +509,7 @@
                         // Title
                         title: [{
                             left: 'center',
-                            text: 'Income Vs Expense daily increment',
+                            text: "{{ __('home.linechart.monthly.title') }}",
                             top: 380,
                             textStyle: {
                                 fontSize: 15,

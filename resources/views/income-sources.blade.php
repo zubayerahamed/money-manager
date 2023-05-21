@@ -1,4 +1,4 @@
-<x-layout pageTitle="Income Sources Status">
+<x-layout pageTitle="{{ __('income-source.page.title') }}">
     <!-- Content -->
     <div class="content">
         <div class="row">

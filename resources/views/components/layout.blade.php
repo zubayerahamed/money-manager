@@ -97,10 +97,10 @@
 
                     <div class="dropdown-menu dropdown-menu-end">
                         <a href="{{ route('profile.index') }}" class="dropdown-item">
-                            <i class="ph-user-circle me-2"></i> My profile
+                            <i class="ph-user-circle me-2"></i> {{ __('common.my-profile') }}
                         </a>
                         <a href="{{ route('logout') }}" class="dropdown-item">
-                            <i class="ph-sign-out me-2"></i> Logout
+                            <i class="ph-sign-out me-2"></i> {{ __('common.logout') }}
                         </a>
                     </div>
                 </li>
@@ -231,7 +231,7 @@
                 @if (Session::has('success'))
                     <div class="col-md-12" style="padding: 20px; padding-bottom: 0px;">
                         <div class="alert alert-success alert-dismissible fade show" style="margin-bottom: 0px;">
-                            <span class="fw-semibold">Well done!</span> {{ Session::get('success') }}
+                            <span class="fw-semibold">{{ __('common.alert.success.prefix') }}</span> {{ Session::get('success') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
                 @if (Session::has('error'))
                     <div class="col-md-12" style="padding: 20px; padding-bottom: 0px;">
                         <div class="alert alert-danger alert-dismissible fade show" style="margin-bottom: 0px;">
-                            <span class="fw-semibold">Oh snap!</span> {{ Session::get('error') }}
+                            <span class="fw-semibold">{{ __('common.alert.error.prefix') }}</span> {{ Session::get('error') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     </div>
@@ -296,7 +296,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Crop & Resize your avatar</h5>
+                    <h5 class="modal-title">{{ __('common.image.cropper.title') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- ./Modal Header -->

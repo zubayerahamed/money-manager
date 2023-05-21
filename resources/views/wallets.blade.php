@@ -1,4 +1,4 @@
-<x-layout pageTitle="Wallets Status">
+<x-layout pageTitle="{{ __('wallet.page.title') }}">
     <!-- Content -->
     <div class="content">
         <div class="row">

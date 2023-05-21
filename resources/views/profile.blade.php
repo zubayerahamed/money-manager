@@ -1,4 +1,4 @@
-<x-layout pageTitle="Profile">
+<x-layout pageTitle="{{ __('profile.page.title') }}">
     <!-- Content -->
     <div class="content">
         <div class="row">
@@ -36,7 +36,7 @@
                         <div class="card">
 
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="mb-0">Update Profile</h5>
+                                <h5 class="mb-0">{{ __('profile.section1.title') }}</h5>
                             </div>
 
                             <div class="card-body border-top">
@@ -45,9 +45,9 @@
                                     @method('PUT')
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Name:</label>
+                                        <label class="form-label" for="name">{{ __('profile.label.name') }}</label>
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
+                                            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}" required>
                                             @error('name')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -55,9 +55,9 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Currency:</label>
+                                        <label class="form-label" for="currency">{{ __('profile.label.currency') }}</label>
                                         <div class="form-group">
-                                            <select id="currency" data-placeholder="Select a Currency..." name="currency" class="form-control select2" required>
+                                            <select id="currency" data-placeholder="Select a Currency..." name="currency" id="currency" class="form-control select2" required>
                                                 <option>--Select currency--</option>
                                                 @foreach (getAllCurrency() as $key => $val)
                                                     <option value="{{ $key }}" {{ old('currency', $user->currency) == $key ? 'selected' : '' }}>{{ $val }}</option>
@@ -70,7 +70,7 @@
                                     </div>
 
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-primary">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
+                                        <button type="submit" class="btn btn-primary">{{ __('common.btn.submit') }}<i class="ph-paper-plane-tilt ms-2"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -82,7 +82,7 @@
                         <div class="card">
 
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="mb-0">Update Password</h5>
+                                <h5 class="mb-0">{{ __('profile.section2.title') }}</h5>
                             </div>
 
                             <div class="card-body border-top">
@@ -91,9 +91,9 @@
                                     @method('PUT')
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Password:</label>
+                                        <label class="form-label" for="password">{{ __('profile.label.password') }}</label>
                                         <div class="form-group">
-                                            <input type="password" name="password" class="form-control" required>
+                                            <input type="password" name="password" id="password" class="form-control" required>
                                             @error('password')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -101,9 +101,9 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label class="form-label">Confirm Password:</label>
+                                        <label class="form-label" for="password_confirmation">{{ __('profile.label.password_confirmation') }}</label>
                                         <div class="form-group">
-                                            <input type="password" name="password_confirmation" class="form-control" required>
+                                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                                             @error('password_confirmation')
                                                 <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
                                             @enderror
@@ -111,7 +111,7 @@
                                     </div>
 
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-primary">Submit<i class="ph-paper-plane-tilt ms-2"></i></button>
+                                        <button type="submit" class="btn btn-primary">{{ __('common.btn.submit') }}<i class="ph-paper-plane-tilt ms-2"></i></button>
                                     </div>
                                 </form>
                             </div>

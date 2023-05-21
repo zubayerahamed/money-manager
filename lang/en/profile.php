@@ -20,16 +20,13 @@ return [
     'not.found' => 'Wallet not found in storage',
     'has.transaction' => ':name wallet already has transactions',
     
-    'label.icon' => 'Icon',
-    'label.name' => 'Wallet name',
-    'label.current_balance' => 'Current balance',
-    'label.note' => 'Note',
+    'label.name' => 'Name',
+    'label.currency' => 'Currency',
+    'label.password' => 'Password',
+    'label.password_confirmation' => 'Confirm password',
 
-    'btn.create-wallet' => 'Create wallet',
-    'btn.edit-wallet' => 'Edit wallet',
-    'btn.delete-wallet' => 'Delete wallet',
+    'section1.title' => 'Update profile',
+    'section2.title' => 'Update password',
 
-    'piechart.title' => 'Wallet status',
-    'header.balance' => 'Balance',
-    'page.title' => 'Wallets status',
+    'page.title' => 'Profile',
 ];

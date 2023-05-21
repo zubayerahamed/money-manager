@@ -30,4 +30,5 @@ return [
 
     'piechart.title' => 'Expense status',
     'header.expense' => 'Total expense',
+    'page.title' => 'Expense types status',
 ];
