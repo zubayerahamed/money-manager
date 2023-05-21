@@ -8,18 +8,18 @@
 
         <div class="col sm-6">
             <div class="row mb-3">
-                <label class="form-label">Amount:</label>
+                <label class="form-label" for="amount">{{ __('transaction.label.amount') }}</label>
                 <div class="form-group">
-                    <input type="number" name="amount" class="form-control" value="{{ $trackingHistory->amount }}" min="0" step="any" required>
+                    <input type="number" name="amount" id="amount" class="form-control" value="{{ $trackingHistory->amount }}" min="0" step="any" required>
                 </div>
             </div>
         </div>
 
         <div class="col sm-6">
             <div class="row mb-3">
-                <label class="form-label">Charge:</label>
+                <label class="form-label" for="transaction_charge">{{ __('transaction.label.charge') }}</label>
                 <div class="form-group">
-                    <input type="number" name="transaction_charge" class="form-control" value="{{ $trackingHistory->transaction_charge }}" min="0" step="any">
+                    <input type="number" name="transaction_charge" id="transaction_charge" class="form-control" value="{{ $trackingHistory->transaction_charge }}" min="0" step="any">
                 </div>
             </div>
         </div>
@@ -28,29 +28,29 @@
 
     @if ($transaction_type == 'EXPENSE' || $transaction_type == 'TRANSFER')
         <div class="row mb-3">
-            <label class="form-label">From Wallet:</label>
+            <label class="form-label" for="from_wallet">{{ __('transaction.label.from_wallet') }}</label>
             <div class="input-group">
-                <select class="form-control" name="from_wallet" required>
+                <select class="form-control" name="from_wallet" id="from_wallet" required>
                     <option value="">-- Select Wallet --</option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->id }}" {{ $trackingHistory->from_wallet == $wallet->id ? 'selected' : '' }}>{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="Add wallet" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
         @if ($transaction_type == 'EXPENSE')
             <div class="row mb-3">
-                <label class="form-label">Expense Type:</label>
+                <label class="form-label" for="expense_type">{{ __('transaction.label.expense_type') }}</label>
                 <div class="input-group">
-                    <select class="form-control" name="expense_type" required>
+                    <select class="form-control" name="expense_type" id="expense_type" required>
                         <option value="">-- Select Expense Type --</option>
                         @foreach ($expenseTypes as $expenseType)
                             <option value="{{ $expenseType->id }}" {{ $trackingHistory->expense_type == $expenseType->id ? 'selected' : '' }}>{{ $expenseType->name }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('expense-type.create') }}" class="btn btn-light transaction-btn" data-title="Create expense type" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('expense-type.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('expense-type.btn.create-expense-type') }}" title="{{ __('expense-type.btn.create-expense-type') }}" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
@@ -58,29 +58,29 @@
 
     @if ($transaction_type == 'INCOME' || $transaction_type == 'TRANSFER')
         <div class="row mb-3">
-            <label class="form-label">To Wallet:</label>
+            <label class="form-label" for="to_wallet">{{ __('transaction.label.to_wallet') }}</label>
             <div class="input-group">
-                <select class="form-control" name="to_wallet" required>
+                <select class="form-control" name="to_wallet" id="to_wallet" required>
                     <option value="">-- Select Wallet --</option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->id }}" {{ $trackingHistory->to_wallet == $wallet->id ? 'selected' : '' }}>{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="Add wallet" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
         @if ($transaction_type == 'INCOME')
             <div class="row mb-3">
-                <label class="form-label">Income Source:</label>
+                <label class="form-label" for="income_source">{{ __('transaction.label.income_source') }}</label>
                 <div class="input-group">
-                    <select class="form-control" name="income_source" required>
+                    <select class="form-control" name="income_source" id="income_source" required>
                         <option value="">-- Select Income Source --</option>
                         @foreach ($incomeSources as $incomeSource)
                             <option value="{{ $incomeSource->id }}" {{ $trackingHistory->income_source == $incomeSource->id ? 'selected' : '' }}>{{ $incomeSource->name }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('income-source.create') }}" class="btn btn-light transaction-btn" data-title="Create income source" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('income-source.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('income-source.btn.create-income-source') }}" title="{{ __('income-source.btn.create-income-source') }}" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
@@ -90,18 +90,18 @@
 
         <div class="col sm-6">
             <div class="row mb-3">
-                <label class="form-label">Date:</label>
+                <label class="form-label" for="transaction_date">{{ __('transaction.label.transaction_date') }}</label>
                 <div class="form-group">
-                    <input type="date" name="transaction_date" class="form-control" value="{{ $trackingHistory->transaction_date }}" max="{{ date('Y-m-d') }}" required>
+                    <input type="date" name="transaction_date" id="transaction_date" class="form-control" value="{{ $trackingHistory->transaction_date }}" max="{{ date('Y-m-d') }}" required>
                 </div>
             </div>
         </div>
 
         <div class="col sm-6">
             <div class="row mb-3">
-                <label class="form-label">Time:</label>
+                <label class="form-label" for="transaction_time">{{ __('transaction.label.transaction_time') }}</label>
                 <div class="form-group">
-                    <input type="time" name="transaction_time" class="form-control" value="{{ $trackingHistory->transaction_time }}" required>
+                    <input type="time" name="transaction_time" id="transaction_time" class="form-control" value="{{ $trackingHistory->transaction_time }}" required>
                 </div>
             </div>
         </div>
@@ -109,9 +109,9 @@
     </div>
 
     <div class="row mb-3">
-        <label class="form-label">Note:</label>
+        <label class="form-label" for="note">{{ __('transaction.label.note') }}</label>
         <div class="form-group">
-            <textarea rows="3" cols="3" class="form-control" name="note">{{ $trackingHistory->note }}</textarea>
+            <textarea rows="3" cols="3" class="form-control" name="note" id="note">{{ $trackingHistory->note }}</textarea>
         </div>
     </div>
 

@@ -198,24 +198,24 @@
                     <!-- Transaction Action Buttons -->
                     <h4 class="page-title text-center m-0">
                         <div class="btn-group" role="group">
-                            <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="Add Income" title="Add Income">
+                            <a href="{{ route('add-income') }}" class="transaction-btn btn btn-light text-success" data-title="{{ __('transaction.btn.add-income') }}" title="{{ __('transaction.btn.add-income') }}">
                                 <i class="fas fa-plus-circle"></i>
-                                <div class="d-none d-md-block ms-2">Add Income</div>
+                                <div class="d-none d-md-block ms-2">{{ __('transaction.btn.add-income') }}</div>
                             </a>
 
-                            <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="Add Expense" title="Add Expense">
+                            <a href="{{ route('add-expense') }}" class="transaction-btn btn btn-light text-danger" data-title="{{ __('transaction.btn.add-expense') }}" title="{{ __('transaction.btn.add-expense') }}">
                                 <i class="fas fa-minus-circle"></i>
-                                <div class="d-none d-md-block ms-2">Add Expense</div>
+                                <div class="d-none d-md-block ms-2">{{ __('transaction.btn.add-expense') }}</div>
                             </a>
 
-                            <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="Do Transfer" title="Do Transfer">
+                            <a href="{{ route('do-transfer') }}" class="transaction-btn btn btn-light text-primary" data-title="{{ __('transaction.btn.do-transfer') }}" title="{{ __('transaction.btn.do-transfer') }}">
                                 <i class="fas fa-exchange-alt"></i>
-                                <div class="d-none d-md-block ms-2">Transfer</div>
+                                <div class="d-none d-md-block ms-2">{{ __('transaction.btn.do-transfer') }}</div>
                             </a>
 
-                            <a href="#" class="btn btn-light text-warning" onclick="location.reload()" title="Reload Page">
+                            <a href="#" class="btn btn-light text-warning" onclick="location.reload()" title="{{ __('transaction.btn.reload-page') }}">
                                 <i class="fas fa-sync-alt"></i>
-                                <div class="d-none d-md-block ms-2">Reload Page</div>
+                                <div class="d-none d-md-block ms-2">{{ __('transaction.btn.reload-page') }}</div>
                             </a>
                         </div>
                     </h4>

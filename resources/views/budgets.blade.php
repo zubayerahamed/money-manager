@@ -1,4 +1,4 @@
-<x-layout pageTitle="Budget">
+<x-layout pageTitle="{{ __('budget.page.title') }}">
     <!-- Content -->
     <div class="content">
         <div class="row">
@@ -9,7 +9,7 @@
 
                     <div class="card-header">
                         <div class="text-center col-md-12">
-                            <h3 class="mb-0">Budget Details</h3>
+                            <h3 class="mb-0">{{ __('budget.header.budget') }}</h3>
                             <h4 class="mb-0">
                                 <a href="{{ route('budget.index', [$month, $year - 1]) }}"><i class="fas fa-arrow-alt-circle-left"></i></a> {{ $year }}
                                 <a href="{{ route('budget.index', [$month, $year + 1]) }}"><i class="fas fa-arrow-alt-circle-right"></i></a>

@@ -10,26 +10,26 @@
         @endif
 
         <div class="row mb-3">
-            <label class="form-label">Expense Type:</label>
+            <label class="form-label" for="expense_type">{{ __('budget.label.expense_type') }}</label>
             <div class="form-group">
                 <input type="hidden" name="expense_type" value="{{ $expenseType->id }}" />
                 <input type="hidden" name="month" value="{{ $month }}" />
                 <input type="hidden" name="year" value="{{ $year }}" />
-                <input type="text" class="form-control" value="{{ $expenseType->name }}" readonly>
+                <input type="text" class="form-control" id="expense_type" value="{{ $expenseType->name }}" readonly>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="form-label">Amount:</label>
+            <label class="form-label" for="amount">{{ __('budget.label.amount') }}</label>
             <div class="form-group">
-                <input type="number" name="amount" class="form-control" value="0.0" min="0" step="any" required>
+                <input type="number" name="amount" id="amount" class="form-control" value="0.0" min="0" step="any" required>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="form-label">Note:</label>
+            <label class="form-label" for="note">{{ __('budget.label.note') }}</label>
             <div class="form-group">
-                <textarea rows="3" cols="3" class="form-control" name="note"></textarea>
+                <textarea rows="3" cols="3" class="form-control" name="note" id="note"></textarea>
             </div>
         </div>
     @else
@@ -38,24 +38,24 @@
         @endif
 
         <div class="row mb-3">
-            <label class="form-label">Expense Type:</label>
+            <label class="form-label" for="expense_type">{{ __('budget.label.expense_type') }}</label>
             <div class="form-group">
                 <input type="hidden" name="expense_type" value="{{ $budget->expense_type }}" />
-                <input type="text" class="form-control" value="{{ $budget->expenseType->name }}" readonly>
+                <input type="text" class="form-control" id="expense_type" value="{{ $budget->expenseType->name }}" readonly>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="form-label">Amount:</label>
+            <label class="form-label" for="amount">{{ __('budget.label.amount') }}</label>
             <div class="form-group">
-                <input type="number" name="amount" class="form-control" value="{{ old('amount', $budget->amount) }}" min="0" step="any" required>
+                <input type="number" name="amount" id="amount" class="form-control" value="{{ old('amount', $budget->amount) }}" min="0" step="any" required>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="form-label">Note:</label>
+            <label class="form-label" for="note">{{ __('budget.label.note') }}</label>
             <div class="form-group">
-                <textarea rows="3" cols="3" class="form-control" name="note">{{ old('note', $budget->note) }}</textarea>
+                <textarea rows="3" cols="3" class="form-control" name="note" id="note">{{ old('note', $budget->note) }}</textarea>
             </div>
         </div>
     @endif

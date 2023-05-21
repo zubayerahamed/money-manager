@@ -14,7 +14,6 @@
             },
             error: function(jqXHR, status, errorThrown) {
                 showMessage(status, "Something went wrong .... ");
-                loadingMask2.hide();
             }
         });
 

@@ -19,11 +19,11 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $trn->id }}">
                             @if ($trn->transaction_type == 'INCOME')
-                                <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> income from <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
+                                <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
                             @elseif ($trn->transaction_type == 'EXPENSE')
-                                <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> expense for <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
+                                <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.expense.for') }} <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
                             @else
-                                <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> transfer from <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
+                                <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.transfer.from') }} <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
                             @endif
                         </button>
                     </h2>
@@ -39,9 +39,10 @@
 
                             <div class="col-md-12 text-center">
                                 <span class="badge border border-teal text-teal rounded-pill m-auto">
-                                    <a href="{{ route('tracking.edit', $trn->id) }}" class="m-2 text-primary transaction-btn" title="Edit" data-title="Edit Transaction">
+                                    <a href="{{ route('tracking.edit', $trn->id) }}" class="m-2 text-primary transaction-btn" title="Edit" data-title="{{ __('transaction.btn.edit-transaction') }}" title="{{ __('transaction.btn.edit-transaction') }}">
                                         <i class="far fa-edit"></i>
                                     </a>
+
                                     <form id="form-id{{ $trn->id }}"
                                           action="{{ route('tracking.destroy', $trn->id) }}"
                                           method="POST" style="display: inline-block;">
@@ -50,7 +51,7 @@
                                         <a href="#" class="delete-btn text-danger m-2"
                                            onclick="deleteData(this)"
                                            data-form-id="{{ 'form-id' . $trn->id }}"
-                                           title="Delete">
+                                           title="{{ __('transaction.btn.delete-transaction') }}">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
                                     </form>

@@ -1,0 +1,38 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Transaction Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used during transaction operations for various
+    | messages that we need to display to the user. You are free to modify
+    | these language lines according to your application's requirements.
+    |
+    */
+
+    'btn.add-income' => 'Add income',
+    'btn.add-expense' => 'Add expense',
+    'btn.do-transfer' => 'Do transfer',
+    'btn.reload-page' => 'Reload page',
+    'btn.edit-transaction' => 'Edit transaction',
+    'btn.delete-transaction' => 'Delete transaction',
+    
+    'label.amount' => 'Amount',
+    'label.charge' => 'Charge',
+    'label.from_wallet' => 'From Wallet',
+    'label.expense_type' => 'Expense Type',
+    'label.to_wallet' => 'To Wallet',
+    'label.income_source' => 'Income Source',
+    'label.transaction_date' => 'Date',
+    'label.transaction_time' => 'Time',
+    'label.note' => 'Note',
+
+    'details.page.title' => 'Transaction Details',
+    'details.income.from' => 'income from',
+    'details.expense.for' => 'expense for',
+    'details.transfer.from' => 'transfer from',
+
+];

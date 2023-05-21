@@ -1,9 +1,9 @@
 <div class="card-body">
 
     <div class="row text-md-start text-center">
-        <p>Total Budget : <span class="text-success">{{ $totalBudget }} {{ auth()->user()->currency }}</span></p>
-        <p>Total Spent : <span class="text-danger">{{ $totalSpent }} {{ auth()->user()->currency }}</span></p>
-        <p>Remaining : <span class="text-success">{{ $totalBudget - $totalSpent > 0 ? $totalBudget - $totalSpent : 0 }} {{ auth()->user()->currency }}</span></p>
+        <p>{{ __('budget.text.total-budget') }} : <span class="text-success">{{ $totalBudget }} {{ auth()->user()->currency }}</span></p>
+        <p>{{ __('budget.text.total-spent') }} : <span class="text-danger">{{ $totalSpent }} {{ auth()->user()->currency }}</span></p>
+        <p>{{ __('budget.text.total-remaining') }} : <span class="text-success">{{ $totalBudget - $totalSpent > 0 ? $totalBudget - $totalSpent : 0 }} {{ auth()->user()->currency }}</span></p>
     </div>
 
     @if ($totalBudget != 0 or $totalSpent != 0)
@@ -38,9 +38,9 @@
                             <div style="text-transform: uppercase; font-weight: bold;">{{ $expenseType->name }}</div>
                             <div class="text-muted fs-sm">
                                 @if ($expenseType->budget)
-                                    Spent : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</span>
+                                    {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</span>
                                 @else
-                                    Spent : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</span>
+                                    {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</span>
                                 @endif
                             </div>
                         </div>
@@ -55,12 +55,12 @@
 
                         @if ($expenseType->budget)
                             <div class="col-md-12 text-center mb-2">
-                                <div>Limit : <span class="text-success">{{ $expenseType->budget }} {{ auth()->user()->currency }}</span></div>
+                                <div>{{ __('budget.text.limit') }} : <span class="text-success">{{ $expenseType->budget }} {{ auth()->user()->currency }}</span></div>
 
-                                <div>Spent : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</div>
+                                <div>{{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</div>
 
                                 <div>
-                                    Remaining :
+                                    {{ __('budget.text.remaining') }} :
                                     @if ($expenseType->remaining > 0)
                                         <b class="text-success">{{ $expenseType->remaining }} {{ auth()->user()->currency }}</b>
                                         <div class="progress" style="margin-top: 10px;">
@@ -80,11 +80,11 @@
 
                         <span class="badge border border-teal text-teal rounded-pill m-auto">
                             @if ($expenseType->budget)
-                                <a href="{{ route('budget.edit', $expenseType->budget_id) }}" class="m-2 text-primary transaction-btn" data-title="Update Limit">
+                                <a href="{{ route('budget.edit', $expenseType->budget_id) }}" class="m-2 text-primary transaction-btn" data-title="{{ __('budget.btn.edit-budget') }}" title="{{ __('budget.btn.edit-budget') }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             @else
-                                <a href="{{ route('budget.create', [$expenseType->id, $month, $year]) }}" class="m-2 text-success transaction-btn" data-title="Add budget">
+                                <a href="{{ route('budget.create', [$expenseType->id, $month, $year]) }}" class="m-2 text-success transaction-btn" data-title="{{ __('budget.btn.create-budget') }}" title="{{ __('budget.btn.create-budget') }}">
                                     <i class="fas fa-calculator"></i>
                                 </a>
                             @endif

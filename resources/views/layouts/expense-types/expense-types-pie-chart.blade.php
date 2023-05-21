@@ -64,7 +64,7 @@
 
                     // Add title
                     title: {
-                        text: 'Expense Status',
+                        text: "{{ __('expense-type.piechart.title') }}",
                         subtext: '',
                         left: 'center',
                         textStyle: {

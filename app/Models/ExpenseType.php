@@ -12,7 +12,13 @@ class ExpenseType extends Model
     use HasFactory, FilterByuser;
 
     protected $table = "expense_type";
-    protected $fillable = ['name', 'icon', 'note', 'user_id'];
+
+    protected $fillable = [
+        'name',
+        'icon',
+        'note',
+        'user_id'
+    ];
 
     public function getTotalExpenseAttribute()
     {

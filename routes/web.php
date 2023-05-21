@@ -96,8 +96,8 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/', [ExpenseTypeController::class, 'create'])->name('create');
         Route::get('/{id}/edit', [ExpenseTypeController::class, 'edit'])->name('edit');
         Route::post('/', [ExpenseTypeController::class, 'store'])->name('store');
-        Route::put('/{expenseType}', [ExpenseTypeController::class, 'update'])->name('update');
-        Route::delete('/{expenseType}', [ExpenseTypeController::class, 'destroy'])->name('destroy');
+        Route::put('/{id}', [ExpenseTypeController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ExpenseTypeController::class, 'destroy'])->name('destroy');
         Route::get('/data/status', [ExpenseTypeController::class, 'expenseTypeStatusPieChart'])->name('data.status');
         Route::get('/section/piechart', [ExpenseTypeController::class, 'piechart'])->name('section.piechart');
         Route::get('/section/header', [ExpenseTypeController::class, 'header'])->name('section.header');

@@ -12,7 +12,7 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $expenseType->name }}</div>
                         <div class="text-muted fs-sm">
-                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $expenseType->totalExpense }} {{ auth()->user()->currency }}</span>
+                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $expenseType->totalExpense == null ? 0 : $expenseType->totalExpense }} {{ auth()->user()->currency }}</span>
                         </div>
                     </div>
 
@@ -31,9 +31,10 @@
                     @endif
 
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
-                        <a href="{{ route('expense-type.edit', $expenseType->id) }}" class="m-2 text-primary transaction-btn" data-title="Edit income source">
+                        <a href="{{ route('expense-type.edit', $expenseType->id) }}" class="m-2 text-primary transaction-btn" title="{{ __('expense-type.btn.edit-expense-type') }}" data-title="{{ __('expense-type.btn.edit-expense-type') }}">
                             <i class="fas fa-edit"></i>
                         </a>
+
                         <form id="form-id{{ $expenseType->id }}"
                               action="{{ route('expense-type.destroy', $expenseType->id) }}"
                               method="POST" style="display: inline-block;">
@@ -42,7 +43,7 @@
                             <a href="#" class="delete-btn text-danger m-2"
                                onclick="deleteData(this)"
                                data-form-id="{{ 'form-id' . $expenseType->id }}"
-                               title="Delete">
+                               title="{{ __('expense-type.btn.delete-expense-type') }}">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </form>
