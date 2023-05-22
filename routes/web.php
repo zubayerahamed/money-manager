@@ -112,8 +112,9 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/{month}/{year}/list', [BudgetController::class, 'index'])->name('index');
         Route::get('/{expenseType}/{month}/{year}', [BudgetController::class, 'create'])->name('create');
         Route::post('/', [BudgetController::class, 'store'])->name('store');
-        Route::get('/{budget}', [BudgetController::class, 'edit'])->name('edit');
-        Route::put('/{budget}', [BudgetController::class, 'update'])->name('update');
+        Route::get('/{id}', [BudgetController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [BudgetController::class, 'update'])->name('update');
+        Route::delete('/{id}', [BudgetController::class, 'destroy'])->name('destroy');
     });
 
     // Transactions
@@ -147,10 +148,10 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/all', [DreamController::class, 'index'])->name('index');
         Route::get('/', [DreamController::class, 'create'])->name('create');
         Route::post('/', [DreamController::class, 'store'])->name('store');
-        Route::get('/{dream}/edit', [DreamController::class, 'edit'])->name('edit');
-        Route::put('/{dream}', [DreamController::class, 'update'])->name('update');
-        Route::delete('/{dream}/delete', [DreamController::class, 'destroy'])->name('destroy');
-        Route::post('/image/{dream}', [DreamController::class, 'updateImage'])->name('image');
+        Route::get('/{id}/edit', [DreamController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [DreamController::class, 'update'])->name('update');
+        Route::delete('/{id}/delete', [DreamController::class, 'destroy'])->name('destroy');
+        Route::post('/image/{id}', [DreamController::class, 'updateImage'])->name('image');
         Route::get('/section/accordion', [DreamController::class, 'accordion'])->name('section.accordion');
     });
 

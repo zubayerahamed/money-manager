@@ -13,12 +13,11 @@ return [
     |
     */
 
-    'save.success' => ':name wallet created successfully.',
-    'update.success' => ':name wallet updated successfully.',
-    'delete.success' => ':name wallet deleted successfully.',
-    'name.unique' => 'Wallet name must be unique',
-    'not.found' => 'Wallet not found in storage',
-    'has.transaction' => ':name wallet already has transactions',
+    'save.success' => ':name dream created successfully.',
+    'update.success' => ':name dream updated successfully.',
+    'update.image.success' => ':name dream image updated successfully.',
+    'delete.success' => ':name dream deleted successfully.',
+    'not.found' => 'Dream not found in storage',
     
     'text.value' => 'Value',
     'text.achieved' => 'Achieved',
@@ -27,7 +26,7 @@ return [
     'label.name' => 'Title',
     'label.amount_needed' => 'Amount needed',
     'label.target_year' => 'Target year',
-    'label.wallet_id' => 'Account wallet',
+    'label.dream_id' => 'Account dream',
     'label.note' => 'Note',
 
     'btn.create-dream' => 'Create dream',

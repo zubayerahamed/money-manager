@@ -13,12 +13,11 @@ return [
     |
     */
 
-    'save.success' => ':name wallet created successfully.',
-    'update.success' => ':name wallet updated successfully.',
-    'delete.success' => ':name wallet deleted successfully.',
-    'name.unique' => 'Wallet name must be unique',
-    'not.found' => 'Wallet not found in storage',
-    'has.transaction' => ':name wallet already has transactions',
+    'save.success' => 'Budget created successfully.',
+    'update.success' => 'Budget updated successfully.',
+    'delete.success' => 'Budget deleted successfully.',
+    'name.unique' => 'Budget name must be unique',
+    'not.found' => 'Budget not found in storage',
     
     'text.total-budget' => 'Total budget',
     'text.total-spent' => 'Total spent',
@@ -33,6 +32,7 @@ return [
 
     'btn.create-budget' => 'Add budget',
     'btn.edit-budget' => 'Update limit',
+    'btn.delete-budget' => 'Delete budget',
 
     'header.budget' => 'Budget Details',
     'page.title' => 'Budgets',

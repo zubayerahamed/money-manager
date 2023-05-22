@@ -38,9 +38,9 @@
                             <div style="text-transform: uppercase; font-weight: bold;">{{ $expenseType->name }}</div>
                             <div class="text-muted fs-sm">
                                 @if ($expenseType->budget)
-                                    {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</span>
+                                    {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent == null ? 0 : $expenseType->spent }} {{ auth()->user()->currency }}</span>
                                 @else
-                                    {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</span>
+                                    {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent == null ? 0 : $expenseType->spent }} {{ auth()->user()->currency }}</span>
                                 @endif
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                             <div class="col-md-12 text-center mb-2">
                                 <div>{{ __('budget.text.limit') }} : <span class="text-success">{{ $expenseType->budget }} {{ auth()->user()->currency }}</span></div>
 
-                                <div>{{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent }} {{ auth()->user()->currency }}</div>
+                                <div>{{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent == null ? 0 : $expenseType->spent }} {{ auth()->user()->currency }}</div>
 
                                 <div>
                                     {{ __('budget.text.remaining') }} :
@@ -83,6 +83,19 @@
                                 <a href="{{ route('budget.edit', $expenseType->budget_id) }}" class="m-2 text-primary transaction-btn" data-title="{{ __('budget.btn.edit-budget') }}" title="{{ __('budget.btn.edit-budget') }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
+
+                                <form id="form-id{{ $expenseType->budget_id }}"
+                                    action="{{ route('budget.destroy', $expenseType->budget_id) }}"
+                                    method="POST" style="display: inline-block;">
+                                  @method('DELETE')
+                                  @csrf
+                                  <a href="#" class="delete-btn text-danger m-2"
+                                     onclick="deleteData(this)"
+                                     data-form-id="{{ 'form-id' . $expenseType->budget_id }}"
+                                     title="{{ __('budget.btn.delete-budget') }}">
+                                      <i class="fas fa-trash"></i>
+                                  </a>
+                              </form>
                             @else
                                 <a href="{{ route('budget.create', [$expenseType->id, $month, $year]) }}" class="m-2 text-success transaction-btn" data-title="{{ __('budget.btn.create-budget') }}" title="{{ __('budget.btn.create-budget') }}">
                                     <i class="fas fa-calculator"></i>

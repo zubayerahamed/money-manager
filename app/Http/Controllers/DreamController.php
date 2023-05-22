@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
 use App\Models\Dream;
 use App\Models\Wallet;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DreamController extends Controller
 {
 
     use HttpResponses;
 
+    /**
+     * Dislay the dream list page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $dreams = Dream::with('wallet')->orderBy('name', 'asc')->get();
@@ -22,6 +27,11 @@ class DreamController extends Controller
         ]);
     }
 
+    /**
+     * Open dream create form in modal
+     *
+     * @return Renderable
+     */
     public function create()
     {
         return view('layouts.dreams.dream-form', [
@@ -30,70 +40,137 @@ class DreamController extends Controller
         ]);
     }
 
+    /**
+     * Store new dream in storage
+     *
+     * @param Request $requset
+     * @return Renderable
+     */
     public function store(Request $request)
     {
-        $incomingFields = $request->validate([
-            'name' => 'required',
+        $request->validate([
+            'name' => ['required', Rule::unique('dreams', 'name')],
             'target_year' => ['required'],
-            'amount_needed' => ['required', 'min:0']
+            'amount_needed' => ['required', 'numeric', 'min:0']
         ]);
 
-        $incomingFields['user_id'] = auth()->user()->id;
-        $incomingFields['wallet_id'] = $request['wallet_id'];
-        $incomingFields['note'] = $request['note'];
-
-        $dream = Dream::create($incomingFields);
+        $dream = Dream::create($request->only([
+            'name',
+            'target_year',
+            'amount_needed',
+            'user_id',
+            'note',
+            'wallet_id'
+        ]));
 
         if ($dream) {
-            return $this->successWithReloadSections(null, $dream->name . ' dream created successfully', 200, [
+            return $this->successWithReloadSections(null, __('dream.save.success', ['name' => $dream->name]), 200, [
                 ['dreams-accordion', route('dream.section.accordion')]
             ]);
         }
 
-        return $this->error(null, "Something went wrong, please try again later", 200);
+        return $this->error(null, __('common.process.error'));
     }
 
-    public function accordion()
+    /**
+     * Open dream edit form in modal
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function edit($id)
     {
-        $dreams = Dream::with('wallet')->orderBy('name', 'asc')->get();
+        $dreams = Dream::where('id', '=', $id)->get();
+        if ($dreams->isEmpty()) return $this->error(null, __('dream.not.found'), 400);
 
-        return view('layouts.dreams.dreams-accordion', [
-            'dreams' => $dreams
-        ]);
-    }
-
-    public function edit(Dream $dream)
-    {
         return view('layouts.dreams.dream-form', [
-            'dream' => $dream,
+            'dream' => $dreams->get(0),
             'wallets' => Wallet::orderBy('name', 'asc')->get()
         ]);
     }
 
-    public function update(Dream $dream, Request $request)
+    /**
+     * Update existing dream in storage
+     *
+     * @param int $id
+     * @param Request $requset
+     * @return Renderable
+     */
+    public function update($id, Request $request)
     {
-        $incomingFields = $request->validate([
-            'name' => ['required'],
+        $dreams = Dream::where('id', '=', $id)->get();
+        if ($dreams->isEmpty()) return $this->error(null, __('dream.not.found'), 400);
+
+        $dream = $dreams->get(0);
+
+        $request->validate([
+            'name' => ['required', Rule::unique('dreams', 'name')->ignore($id)],
             'target_year' => ['required'],
-            'amount_needed' =>  ['required', 'min:0']
+            'amount_needed' =>  ['required', 'numeric', 'min:0']
         ]);
 
-        $incomingFields['wallet_id'] = $request['wallet_id'];
-        $incomingFields['note'] = $request['note'];
-
-        $updated = $dream->update($incomingFields);
+        $updated = $dream->update($request->only([
+            'name',
+            'target_year',
+            'amount_needed',
+            'user_id',
+            'note',
+            'wallet_id'
+        ]));
 
         if ($updated) {
-            return $this->successWithReloadSections(null, $dream->name . ' dream updated successfully', 200, [
+            return $this->successWithReloadSections(null, __('dream.update.success', ['name' => $dream->name]), 200, [
                 ['dreams-accordion', route('dream.section.accordion')]
             ]);
         }
 
-        return $this->error(null, "Something went wrong, please try again later", 200);
+        return $this->error(null, __('common.process.error'));
     }
 
-    public function updateImage(Dream $dream, Request $request)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function destroy($id)
     {
+        $dreams = Dream::where('id', '=', $id)->get();
+        if ($dreams->isEmpty()) return $this->error(null, __('dream.not.found'), 400);
+
+        $dream = $dreams->get(0);
+
+        // Delete previous avatar
+        $previousAvatar = $dream->image;
+        $prevImagePath = public_path() . $previousAvatar;
+        if ($previousAvatar != '/assets/images/no-image.png') {
+            unlink($prevImagePath);
+        }
+
+        $deleted = $dream->delete();
+
+        if ($deleted) {
+            return $this->successWithReloadSections(null, __('dream.delete.success', ['name' => $dream->name]), 200, [
+                ['dreams-accordion', route('dream.section.accordion')]
+            ]);
+        }
+
+        return $this->error(null, __('common.process.error'));
+    }
+
+    /**
+     * Update dream image
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function updateImage($id, Request $request)
+    {
+        $dreams = Dream::where('id', '=', $id)->get();
+        if ($dreams->isEmpty()) return $this->error(null, __('dream.not.found'), 400);
+
+        $dream = $dreams->get(0);
+
         $folderPath = public_path('upload/dream/');
 
         $image_parts = explode(";base64,", $request->image);
@@ -104,7 +181,6 @@ class DreamController extends Controller
         $imageName = uniqid() . '.png';
 
         $imageFullPath = $folderPath . $imageName;
-
 
         if (!is_dir($folderPath)) {
             mkdir($folderPath);
@@ -122,29 +198,22 @@ class DreamController extends Controller
             unlink($prevImagePath);
         }
 
-        return $this->successWithReloadSections(null, $dream->name . ' dream deleted successfully', 200, [
+        return $this->successWithReloadSections(null, __('dream.update.image.success', ['name' => $dream->name]), 200, [
             ['dreams-accordion', route('dream.section.accordion')]
         ]);
     }
 
-    public function destroy(Dream $dream)
+    /**
+     * Dream page accordion section
+     *
+     * @return Renderable
+     */
+    public function accordion()
     {
-        $dreamName = $dream->name;
+        $dreams = Dream::with('wallet')->orderBy('name', 'asc')->get();
 
-        // Delete previous avatar
-        $previousAvatar = $dream->image;
-        $prevImagePath = public_path() . $previousAvatar;
-        if ($previousAvatar != '/assets/images/no-image.png') {
-            unlink($prevImagePath);
-        }
-        $deleted = $dream->delete();
-
-        if ($deleted){
-            return $this->successWithReloadSections(null, $dream->name . ' dream deleted successfully', 200, [
-                ['dreams-accordion', route('dream.section.accordion')]
-            ]);
-        }
-
-        return $this->error(null, "Something went wrong, please try again later", 200);
+        return view('layouts.dreams.dreams-accordion', [
+            'dreams' => $dreams
+        ]);
     }
 }

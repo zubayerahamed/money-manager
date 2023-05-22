@@ -86,7 +86,8 @@ class WalletController extends Controller
     {
         $requset->validate([
             'name' => ['required', new IsCompositeUnique('wallet', ['name' => $requset->get('name'), 'user_id' => auth()->user()->id], __('wallet.name.unique'))],
-            'icon' => 'required'
+            'icon' => 'required',
+            'current_balance' => ['required', 'numeric', 'min:0']
         ]);
 
         $wallet = Wallet::create($requset->only([

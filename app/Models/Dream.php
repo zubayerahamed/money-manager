@@ -15,7 +15,8 @@ class Dream extends Model
         'image',
         'target_year',
         'amount_needed',
-        'user_id', 'note',
+        'user_id', 
+        'note',
         'wallet_id'
     ];
 

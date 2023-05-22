@@ -12,9 +12,14 @@ class BudgetController extends Controller
 {
     use HttpResponses;
 
+    /**
+     * Dislay the budget status page
+     *
+     * @return Renderable
+     */
     public function index($month, $year)
     {
-        $expenseTypes = ExpenseType::where('user_id', '=', auth()->user()->id)->get()->sortDesc();
+        $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
 
         $totalBudget = 0;
         $totalSpent = 0;
@@ -55,32 +60,51 @@ class BudgetController extends Controller
         ]);
     }
 
+    /**
+     * Get Monthly expense amount
+     *
+     * @param ExpenseType $expenseType
+     * @param int $year
+     * @param int $month
+     * @return int
+     */
     private function getMonthlyExpenseAmount($expenseType, $year, $month)
     {
         $amount = DB::table('tracking_history')
             ->selectRaw("SUM(amount) as amount")
             ->where('expense_type', '=', $expenseType->id)
-            ->where('user_id', '=', auth()->user()->id)
+            ->where('user_id', '=', auth()->id())
             ->where('transaction_type', '=', 'EXPENSE')
             ->where('year', '=', $year)
             ->where('month', '=', $month)
             ->get();
-        return $amount[0]->amount == null ? 0 : $amount[0]->amount;
+
+        return $amount->isEmpty() ? 0 : $amount->get(0)->amount;
     }
 
+    /**
+     * Get Budget Object
+     *
+     * @param ExpenseType $expenseType
+     * @param int $year
+     * @param int $month
+     * @return Budget|null
+     */
     private function getBudget($expenseType, $year, $month)
     {
-        $budget = DB::table('budgets')
-            ->selectRaw("*")
-            ->where('expense_type', '=', $expenseType->id)
-            ->where('user_id', '=', auth()->user()->id)
+        $budgets = Budget::where('expense_type', '=', $expenseType->id)
             ->where('year', '=', $year)
             ->where('month', '=', $month)
-            ->first();
+            ->get();
 
-        return $budget;
+        return $budgets->isEmpty() ? null : $budgets->get(0);
     }
 
+    /**
+     * Open budget create form in modal
+     *
+     * @return Renderable
+     */
     public function create(ExpenseType $expenseType, $month, $year)
     {
         return view('layouts.budgets.budget-form', [
@@ -92,29 +116,52 @@ class BudgetController extends Controller
         ]);
     }
 
+    /**
+     * Store new budget in storage
+     *
+     * @param Request $requset
+     * @return Renderable
+     */
     public function store(Request $request)
     {
-        $incomingFields = $request->validate([
+        $request->validate([
             'expense_type' => 'required',
-            'amount' => ['required', 'min:0'],
+            'amount' => ['required', 'numeric', 'gt:0'],
             'month' => ['required'],
             'year' => ['required']
         ]);
 
-        $incomingFields['user_id'] = auth()->user()->id;
+        $budget = Budget::create($request->only([
+            'amount',
+            'expense_type',
+            'note',
+            'user_id',
+            'month',
+            'year'
+        ]));
 
-        $budget = Budget::create($incomingFields);
         if (!$budget) {
-            return $this->error(null, "Something went wrong, please try again later.", 200);
+            return $this->error(null, __('common.process.error'));
         }
 
-        return $this->successWithReloadSections(null, 'Budget created successfully', 200, [
+        return $this->successWithReloadSections(null, __('budget.save.success'), 200, [
             ['budgets-accordion', route('budget.index', [$request->get('month'), $request->get('year')])]
         ]);
     }
 
-    public function edit(Budget $budget)
+    /**
+     * Open budget edit form in modal
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function edit($id)
     {
+        $budget = Budget::where('id', '=', $id)->get();
+        if ($budget->isEmpty()) return $this->error(null, __('budget.not.found'), 400);
+
+        $budget = $budget->get(0);
+
         return view('layouts.budgets.budget-form', [
             'budget' => $budget,
             'month' => $budget->month,
@@ -123,26 +170,59 @@ class BudgetController extends Controller
         ]);
     }
 
-    public function update(Budget $budget, Request $request)
+    /**
+     * Update existing budget in storage
+     *
+     * @param int $id
+     * @param Request $requset
+     * @return Renderable
+     */
+    public function update($id, Request $request)
     {
-        $incomingFields = $request->validate([
+        $budget = Budget::where('id', '=', $id)->get();
+        if ($budget->isEmpty()) return $this->error(null, __('budget.not.found'), 400);
+
+        $budget = $budget->get(0);
+
+        $request->validate([
             'expense_type' => 'required',
-            'amount' => ['required', 'min:0']
+            'amount' => ['required', 'numeric', 'gt:0']
         ]);
 
-        if ($incomingFields['amount'] <= 0) {
-            return back()->with('error', "Budget can't be zero");
-        }
-
-        $budget->amount = $incomingFields['amount'];
-        $updateStatus = $budget->update();
+        $updateStatus = $budget->update($request->only([
+            'amount'
+        ]));
 
         if ($updateStatus) {
-            return $this->successWithReloadSections(null, 'Budget updated successfully', 200, [
+            return $this->successWithReloadSections(null, __('budget.update.success'), 200, [
                 ['budgets-accordion', route('budget.index', [$budget->month, $budget->year])]
             ]);
         }
 
-        return $this->error(null, 'Budget update failed', 200);
+        return $this->error(null, __('common.process.error'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function destroy($id)
+    {
+        $budget = Budget::where('id', '=', $id)->get();
+        if ($budget->isEmpty()) return $this->error(null, __('budget.not.found'), 400);
+
+        $budget = $budget->get(0);
+
+        $deleted = $budget->delete();
+
+        if ($deleted) {
+            return $this->successWithReloadSections(null, __('budget.delete.success'), 200, [
+                ['budgets-accordion', route('budget.index', [$budget->month, $budget->year])]
+            ]);
+        }
+
+        return $this->error(null, __('common.process.error'));
     }
 }
