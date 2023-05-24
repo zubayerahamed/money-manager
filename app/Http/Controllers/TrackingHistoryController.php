@@ -8,70 +8,70 @@ use App\Models\IncomeSource;
 use App\Models\TrackingHistory;
 use App\Models\Wallet;
 use App\Traits\HttpResponses;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 class TrackingHistoryController extends Controller
 {
     use HttpResponses;
 
+    /**
+     * Open add income form in modal
+     *
+     * @return Renderable
+     */
     public function addIncome()
     {
-        $incomeSources = IncomeSource::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
-        $wallets = Wallet::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
+        $incomeSources = IncomeSource::orderBy('name', 'asc')->get();
+        $wallets = Wallet::orderBy('name', 'asc')->get();
 
-        if (request()->ajax()) {
-            return view('layouts.transactions.transaction-create-form', [
-                'incomeSources' => $incomeSources,
-                'wallets' => $wallets,
-                'transaction_type' => 'INCOME'
-            ]);
-        }
-
-        return view('add-income', [
+        return view('layouts.transactions.transaction-create-form', [
             'incomeSources' => $incomeSources,
-            'wallets' => $wallets
+            'wallets' => $wallets,
+            'transaction_type' => 'INCOME'
         ]);
     }
 
+    /**
+     * Open add expense form in modal
+     *
+     * @return Renderable
+     */
     public function addExpense()
     {
-        $wallets = Wallet::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
-        $expenseTypes = ExpenseType::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
+        $wallets = Wallet::orderBy('name', 'asc')->get();
+        $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
 
-        if (request()->ajax()) {
-            return view('layouts.transactions.transaction-create-form', [
-                'expenseTypes' => $expenseTypes,
-                'wallets' => $wallets,
-                'transaction_type' => 'EXPENSE'
-            ]);
-        }
-
-        return view('add-expense', [
+        return view('layouts.transactions.transaction-create-form', [
             'expenseTypes' => $expenseTypes,
-            'wallets' => $wallets
+            'wallets' => $wallets,
+            'transaction_type' => 'EXPENSE'
         ]);
     }
 
+    /**
+     * Open do transfer form in modal
+     *
+     * @return Renderable
+     */
     public function doTransfer()
     {
-        $wallets = Wallet::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
+        $wallets = Wallet::orderBy('name', 'asc')->get();
 
-        if (request()->ajax()) {
-            return view('layouts.transactions.transaction-create-form', [
-                'wallets' => $wallets,
-                'transaction_type' => 'TRANSFER'
-            ]);
-        }
-
-        return view('do-transfer', [
-            'wallets' => $wallets
+        return view('layouts.transactions.transaction-create-form', [
+            'wallets' => $wallets,
+            'transaction_type' => 'TRANSFER'
         ]);
     }
 
-
+    /**
+     * Do Transaction and add data to storage
+     *
+     * @param Request $requset
+     * @return Renderable
+     */
     public function doTransaction(Request $request)
     {
-
         $incomingFields = $request->validate([
             'transaction_type' => 'required',
         ]);
@@ -79,30 +79,25 @@ class TrackingHistoryController extends Controller
         $transactionType = $request->get('transaction_type');
 
         $message = "";
-        $errorMessage = "";
-        $redirectUrl = "";
+        $errorMessage = __('common.process.error');
 
         if ($transactionType == 'INCOME') {
-            $message = "Income Added Successfully";
-            $errorMessage = "Failed to add income";
-            $redirectUrl = "add-income";
+            $message = __('transaction.income.add.success');
 
             $incomingFields = $request->validate([
-                'amount' => ['required', 'min:0'],
-                'transaction_charge' => ['min:0'],
+                'amount' => ['required', 'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
                 'to_wallet' => 'required',
                 'income_source' => 'required',
                 'transaction_date' => 'required',
                 'transaction_time' => 'required'
             ]);
         } else if ($transactionType == 'EXPENSE') {
-            $message = "Expense Added Successfully";
-            $errorMessage = "Failed to add expense";
-            $redirectUrl = "add-expense";
+            $message = __('transaction.expense.add.success');
 
             $incomingFields = $request->validate([
-                'amount' => ['required', 'min:0'],
-                'transaction_charge' => ['min:0'],
+                'amount' => ['required',  'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
                 'from_wallet' => 'required',
                 'expense_type' => 'required',
                 'transaction_date' => 'required',
@@ -111,21 +106,14 @@ class TrackingHistoryController extends Controller
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
-
-                if (request()->ajax()) {
-                    return $this->error(null, $wallet->name . ' has insufficient balance for transaction', 200);
-                }
-
-                return back()->with('error', $wallet->name . ' has insufficient balance for transaction');
+                return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
         } else {
-            $message = "Transfer Successfully";
-            $errorMessage = "Failed to do transfer";
-            $redirectUrl = "do-transfer";
+            $message = __('transaction.transfer.add.success');
 
             $incomingFields = $request->validate([
-                'amount' => ['required', 'min:0'],
-                'transaction_charge' => ['min:0'],
+                'amount' => ['required',  'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
                 'from_wallet' => 'required',
                 'to_wallet' => 'required',
                 'transaction_date' => 'required',
@@ -134,19 +122,14 @@ class TrackingHistoryController extends Controller
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
-
-                if (request()->ajax()) {
-                    return $this->error(null, $wallet->name . ' has insufficient balance for transaction', 200);
-                }
-
-                return back()->with('error', $wallet->name . ' has insufficient balance for transaction');
+                return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
         }
 
 
         $incomingFields['transaction_type'] = $request->get('transaction_type');
         $incomingFields['note'] = $request->get('note');
-        $incomingFields['user_id'] = auth()->user()->id;
+        $incomingFields['user_id'] = auth()->id();
         $incomingFields['month'] = date('m', strtotime($incomingFields['transaction_date']));
         $incomingFields['year'] =  date('Y', strtotime($incomingFields['transaction_date']));
 
@@ -155,58 +138,47 @@ class TrackingHistoryController extends Controller
         if ($trackingHistory) {
 
             $arhead['tracking_history_id'] = $trackingHistory->id;
-            $arhead['user_id'] = auth()->user()->id;
+            $arhead['user_id'] = auth()->id();
             if ($transactionType == 'INCOME') {
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
 
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
             } else if ($transactionType == 'EXPENSE') {
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
 
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
             } else {
                 $arhead['amount'] = $trackingHistory['amount'];
 
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
 
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
             }
 
-            if (request()->ajax()) {
-                return $this->success(null, $message);
-            }
-
-            return redirect('/transaction/' . $redirectUrl)->with('success', $message);
+            return $this->success(null, $message);
         }
 
-        if (request()->ajax()) {
-            return $this->error(null, $errorMessage, 200);
-        }
-
-        return redirect('/transaction/' . $redirectUrl)->with('error', $errorMessage);
+        return $this->error(null, $errorMessage);
     }
 
-    function array_push_assoc($array, $key, $value)
-    {
-        $array[$key] = $value;
-        return $array;
-    }
-
-
+    /**
+     * Dislay the todays transaction details page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function showAllTodaysTransactions()
     {
-
         $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('transaction_date', '=', date('Y/m/d'))
             ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
@@ -224,17 +196,17 @@ class TrackingHistoryController extends Controller
                 $expense = 0;
                 if ($trn->transaction_type == 'INCOME') $income = $trn->amount;
                 if ($trn->transaction_type == 'EXPENSE') $expense = $trn->amount;
-                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date, ['data' => [$trn], 'income' => $income, 'expense' => $expense]);
+                $dateWiseGroup = array_push_assoc($dateWiseGroup, $trn->transaction_date, ['data' => [$trn], 'income' => $income, 'expense' => $expense]);
             } else {
                 $dateData = $dateWiseGroup[$trn->transaction_date];
                 $existDateData = $dateData['data'];
                 if ($trn->transaction_type == 'INCOME') $dateData['income'] = $dateData['income'] + $trn->amount;
                 if ($trn->transaction_type == 'EXPENSE') $dateData['expense'] = $dateData['expense'] + $trn->amount;
                 array_push($existDateData, $trn);
-                $dateData = $this->array_push_assoc($dateData, 'data', $existDateData);
-                $dateData = $this->array_push_assoc($dateData, 'income', $dateData['income']);
-                $dateData = $this->array_push_assoc($dateData, 'expense', $dateData['expense']);
-                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date, $dateData);
+                $dateData = array_push_assoc($dateData, 'data', $existDateData);
+                $dateData = array_push_assoc($dateData, 'income', $dateData['income']);
+                $dateData = array_push_assoc($dateData, 'expense', $dateData['expense']);
+                $dateWiseGroup = array_push_assoc($dateWiseGroup, $trn->transaction_date, $dateData);
             }
         }
 
@@ -243,10 +215,14 @@ class TrackingHistoryController extends Controller
         ]);
     }
 
+    /**
+     * Dislay the year wise transaction details page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function showYearWiseTransactions($year)
     {
-        $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
-            ->where('year', '=', $year)
+        $totalIncome = TrackingHistory::where('year', '=', $year)
             ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
             ->orderBy('transaction_date', 'desc')
             ->orderBy('id', 'desc')
@@ -263,17 +239,17 @@ class TrackingHistoryController extends Controller
                 $expense = 0;
                 if ($trn->transaction_type == 'INCOME') $income = $trn->amount;
                 if ($trn->transaction_type == 'EXPENSE') $expense = $trn->amount;
-                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date, ['data' => [$trn], 'income' => $income, 'expense' => $expense]);
+                $dateWiseGroup = array_push_assoc($dateWiseGroup, $trn->transaction_date, ['data' => [$trn], 'income' => $income, 'expense' => $expense]);
             } else {
                 $dateData = $dateWiseGroup[$trn->transaction_date];
                 $existDateData = $dateData['data'];
                 if ($trn->transaction_type == 'INCOME') $dateData['income'] = $dateData['income'] + $trn->amount;
                 if ($trn->transaction_type == 'EXPENSE') $dateData['expense'] = $dateData['expense'] + $trn->amount;
                 array_push($existDateData, $trn);
-                $dateData = $this->array_push_assoc($dateData, 'data', $existDateData);
-                $dateData = $this->array_push_assoc($dateData, 'income', $dateData['income']);
-                $dateData = $this->array_push_assoc($dateData, 'expense', $dateData['expense']);
-                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date, $dateData);
+                $dateData = array_push_assoc($dateData, 'data', $existDateData);
+                $dateData = array_push_assoc($dateData, 'income', $dateData['income']);
+                $dateData = array_push_assoc($dateData, 'expense', $dateData['expense']);
+                $dateWiseGroup = array_push_assoc($dateWiseGroup, $trn->transaction_date, $dateData);
             }
         }
 
@@ -282,11 +258,15 @@ class TrackingHistoryController extends Controller
         ]);
     }
 
+    /**
+     * Dislay the month wise transaction details page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function showMonthWiseTransactions($monthno, $year)
     {
 
-        $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
-            ->where('month', '=', $monthno)
+        $totalIncome = TrackingHistory::where('month', '=', $monthno)
             ->where('year', '=', $year)
             ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
             ->orderBy('transaction_date', 'desc')
@@ -304,17 +284,17 @@ class TrackingHistoryController extends Controller
                 $expense = 0;
                 if ($trn->transaction_type == 'INCOME') $income = $trn->amount;
                 if ($trn->transaction_type == 'EXPENSE') $expense = $trn->amount;
-                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date, ['data' => [$trn], 'income' => $income, 'expense' => $expense]);
+                $dateWiseGroup = array_push_assoc($dateWiseGroup, $trn->transaction_date, ['data' => [$trn], 'income' => $income, 'expense' => $expense]);
             } else {
                 $dateData = $dateWiseGroup[$trn->transaction_date];
                 $existDateData = $dateData['data'];
                 if ($trn->transaction_type == 'INCOME') $dateData['income'] = $dateData['income'] + $trn->amount;
                 if ($trn->transaction_type == 'EXPENSE') $dateData['expense'] = $dateData['expense'] + $trn->amount;
                 array_push($existDateData, $trn);
-                $dateData = $this->array_push_assoc($dateData, 'data', $existDateData);
-                $dateData = $this->array_push_assoc($dateData, 'income', $dateData['income']);
-                $dateData = $this->array_push_assoc($dateData, 'expense', $dateData['expense']);
-                $dateWiseGroup = $this->array_push_assoc($dateWiseGroup, $trn->transaction_date, $dateData);
+                $dateData = array_push_assoc($dateData, 'data', $existDateData);
+                $dateData = array_push_assoc($dateData, 'income', $dateData['income']);
+                $dateData = array_push_assoc($dateData, 'expense', $dateData['expense']);
+                $dateWiseGroup = array_push_assoc($dateWiseGroup, $trn->transaction_date, $dateData);
             }
         }
 
@@ -323,12 +303,23 @@ class TrackingHistoryController extends Controller
         ]);
     }
 
-    public function editTrackingDetailPage(TrackingHistory $trackingHistory)
+    /**
+     * Dislay the transaction edit page in modal
+     *
+     * @param int $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function editTrackingDetailPage($id)
     {
-        $wallets = Wallet::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
+        $trackingHistories = TrackingHistory::where('id', '=', $id)->get();
+        if ($trackingHistories->isEmpty()) return $this->error(null, __('transaction.not.found'), 400);
+
+        $trackingHistory = $trackingHistories->get(0);
+
+        $wallets = Wallet::orderBy('name', 'asc')->get();
 
         if ($trackingHistory->transaction_type == 'INCOME') {
-            $incomeSources = IncomeSource::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
+            $incomeSources = IncomeSource::orderBy('name', 'asc')->get();
 
             return view('layouts.transactions.transaction-edit-form', [
                 'trackingHistory' => $trackingHistory,
@@ -337,7 +328,7 @@ class TrackingHistoryController extends Controller
                 'transaction_type' => 'INCOME'
             ]);
         } else if ($trackingHistory->transaction_type == 'EXPENSE') {
-            $expenseTypes = ExpenseType::where('user_id', auth()->user()->id)->orderBy('name', 'asc')->get();
+            $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
 
             return view('layouts.transactions.transaction-edit-form', [
                 'trackingHistory' => $trackingHistory,
@@ -354,8 +345,20 @@ class TrackingHistoryController extends Controller
         }
     }
 
-    public function updateTrackingDetail(TrackingHistory $trackingHistory, Request $request)
+    /**
+     * Update transaction details in storage
+     *
+     * @param int $id
+     * @param Request $request
+     * @return Renderable
+     */
+    public function updateTrackingDetail($id, Request $request)
     {
+        $trackingHistories = TrackingHistory::where('id', '=', $id)->get();
+        if ($trackingHistories->isEmpty()) return $this->error(null, __('transaction.not.found'), 400);
+
+        $trackingHistory = $trackingHistories->get(0);
+
         // add new tracking
         $incomingFields = $request->validate([
             'transaction_type' => 'required',
@@ -364,17 +367,14 @@ class TrackingHistoryController extends Controller
         $transactionType = $request->get('transaction_type');
 
         $message = "";
-        $errorMessage = "";
-        $redirectUrl = "";
+        $errorMessage = __('common.process.error');
 
         if ($transactionType == 'INCOME') {
-            $message = "Income Updated Successfully";
-            $errorMessage = "Failed to add income";
-            $redirectUrl = "add-income";
+            $message = __('transaction.income.update.success');
 
             $incomingFields = $request->validate([
-                'amount' => ['required', 'min:0'],
-                'transaction_charge' => ['min:0'],
+                'amount' => ['required', 'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
                 'to_wallet' => 'required',
                 'income_source' => 'required',
                 'transaction_date' => 'required',
@@ -384,13 +384,11 @@ class TrackingHistoryController extends Controller
             // Delete previous
             $trackingHistory->delete();
         } else if ($transactionType == 'EXPENSE') {
-            $message = "Expense Updated Successfully";
-            $errorMessage = "Failed to add expense";
-            $redirectUrl = "add-expense";
+            $message = __('transaction.expense.update.success');
 
             $incomingFields = $request->validate([
-                'amount' => ['required', 'min:0'],
-                'transaction_charge' => ['min:0'],
+                'amount' => ['required', 'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
                 'from_wallet' => 'required',
                 'expense_type' => 'required',
                 'transaction_date' => 'required',
@@ -399,19 +397,17 @@ class TrackingHistoryController extends Controller
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
-                return $this->error(null, $wallet->name . ' has insufficient balance for transaction', 200);
+                return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
 
             // Delete previous
             $trackingHistory->delete();
         } else {
-            $message = "Transfer Updated Successfully";
-            $errorMessage = "Failed to do transfer";
-            $redirectUrl = "do-transfer";
+            $message = __('transaction.transfer.update.success');
 
             $incomingFields = $request->validate([
-                'amount' => ['required', 'min:0'],
-                'transaction_charge' => ['min:0'],
+                'amount' => ['required', 'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
                 'from_wallet' => 'required',
                 'to_wallet' => 'required',
                 'transaction_date' => 'required',
@@ -420,7 +416,7 @@ class TrackingHistoryController extends Controller
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
-                return $this->error(null, $wallet->name . ' has insufficient balance for transaction', 200);
+                return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
 
             // Delete previous
@@ -430,7 +426,7 @@ class TrackingHistoryController extends Controller
 
         $incomingFields['transaction_type'] = $request->get('transaction_type');
         $incomingFields['note'] = $request->get('note');
-        $incomingFields['user_id'] = auth()->user()->id;
+        $incomingFields['user_id'] = auth()->id();
         $incomingFields['month'] = date('m', strtotime($incomingFields['transaction_date']));
         $incomingFields['year'] =  date('Y', strtotime($incomingFields['transaction_date']));
 
@@ -446,41 +442,51 @@ class TrackingHistoryController extends Controller
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
 
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
             } else if ($transactionType == 'EXPENSE') {
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
 
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
             } else {
                 $arhead['amount'] = $trackingHistory['amount'];
 
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
-
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
 
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
-
-                $savedArhead = Arhead::create($arhead);
+                Arhead::create($arhead);
             }
 
             return $this->successWithReload(null, $message);
         }
 
-        return $this->error(null, 'Something went wrong, please try again later!', 200);
+        return $this->error(null, $errorMessage);
     }
 
-    public function deleteTrackingDetail(TrackingHistory $trackingHistory)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return Renderable
+     */
+    public function deleteTrackingDetail($id)
     {
+        $trackingHistories = TrackingHistory::where('id', '=', $id)->get();
+        if ($trackingHistories->isEmpty()) return $this->error(null, __('transaction.not.found'), 400);
+
+        $trackingHistory = $trackingHistories->get(0);
+
         $deleted = $trackingHistory->delete();
         if ($deleted) {
-            return $this->successWithReload(null, "Transaction detail deleted successfully");
+            return $this->successWithReload(null, __('transaction.delete.success'));
         }
-        return $this->error(null, 'Something went wrong, please try again later!', 200);
+
+        return $this->error(null, __('common.process.error'));
     }
 }

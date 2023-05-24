@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Exception;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -18,11 +19,21 @@ class SetupController extends Controller
 
     protected array $dbConfig;
 
+    /**
+     * Dislay the welcome page of setup
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function welcome()
     {
         return view('setup.welcome');
     }
 
+    /**
+     * Dislay the setup requirements page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function requirements()
     {
         [$success, $results] = $this->checkRequirements();
@@ -33,10 +44,13 @@ class SetupController extends Controller
         ]);
     }
 
+    /**
+     * Requirments check and return an array of results
+     */
     private function checkRequirements(): array
     {
         $results = [
-            'PHP version >= 7.4.0' => PHP_VERSION_ID >= 70400,
+            'PHP version >= 8.0.2' => PHP_VERSION_ID >= 80102,
             'PHP Extension: BCMath' => extension_loaded('bcmath'),
             'PHP Extension: Ctype' => extension_loaded('ctype'),
             'PHP Extension: JSON' => extension_loaded('json'),
@@ -54,11 +68,21 @@ class SetupController extends Controller
         return [$success, $results];
     }
 
+    /**
+     * Dislay the database configuration page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function database()
     {
         return view('setup.database');
     }
 
+    /**
+     * Configure database
+     *
+     * @return Renderable
+     */
     public function configure(Request $request)
     {
         $this->createTempDatabaseConnection($request->all());
@@ -78,6 +102,9 @@ class SetupController extends Controller
         return redirect()->route('setup.complete');
     }
 
+    /**
+     * Creating temporary database connection to check database is exist or not
+     */
     protected function createTempDatabaseConnection(array $credentials): void
     {
         $this->dbConfig = config('database.connections.mysql');
@@ -91,6 +118,11 @@ class SetupController extends Controller
         Config::set('database.connections.setup', $this->dbConfig);
     }
 
+    /**
+     * Migrate databse with freash tables
+     * 
+     * @return boolean
+     */
     protected function migrateDatabase(): bool
     {
         try {
@@ -101,13 +133,15 @@ class SetupController extends Controller
                 '--seed' => true
             ]);
         } catch (Exception $e) {
-            $alert = 'Database could not be configured. Please check your connection details. Details: ' . $e->getMessage();
             return false;
         }
 
         return true;
     }
 
+    /**
+     * Update enviroment configurations for new databse setup
+     */
     protected function storeConfigurationInEnv(): void
     {
         $envContent = File::get(base_path('.env'));
@@ -131,6 +165,11 @@ class SetupController extends Controller
         }
     }
 
+    /**
+     * Check datbase has existing data or empty
+     * 
+     * @return boolean
+     */
     protected function databaseHasData(): bool
     {
         try {
@@ -145,6 +184,11 @@ class SetupController extends Controller
         return count($present_tables) > 0;
     }
 
+    /**
+     * Dislay the setup complete
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function complete()
     {
         Setting::create(['key' => 'system_setup_completed', 'value' => true]);

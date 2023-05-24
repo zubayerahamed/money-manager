@@ -22,7 +22,7 @@ class Dream extends Model
 
     public function getImageAttribute($value)
     {
-        return $value ? '/upload/dream/' . $value : "/assets/images/no-image.png";
+        return $value && file_exists(public_path() . '/upload/dream/' . $value) ? '/upload/dream/' . $value : "/assets/images/no-image.png";
     }
 
     public function wallet()

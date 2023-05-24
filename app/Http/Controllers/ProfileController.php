@@ -10,54 +10,79 @@ class ProfileController extends Controller
 {
     use HttpResponses;
 
+    /**
+     * Dislay the profile page
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
-
         return view('profile', [
             'user' => auth()->user()
         ]);
     }
 
+    /**
+     * Update profile info in storage
+     *
+     * @param Request $requset
+     * @return Renderable
+     */
     public function update(Request $request)
     {
-
-        $incomingFields = $request->validate([
+        $request->validate([
             'name' => 'required',
             'currency' => 'required'
         ]);
 
-        $user = User::find(auth()->user()->id);
+        $user = User::find(auth()->id());
+        $user->name = $request['name'];
+        $user->currency = $request['currency'];
 
-        $user->name = $incomingFields['name'];
-        $user->currency = $incomingFields['currency'];
-        $user->update();
+        $updated = $user->update();
+        if ($updated) {
+            return back()->with('success', __('profile.update.success'));
+        }
 
-        return redirect('/profile')->with('success', "Profile updated successfully");
+        return back()->with('error', __('common.process.error'));
     }
 
+    /**
+     * Update password in storage
+     *
+     * @param Request $requset
+     * @return Renderable
+     */
     public function updatePassword(Request $request)
     {
-
-        $incomingFields = $request->validate([
+        $request->validate([
             'password' => ['required', 'min:8', 'confirmed']
         ]);
 
-        $user = User::find(auth()->user()->id);
+        $user = User::find(auth()->id());
+        $user->password = bcrypt($request['password']);
 
-        $incomingFields['password'] = bcrypt($incomingFields['password']);
-        $user->password = $incomingFields['password'];
         $user->update();
 
-        return redirect('/profile')->with('success', "Password updated successfully");
+        $updated = $user->update();
+        if ($updated) {
+            return back()->with('success', __('profile.password.success'));
+        }
+
+        return back()->with('error', __('common.process.error'));
     }
 
+    /**
+     * Update profile avatar in storage
+     *
+     * @param Request $requset
+     * @return Renderable
+     */
     public function updateAvatar(Request $request)
     {
         $folderPath = public_path('upload/avatar/');
 
         $image_parts = explode(";base64,", $request->image);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
 
         $imageName = uniqid() . '.png';
@@ -71,10 +96,14 @@ class ProfileController extends Controller
 
         file_put_contents($imageFullPath, $image_base64);
 
-        $user = User::find(auth()->user()->id);
+        $user = User::find(auth()->id());
         $previousAvatar = $user->avatar;
         $user->avatar = $imageName;
-        $user->update();
+
+        $updated = $user->update();
+        if (!$updated) {
+            return $this->error(null, __('common.process.error'));
+        }
 
         // Delete previous avatar
         $prevImagePath = public_path() . $previousAvatar;
@@ -82,6 +111,6 @@ class ProfileController extends Controller
             unlink($prevImagePath);
         }
 
-        return $this->successWithReload(null, 'Profile picture updated successfully');
+        return $this->successWithReload(null, __('profile.picture.success'));
     }
 }

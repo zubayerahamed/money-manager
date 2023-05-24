@@ -13,6 +13,17 @@ return [
     |
     */
 
+    'income.add.success' => 'Income added successfully',
+    'income.update.success' => 'Income updated successfully',
+    'expense.add.success' => 'Expense added successfully',
+    'expense.update.success' => 'Expense updated successfully',
+    'transfer.add.success' => 'Transfered successfully',
+    'transfer.update.success' => 'Transfered updated successfully',
+    'delete.success' => 'Transaction deleted successfully',
+
+    'insufficient.balance' => ':name has insufficient balance for transaction',
+    'not.found' => 'Transaction not found',
+
     'btn.add-income' => 'Add income',
     'btn.add-expense' => 'Add expense',
     'btn.do-transfer' => 'Do transfer',
@@ -34,5 +45,4 @@ return [
     'details.income.from' => 'income from',
     'details.expense.for' => 'expense for',
     'details.transfer.from' => 'transfer from',
-
 ];
