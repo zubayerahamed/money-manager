@@ -55,7 +55,7 @@
                                 <div class="d-inline-flex align-items-center justify-content-center mb-0 mt-0">
                                     <img src="{{ asset('/assets/images/money-manager-logo.png') }}" class="h-48px" alt="">
                                 </div>
-                                <h6 class="mb-0">Installation Wizard</h6>
+                                <h6 class="mb-0">{{ __('setup.install.wizard.title') }}</h6>
                             </div>
 
                             {{ $slot }}
