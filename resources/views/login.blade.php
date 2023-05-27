@@ -53,6 +53,10 @@
                 <div class="text-center">
                     {{ __('login.text.dont-have-account') }} <a href="{{ route('register') }}">{{ __('login.btn.register.here') }}</a>
                 </div>
+
+                <div class="text-center">
+                    <a href="{{ route('register') }}">{{ __('login.btn.forgot.password') }}</a>
+                </div>
             </div>
         </div>
     </form>

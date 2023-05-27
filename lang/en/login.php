@@ -16,6 +16,7 @@ return [
     'btn.sign-in' => 'Sign in',
     'btn.register.here' => 'Register here',
     'text.dont-have-account' => "Don't have an account?",
+    'btn.forgot.password' => 'Forgot password?',
 
 
     'header.des' => 'Enter your credentials below',
