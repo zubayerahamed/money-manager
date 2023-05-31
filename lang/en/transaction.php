@@ -6,11 +6,6 @@ return [
     |--------------------------------------------------------------------------
     | Transaction Language Lines
     |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during transaction operations for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
     */
 
     'income.add.success' => 'Income added successfully',

@@ -1,9 +1,5 @@
 /* ------------------------------------------------------------------------------
- *
- *  # Template JS core
- *
- *  Includes minimum required JS code for proper template functioning
- *
+ *  # JS core
  * ---------------------------------------------------------------------------- */
 
 
@@ -11,10 +7,6 @@
 // ------------------------------
 
 const App = function () {
-
-
-    // Utils
-    // -------------------------
 
     //
     // Transitions
@@ -540,8 +532,6 @@ const App = function () {
         }
     };
 
-
-
     //
     // Return objects assigned to module
     //
@@ -558,6 +548,7 @@ const App = function () {
         initAfterLoad: function() {
             transitionsEnabled();
         },
+
         // Initialize all components
         initComponents: function() {
             componentTooltip();

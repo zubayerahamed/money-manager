@@ -3,21 +3,22 @@
 
 ## About Money Manager
 
-Money Manager is a web application base on Laravel framework. People can track their daily income and expense using this software. It has some features like
+Money Manager is a web application, based on Laravel framework. People can track their daily income and expense using this software. It has some features like
 
-- [People can register themselves and can started using this software instantly](https://karigorit.com).
-- [Create Wallet](https://karigorit.com).
-- [Create Expense Type](https://karigorit.com).
-- [Create Income Source](https://karigorit.com).
-- [Add income, expense and transfer by selecting date and time with note](https://karigorit.com).
-- [Can see today's transaction status](https://karigorit.com).
-- [Can see Monthly transaction status](https://karigorit.com).
-- [Can see Yearly transaction status](https://karigorit.com).
-- [People can easily change their avatar with robast image cropping tool](https://karigorit.com).
+- [People can register themselves and can started using this software instantly](https://money-manager.zubayerahamed.com).
+- [Create Wallet](https://money-manager.zubayerahamed.com).
+- [Create Expense Type](https://money-manager.zubayerahamed.com).
+- [Create Income Source](https://money-manager.zubayerahamed.com).
+- [Add income, expense and transfer by selecting date and time with note](https://money-manager.zubayerahamed.com).
+- [Can see today's transaction status](https://money-manager.zubayerahamed.com).
+- [Can see Monthly transaction status](https://money-manager.zubayerahamed.com).
+- [Can see Yearly transaction status](https://money-manager.zubayerahamed.com).
+- [Can add dreams with target](https://money-manager.zubayerahamed.com).
+- [People can easily change their avatar with robast image cropping tool](https://money-manager.zubayerahamed.com).
 
 ## Money Manager Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Money Manager. If you are interested in becoming a sponsor, please visit the Karigor IT [Patreon page](https://karigorit.com).
+We would like to extend our thanks to the following sponsors for funding Money Manager. If you are interested in becoming a sponsor, please visit the [Patreon page](https://money-manager.zubayerahamed.com).
 
 ## License
 

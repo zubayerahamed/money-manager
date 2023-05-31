@@ -34,10 +34,16 @@ function showMessage(type, message) {
     }).show();
 }
 
+/**
+ * Icon modal
+ */
 function openIconModal() {
     $('#icon-modal').modal('show');
 }
 
+/**
+ * Reload section with ajax request
+ */
 function sectionReloadAjaxReq(section) {
     loadingMask2.show();
     $.ajax({
@@ -67,7 +73,9 @@ function deleteData(el) {
     }
 }
 
-
+/**
+ * Sumbit form 
+ */
 function submitForm(formEl, method) {
 
     var url = $(formEl).attr('action');
@@ -107,9 +115,10 @@ function submitForm(formEl, method) {
     });
 }
 
-
+/**
+ * Open sections in modal
+ */
 function modalWidget(url, elementClass) {
-
     loadingMask2.show();
     $.ajax({
         url: url,
@@ -127,6 +136,9 @@ function modalWidget(url, elementClass) {
     });
 }
 
+/**
+ * Load functions and init events when document is loaded
+ */
 $(document).ready(function () {
 
     $('body').on('click', '.transaction-btn', function (e) {

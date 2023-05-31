@@ -6,11 +6,6 @@ return [
     |--------------------------------------------------------------------------
     | Expense Type Language Lines
     |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during expense types operations for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
     */
 
     'save.success' => ':name expense type created successfully.',

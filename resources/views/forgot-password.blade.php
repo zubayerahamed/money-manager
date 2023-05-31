@@ -1,4 +1,4 @@
-<x-login-register-layout pageTitle="Forgot password">
+<x-login-register-layout pageTitle="{{ __('password.forgot.page.title') }}">
     <!-- Login form -->
     <form class="login-form" action="{{ route('password.email') }}" method="POST">
         @csrf
@@ -11,9 +11,9 @@
                         <img src="{{ asset('/assets/images/money-manager-logo.png') }}" class="h-48px" alt="">
                     </div>
 
-                    <h5 class="mb-2">Reset Password</h5>
+                    <h5 class="mb-2">{{ __('password.forgot.page.header') }}</h5>
 
-                    <span class="d-block text-muted">Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</span>
+                    <span class="d-block text-muted">{{ __('password.forgot.page.desc') }}</span>
 
                     @if (Session::has('status'))
                         <span class="d-block text-success mt-2">{{ Session::get('status') }}</span>
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary w-100">Email password reset link</button>
+                    <button type="submit" class="btn btn-primary w-100">{{ __('password.forgot.btn.submit') }}</button>
                 </div>
 
             </div>
