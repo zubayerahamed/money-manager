@@ -9,13 +9,21 @@ use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\IncomeSourceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\PasswordResetLinkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\TrackingHistoryController;
 use App\Http\Controllers\WalletController;
+use App\Models\User;
 use GuzzleHttp\Middleware;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,13 +36,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Registration
-Route::get('/register', [RegisterController::class, 'index'])->name('register')->middleware('setup');
-Route::post('/register', [RegisterController::class, 'store'])->name('register')->middleware('setup');
+Route::group(['middleware' => ['guest', 'setup']], function () {
+    // Registration
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register');
 
-// Login
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('setup');
-Route::post('/login', [LoginController::class, 'store'])->name('login')->middleware('setup');
+    // Login
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->name('login');
+
+    // Forgot Password
+    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+
+    // Reset Password
+    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
+});
 
 Route::group(['middleware' => ['auth', 'setup']], function () {
     // Home

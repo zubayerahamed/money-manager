@@ -1,7 +1,8 @@
-<x-login-register-layout pageTitle="{{ __('login.page.title') }}">
+<x-login-register-layout pageTitle="Reset password">
     <!-- Login form -->
-    <form class="login-form" action="{{ route('login') }}" method="POST">
+    <form class="login-form" action="{{ route('password.update') }}" method="POST">
         @csrf
+        <input type="hidden" name="token" value="{{ $token }}">
 
         <div class="card mb-0">
             <div class="card-body">
@@ -11,19 +12,13 @@
                         <img src="{{ asset('/assets/images/money-manager-logo.png') }}" class="h-48px" alt="">
                     </div>
 
-                    <h5 class="mb-0">{{ __('login.header.title') }}</h5>
-
-                    <span class="d-block text-muted mb-2">{{ __('login.header.des') }}</span>
-
-                    @if (Session::has('status'))
-                        <span class="d-block text-success mt-2">{{ Session::get('status') }}</span>
-                    @endif
+                    <h5 class="mb-2">Reset your account password</h5>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="email">{{ __('login.label.email') }}</label>
                     <div class="form-control-feedback form-control-feedback-start">
-                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $email) }}" readonly>
                         <div class="form-control-feedback-icon">
                             <i class="ph-at text-muted"></i>
                         </div>
@@ -34,7 +29,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="password">{{ __('login.label.password') }}</label>
+                    <label class="form-label" for="password">New password</label>
                     <div class="form-control-feedback form-control-feedback-start">
                         <input type="password" name="password" id="password" class="form-control">
                         <div class="form-control-feedback-icon">
@@ -47,15 +42,20 @@
                 </div>
 
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary w-100">{{ __('login.btn.sign-in') }}</button>
+                    <label class="form-label" for="password_confirmation">{{ __('register.label.password_confirmation') }}</label>
+                    <div class="form-control-feedback form-control-feedback-start">
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                        <div class="form-control-feedback-icon">
+                            <i class="ph-lock text-muted"></i>
+                        </div>
+                    </div>
+                    @error('password_confirmation')
+                        <div class="form-text text-danger"><i class="ph-x-circle me-1"></i>{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <div class="text-center">
-                    {{ __('login.text.dont-have-account') }} <a href="{{ route('register') }}">{{ __('login.btn.register.here') }}</a>
-                </div>
-
-                <div class="text-center">
-                    <a href="{{ route('password.request') }}">{{ __('login.btn.forgot.password') }}</a>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100">Reset password</button>
                 </div>
             </div>
         </div>
