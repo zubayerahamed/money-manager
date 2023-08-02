@@ -105,7 +105,8 @@ class TrackingHistoryController extends Controller
             ]);
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
-            if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
+
+            if ($wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) == null || $wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
                 return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
         } else {
@@ -121,7 +122,7 @@ class TrackingHistoryController extends Controller
             ]);
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
-            if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
+            if ($wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) == null || $wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) < ($incomingFields['amount'] + $incomingFields['transaction_charge'])) {
                 return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
         }
@@ -144,6 +145,8 @@ class TrackingHistoryController extends Controller
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 Arhead::create($arhead);
             } else if ($transactionType == 'EXPENSE') {
@@ -151,10 +154,14 @@ class TrackingHistoryController extends Controller
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 Arhead::create($arhead);
             } else {
                 $arhead['amount'] = $trackingHistory['amount'];
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
@@ -395,8 +402,9 @@ class TrackingHistoryController extends Controller
                 'transaction_time' => 'required'
             ]);
 
+            
             $wallet = Wallet::find($incomingFields['from_wallet']);
-            if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
+            if ($wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) == null || $wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
                 return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
 
@@ -415,7 +423,7 @@ class TrackingHistoryController extends Controller
             ]);
 
             $wallet = Wallet::find($incomingFields['from_wallet']);
-            if ($wallet->currentBalance < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
+            if ($wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) == null || $wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
                 return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
 
@@ -441,6 +449,8 @@ class TrackingHistoryController extends Controller
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 Arhead::create($arhead);
             } else if ($transactionType == 'EXPENSE') {
@@ -448,10 +458,14 @@ class TrackingHistoryController extends Controller
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 Arhead::create($arhead);
             } else {
                 $arhead['amount'] = $trackingHistory['amount'];
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;

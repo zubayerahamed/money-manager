@@ -30,4 +30,16 @@ class Wallet extends Model
 
         return $currentBalance->isEmpty() ? 0 : $currentBalance->get(0)->currentBalance;
     }
+
+    public function getBalanceByDate($date, $time){
+        $currentBalance = DB::table('arhead')
+            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as currentBalance")
+            ->where('wallet_id', '=', $this->id)
+            ->where('user_id', '=', auth()->id())
+            ->where('xdate', '<=', $date)
+            ->where('xtime', '<=', $time)
+            ->get();
+        
+        return $currentBalance->isEmpty() ? 0 : $currentBalance->get(0)->currentBalance;
+    }
 }

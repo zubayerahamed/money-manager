@@ -18,11 +18,17 @@ class Arhead extends Model
         'row_sign',
         'amount',
         'transaction_charge',
-        'user_id'
+        'user_id',
+        'xdate',
+        'xtime'
     ];
 
     public function wallet()
     {
         $this->belongsTo(Wallet::class, 'wallet_id');
     }
+
+    protected $casts = [
+        'xdate' => 'datetime:Y-m-d',
+    ];
 }
