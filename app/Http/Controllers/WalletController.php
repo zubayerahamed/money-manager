@@ -9,6 +9,7 @@ use App\Rules\IsCompositeUnique;
 use App\Traits\HttpResponses;
 use DebugBar\DataCollector\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class WalletController extends Controller
@@ -116,6 +117,8 @@ class WalletController extends Controller
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
+                $arhead['xdate'] = date('Y-m-d');
+                $arhead['xtime'] = date('H:i');
 
                 Arhead::create($arhead);
             }
