@@ -37,7 +37,7 @@ class Wallet extends Model
             ->where('wallet_id', '=', $this->id)
             ->where('user_id', '=', auth()->id())
             ->where('xdate', '<=', $date)
-            ->where('xtime', '<=', $time)
+            //->where('xtime', '<=', $time)
             ->get();
         
         return $currentBalance->isEmpty() ? 0 : $currentBalance->get(0)->currentBalance;
