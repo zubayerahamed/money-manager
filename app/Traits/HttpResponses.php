@@ -45,6 +45,14 @@ trait HttpResponses
         ], $code);
     }
 
+    protected function reloadSectionsOnly($sections = [])
+    {
+        return response()->json([
+            'reload' => true,
+            'sections' => $sections
+        ], 200);
+    }
+
     /**
      * Return error response
      *

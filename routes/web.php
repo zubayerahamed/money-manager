@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::get('/current-month/line-chart', [DashboardController::class, 'getCurrentMonthLineChartData'])->name('month.line-chart');
     Route::get('/current-year/line-chart', [DashboardController::class, 'getCurrentYearLineChartData'])->name('year.line-chart');
+    Route::get('/sections/all', [DashboardController::class, 'reloadPageSections'])->name('home.sections');
 
     // Profile
     Route::group([
@@ -86,6 +87,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/section/piechart', [WalletController::class, 'piechart'])->name('section.piechart');
         Route::get('/section/header', [WalletController::class, 'header'])->name('section.header');
         Route::get('/section/accordion', [WalletController::class, 'accordion'])->name('section.accordion');
+        Route::get('/sections/all', [WalletController::class, 'reloadPageSections'])->name('sections');
     });
 
     // Income source
@@ -103,6 +105,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/section/piechart', [IncomeSourceController::class, 'piechart'])->name('section.piechart');
         Route::get('/section/header', [IncomeSourceController::class, 'header'])->name('section.header');
         Route::get('/section/accordion', [IncomeSourceController::class, 'accordion'])->name('section.accordion');
+        Route::get('/sections/all', [IncomeSourceController::class, 'reloadPageSections'])->name('sections');
     });
 
     // Expense Type
@@ -120,6 +123,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/section/piechart', [ExpenseTypeController::class, 'piechart'])->name('section.piechart');
         Route::get('/section/header', [ExpenseTypeController::class, 'header'])->name('section.header');
         Route::get('/section/accordion', [ExpenseTypeController::class, 'accordion'])->name('section.accordion');
+        Route::get('/sections/all', [ExpenseTypeController::class, 'reloadPageSections'])->name('sections');
     });
 
     // Budget
@@ -133,6 +137,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/{id}', [BudgetController::class, 'edit'])->name('edit');
         Route::put('/{id}', [BudgetController::class, 'update'])->name('update');
         Route::delete('/{id}', [BudgetController::class, 'destroy'])->name('destroy');
+        Route::get('/sections/all', [BudgetController::class, 'reloadPageSections'])->name('sections');
     });
 
     // Transactions
@@ -156,6 +161,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/detail/{id}/edit', [TrackingHistoryController::class, 'editTrackingDetailPage'])->name('edit');
         Route::put('/detail/{id}/update', [TrackingHistoryController::class, 'updateTrackingDetail'])->name('update');
         Route::delete('/detail/{id}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('destroy');
+        Route::get('/sections/all', [TrackingHistoryController::class, 'reloadPageSections'])->name('sections');
     });
 
     // Dream

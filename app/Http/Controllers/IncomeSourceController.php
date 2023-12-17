@@ -26,6 +26,22 @@ class IncomeSourceController extends Controller
     }
 
     /**
+     * Page Sections loader
+     *
+     * @param Request $requset
+     * @return void
+     */
+    public function reloadPageSections(Request $requset){
+        return $this->reloadSectionsOnly(
+            [
+                $this->section_accordion,
+                $this->section_header,
+                $this->section_piechart
+            ]
+        );
+    }
+
+    /**
      * Get income source status pie chart data
      * 
      * @return Renderable

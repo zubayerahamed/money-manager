@@ -26,6 +26,22 @@ class ExpenseTypeController extends Controller
     }
 
     /**
+     * Page Sections loader
+     *
+     * @param Request $requset
+     * @return void
+     */
+    public function reloadPageSections(Request $requset){
+        return $this->reloadSectionsOnly(
+            [
+                $this->section_accordion,
+                $this->section_header,
+                $this->section_piechart
+            ]
+        );
+    }
+
+    /**
      * Get expense type status pie chart data
      * 
      * @return Renderable

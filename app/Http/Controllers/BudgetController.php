@@ -13,11 +13,25 @@ class BudgetController extends Controller
     use HttpResponses;
 
     /**
+     * Page Sections loader
+     *
+     * @param Request $requset
+     * @return void
+     */
+    public function reloadPageSections(Request $requset){
+        return $this->reloadSectionsOnly(
+            [
+                ['budgets-accordion', $requset->get('definedRoute')],
+            ]
+        );
+    }
+
+    /**
      * Dislay the budget status page
      *
      * @return Renderable
      */
-    public function index($month, $year)
+    public function index($month, $year, Request $request)
     {
         $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
 
@@ -39,7 +53,7 @@ class BudgetController extends Controller
             }
         }
 
-        if (request()->ajax()) {
+        if ($request->ajax()) {
             return view('layouts.budgets.budgets-accordion', [
                 'expenseTypes' => $expenseTypes,
                 'month' => $month,
@@ -50,13 +64,19 @@ class BudgetController extends Controller
             ]);
         }
 
+        $sectionReloadRoute = $request->route()->getName();
+
         return view('budgets', [
             'expenseTypes' => $expenseTypes,
             'month' => $month,
             'monthText' => date("F", mktime(0, 0, 0, $month, 10)),
             'year' => $year,
             'totalBudget' => $totalBudget,
-            'totalSpent' => $totalSpent
+            'totalSpent' => $totalSpent,
+            'sectionReloadRoute' => route($sectionReloadRoute, [
+                'month' => $month,
+                'year' => $year
+            ]),
         ]);
     }
 

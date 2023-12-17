@@ -3,6 +3,7 @@
     <div class="content">
         <div class="row">
             <div class="col-xl-12">
+                <input type="hidden" id="sections-reloader" value="{{ route('wallet.sections') }}">
 
                 <!-- Wallet Section -->
                 <div class="card">
@@ -21,7 +22,6 @@
 
                 </div>
                 <!-- ./Wallet Section -->
-
             </div>
         </div>
     </div>

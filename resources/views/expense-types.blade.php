@@ -3,6 +3,7 @@
     <div class="content">
         <div class="row">
             <div class="col-xl-12">
+                <input type="hidden" id="sections-reloader" value="{{ route('expense-type.sections') }}">
 
                 <!-- Expense Type Section -->
                 <div class="card">

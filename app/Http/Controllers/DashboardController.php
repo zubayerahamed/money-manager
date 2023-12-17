@@ -3,18 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\TrackingHistory;
+use App\Traits\HttpResponses;
 use DebugBar\DataCollector\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+
+    use HttpResponses;
+
+    private  $section_accordion;
+
+    /**
+     * Constructor 
+     */
+    public function __construct()
+    {
+        $this->section_accordion = ['dashboard-content-section', route('home')];
+    }
+
+    /**
+     * Page Sections loader
+     *
+     * @param Request $requset
+     * @return void
+     */
+    public function reloadPageSections(Request $requset){
+        return $this->reloadSectionsOnly(
+            [
+                $this->section_accordion,
+            ]
+        );
+    }
 
     /**
      * Display dashboard for user
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         // Current balance
         $currentBalance = DB::table('arhead')
@@ -116,6 +144,14 @@ class DashboardController extends Controller
                 }
             }
         });
+
+        if($request->ajax()){
+            return view('layouts.dashboard.dashboard-chart', [
+                'currentBalance' => $currentBalance,
+                'monthWiseGroup' => $monthWiseGroup,
+                'yearWiseGroup' => $yearWiseGroup
+            ]);
+        }
 
         return view('dashboard', [
             'currentBalance' => $currentBalance,

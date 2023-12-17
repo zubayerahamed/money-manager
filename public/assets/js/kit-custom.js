@@ -1,3 +1,49 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Custom JS code
+ *
+ *  Place here all your custom js. Make sure it's loaded after app.js
+ *
+ * ---------------------------------------------------------------------------- */
+var kit = kit || {};
+kit.ui = kit.ui || {};
+kit.ui.config = kit.ui.config || {};
+
+kit.ui.config.loadPageData = function(){
+
+    loadingMask2.show();
+
+    var definedRoute = $('#sections-reloader').data('defined-route');
+    
+    var url = $('#sections-reloader').val();
+    if(definedRoute != undefined){
+        url = url + '?definedRoute=' + definedRoute;
+    }
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        success: function (data) {
+            loadingMask2.hide();
+            if (data.reload == true) {
+                if (data.sections.length > 0) {
+                    $.each(data.sections, function (ind, section) {
+                        sectionReloadAjaxReq(section);
+                    });
+                } else {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 500);
+                }
+            }
+        },
+        error: function (jqXHR, status, errorThrown) {
+            loadingMask2.hide();
+            showMessage("error", jqXHR.responseJSON.message);
+        },
+    });
+}
+
 /**
  * Loading mask object
  * function1 : show  -- Show loading mask
@@ -76,7 +122,7 @@ function deleteData(el) {
 /**
  * Sumbit form 
  */
-function submitForm(formEl, method) {
+function submitForm(formEl, method, transactionData) {
 
     var url = $(formEl).attr('action');
     var data = $(formEl).serializeArray();
@@ -106,6 +152,10 @@ function submitForm(formEl, method) {
                         location.reload();
                     }, 500);
                 }
+            }
+
+            if(transactionData){
+                kit.ui.config.loadPageData();
             }
         },
         error: function (jqXHR, status, errorThrown) {
@@ -154,7 +204,10 @@ $(document).ready(function () {
 
     $('body').on('click', '.transaction-submit-btn', function (e) {
         e.preventDefault();
-        submitForm($('#transaction-form'), 'POST');
+
+        var transactionData = $('input[name="transaction_type"]').val() != undefined;
+
+        submitForm($('#transaction-form'), 'POST', transactionData);
     });
 
     //Initialize Select2 Elements

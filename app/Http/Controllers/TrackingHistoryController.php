@@ -10,10 +10,25 @@ use App\Models\Wallet;
 use App\Traits\HttpResponses;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class TrackingHistoryController extends Controller
 {
     use HttpResponses;
+
+    /**
+     * Page Sections loader
+     *
+     * @param Request $requset
+     * @return void
+     */
+    public function reloadPageSections(Request $requset){
+        return $this->reloadSectionsOnly(
+            [
+                ['transaction-detail-accordion', $requset->get('definedRoute')],
+            ]
+        );
+    }
 
     /**
      * Open add income form in modal
@@ -184,7 +199,7 @@ class TrackingHistoryController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function showAllTodaysTransactions()
+    public function showAllTodaysTransactions(Request $request)
     {
         $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('transaction_date', '=', date('Y/m/d'))
@@ -217,8 +232,17 @@ class TrackingHistoryController extends Controller
             }
         }
 
+        $sectionReloadRoute = $request->route()->getName();
+
+        if($request->ajax()){
+            return view('layouts.transactions.transaction-detail-accordion', [
+                'thDetails' => $dateWiseGroup,
+            ]);
+        }
+
         return view('th-details', [
-            'thDetails' => $dateWiseGroup
+            'thDetails' => $dateWiseGroup,
+            'sectionReloadRoute' => route($sectionReloadRoute),
         ]);
     }
 
@@ -227,7 +251,7 @@ class TrackingHistoryController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function showYearWiseTransactions($year)
+    public function showYearWiseTransactions($year, Request $request)
     {
         $totalIncome = TrackingHistory::where('year', '=', $year)
             ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
@@ -260,8 +284,17 @@ class TrackingHistoryController extends Controller
             }
         }
 
+        $sectionReloadRoute = $request->route()->getName();
+
+        if($request->ajax()){
+            return view('layouts.transactions.transaction-detail-accordion', [
+                'thDetails' => $dateWiseGroup,
+            ]);
+        }
+
         return view('th-details', [
-            'thDetails' => $dateWiseGroup
+            'thDetails' => $dateWiseGroup,
+            'sectionReloadRoute' => route($sectionReloadRoute, ['year' => $year]),
         ]);
     }
 
@@ -270,7 +303,7 @@ class TrackingHistoryController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function showMonthWiseTransactions($monthno, $year)
+    public function showMonthWiseTransactions($monthno, $year, Request $request)
     {
 
         $totalIncome = TrackingHistory::where('month', '=', $monthno)
@@ -305,8 +338,17 @@ class TrackingHistoryController extends Controller
             }
         }
 
+        $sectionReloadRoute = $request->route()->getName();
+
+        if($request->ajax()){
+            return view('layouts.transactions.transaction-detail-accordion', [
+                'thDetails' => $dateWiseGroup,
+            ]);
+        }
+
         return view('th-details', [
-            'thDetails' => $dateWiseGroup
+            'thDetails' => $dateWiseGroup,
+            'sectionReloadRoute' => route($sectionReloadRoute, ['year' => $year, 'monthno' => $monthno]),
         ]);
     }
 
