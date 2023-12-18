@@ -298,6 +298,39 @@ class TrackingHistoryController extends Controller
         ]);
     }
 
+
+    public function showItemWiseMonthlyGroupedTotalTransactions($itemid, $transactiontype, $year, Request $request)
+    {
+
+        $searchColumn = 'expense_type';
+
+        if($transactiontype == 'INCOME'){
+            $searchColumn = 'income_source';
+        } 
+
+        $allTransactions = TrackingHistory::where('year', '=', $year)
+            ->where('transaction_type', '=', $transactiontype)
+            ->where($searchColumn, '=', $itemid)
+            ->orderBy('transaction_date', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+        
+        $monthWiseGroup = [];
+
+        $currentTransactionMonth = "";
+        foreach ($allTransactions->all() as $trn) {
+            if($currentTransactionMonth == ""){
+                $currentTransactionMonth = $trn->month;
+                $amount = $trn->amount;
+                array_push_assoc($monthWiseGroup, $trn->month, ['data' => [$trn], 'amount' => $amount]);
+            } else {
+
+            }
+        }
+
+        dd($monthWiseGroup);
+    }
+
     /**
      * Dislay the month wise transaction details page
      *
