@@ -242,6 +242,7 @@ class TrackingHistoryController extends Controller
 
         return view('th-details', [
             'thDetails' => $dateWiseGroup,
+            'displayType' => '',
             'sectionReloadRoute' => route($sectionReloadRoute),
         ]);
     }
@@ -294,7 +295,103 @@ class TrackingHistoryController extends Controller
 
         return view('th-details', [
             'thDetails' => $dateWiseGroup,
+            'displayType' => '',
             'sectionReloadRoute' => route($sectionReloadRoute, ['year' => $year]),
+        ]);
+    }
+
+    public function showYearWiseTransactionSummary(Request $request)
+    {
+        $allTransactions = TrackingHistory::whereIn('transaction_type', ['INCOME', 'EXPENSE'])
+            ->orderBy('transaction_date', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $yearWiseGroup = [];
+
+        $currentYear = "";
+        $i = 0;
+        foreach ($allTransactions->all() as $trn) {
+            $i++;
+            $month_name = date("F", mktime(0, 0, 0, $trn->month, 10));
+            $yearname = $trn->year; 
+            $currentYearKey = $yearname . '-' . $month_name;
+
+            if ($currentYear == "" || $currentYear != $currentYearKey) {
+                $currentYear = $currentYearKey;
+                
+                $income = 0;
+                $expense = 0;
+                if ($trn->transaction_type == 'INCOME') $income = $trn->amount;
+                if ($trn->transaction_type == 'EXPENSE') $expense = $trn->amount;
+                
+                // Search for previous one
+                if(array_key_exists($yearname, $yearWiseGroup)){
+                    $yearArr = $yearWiseGroup[$yearname];
+
+                    $monthData = $yearArr['data'];
+
+                    $newMonthData = ['income' => $income, 'expense' => $expense];
+                    $monthData = array_push_assoc($monthData, $month_name, $newMonthData);
+                    $yearArr = array_push_assoc($yearArr, 'data', $monthData);
+
+                    if ($trn->transaction_type == 'INCOME') $yearArr['income'] = $yearArr['income'] + $trn->amount;
+                    if ($trn->transaction_type == 'EXPENSE') $yearArr['expense'] = $yearArr['expense'] + $trn->amount;
+                    $yearArr = array_push_assoc($yearArr, 'income', $yearArr['income']);
+                    $yearArr = array_push_assoc($yearArr, 'expense', $yearArr['expense']);
+                    
+                    $yearWiseGroup = array_push_assoc($yearWiseGroup, $yearname, $yearArr);
+                } else {
+                    $monthData = [$month_name => ['income' => $income, 'expense' => $expense]];
+                
+                    $yearArr = ['data' => [], 'income' => 0, 'expense' => 0];
+                    $yearArr = array_push_assoc($yearArr, 'data', $monthData);
+                    $yearArr = array_push_assoc($yearArr, 'income', $income);
+                    $yearArr = array_push_assoc($yearArr, 'expense', $expense);
+                    
+                    $yearWiseGroup = array_push_assoc($yearWiseGroup, $yearname, $yearArr);
+                }
+            } else {
+                
+                $yearArr = $yearWiseGroup[$yearname];
+                
+                $monthData = $yearArr['data'];
+                
+                $specificMonth = $monthData[$month_name];
+
+                if($specificMonth){
+                    if ($trn->transaction_type == 'INCOME') $specificMonth['income'] = $specificMonth['income'] + $trn->amount;
+                    if ($trn->transaction_type == 'EXPENSE') $specificMonth['expense'] = $specificMonth['expense'] + $trn->amount;
+                    $specificMonth = array_push_assoc($specificMonth, 'income', $specificMonth['income']);
+                    $specificMonth = array_push_assoc($specificMonth, 'expense', $specificMonth['expense']);
+                    $monthData = array_push_assoc($monthData, $month_name, $specificMonth);
+                    $yearArr = array_push_assoc($yearArr, 'data', $monthData);
+
+                    if ($trn->transaction_type == 'INCOME') $yearArr['income'] = $yearArr['income'] + $trn->amount;
+                    if ($trn->transaction_type == 'EXPENSE') $yearArr['expense'] = $yearArr['expense'] + $trn->amount;
+                    $yearArr = array_push_assoc($yearArr, 'income', $yearArr['income']);
+                    $yearArr = array_push_assoc($yearArr, 'expense', $yearArr['expense']);
+                    
+                    $yearWiseGroup = array_push_assoc($yearWiseGroup, $yearname, $yearArr);
+                } 
+
+            }
+        }
+
+        //dd($yearWiseGroup);
+
+        $sectionReloadRoute = $request->route()->getName();
+
+        if($request->ajax()){
+            return view('layouts.transactions.transaction-detail-accordion', [
+                'thDetails' => $yearWiseGroup,
+            ]);
+        }
+
+        return view('th-details', [
+            'thDetails' => $yearWiseGroup,
+            'displayType' => 'yearWiseSummary',
+            'sectionReloadRoute' => route($sectionReloadRoute),
         ]);
     }
 
@@ -349,6 +446,7 @@ class TrackingHistoryController extends Controller
 
         return view('th-details', [
             'thDetails' => $monthWiseGroup,
+            'displayType' => '',
             'sectionReloadRoute' => route($sectionReloadRoute, ['itemid' => $itemid, 'transactiontype' => $transactiontype]),
         ]);
     }
@@ -403,6 +501,7 @@ class TrackingHistoryController extends Controller
 
         return view('th-details', [
             'thDetails' => $dateWiseGroup,
+            'displayType' => '',
             'sectionReloadRoute' => route($sectionReloadRoute, ['year' => $year, 'monthno' => $monthno]),
         ]);
     }

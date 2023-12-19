@@ -142,7 +142,7 @@
 
     <!-- Yearly Tab -->
     <div class="tab-pane fade" id="messages-yearly">
-        <a href="{{ route('tracking.yearly', date('Y')) }}" class="btn btn-light btn-sm mb-2" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
+        <a href="{{ route('tracking.years.summary') }}" class="btn btn-light btn-sm mb-2" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
 
         <!-- Current Year Line Chart -->
         <div class="chart-container">
@@ -160,7 +160,7 @@
                                 <h5 class="mb-0">{{ $key }}</h5>
                             </div>
                             <div class="col-md-2 float-end text-end">
-                                <a href="{{ route('tracking.yearly' . $val['year']) }}" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
+                                <a href="{{ route('tracking.yearly', $val['year']) }}" title="{{ __('home.text.transaction.details.view') }}"><i class="far fa-eye"></i></a>
                             </div>
                         </div>
 

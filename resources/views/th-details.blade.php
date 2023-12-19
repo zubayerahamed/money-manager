@@ -7,9 +7,18 @@
             <div class="col-xl-12">
                 <input type="hidden" id="sections-reloader" value="{{ route('tracking.sections') }}" data-defined-route="{{ $sectionReloadRoute }}">
 
-                <h5 class="text-center">{{ __('transaction.details.page.title') }}</h5>
+                @if ($displayType == 'yearWiseSummary')
+                    <h5 class="text-center">Year wise transactions summary</h5>
+                @else
+                    <h5 class="text-center">{{ __('transaction.details.page.title') }}</h5>
+                @endif
+               
                 <div class="transaction-detail-accordion">
-                    @include('layouts.transactions.transaction-detail-accordion')
+                    @if ($displayType == 'yearWiseSummary')
+                        @include('layouts.transactions.transaction-detail-yearwise-summary-accordion')
+                    @else
+                        @include('layouts.transactions.transaction-detail-accordion')
+                    @endif
                 </div>
             </div>
             <!-- ./Transaction Details -->

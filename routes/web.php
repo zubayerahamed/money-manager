@@ -159,6 +159,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/details/month/{monthno}/{year}', [TrackingHistoryController::class, 'showMonthWiseTransactions'])->name('monthly');
         Route::get('/details/monthlygrouped/{itemid}/{transactiontype}', [TrackingHistoryController::class, 'showItemWiseMonthlyGroupedTotalTransactions'])->name('monthlygrouped');
         Route::get('/details/year/{year}', [TrackingHistoryController::class, 'showYearWiseTransactions'])->name('yearly');
+        Route::get('/details/years/summary', [TrackingHistoryController::class, 'showYearWiseTransactionSummary'])->name('years.summary');
         Route::get('/detail/{id}/edit', [TrackingHistoryController::class, 'editTrackingDetailPage'])->name('edit');
         Route::put('/detail/{id}/update', [TrackingHistoryController::class, 'updateTrackingDetail'])->name('update');
         Route::delete('/detail/{id}/delete', [TrackingHistoryController::class, 'deleteTrackingDetail'])->name('destroy');
