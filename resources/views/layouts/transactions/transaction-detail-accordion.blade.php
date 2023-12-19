@@ -7,7 +7,9 @@
             </div>
             <div class="col-md-2 float-end text-end">
                 <span style="color: green; font-weight: bold">{{ $val['income'] }}</span>
-                <span style="color: rgb(9, 31, 238); font-weight: bold">/</span>
+                @if ($val['income'] != '' && $val['expense'] != '')
+                    <span style="color: rgb(9, 31, 238); font-weight: bold">/</span>
+                @endif
                 <span style="color: red; font-weight: bold">{{ $val['expense'] }}</span>
             </div>
         </div>
@@ -19,15 +21,22 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $trn->id }}">
                             @if ($trn->transaction_type == 'INCOME')
-                                <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
+                                <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name . ' ' }}</b></span>
+                                @if ($val['expense'] == '')
+                                    <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                @endif
                             @elseif ($trn->transaction_type == 'EXPENSE')
                                 <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.expense.for') }} <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
+                                @if ($val['income'] == '')
+                                    <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                @endif
                             @else
                                 <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.transfer.from') }} <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
                             @endif
                         </button>
                     </h2>
 
+                    @if ($val['income'] != '' && $val['expense'] != '')
                     <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush">
                         <div class="accordion-body">
 
@@ -60,6 +69,7 @@
 
                         </div>
                     </div>
+                    @endif
 
                 </div>
             @endforeach

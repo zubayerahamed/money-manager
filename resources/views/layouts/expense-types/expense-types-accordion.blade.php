@@ -31,6 +31,10 @@
                     @endif
 
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
+                        <a href="{{ route('tracking.monthlygrouped', [$expenseType->id, 'EXPENSE']) }}" class="m-2 text-primary transaction-btn" title="View Details" data-title="Expense Details of {{ $expenseType->name }}">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        
                         <a href="{{ route('expense-type.edit', $expenseType->id) }}" class="m-2 text-primary transaction-btn" title="{{ __('expense-type.btn.edit-expense-type') }}" data-title="{{ __('expense-type.btn.edit-expense-type') }}">
                             <i class="fas fa-edit"></i>
                         </a>

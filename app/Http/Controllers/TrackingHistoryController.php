@@ -299,17 +299,20 @@ class TrackingHistoryController extends Controller
     }
 
 
-    public function showItemWiseMonthlyGroupedTotalTransactions($itemid, $transactiontype, $year, Request $request)
+    public function showItemWiseMonthlyGroupedTotalTransactions($itemid, $transactiontype, Request $request)
     {
 
         $searchColumn = 'expense_type';
+        $amountKey = 'expense';
+        $altAmountKey = 'income';
 
         if($transactiontype == 'INCOME'){
             $searchColumn = 'income_source';
+            $amountKey = 'income';
+            $altAmountKey = 'expense';
         } 
 
-        $allTransactions = TrackingHistory::where('year', '=', $year)
-            ->where('transaction_type', '=', $transactiontype)
+        $allTransactions = TrackingHistory::where('transaction_type', '=', $transactiontype)
             ->where($searchColumn, '=', $itemid)
             ->orderBy('transaction_date', 'desc')
             ->orderBy('id', 'desc')
@@ -319,16 +322,35 @@ class TrackingHistoryController extends Controller
 
         $currentTransactionMonth = "";
         foreach ($allTransactions->all() as $trn) {
-            if($currentTransactionMonth == ""){
-                $currentTransactionMonth = $trn->month;
-                $amount = $trn->amount;
-                array_push_assoc($monthWiseGroup, $trn->month, ['data' => [$trn], 'amount' => $amount]);
-            } else {
+            $month_name = date("F", mktime(0, 0, 0, $trn->month, 10)) . ', ' . $trn->year;
 
+            if($currentTransactionMonth == "" || $currentTransactionMonth != $month_name){
+                $currentTransactionMonth = $month_name;
+                $amount = $trn->amount;
+                $monthWiseGroup = array_push_assoc($monthWiseGroup, $month_name, ['data' => [$trn], $amountKey => $amount, $altAmountKey => '']);
+            } else {
+                $monthArr = $monthWiseGroup[$month_name];
+                $trnDataArr = $monthArr['data'];
+                $newAmount = $monthArr[$amountKey] + $trn->amount;
+                array_push($trnDataArr, $trn);
+                $monthArr = array_push_assoc($monthArr, 'data', $trnDataArr);
+                $monthArr = array_push_assoc($monthArr, $amountKey, $newAmount);
+                $monthWiseGroup = array_push_assoc($monthWiseGroup, $month_name, $monthArr);
             }
         }
 
-        dd($monthWiseGroup);
+        $sectionReloadRoute = $request->route()->getName();
+
+        if($request->ajax()){
+            return view('layouts.transactions.transaction-detail-accordion', [
+                'thDetails' => $monthWiseGroup,
+            ]);
+        }
+
+        return view('th-details', [
+            'thDetails' => $monthWiseGroup,
+            'sectionReloadRoute' => route($sectionReloadRoute, ['itemid' => $itemid, 'transactiontype' => $transactiontype]),
+        ]);
     }
 
     /**

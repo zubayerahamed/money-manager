@@ -31,6 +31,10 @@
                     @endif
 
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
+                        <a href="{{ route('tracking.monthlygrouped', [$incomeSource->id, 'INCOME']) }}" class="m-2 text-primary transaction-btn" title="View Details" data-title="Income Details of {{ $incomeSource->name }}">
+                            <i class="fas fa-eye"></i>
+                        </a>
+
                         <a href="{{ route('income-source.edit', $incomeSource->id) }}" class="m-2 text-primary transaction-btn" title="{{ __('income-source.btn.edit-income-source') }}" data-title="{{ __('income-source.btn.edit-income-source') }}">
                             <i class="fas fa-edit"></i>
                         </a>
