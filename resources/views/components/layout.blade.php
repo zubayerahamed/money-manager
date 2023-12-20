@@ -31,6 +31,7 @@
 
     <link href="{{ asset('/assets/css/cropper.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="{{ asset('/assets/css/bootstrap-iconpicker.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/assets/css/kit-custom.css') }}" rel="stylesheet" />
     <!-- ./Stylesheets -->
 
@@ -48,6 +49,10 @@
     <script src="{{ asset('/assets/js/d3_tooltip.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
     <script src="{{ asset('/assets/js/noty.min.js') }}"></script>
+    <script src="{{asset('/assets/js/moment/moment.min.js')}}"></script>
+	<script src="{{asset('/assets/js/pickers/daterangepicker.js')}}"></script>
+	<script src="{{asset('/assets/js/pickers/datepicker.min.js')}}"></script>
+	<script src="{{asset('/assets/js/bootstap-datepicker.js')}}"></script>
     <!-- ./Vendor JS files -->
 
     <!-- Custom Js Files -->
@@ -283,7 +288,6 @@
                     </div>
                 </div>
                 <!-- ./Modal body -->
-
             </div>
         </div>
     </div>

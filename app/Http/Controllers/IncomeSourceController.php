@@ -84,10 +84,11 @@ class IncomeSourceController extends Controller
      *
      * @return Renderable
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('layouts.income-sources.income-source-form', [
-            'incomeSource' => new IncomeSource()
+            'incomeSource' => new IncomeSource(),
+            'fromtransaction' => $request->get('fromtransaction')
         ]);
     }
 
@@ -107,6 +108,27 @@ class IncomeSourceController extends Controller
         $incomeSource = IncomeSource::create($requset->only([
             'name', 'icon', 'note', 'user_id'
         ]));
+
+        if($requset->get('fromtransaction')){
+            $route = route("do-transfer");
+            $modalTitle = "Do Transfer";
+            if($requset->get('fromtransaction') == 'INCOME') {
+                $route = route('add-income');
+                $modalTitle = "Add Income";
+            }
+            if($requset->get('fromtransaction') == 'EXPENSE') {
+                $route = route('add-expense');
+                $modalTitle = "Add Expense";
+            }
+
+            return $this->successWithReloadSectionsInModal(
+                null,
+                __('income-source.save.success', ['name' => $incomeSource->name]),
+                200,
+                $modalTitle,
+                $route
+            );
+        }
 
         if ($incomeSource) {
             return $this->successWithReloadSections(null, __('income-source.save.success', ['name' => $incomeSource->name]), 200, [

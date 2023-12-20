@@ -4,6 +4,19 @@
         @method('PUT')
     @endif
 
+    @if ($fromtransaction != null)
+    <div class="row mb-3">
+        <div class="col text-end">
+            <a  href="{{ $fromtransaction == 'INCOME' ? route('add-income') : ($fromtransaction == 'EXPENSE' ? route('add-expense') : route('do-transfer')) }}" 
+                class="btn btn-primary btn-sm transaction-btn" 
+                data-title="{{ $fromtransaction == 'INCOME' ? 'Add Income' : ($fromtransaction == 'EXPENSE' ? 'Add Expense' : 'Do Transfer') }}" 
+                type="button">Back To Transaction</a>
+        </div>
+    </div>
+    @endif
+
+    <input type="hidden" name="fromtransaction" value="{{ $fromtransaction == null ? "" : $fromtransaction }}"/>
+
     <i class="{{ $expenseType->id == null || $expenseType->icon == null ? 'fab fa-korvue' : $expenseType->icon }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
 
     <div class="row mb-3">

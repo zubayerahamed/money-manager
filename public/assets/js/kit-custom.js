@@ -9,6 +9,61 @@ var kit = kit || {};
 kit.ui = kit.ui || {};
 kit.ui.config = kit.ui.config || {};
 
+function datepickerInit(){
+	$.each($('.datepicker-date-format'), function(ind, elem){
+		var maxDate = undefined;
+		var minDate = undefined;
+
+		if($(elem).attr('maxDate')){
+			maxDate = $(elem).attr('maxDate')
+		}
+
+		if($(elem).attr('minDate')){
+			minDate = $(elem).attr('minDate')
+		}
+
+		new Datepicker(elem, {
+			container: '.content-inner',
+			buttonClass: 'btn btn-sm',
+			prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
+			nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
+			format: 'yyyy-mm-dd',
+			maxDate: maxDate,
+			minDate: minDate
+		});
+
+	});
+}
+
+function dateAndTimepickerInit(){
+
+	$.each($('.timepicker'), function(ind, elem){
+		$(elem).datetimepicker({
+			format: "HH:mm",   // LT, LTS
+			icons: {
+				up: "ph-caret-up",
+				down: "ph-caret-down"
+			}
+		});
+	});
+
+	$.each($('.datetimepicker'), function(ind, elem){
+		$(elem).datetimepicker({
+			useCurrent: false,
+			format: "ddd, DD-MMM-YYYY HH:mm:ss",  // L, LL
+			showTodayButton: true,
+			icons: {
+				next: "fa fa-chevron-right",
+				previous: "fa fa-chevron-left",
+				today: 'todayText',
+				up: "fa fa-chevron-up",
+				down: "fa fa-chevron-down"
+			}
+		});
+	});
+}
+
+
 kit.ui.config.loadPageData = function(){
 
     loadingMask2.show();
@@ -138,10 +193,18 @@ function submitForm(formEl, method, transactionData) {
         success: function (data) {
             loadingMask2.hide();
             showMessage(data.status, data.message, data.reload);
+
+            if(data.inmodal == true){
+                $('.transaction-modal-title').html(data.modaltitle);
+                modalWidget(data.url, 'transaction');
+                return;
+            }
+
             if (data.status == 'success') {
                 $(".transaction-form-wrapper").html("");
                 $('#transaction-modal').modal('hide');
             }
+
             if (data.reload == true) {
                 if (data.sections.length > 0) {
                     $.each(data.sections, function (ind, section) {
@@ -178,6 +241,9 @@ function modalWidget(url, elementClass) {
             $("." + elementClass + "-form-wrapper").html("");
             $('#' + elementClass + '-modal').modal('show');
             $("." + elementClass + "-form-wrapper").append(data);
+
+            datepickerInit();
+            dateAndTimepickerInit();
         },
         error: function (jqXHR, status, errorThrown) {
             loadingMask2.hide();
@@ -190,6 +256,8 @@ function modalWidget(url, elementClass) {
  * Load functions and init events when document is loaded
  */
 $(document).ready(function () {
+    datepickerInit();
+    dateAndTimepickerInit();
 
     $('body').on('click', '.transaction-btn', function (e) {
         e.preventDefault();

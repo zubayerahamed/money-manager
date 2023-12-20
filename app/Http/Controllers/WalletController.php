@@ -86,10 +86,11 @@ class WalletController extends Controller
      *
      * @return Renderable
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('layouts.wallets.wallet-form', [
-            'wallet' => new Wallet()
+            'wallet' => new Wallet(),
+            'fromtransaction' => $request->get('fromtransaction')
         ]);
     }
 
@@ -138,6 +139,27 @@ class WalletController extends Controller
 
                 Arhead::create($arhead);
             }
+        }
+
+        if($requset->get('fromtransaction')){
+            $route = route("do-transfer");
+            $modalTitle = "Do Transfer";
+            if($requset->get('fromtransaction') == 'INCOME') {
+                $route = route('add-income');
+                $modalTitle = "Add Income";
+            }
+            if($requset->get('fromtransaction') == 'EXPENSE') {
+                $route = route('add-expense');
+                $modalTitle = "Add Expense";
+            }
+
+            return $this->successWithReloadSectionsInModal(
+                null,
+                __('wallet.save.success', ['name' => $wallet->name]),
+                200,
+                $modalTitle,
+                $route
+            );
         }
 
         if ($wallet->exists) {

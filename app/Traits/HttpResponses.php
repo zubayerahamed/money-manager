@@ -45,6 +45,19 @@ trait HttpResponses
         ], $code);
     }
 
+    protected function successWithReloadSectionsInModal($data, $message = null, $code = 200, $modaltitle, $url)
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => $message,
+            'data' => $data,
+            'reload' => true,
+            'url' => $url,
+            'inmodal' => true,
+            'modaltitle' => $modaltitle,
+        ], $code);
+    }
+
     protected function reloadSectionsOnly($sections = [])
     {
         return response()->json([

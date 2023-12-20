@@ -35,7 +35,7 @@
                         <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') . '?fromtransaction=' . $transaction_type }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                             <option value="{{ $expenseType->id }}">{{ $expenseType->name }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('expense-type.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('expense-type.btn.create-expense-type') }}" title="{{ __('expense-type.btn.create-expense-type') }}" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('expense-type.create') . '?fromtransaction=' . $transaction_type }}" class="btn btn-light transaction-btn" data-title="{{ __('expense-type.btn.create-expense-type') }}" title="{{ __('expense-type.btn.create-expense-type') }}" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
@@ -65,7 +65,7 @@
                         <option value="{{ $wallet->id }}">{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') . '?fromtransaction=' . $transaction_type }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
@@ -79,7 +79,7 @@
                             <option value="{{ $incomeSource->id }}">{{ $incomeSource->name }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('income-source.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('income-source.btn.create-income-source') }}" title="{{ __('income-source.btn.create-income-source') }}" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('income-source.create') . '?fromtransaction=' . $transaction_type }}" class="btn btn-light transaction-btn" data-title="{{ __('income-source.btn.create-income-source') }}" title="{{ __('income-source.btn.create-income-source') }}" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
@@ -95,6 +95,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="col sm-6">
+            <div class="row mb-3">
+                <label class="form-label" for="transaction_date">{{ __('transaction.label.transaction_date') }}</label>
+                <div class="input-group">
+                    <input 	type="text" 
+                            name="transaction_date" 
+                            id="transaction_date" 
+                            class="form-control datepicker-date-format" 
+                            placeholder="yyyy-mm-dd format" 
+                            required="required"
+                            value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}">
+                    <span class="input-group-text">
+                        <i class="ph-calendar"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
 
         <div class="col sm-6">
             <div class="row mb-3">
