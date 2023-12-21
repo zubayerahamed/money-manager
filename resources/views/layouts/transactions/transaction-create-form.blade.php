@@ -9,7 +9,7 @@
             <div class="row mb-3">
                 <label class="form-label" for="amount">{{ __('transaction.label.amount') }}</label>
                 <div class="form-group">
-                    <input type="number" name="amount" id="amount" class="form-control" value="0.0" min="0" step="any" required>
+                    <input type="number" name="amount" id="amount" class="form-control" value="0" min="0" step="any" required>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <div class="row mb-3">
                 <label class="form-label" for="transaction_charge">{{ __('transaction.label.charge') }}</label>
                 <div class="form-group">
-                    <input type="number" name="transaction_charge" id="transaction_charge" class="form-control" value="0.0" min="0" step="any">
+                    <input type="number" name="transaction_charge" id="transaction_charge" class="form-control" value="0" min="0" step="any">
                 </div>
             </div>
         </div>
@@ -90,15 +90,6 @@
         <div class="col sm-6">
             <div class="row mb-3">
                 <label class="form-label" for="transaction_date">{{ __('transaction.label.transaction_date') }}</label>
-                <div class="form-group">
-                    <input type="date" name="transaction_date" id="transaction_date" class="form-control" value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="col sm-6">
-            <div class="row mb-3">
-                <label class="form-label" for="transaction_date">{{ __('transaction.label.transaction_date') }}</label>
                 <div class="input-group">
                     <input 	type="text" 
                             name="transaction_date" 
@@ -106,7 +97,7 @@
                             class="form-control datepicker-date-format" 
                             placeholder="yyyy-mm-dd format" 
                             required="required"
-                            value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}">
+                            value="{{ date('Y-m-d') }}" maxDate="{{ date('Y-m-d') }}">
                     <span class="input-group-text">
                         <i class="ph-calendar"></i>
                     </span>
@@ -118,9 +109,18 @@
         <div class="col sm-6">
             <div class="row mb-3">
                 <label class="form-label" for="transaction_tile">{{ __('transaction.label.transaction_time') }}</label>
-                <div class="form-group">
-                    <input type="time" name="transaction_time" id="transaction_time" class="form-control" value="{{ date('H:i') }}" required>
-                </div>
+                <div class="input-group time date-time-wrapper timepicker">
+					<input 	class="form-control" 
+							data-type="timepicker" 
+							id="transaction_time"
+							name="transaction_time" 
+							required="required"
+							value="{{ date('H:i') }}"/>
+                    <span class="input-group-text input-group-append input-group-addon">
+                        <i class="fa fa-clock"></i>
+                    </span>
+				</div>
+
             </div>
         </div>
 

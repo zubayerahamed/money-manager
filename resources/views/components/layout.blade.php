@@ -256,7 +256,7 @@
                 <!-- Footer -->
                 <div class="navbar navbar-sm navbar-footer border-top">
                     <div class="container-fluid justify-content-center">
-                        {!! systemsettingsNow('copyright_text') !!}
+                        {!! systemsettingsNow('copyright_text') . '&nbsp (version-7.0.0)' !!}
                     </div>
                 </div>
                 <!-- /Footer -->
@@ -270,7 +270,7 @@
     <!-- /Page content -->
 
     <!-- Transaction Modal -->
-    <div class="modal fade" id="transaction-modal">
+    <div class="modal fade" id="transaction-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 

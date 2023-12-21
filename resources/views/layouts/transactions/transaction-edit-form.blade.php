@@ -36,7 +36,7 @@
                         <option value="{{ $wallet->id }}" {{ $trackingHistory->from_wallet == $wallet->id ? 'selected' : '' }}>{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') . '?fromtransaction=' . $transaction_type . '&trnid=' . $trackingHistory->id }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
@@ -50,7 +50,7 @@
                             <option value="{{ $expenseType->id }}" {{ $trackingHistory->expense_type == $expenseType->id ? 'selected' : '' }}>{{ $expenseType->name }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('expense-type.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('expense-type.btn.create-expense-type') }}" title="{{ __('expense-type.btn.create-expense-type') }}" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('expense-type.create') . '?fromtransaction=' . $transaction_type . '&trnid=' . $trackingHistory->id }}" class="btn btn-light transaction-btn" data-title="{{ __('expense-type.btn.create-expense-type') }}" title="{{ __('expense-type.btn.create-expense-type') }}" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
@@ -66,7 +66,7 @@
                         <option value="{{ $wallet->id }}" {{ $trackingHistory->to_wallet == $wallet->id ? 'selected' : '' }}>{{ $wallet->name }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('wallet.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('wallet.create') . '?fromtransaction=' . $transaction_type . '&trnid=' . $trackingHistory->id }}" class="btn btn-light transaction-btn" data-title="{{ __('wallet.btn.create-wallet') }}" title="{{ __('wallet.btn.create-wallet') }}" type="button"><i class="fas fa-plus"></i></a>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
                             <option value="{{ $incomeSource->id }}" {{ $trackingHistory->income_source == $incomeSource->id ? 'selected' : '' }}>{{ $incomeSource->name }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('income-source.create') }}" class="btn btn-light transaction-btn" data-title="{{ __('income-source.btn.create-income-source') }}" title="{{ __('income-source.btn.create-income-source') }}" type="button"><i class="fas fa-plus"></i></a>
+                    <a href="{{ route('income-source.create') . '?fromtransaction=' . $transaction_type . '&trnid=' . $trackingHistory->id }}" class="btn btn-light transaction-btn" data-title="{{ __('income-source.btn.create-income-source') }}" title="{{ __('income-source.btn.create-income-source') }}" type="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         @endif
@@ -91,18 +91,36 @@
         <div class="col sm-6">
             <div class="row mb-3">
                 <label class="form-label" for="transaction_date">{{ __('transaction.label.transaction_date') }}</label>
-                <div class="form-group">
-                    <input type="date" name="transaction_date" id="transaction_date" class="form-control" value="{{ $trackingHistory->transaction_date }}" max="{{ date('Y-m-d') }}" required>
+                <div class="input-group">
+                    <input 	type="text" 
+                            name="transaction_date" 
+                            id="transaction_date" 
+                            class="form-control datepicker-date-format" 
+                            placeholder="yyyy-mm-dd format" 
+                            required="required"
+                            value="{{ $trackingHistory->transaction_date }}" maxDate="{{ date('Y-m-d') }}">
+                    <span class="input-group-text">
+                        <i class="ph-calendar"></i>
+                    </span>
                 </div>
             </div>
         </div>
 
         <div class="col sm-6">
             <div class="row mb-3">
-                <label class="form-label" for="transaction_time">{{ __('transaction.label.transaction_time') }}</label>
-                <div class="form-group">
-                    <input type="time" name="transaction_time" id="transaction_time" class="form-control" value="{{ $trackingHistory->transaction_time }}" required>
-                </div>
+                <label class="form-label" for="transaction_tile">{{ __('transaction.label.transaction_time') }}</label>
+                <div class="input-group time date-time-wrapper timepicker">
+					<input 	class="form-control" 
+							data-type="timepicker" 
+							id="transaction_time"
+							name="transaction_time" 
+							required="required"
+							value="{{ $trackingHistory->transaction_time }}"/>
+                    <span class="input-group-text input-group-append input-group-addon">
+                        <i class="fa fa-clock"></i>
+                    </span>
+				</div>
+
             </div>
         </div>
 

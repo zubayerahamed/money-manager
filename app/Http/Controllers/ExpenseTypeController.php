@@ -89,7 +89,8 @@ class ExpenseTypeController extends Controller
     {
         return view('layouts.expense-types.expense-type-form', [
             'expenseType' => new ExpenseType(),
-            'fromtransaction' => $request->get('fromtransaction')
+            'fromtransaction' => $request->get('fromtransaction'),
+            'trnId' => $request->get('trnid'),
         ]);
     }
 
@@ -111,6 +112,21 @@ class ExpenseTypeController extends Controller
         ]));
 
         if($requset->get('fromtransaction')){
+            // For transaction edit screen
+            if($requset->get('trnId') != null && $requset->get('trnId') != ''){
+                $route = route("tracking.edit", [$requset->get('trnId')]);
+                $modalTitle = "Edit transaction";
+    
+                return $this->successWithReloadSectionsInModal(
+                    null,
+                    __('expense-type.save.success', ['name' => $expenseType->name]),
+                    200,
+                    $modalTitle,
+                    $route
+                );
+            }
+
+            // For new transaction screen
             $route = route("do-transfer");
             $modalTitle = "Do Transfer";
             if($requset->get('fromtransaction') == 'INCOME') {

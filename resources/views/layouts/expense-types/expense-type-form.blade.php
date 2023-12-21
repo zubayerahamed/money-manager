@@ -7,15 +7,23 @@
     @if ($fromtransaction != null)
     <div class="row mb-3">
         <div class="col text-end">
+            @if ($trnId != null && $trnId != '')
+                <a  href="{{ route('tracking.edit', [$trnId]) }}" 
+                    class="btn btn-primary btn-sm transaction-btn" 
+                    data-title="Edit transaction" 
+                    type="button">Back To Transaction</a>
+            @else
             <a  href="{{ $fromtransaction == 'INCOME' ? route('add-income') : ($fromtransaction == 'EXPENSE' ? route('add-expense') : route('do-transfer')) }}" 
                 class="btn btn-primary btn-sm transaction-btn" 
                 data-title="{{ $fromtransaction == 'INCOME' ? 'Add Income' : ($fromtransaction == 'EXPENSE' ? 'Add Expense' : 'Do Transfer') }}" 
                 type="button">Back To Transaction</a>
+            @endif
         </div>
     </div>
     @endif
 
     <input type="hidden" name="fromtransaction" value="{{ $fromtransaction == null ? "" : $fromtransaction }}"/>
+    <input type="hidden" name="trnId" value="{{ $trnId == null ? "" : $trnId }}"/>
 
     <i class="{{ $expenseType->id == null || $expenseType->icon == null ? 'fab fa-korvue' : $expenseType->icon }} fa-2x" id="replacable-icon" style="padding: 10px; border: 1px solid #000; border-radius: 5px; margin-bottom: 10px;"></i>
 

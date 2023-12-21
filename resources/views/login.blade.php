@@ -57,6 +57,8 @@
                 <div class="text-center">
                     <a href="{{ route('password.request') }}">{{ __('login.btn.forgot.password') }}</a>
                 </div>
+
+                <span class="d-block text-muted mt-2 text-center">Version - 7.0.0</span>
             </div>
         </div>
     </form>

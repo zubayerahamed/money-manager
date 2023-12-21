@@ -29,7 +29,9 @@ function datepickerInit(){
 			nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
 			format: 'yyyy-mm-dd',
 			maxDate: maxDate,
-			minDate: minDate
+			minDate: minDate,
+            todayHighlight: true,
+            autoclose: true,
 		});
 
 	});
@@ -242,6 +244,8 @@ function modalWidget(url, elementClass) {
             $('#' + elementClass + '-modal').modal('show');
             $("." + elementClass + "-form-wrapper").append(data);
 
+
+
             datepickerInit();
             dateAndTimepickerInit();
         },
@@ -287,4 +291,5 @@ $(document).ready(function () {
         $(".select2").select2();
     }
 
+    
 });
