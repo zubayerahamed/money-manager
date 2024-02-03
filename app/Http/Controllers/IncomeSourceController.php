@@ -169,7 +169,9 @@ class IncomeSourceController extends Controller
         if ($incomeSources->isEmpty()) return $this->error(null, __('income-source.not.found'), 400);
 
         return view('layouts.income-sources.income-source-form', [
-            'incomeSource' => $incomeSources->first()
+            'incomeSource' => $incomeSources->first(),
+            'fromtransaction' => request()->get('fromtransaction'),
+            'trnId' => request()->get('trnid'),
         ]);
     }
 

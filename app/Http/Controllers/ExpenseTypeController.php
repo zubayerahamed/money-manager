@@ -170,7 +170,9 @@ class ExpenseTypeController extends Controller
         if ($expenseTypes->isEmpty()) return $this->error(null, __('expense-type.not.found'), 400);
 
         return view('layouts.expense-types.expense-type-form', [
-            'expenseType' => $expenseTypes->first()
+            'expenseType' => $expenseTypes->first(),
+            'fromtransaction' => request()->get('fromtransaction'),
+            'trnId' => request()->get('trnid'),
         ]);
     }
 

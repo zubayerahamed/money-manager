@@ -206,7 +206,11 @@ class WalletController extends Controller
         $wallets = Wallet::where('id', '=', $id)->get();
         if ($wallets->isEmpty()) return $this->error(null, __('wallet.not.found'), 400);
 
-        return view('layouts.wallets.wallet-form', ['wallet' => $wallets->first()]);
+        return view('layouts.wallets.wallet-form', [
+            'wallet' => $wallets->first(),
+            'fromtransaction' => request()->get('fromtransaction'),
+            'trnId' => request()->get('trnid'),
+        ]);
     }
 
     /**
