@@ -3,7 +3,7 @@
     <div class="row text-md-start text-center">
         <p>{{ __('budget.text.total-budget') }} : <span class="text-success">{{ $totalBudget }} {{ auth()->user()->currency }}</span></p>
         <p>{{ __('budget.text.total-spent') }} : <span class="text-danger">{{ $totalSpent }} {{ auth()->user()->currency }}</span></p>
-        <p>{{ __('budget.text.total-remaining') }} : <span class="text-success">{{ $totalBudget - $totalSpent > 0 ? $totalBudget - $totalSpent : 0 }} {{ auth()->user()->currency }}</span></p>
+        <p>{{ __('budget.text.total-remaining') }} : <span class="text-primary">{{ $totalBudget - $totalSpent > 0 ? $totalBudget - $totalSpent : 0 }} {{ auth()->user()->currency }}</span></p>
     </div>
 
     @if ($totalBudget != 0 or $totalSpent != 0)
@@ -28,17 +28,40 @@
 
             <h2 class="accordion-header">
                 <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $expenseType->id }}">
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center col-sm-12">
 
                         <div style="width: 70px; text-align: center;">
                             <i class="{{ $expenseType->icon }} fa-2x me-3"></i>
                         </div>
 
-                        <div>
+                        <div style="flex-grow: 1">
                             <div style="text-transform: uppercase; font-weight: bold;">{{ $expenseType->name }}</div>
                             <div class="text-muted fs-sm">
                                 @if ($expenseType->budget)
+                                    {{ __('budget.text.limit') }} : <span class="text-success">{{ $expenseType->budget }} {{ auth()->user()->currency }}</span>
+                                    <br/>
                                     {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent == null ? 0 : $expenseType->spent }} {{ auth()->user()->currency }}</span>
+                                    
+                                    <br/>
+                                    @if ($expenseType->remaining > 0)
+                                        {{ __('budget.text.remaining') }} :
+                                        <b class="text-success">{{ $expenseType->remaining }} {{ auth()->user()->currency }}</b>
+                                        <div class="progress" style="margin-top: 10px;">
+                                            <div class="progress-bar bg-teal" style="width: {{ $expenseType->percent }}%" aria-valuenow="{{ $expenseType->percent }}" aria-valuemin="0" aria-valuemax="100">{{ $expenseType->percent }}% complete</div>
+                                        </div>
+                                    @elseif ($expenseType->remaining == 0 && $expenseType->exced_amount == 0)
+                                        <div class="progress" style="margin-top: 10px;">
+                                            <div class="progress-bar bg-teal" style="width: {{ $expenseType->percent }}%" aria-valuenow="{{ $expenseType->percent }}" aria-valuemin="0" aria-valuemax="100">{{ $expenseType->percent }}% complete</div>
+                                        </div>
+                                    @else
+                                        {{ __('budget.text.remaining') }} :
+                                        <b class="text-primary">0 {{ auth()->user()->currency }}</b>
+                                        <div class="progress" style="margin-top: 10px;">
+                                            <div class="progress-bar bg-teal bg-danger" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                Limit exceeded {{ $expenseType->exced_amount }} {{ auth()->user()->currency }}
+                                            </div>
+                                        </div>
+                                    @endif
                                 @else
                                     {{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent == null ? 0 : $expenseType->spent }} {{ auth()->user()->currency }}</span>
                                 @endif
@@ -52,31 +75,6 @@
             <div id="flush_item{{ $expenseType->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush">
                 <div class="accordion-body">
                     <div class="col-md-12 text-center">
-
-                        @if ($expenseType->budget)
-                            <div class="col-md-12 text-center mb-2">
-                                <div>{{ __('budget.text.limit') }} : <span class="text-success">{{ $expenseType->budget }} {{ auth()->user()->currency }}</span></div>
-
-                                <div>{{ __('budget.text.spent') }} : <span class="text-danger">{{ $expenseType->spent == null ? 0 : $expenseType->spent }} {{ auth()->user()->currency }}</div>
-
-                                <div>
-                                    {{ __('budget.text.remaining') }} :
-                                    @if ($expenseType->remaining > 0)
-                                        <b class="text-success">{{ $expenseType->remaining }} {{ auth()->user()->currency }}</b>
-                                        <div class="progress" style="margin-top: 10px;">
-                                            <div class="progress-bar bg-teal" style="width: {{ $expenseType->percent }}%" aria-valuenow="{{ $expenseType->percent }}" aria-valuemin="0" aria-valuemax="100">{{ $expenseType->percent }}% complete</div>
-                                        </div>
-                                    @else
-                                        <b class="text-danger">0 {{ auth()->user()->currency }}</b>
-                                        <div class="progress" style="margin-top: 10px;">
-                                            <div class="progress-bar bg-teal bg-danger" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                Limit exceeded {{ $expenseType->exced_amount }} {{ auth()->user()->currency }}
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
 
                         <span class="badge border border-teal text-teal rounded-pill m-auto">
                             @if ($expenseType->budget)

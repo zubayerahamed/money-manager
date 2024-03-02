@@ -20,32 +20,35 @@
 
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $trn->id }}">
-                            @if ($trn->transaction_type == 'INCOME')
-                                <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name . ' ' }}</b></span>
-                                @if ($val['expense'] == '')
-                                    <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                            <div class="row">
+                                <div class="d-flex">
+                                    @if ($trn->transaction_type == 'INCOME')
+                                        <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name . ' ' }}</b></span>
+                                        @if ($val['expense'] == '')
+                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                        @endif
+                                    @elseif ($trn->transaction_type == 'EXPENSE')
+                                        <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.expense.for') }} <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
+                                        @if ($val['income'] == '')
+                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                        @endif
+                                    @else
+                                        <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.transfer.from') }} <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
+                                    @endif
+                                </div>
+                                @if ($trn->note != '')
+                                    <div class="row">
+                                        <span class="fw-semibold">{{ $trn->note }}</span>
+                                    </div>
                                 @endif
-                            @elseif ($trn->transaction_type == 'EXPENSE')
-                                <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.expense.for') }} <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
-                                @if ($val['income'] == '')
-                                    <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
-                                @endif
-                            @else
-                                <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.transfer.from') }} <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
-                            @endif
+                            </div>
                         </button>
                     </h2>
 
-                    @if ($val['income'] != '' && $val['expense'] != '')
+                   
                     <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush">
                         <div class="accordion-body">
-
-                            @if ($trn->note != '')
-                                <div class="col-md-12 text-center mb-2">
-                                    <span class="fw-semibold">{{ $trn->note }}</span>
-                                </div>
-                            @endif
-
+                            
                             <div class="col-md-12 text-center">
                                 <span class="badge border border-teal text-teal rounded-pill m-auto">
                                     <a href="{{ route('tracking.edit', $trn->id) }}" class="m-2 text-primary transaction-btn" title="Edit" data-title="{{ __('transaction.btn.edit-transaction') }}" title="{{ __('transaction.btn.edit-transaction') }}">
@@ -69,7 +72,6 @@
 
                         </div>
                     </div>
-                    @endif
 
                 </div>
             @endforeach
