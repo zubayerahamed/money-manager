@@ -10,7 +10,7 @@
             </div>
 
             <!-- Modal body -->
-            <div class="modal-body">
+            <div class="modal-body" style="max-height: 500px; overflow-y: scroll">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row g-0 glyphs">
@@ -9882,7 +9882,9 @@
 <script>
     $(document).ready(function() {
 
-        $('.icon-item').off('click').on('click', function() {
+        $('.icon-item').on('click', function(e) {
+            e.preventDefault();
+
             var classList = $(this).find('i').attr('class');
             classList = classList.replace(" me-3 fa-2x", "");
 

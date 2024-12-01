@@ -14,8 +14,10 @@ use App\Http\Controllers\PasswordResetLinkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SetupController;
+use App\Http\Controllers\SubExpenseTypeController;
 use App\Http\Controllers\TrackingHistoryController;
 use App\Http\Controllers\WalletController;
+use App\Models\SubExpenseType;
 use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\PasswordReset;
@@ -124,6 +126,21 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/section/header', [ExpenseTypeController::class, 'header'])->name('section.header');
         Route::get('/section/accordion', [ExpenseTypeController::class, 'accordion'])->name('section.accordion');
         Route::get('/sections/all', [ExpenseTypeController::class, 'reloadPageSections'])->name('sections');
+    });
+
+    // Sub Expense Type
+    Route::group([
+        'prefix' => 'sub-expense-type',
+        'as' => 'sub-expense-type.'
+    ], function () {
+        // Route::get('/{expense_type_id}/all', [SubExpenseTypeController::class, 'index'])->name('index');
+        Route::get('/{expense_type_id}', [SubExpenseTypeController::class, 'create'])->name('create');
+        Route::get('/{expense_type_id}/{id}/edit', [SubExpenseTypeController::class, 'edit'])->name('edit');
+        Route::post('/{expense_type_id}', [SubExpenseTypeController::class, 'store'])->name('store');
+        Route::put('/{expense_type_id}/{id}', [SubExpenseTypeController::class, 'update'])->name('update');
+        Route::delete('/{expense_type_id}/{id}', [SubExpenseTypeController::class, 'destroy'])->name('destroy');
+        Route::get('/section/accordion/{expense_type_id}', [SubExpenseTypeController::class, 'accordion'])->name('section.accordion');
+        Route::get('/section/{expense_type_id}/all', [SubExpenseTypeController::class, 'subexpenseslist'])->name('section.list');
     });
 
     // Budget

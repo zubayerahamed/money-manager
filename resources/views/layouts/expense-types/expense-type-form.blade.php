@@ -49,6 +49,13 @@
         </div>
     </div>
 
+    <div class="row mb-3">
+        <div class="d-flex align-items-center">
+            <input type="checkbox" id="active" name="active" {{ $expenseType->active ? 'checked' : '' }}>
+            <label class="ms-2" for="active">Active?</label>
+        </div>
+    </div>
+
     <div class="text-end">
         <button type="submit" class="btn btn-primary transaction-submit-btn">{{ __('common.btn.submit') }}<i class="ph-paper-plane-tilt ms-2"></i></button>
     </div>

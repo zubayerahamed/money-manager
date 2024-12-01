@@ -271,7 +271,7 @@
 
     <!-- Transaction Modal -->
     <div class="modal fade" id="transaction-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
 
                 <!-- Modal Header -->

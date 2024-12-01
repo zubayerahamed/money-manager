@@ -147,7 +147,7 @@ function openIconModal() {
 /**
  * Reload section with ajax request
  */
-function sectionReloadAjaxReq(section) {
+function sectionReloadAjaxReq(section, callbackfunction) {
     loadingMask2.show();
     $.ajax({
         url: section[1],
@@ -156,6 +156,7 @@ function sectionReloadAjaxReq(section) {
             loadingMask2.hide();
             $("." + section[0]).html("");
             $("." + section[0]).append(data);
+            if(callbackfunction) callbackfunction();
         },
         error: function (jqXHR, status, errorThrown) {
             loadingMask2.hide();

@@ -47,4 +47,9 @@ class TrackingHistory extends Model
     {
         return $this->belongsTo(ExpenseType::class, 'expense_type');
     }
+
+    public function details()
+    {
+        return $this->hasMany(TransactionHistoryDetail::class, 'tracking_history_id', 'id');
+    }
 }

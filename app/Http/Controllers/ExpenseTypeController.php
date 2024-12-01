@@ -66,7 +66,7 @@ class ExpenseTypeController extends Controller
      */
     public function index()
     {
-        $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
+        $expenseTypes = ExpenseType::with('subExpenseTypes')->orderBy('name', 'asc')->get();
 
         $totalExpense = DB::table('tracking_history')
             ->selectRaw("SUM(amount) as totalExpense")
@@ -87,8 +87,11 @@ class ExpenseTypeController extends Controller
      */
     public function create(Request $request)
     {
+        $expenseType = new ExpenseType();
+        $expenseType->active = true;
+
         return view('layouts.expense-types.expense-type-form', [
-            'expenseType' => new ExpenseType(),
+            'expenseType' => $expenseType,
             'fromtransaction' => $request->get('fromtransaction'),
             'trnId' => $request->get('trnid'),
         ]);
@@ -107,8 +110,10 @@ class ExpenseTypeController extends Controller
             'icon' => 'required'
         ]);
 
+        $requset['active'] = $requset->has('active') ? true : false;
+
         $expenseType = ExpenseType::create($requset->only([
-            'name', 'icon', 'note', 'user_id'
+            'name', 'icon', 'note', 'user_id', 'active'
         ]));
 
         if($requset->get('fromtransaction')){

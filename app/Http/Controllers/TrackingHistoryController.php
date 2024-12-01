@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Arhead;
 use App\Models\ExpenseType;
 use App\Models\IncomeSource;
+use App\Models\SubExpenseType;
 use App\Models\TrackingHistory;
+use App\Models\TransactionHistoryDetail;
 use App\Models\Wallet;
 use App\Traits\HttpResponses;
 use Illuminate\Contracts\Support\Renderable;
@@ -55,7 +57,7 @@ class TrackingHistoryController extends Controller
     public function addExpense()
     {
         $wallets = Wallet::orderBy('name', 'asc')->get();
-        $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
+        $expenseTypes = ExpenseType::with('subExpenseTypes')->orderBy('name', 'asc')->get();
 
         return view('layouts.transactions.transaction-create-form', [
             'expenseTypes' => $expenseTypes,
@@ -173,6 +175,24 @@ class TrackingHistoryController extends Controller
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 Arhead::create($arhead);
+
+                // Now create expense details
+                $expenseType = ExpenseType::with('subExpenseTypes')->where('id', '=', $incomingFields['expense_type'])->first();
+                if($expenseType != null){
+                    foreach($expenseType->subExpenseTypes as $se){
+                        $detail = new TransactionHistoryDetail();
+                        $detail->amount = $request->get('sub_expense_' . $se->id);
+                        $detail->transaction_date = $trackingHistory['transaction_date'];
+                        $detail->transaction_time = $trackingHistory['transaction_time'];
+                        $detail->sub_expense_type_id = $se->id;
+                        $detail->tracking_history_id = $trackingHistory->id;
+                        $detail->user_id = auth()->id();
+                        $detail->month = date('m', strtotime($trackingHistory['transaction_date']));
+                        $detail->year = date('Y', strtotime($trackingHistory['transaction_date']));
+                        $detail->save();
+                    }
+                }
+
             } else {
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['xdate'] = $trackingHistory['transaction_date'];

@@ -17,7 +17,8 @@ class ExpenseType extends Model
         'name',
         'icon',
         'note',
-        'user_id'
+        'user_id',
+        'active',
     ];
 
     public function getTotalExpenseAttribute()
@@ -35,5 +36,10 @@ class ExpenseType extends Model
     public function trackingHistory()
     {
         return $this->hasMany(TrackingHistory::class, 'expense_type', 'id');
+    }
+
+    public function subExpenseTypes()
+    {
+        return $this->hasMany(SubExpenseType::class, 'expense_type_id', 'id');
     }
 }

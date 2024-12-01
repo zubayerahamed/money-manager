@@ -34,7 +34,7 @@
                         <a href="{{ route('tracking.monthlygrouped', [$expenseType->id, 'EXPENSE']) }}" class="m-2 text-primary transaction-btn" title="View Details" data-title="Expense Details of {{ $expenseType->name }}">
                             <i class="fas fa-eye"></i>
                         </a>
-                        
+
                         <a href="{{ route('expense-type.edit', $expenseType->id) }}" class="m-2 text-primary transaction-btn" title="{{ __('expense-type.btn.edit-expense-type') }}" data-title="{{ __('expense-type.btn.edit-expense-type') }}">
                             <i class="fas fa-edit"></i>
                         </a>
@@ -52,6 +52,16 @@
                             </a>
                         </form>
                     </span>
+
+                    <span class="badge border border-teal text-teal rounded-pill m-auto">
+                        <a href="{{ route('sub-expense-type.create', ['expense_type_id' => $expenseType->id]) }}" class="m-2 text-primary transaction-btn" title="Add Sub Expense Type" data-title="Add Sub Expense Type">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </span>
+
+                    <div class="sub-expense-type-wrapper-{{ $expenseType->id }}">
+                        @include('layouts.sub-expense-types.sub-expense-types-accordion')
+                    </div>
 
                 </div>
             </div>
