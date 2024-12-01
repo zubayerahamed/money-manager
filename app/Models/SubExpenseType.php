@@ -16,4 +16,24 @@ class SubExpenseType extends Model
         'user_id',
         'expense_type_id',
     ];
+
+    // Temporary dynamic property
+    protected $attributes = [
+        'amount' => 0, // Default value
+    ];
+
+    // Add amount to appends to include it in queries
+    protected $appends = ['amount'];
+
+    // Getter for the amount
+    public function getAmountAttribute()
+    {
+        return $this->attributes['amount'];
+    }
+
+    // Setter for the amount
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = $value;
+    }
 }

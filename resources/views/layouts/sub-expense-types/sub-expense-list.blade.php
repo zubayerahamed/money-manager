@@ -6,7 +6,7 @@
         @foreach ($subExpenseTypes as $se)
             <div class="col-md-12 mb-1">
                 <div class="form-floating">
-                    <input type="number" class="form-control" placeholder="Placeholder" name="sub_expense_{{ $se->id }}" value="0">
+                    <input type="number" class="form-control" placeholder="Placeholder" name="sub_expense_{{ $se->id }}" value="{{ $se->amount }}">
                     <label>{{ $se->name }}</label>
                 </div>
             </div>

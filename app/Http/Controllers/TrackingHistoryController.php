@@ -534,7 +534,7 @@ class TrackingHistoryController extends Controller
      */
     public function editTrackingDetailPage($id)
     {
-        $trackingHistories = TrackingHistory::where('id', '=', $id)->get();
+        $trackingHistories = TrackingHistory::with('details')->where('id', '=', $id)->get();
         if ($trackingHistories->isEmpty()) return $this->error(null, __('transaction.not.found'), 400);
 
         $trackingHistory = $trackingHistories->get(0);
@@ -553,11 +553,21 @@ class TrackingHistoryController extends Controller
         } else if ($trackingHistory->transaction_type == 'EXPENSE') {
             $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
 
+            $subExpenseTypes = collect(); 
+            foreach($trackingHistory->details as $detail){
+                $se = SubExpenseType::where('id', '=', $detail->sub_expense_type_id)->first();
+                if($se != null){
+                    $se->amount = $detail->amount;
+                    $subExpenseTypes->push($se);
+                }
+            }
+
             return view('layouts.transactions.transaction-edit-form', [
                 'trackingHistory' => $trackingHistory,
                 'expenseTypes' => $expenseTypes,
                 'wallets' => $wallets,
-                'transaction_type' => 'EXPENSE'
+                'transaction_type' => 'EXPENSE',
+                'subExpenseTypes' => $subExpenseTypes
             ]);
         } else {
             return view('layouts.transactions.transaction-edit-form', [
@@ -678,6 +688,24 @@ class TrackingHistoryController extends Controller
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
 
                 Arhead::create($arhead);
+
+                // Now create expense details
+                $expenseType = ExpenseType::with('subExpenseTypes')->where('id', '=', $incomingFields['expense_type'])->first();
+                if($expenseType != null){
+                    foreach($expenseType->subExpenseTypes as $se){
+                        $detail = new TransactionHistoryDetail();
+                        $detail->amount = $request->get('sub_expense_' . $se->id);
+                        $detail->transaction_date = $trackingHistory['transaction_date'];
+                        $detail->transaction_time = $trackingHistory['transaction_time'];
+                        $detail->sub_expense_type_id = $se->id;
+                        $detail->tracking_history_id = $trackingHistory->id;
+                        $detail->user_id = auth()->id();
+                        $detail->month = date('m', strtotime($trackingHistory['transaction_date']));
+                        $detail->year = date('Y', strtotime($trackingHistory['transaction_date']));
+                        $detail->save();
+                    }
+                }
+
             } else {
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['xdate'] = $trackingHistory['transaction_date'];

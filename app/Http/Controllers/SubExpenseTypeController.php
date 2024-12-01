@@ -20,8 +20,13 @@ class SubExpenseTypeController extends Controller
     }
 
     public function subexpenseslist($expense_type_id){
+        $subExpenseTypes = SubExpenseType::where('expense_type_id', '=', $expense_type_id)->get();
+        foreach($subExpenseTypes as $se){
+            $se->amount = 0;
+        }
+
         return view('layouts.sub-expense-types.sub-expense-list', [
-            'subExpenseTypes' => SubExpenseType::where('expense_type_id', '=', $expense_type_id)->get(),
+            'subExpenseTypes' => $subExpenseTypes,
         ]);
     }
 
