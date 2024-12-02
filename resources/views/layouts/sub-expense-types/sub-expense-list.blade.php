@@ -2,12 +2,12 @@
     <h6 class="text-center text-muted m-0 mb-1">Sub Expenses</h6>
     <a href="#" class="btn btn-sm btn-primary col-12 mb-2 calculate-amounts">Calculate & Set</a>
 
-    <div class="row mb-3" style="max-height: 500px; overflow-y: auto">
+    <div class="row mb-3" style="max-height: 397px; overflow-y: auto">
 
         @foreach ($subExpenseTypes as $se)
             <div class="col-md-12 mb-1">
                 <div class="form-floating">
-                    <input type="number" class="form-control numeric-only sub-expense-amt" placeholder="Placeholder" name="sub_expense_{{ $se->id }}" value="{{ $se->amount }}">
+                    <input type="number" class="form-control numeric-only {{ $se->active ? '' : 'is-invalid' }} sub-expense-amt" placeholder="Placeholder" name="sub_expense_{{ $se->id }}" value="{{ $se->amount }}">
                     <label>{{ $se->name }}</label>
                 </div>
             </div>

@@ -141,6 +141,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::delete('/{expense_type_id}/{id}', [SubExpenseTypeController::class, 'destroy'])->name('destroy');
         Route::get('/section/accordion/{expense_type_id}', [SubExpenseTypeController::class, 'accordion'])->name('section.accordion');
         Route::get('/section/{tracking_history_id}/{expense_type_id}/all', [SubExpenseTypeController::class, 'sectionSubexpensesList'])->name('section.list');
+        Route::get('/details/monthlygrouped/{sub_expense_type_id}', [SubExpenseTypeController::class, 'showMonthlyGroupedTransactions'])->name('monthlygrouped');
     });
 
     // Budget
@@ -166,6 +167,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/do-transfer', [TrackingHistoryController::class, 'doTransfer'])->name('do-transfer');
         Route::post('/', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
     });
+
 
     // Tracking
     Route::group([

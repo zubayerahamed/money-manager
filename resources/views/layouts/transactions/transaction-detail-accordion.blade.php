@@ -1,3 +1,6 @@
+@if (count($thDetails) == 0)
+    <h2 class="text-center m-0">Transactions are not available</h2>
+@endif
 @foreach ($thDetails as $key => $val)
     <div class="card">
 
@@ -14,7 +17,7 @@
             </div>
         </div>
 
-        <div class="accordion accordion-flush" id="accordion_flush">
+        <div class="accordion accordion-flush" id="accordion_flush_detail">
             @foreach ($val['data'] as $trn)
                 <div class="accordion-item">
 
@@ -46,7 +49,7 @@
                     </h2>
 
                    
-                    <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush">
+                    <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush_detail">
                         <div class="accordion-body">
                             
                             <div class="col-md-12 text-center">

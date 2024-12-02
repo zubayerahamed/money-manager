@@ -46,7 +46,9 @@
                             <select class="form-control" name="expense_type" id="expense_type" required>
                                 <option value="">-- Select Expense Type --</option>
                                 @foreach ($expenseTypes as $expenseType)
-                                    <option value="{{ $expenseType->id }}">{{ $expenseType->name }}</option>
+                                    @if ($expenseType->active)
+                                        <option value="{{ $expenseType->id }}">{{ $expenseType->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                             <a href="{{ route('expense-type.create') . '?fromtransaction=' . $transaction_type }}" class="btn btn-light transaction-btn" data-title="{{ __('expense-type.btn.create-expense-type') }}" title="{{ __('expense-type.btn.create-expense-type') }}" type="button"><i class="fas fa-plus"></i></a>

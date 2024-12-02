@@ -19,9 +19,9 @@ class SubExpenseType extends Model
     ];
 
     // Temporary dynamic property
-    protected $attributes = [
-        'amount' => 0, // Default value
-    ];
+    // protected $attributes = [
+    //     'amount' => 0, // Default value
+    // ];
 
     // Add amount to appends to include it in queries
     protected $appends = ['amount'];
@@ -48,4 +48,5 @@ class SubExpenseType extends Model
 
         return $totalExpense->isEmpty() ? 0 : $totalExpense->get(0)->totalExpense;
     }
+
 }

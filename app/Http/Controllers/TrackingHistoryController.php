@@ -180,16 +180,19 @@ class TrackingHistoryController extends Controller
                 $expenseType = ExpenseType::with('subExpenseTypes')->where('id', '=', $incomingFields['expense_type'])->first();
                 if($expenseType != null){
                     foreach($expenseType->subExpenseTypes as $se){
-                        $detail = new TransactionHistoryDetail();
-                        $detail->amount = $request->get('sub_expense_' . $se->id);
-                        $detail->transaction_date = $trackingHistory['transaction_date'];
-                        $detail->transaction_time = $trackingHistory['transaction_time'];
-                        $detail->sub_expense_type_id = $se->id;
-                        $detail->tracking_history_id = $trackingHistory->id;
-                        $detail->user_id = auth()->id();
-                        $detail->month = date('m', strtotime($trackingHistory['transaction_date']));
-                        $detail->year = date('Y', strtotime($trackingHistory['transaction_date']));
-                        $detail->save();
+                        $amt = $request->get('sub_expense_' . $se->id);
+                        if($amt != null && $amt > 0){
+                            $detail = new TransactionHistoryDetail();
+                            $detail->amount = $amt;
+                            $detail->transaction_date = $trackingHistory['transaction_date'];
+                            $detail->transaction_time = $trackingHistory['transaction_time'];
+                            $detail->sub_expense_type_id = $se->id;
+                            $detail->tracking_history_id = $trackingHistory->id;
+                            $detail->user_id = auth()->id();
+                            $detail->month = date('m', strtotime($trackingHistory['transaction_date']));
+                            $detail->year = date('Y', strtotime($trackingHistory['transaction_date']));
+                            $detail->save();
+                        }
                     }
                 }
 
@@ -415,7 +418,6 @@ class TrackingHistoryController extends Controller
         ]);
     }
 
-
     public function showItemWiseMonthlyGroupedTotalTransactions($itemid, $transactiontype, Request $request)
     {
 
@@ -553,14 +555,16 @@ class TrackingHistoryController extends Controller
         } else if ($trackingHistory->transaction_type == 'EXPENSE') {
             $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
 
-            $subExpenseTypes = collect(); 
-            foreach($trackingHistory->details as $detail){
-                $se = SubExpenseType::where('id', '=', $detail->sub_expense_type_id)->first();
-                if($se != null){
+            $subExpenseTypes = SubExpenseType::where('expense_type_id', '=', $trackingHistory->expense_type)->get();
+            foreach($subExpenseTypes as $se){
+                $detail = TransactionHistoryDetail::where('sub_expense_type_id', '=', $se->id)->where('tracking_history_id', '=', $trackingHistory->id)->first();
+                if($detail != null){
                     $se->amount = $detail->amount;
-                    $subExpenseTypes->push($se);
+                } else {
+                    $se->amount = 0;
                 }
             }
+            $subExpenseTypes = $subExpenseTypes->sortByDesc('active');
 
             return view('layouts.transactions.transaction-edit-form', [
                 'trackingHistory' => $trackingHistory,
@@ -693,16 +697,19 @@ class TrackingHistoryController extends Controller
                 $expenseType = ExpenseType::with('subExpenseTypes')->where('id', '=', $incomingFields['expense_type'])->first();
                 if($expenseType != null){
                     foreach($expenseType->subExpenseTypes as $se){
-                        $detail = new TransactionHistoryDetail();
-                        $detail->amount = $request->get('sub_expense_' . $se->id);
-                        $detail->transaction_date = $trackingHistory['transaction_date'];
-                        $detail->transaction_time = $trackingHistory['transaction_time'];
-                        $detail->sub_expense_type_id = $se->id;
-                        $detail->tracking_history_id = $trackingHistory->id;
-                        $detail->user_id = auth()->id();
-                        $detail->month = date('m', strtotime($trackingHistory['transaction_date']));
-                        $detail->year = date('Y', strtotime($trackingHistory['transaction_date']));
-                        $detail->save();
+                        $amt = $request->get('sub_expense_' . $se->id);
+                        if($amt != null && $amt > 0){
+                            $detail = new TransactionHistoryDetail();
+                            $detail->amount = $amt;
+                            $detail->transaction_date = $trackingHistory['transaction_date'];
+                            $detail->transaction_time = $trackingHistory['transaction_time'];
+                            $detail->sub_expense_type_id = $se->id;
+                            $detail->tracking_history_id = $trackingHistory->id;
+                            $detail->user_id = auth()->id();
+                            $detail->month = date('m', strtotime($trackingHistory['transaction_date']));
+                            $detail->year = date('Y', strtotime($trackingHistory['transaction_date']));
+                            $detail->save();
+                        }
                     }
                 }
 

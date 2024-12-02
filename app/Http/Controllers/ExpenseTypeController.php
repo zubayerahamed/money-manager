@@ -200,8 +200,10 @@ class ExpenseTypeController extends Controller
             'icon' => 'required'
         ]);
 
+        $requset['active'] = $requset->has('active') ? true : false;
+
         $updated = $expenseType->update($requset->only([
-            'name', 'icon', 'note', 'user_id'
+            'name', 'icon', 'note', 'user_id', 'active'
         ]));
 
         if ($updated) {

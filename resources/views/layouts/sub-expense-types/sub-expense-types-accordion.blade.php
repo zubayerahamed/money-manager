@@ -6,6 +6,9 @@
                     @foreach ($expenseType->subExpenseTypes as $subExpenseType)
                         <tr>
                             <td style="width: 15px; text-align: left;">
+                                <a href="{{ route('sub-expense-type.monthlygrouped', ['sub_expense_type_id' => $subExpenseType->id]) }}" class="m-2 text-primary transaction-btn" title="View Details" data-title="Expense Details of {{ $subExpenseType->name }}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 <form id="form-id-sub{{ $subExpenseType->id }}"
                                       action="{{ route('sub-expense-type.destroy', ['expense_type_id' => $expenseType->id, 'id' => $subExpenseType->id]) }}"
                                       method="POST" style="display: inline-block;">
@@ -21,14 +24,14 @@
                             </td>
                             <td style="text-align: left; font-weight: bold">
                                 <a href="{{ route('sub-expense-type.edit', ['expense_type_id' => $subExpenseType->expense_type_id, 'id' => $subExpenseType->id]) }}"
-                                   class="transaction-btn {{ $subExpenseType->active ? 'text-success' : 'text-danger' }}"
+                                   class="transaction-btn text-muted"
                                    title="Edit Sub Expense Type"
                                    data-title="Edit Sub Expense Type">
                                     <span>
                                         {{ $subExpenseType->name }}
                                     </span>
                                     <div class="text-muted fs-sm">
-                                        <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $subExpenseType->totalExpense == null ? 0 : $subExpenseType->totalExpense }} {{ auth()->user()->currency }}</span>
+                                        <span class="d-inline-block {{ $subExpenseType->active ? 'bg-primary' : 'bg-danger' }} rounded-pill p-1 me-1"></span> <span>{{ $subExpenseType->totalExpense == null ? 0 : $subExpenseType->totalExpense }} {{ auth()->user()->currency }}</span>
                                     </div>
                                 </a>
                             </td>

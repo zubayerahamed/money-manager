@@ -12,7 +12,7 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $expenseType->name }}</div>
                         <div class="text-muted fs-sm">
-                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $expenseType->totalExpense == null ? 0 : $expenseType->totalExpense }} {{ auth()->user()->currency }}</span>
+                            <span class="d-inline-block rounded-pill p-1 me-1 {{ $expenseType->active? 'bg-primary' : 'bg-danger' }}"></span> <span>{{ $expenseType->totalExpense == null ? 0 : $expenseType->totalExpense }} {{ auth()->user()->currency }}</span>
                         </div>
                     </div>
 
