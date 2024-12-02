@@ -2,6 +2,7 @@
     @method('PUT')
     @csrf
 
+    <input type="hidden" id="tracking_history_id" value="{{ $trackingHistory->id }}"/>
     <input type="hidden" name="transaction_type" value="{{ $transaction_type }}" />
 
     <div class="row">
@@ -136,7 +137,7 @@
             </div>
 
             <div class="text-end">
-                <button type="submit" class="btn btn-primary transaction-submit-btn">{{ __('common.btn.submit') }}<i class="ph-paper-plane-tilt ms-2"></i></button>
+                <button type="submit" class="btn btn-primary transaction-submit-btn mb-2">{{ __('common.btn.submit') }}<i class="ph-paper-plane-tilt ms-2"></i></button>
             </div>
         </div>
 
@@ -158,6 +159,7 @@
         $('#expense_type').on('change', function() {
 
             var expenseType = $(this).val();
+            var tracking_history_id = $('#tracking_history_id').val();
             
             if(expenseType == undefined || expenseType == null || expenseType == '') {
                 $('.xub-expenses-wrapper').addClass('d-none');
@@ -166,8 +168,9 @@
                 return;
             } 
 
-            var url = '{{ route('sub-expense-type.section.list', ['expense_type_id' => ':expenseType']) }}';
+            var url = '{{ route('sub-expense-type.section.list', ['tracking_history_id' => ':tracking_history_id', 'expense_type_id' => ':expenseType']) }}';
             url = url.replace(':expenseType', expenseType);
+            url = url.replace(':tracking_history_id', tracking_history_id);
 
             sectionReloadAjaxReq(['xub-expenses-wrapper', url]);
 

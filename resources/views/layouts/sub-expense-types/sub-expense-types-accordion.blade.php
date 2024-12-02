@@ -23,7 +23,13 @@
                                 <a href="{{ route('sub-expense-type.edit', ['expense_type_id' => $subExpenseType->expense_type_id, 'id' => $subExpenseType->id]) }}"
                                    class="transaction-btn {{ $subExpenseType->active ? 'text-success' : 'text-danger' }}"
                                    title="Edit Sub Expense Type"
-                                   data-title="Edit Sub Expense Type">{{ $subExpenseType->name }}
+                                   data-title="Edit Sub Expense Type">
+                                    <span>
+                                        {{ $subExpenseType->name }}
+                                    </span>
+                                    <div class="text-muted fs-sm">
+                                        <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $subExpenseType->totalExpense == null ? 0 : $subExpenseType->totalExpense }} {{ auth()->user()->currency }}</span>
+                                    </div>
                                 </a>
                             </td>
                         </tr>

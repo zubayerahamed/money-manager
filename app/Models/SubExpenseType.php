@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\FilterByuser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class SubExpenseType extends Model
 {
@@ -35,5 +36,16 @@ class SubExpenseType extends Model
     public function setAmountAttribute($value)
     {
         $this->attributes['amount'] = $value;
+    }
+
+    public function getTotalExpenseAttribute()
+    {
+        $totalExpense = DB::table('transaction_history_details')
+            ->selectRaw("SUM(amount) as totalExpense")
+            ->where('sub_expense_type_id', '=', $this->id)
+            ->where('user_id', '=', auth()->id())
+            ->get();
+
+        return $totalExpense->isEmpty() ? 0 : $totalExpense->get(0)->totalExpense;
     }
 }

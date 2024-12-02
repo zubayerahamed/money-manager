@@ -140,7 +140,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::put('/{expense_type_id}/{id}', [SubExpenseTypeController::class, 'update'])->name('update');
         Route::delete('/{expense_type_id}/{id}', [SubExpenseTypeController::class, 'destroy'])->name('destroy');
         Route::get('/section/accordion/{expense_type_id}', [SubExpenseTypeController::class, 'accordion'])->name('section.accordion');
-        Route::get('/section/{expense_type_id}/all', [SubExpenseTypeController::class, 'subexpenseslist'])->name('section.list');
+        Route::get('/section/{tracking_history_id}/{expense_type_id}/all', [SubExpenseTypeController::class, 'sectionSubexpensesList'])->name('section.list');
     });
 
     // Budget

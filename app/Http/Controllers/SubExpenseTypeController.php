@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ExpenseType;
 use App\Models\SubExpenseType;
+use App\Models\TransactionHistoryDetail;
 use App\Rules\IsCompositeUnique;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -19,10 +20,15 @@ class SubExpenseTypeController extends Controller
         $this->section_accordion = ['expense-types-accordion', route('expense-type.section.accordion')];
     }
 
-    public function subexpenseslist($expense_type_id){
+    public function sectionSubexpensesList($tracking_history_id, $expense_type_id){
         $subExpenseTypes = SubExpenseType::where('expense_type_id', '=', $expense_type_id)->get();
         foreach($subExpenseTypes as $se){
-            $se->amount = 0;
+            $detail = TransactionHistoryDetail::where('sub_expense_type_id', '=', $se->id)->where('tracking_history_id', '=', $tracking_history_id)->first();
+            if($detail != null){
+                $se->amount = $detail->amount;
+            } else {
+                $se->amount = 0;
+            }
         }
 
         return view('layouts.sub-expense-types.sub-expense-list', [
