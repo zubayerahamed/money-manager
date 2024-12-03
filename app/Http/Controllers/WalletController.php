@@ -169,6 +169,10 @@ class WalletController extends Controller
                 $route = route('add-expense');
                 $modalTitle = "Add Expense";
             }
+            if($requset->get('fromtransaction') == 'LOAN') {
+                $route = route('get-loan');
+                $modalTitle = "Get Loan";
+            }
 
             return $this->successWithReloadSectionsInModal(
                 null,

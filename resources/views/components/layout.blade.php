@@ -218,7 +218,12 @@
                                 <div class="d-none d-md-block ms-2">{{ __('transaction.btn.do-transfer') }}</div>
                             </a>
 
-                            <a href="#" class="btn btn-light text-warning" onclick="location.reload()" title="{{ __('transaction.btn.reload-page') }}">
+                            <a href="{{ route('get-loan') }}" class="transaction-btn btn btn-light text-warning" data-title="Get Loan" title="Get Loan">
+                                <i class="fas fa-car-crash"></i>
+                                <div class="d-none d-md-block ms-2">Get Loan</div>
+                            </a>
+
+                            <a href="#" class="btn btn-light text-indigo" onclick="location.reload()" title="{{ __('transaction.btn.reload-page') }}">
                                 <i class="fas fa-sync-alt"></i>
                                 <div class="d-none d-md-block ms-2">{{ __('transaction.btn.reload-page') }}</div>
                             </a>

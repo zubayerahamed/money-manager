@@ -165,6 +165,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/add-income', [TrackingHistoryController::class, 'addIncome'])->name('add-income');
         Route::get('/add-expense', [TrackingHistoryController::class, 'addExpense'])->name('add-expense');
         Route::get('/do-transfer', [TrackingHistoryController::class, 'doTransfer'])->name('do-transfer');
+        Route::get('/get-loan', [TrackingHistoryController::class, 'getLoan'])->name('get-loan');
         Route::post('/', [TrackingHistoryController::class, 'doTransaction'])->name('transaction');
     });
 

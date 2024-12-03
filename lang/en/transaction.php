@@ -10,6 +10,8 @@ return [
 
     'income.add.success' => 'Income added successfully',
     'income.update.success' => 'Income updated successfully',
+    'loan.add.success' => 'Loan added successfully',
+    'loan.update.success' => 'Loan updated successfully',
     'expense.add.success' => 'Expense added successfully',
     'expense.update.success' => 'Expense updated successfully',
     'transfer.add.success' => 'Transfered successfully',
@@ -20,6 +22,7 @@ return [
     'not.found' => 'Transaction not found',
 
     'btn.add-income' => 'Add income',
+    'btn.add-loan' => 'Get loan',
     'btn.add-expense' => 'Add expense',
     'btn.do-transfer' => 'Do transfer',
     'btn.reload-page' => 'Reload page',
@@ -38,6 +41,7 @@ return [
 
     'details.page.title' => 'Transaction Details',
     'details.income.from' => 'income from',
+    'details.loan.from' => 'loan from',
     'details.expense.for' => 'expense for',
     'details.transfer.from' => 'transfer from',
 ];

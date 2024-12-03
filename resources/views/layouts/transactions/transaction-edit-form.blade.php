@@ -61,7 +61,7 @@
                 @endif
             @endif
 
-            @if ($transaction_type == 'INCOME' || $transaction_type == 'TRANSFER')
+            @if ($transaction_type == 'INCOME' || $transaction_type == 'TRANSFER' || $transaction_type == 'LOAN')
                 <div class="row mb-3">
                     <label class="form-label" for="to_wallet">{{ __('transaction.label.to_wallet') }}</label>
                     <div class="input-group">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
 
-                @if ($transaction_type == 'INCOME')
+                @if ($transaction_type == 'INCOME' || $transaction_type == 'LOAN')
                     <div class="row mb-3">
                         <label class="form-label" for="income_source">{{ __('transaction.label.income_source') }}</label>
                         <div class="input-group">

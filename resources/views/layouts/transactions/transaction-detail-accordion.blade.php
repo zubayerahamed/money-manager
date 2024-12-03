@@ -30,6 +30,11 @@
                                         @if ($val['expense'] == '')
                                             <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
                                         @endif
+                                    @elseif ($trn->transaction_type == 'LOAN')
+                                        <span class="text-warning"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.loan.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name . ' ' }}</b></span>
+                                        @if ($val['expense'] == '')
+                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                        @endif
                                     @elseif ($trn->transaction_type == 'EXPENSE')
                                         <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.expense.for') }} <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
                                         @if ($val['income'] == '')

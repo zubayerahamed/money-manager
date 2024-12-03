@@ -12,7 +12,9 @@
                     <div>
                         <div style="text-transform: uppercase; font-weight: bold;">{{ $incomeSource->name }}</div>
                         <div class="text-muted fs-sm">
-                            <span class="d-inline-block bg-primary rounded-pill p-1 me-1"></span> <span>{{ $incomeSource->totalIncome == null ? 0 : $incomeSource->totalIncome }} {{ auth()->user()->currency }}</span>
+                            <span class="d-inline-block bg-success rounded-pill p-1 me-1"></span> <span>{{ $incomeSource->totalIncome == null ? 0 : $incomeSource->totalIncome }} {{ auth()->user()->currency }}</span>
+                            &nbsp; | &nbsp;
+                            <span class="d-inline-block bg-warning rounded-pill p-1 me-1"></span> <span>{{ $incomeSource->totalLoan == null ? 0 : $incomeSource->totalLoan }} {{ auth()->user()->currency }}</span>
                         </div>
                     </div>
 
@@ -31,7 +33,11 @@
                     @endif
 
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
-                        <a href="{{ route('tracking.monthlygrouped', [$incomeSource->id, 'INCOME']) }}" class="m-2 text-primary transaction-btn" title="View Details" data-title="Income Details of {{ $incomeSource->name }}">
+                        <a href="{{ route('tracking.monthlygrouped', [$incomeSource->id, 'INCOME']) }}" class="m-2 text-success transaction-btn" title="View Income Details" data-title="Income Details of {{ $incomeSource->name }}">
+                            <i class="fas fa-eye"></i>
+                        </a>
+
+                        <a href="{{ route('tracking.monthlygrouped', [$incomeSource->id, 'LOAN']) }}" class="m-2 text-warning transaction-btn" title="View Loan Details" data-title="Loan Details of {{ $incomeSource->name }}">
                             <i class="fas fa-eye"></i>
                         </a>
 

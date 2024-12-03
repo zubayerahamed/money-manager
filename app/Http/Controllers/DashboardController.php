@@ -69,12 +69,14 @@ class DashboardController extends Controller
                 $currentTrnMonth = $trn->month;     // Set the transaction record month to current month variable for track loop
 
                 $income = $trn->transaction_type == 'INCOME' ? $trn->amount : 0;
+                $loan = $trn->transaction_type == 'LOAN' ? $trn->amount : 0;
                 $expense = $trn->transaction_type == 'EXPENSE' ? $trn->amount : 0;
                 $trancharge = $trn->transaction_charge;
                 $saving = $income - $expense - $trancharge;
 
                 $monthWiseGroup = array_push_assoc($monthWiseGroup, $month_name, [
                     'income' => $income,
+                    'loan' => $loan,
                     'expense' => $expense,
                     'saving' => $saving,
                     'trancharge' => $trancharge,
@@ -85,12 +87,14 @@ class DashboardController extends Controller
 
                 // Update the previous values
                 if ($trn->transaction_type == 'INCOME') $monthData['income'] = $monthData['income'] + $trn->amount;
+                if ($trn->transaction_type == 'LOAN') $monthData['loan'] = $monthData['loan'] + $trn->amount;
                 if ($trn->transaction_type == 'EXPENSE') $monthData['expense'] = $monthData['expense'] + $trn->amount;
                 $monthData['trancharge'] = $monthData['trancharge'] + $trn->transaction_charge;
                 $monthData['saving'] = $monthData['income'] - $monthData['expense'] - $monthData['trancharge'];
 
                 // Replacing previous values with new values
                 $monthData = array_push_assoc($monthData, 'income', $monthData['income']);
+                $monthData = array_push_assoc($monthData, 'loan', $monthData['loan']);
                 $monthData = array_push_assoc($monthData, 'expense', $monthData['expense']);
                 $monthData = array_push_assoc($monthData, 'saving', $monthData['saving']);
                 $monthData = array_push_assoc($monthData, 'trancharge', $monthData['trancharge']);
@@ -112,12 +116,14 @@ class DashboardController extends Controller
                     $currentTrnYear = $trn->year;
 
                     $income = $trn->transaction_type == 'INCOME' ? $trn->amount : 0;
+                    $loan = $trn->transaction_type == 'LOAN' ? $trn->amount : 0;
                     $expense = $trn->transaction_type == 'EXPENSE' ? $trn->amount : 0;
                     $trancharge = $trn->transaction_charge;
                     $saving = $income - $expense - $trancharge;
 
                     $yearWiseGroup = array_push_assoc($yearWiseGroup, $currentTrnYear, [
                         'income' => $income,
+                        'loan' => $loan,
                         'expense' => $expense,
                         'saving' => $saving,
                         'trancharge' => $trancharge,
@@ -128,12 +134,14 @@ class DashboardController extends Controller
 
                     // Update the previous values
                     if ($trn->transaction_type == 'INCOME') $yearData['income'] = $yearData['income'] + $trn->amount;
+                    if ($trn->transaction_type == 'LOAN') $yearData['loan'] = $yearData['loan'] + $trn->amount;
                     if ($trn->transaction_type == 'EXPENSE') $yearData['expense'] = $yearData['expense'] + $trn->amount;
                     $yearData['trancharge'] = $yearData['trancharge'] + $trn->transaction_charge;
                     $yearData['saving'] = $yearData['income'] - $yearData['expense'] - $yearData['trancharge'];
 
                     // Replacing previous values with new values
                     $yearData = array_push_assoc($yearData, 'income', $yearData['income']);
+                    $yearData = array_push_assoc($yearData, 'loan', $yearData['loan']);
                     $yearData = array_push_assoc($yearData, 'expense', $yearData['expense']);
                     $yearData = array_push_assoc($yearData, 'saving', $yearData['saving']);
                     $yearData = array_push_assoc($yearData, 'trancharge', $yearData['trancharge']);

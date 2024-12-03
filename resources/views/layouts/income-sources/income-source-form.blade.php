@@ -13,9 +13,9 @@
                     data-title="Edit transaction" 
                     type="button">Back To Transaction</a>
             @else
-            <a  href="{{ $fromtransaction == 'INCOME' ? route('add-income') : ($fromtransaction == 'EXPENSE' ? route('add-expense') : route('do-transfer')) }}" 
+            <a  href="{{ $fromtransaction == 'INCOME' ? route('add-income') : ($fromtransaction == 'EXPENSE' ? route('add-expense') : ($fromtransaction == 'LOAN' ? route('get-loan') : route('do-transfer'))) }}" 
                 class="btn btn-primary btn-sm transaction-btn" 
-                data-title="{{ $fromtransaction == 'INCOME' ? 'Add Income' : ($fromtransaction == 'EXPENSE' ? 'Add Expense' : 'Do Transfer') }}" 
+                data-title="{{ $fromtransaction == 'INCOME' ? 'Add Income' : ($fromtransaction == 'EXPENSE' ? 'Add Expense' : ($fromtransaction == 'LOAN' ? 'Get Loan' : 'Do Transfer')) }}" 
                 type="button">Back To Transaction</a>
             @endif
         </div>

@@ -53,12 +53,12 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body bg-success text-white">
                             <div class="d-flex align-items-center">
-                                <i class="ph-mask-happy ph-2x opacity-75 me-3"></i>
-
-                                <div class="flex-fill text-end">
+                                <div class="flex-fill">
                                     <h4 class="mb-0">{{ $val['income'] }} {{ auth()->user()->currency }}</h4>
-                                    {{ __('home.text.income') }}
+                                    {{ __('home.text.income') }}, <span class="bg-warning rounded-pill p-1 ps-2 pe-2">Loan ({{ $val['loan'] }})</span>
                                 </div>
+
+                                <i class="ph-mask-happy ph-2x opacity-75 ms-3"></i>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body bg-indigo text-white">
                             <div class="d-flex align-items-center">
-                                <i class="ph-bank ph-2x opacity-75 me-3"></i>
+                                <i class="ph-floppy-disk-back ph-2x opacity-75 me-3"></i>
 
                                 <div class="flex-fill text-end">
                                     <h4 class="mb-0">{{ $val['saving'] }} {{ auth()->user()->currency }}</h4>
@@ -117,6 +117,10 @@
                                 <div class="list-group-item d-flex">
                                     {{ __('home.text.income') }}
                                     <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
+                                </div>
+                                <div class="list-group-item d-flex">
+                                    Loan
+                                    <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['loan'] }} {{ auth()->user()->currency }}</span>
                                 </div>
                                 <div class="list-group-item d-flex">
                                     {{ __('home.text.expense') }}
@@ -168,6 +172,10 @@
                             <div class="list-group-item d-flex">
                                 {{ __('home.text.income') }}
                                 <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['income'] }} {{ auth()->user()->currency }}</span>
+                            </div>
+                            <div class="list-group-item d-flex">
+                                Loan
+                                <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $val['loan'] }} {{ auth()->user()->currency }}</span>
                             </div>
                             <div class="list-group-item d-flex">
                                 {{ __('home.text.expense') }}

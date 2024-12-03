@@ -82,6 +82,23 @@ class TrackingHistoryController extends Controller
     }
 
     /**
+     * Open add income form in modal
+     *
+     * @return Renderable
+     */
+    public function getLoan()
+    {
+        $incomeSources = IncomeSource::orderBy('name', 'asc')->get();
+        $wallets = Wallet::orderBy('name', 'asc')->get();
+
+        return view('layouts.transactions.transaction-create-form', [
+            'incomeSources' => $incomeSources,
+            'wallets' => $wallets,
+            'transaction_type' => 'LOAN'
+        ]);
+    }
+
+    /**
      * Do Transaction and add data to storage
      *
      * @param Request $requset
@@ -100,6 +117,17 @@ class TrackingHistoryController extends Controller
 
         if ($transactionType == 'INCOME') {
             $message = __('transaction.income.add.success');
+
+            $incomingFields = $request->validate([
+                'amount' => ['required', 'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
+                'to_wallet' => 'required',
+                'income_source' => 'required',
+                'transaction_date' => 'required',
+                'transaction_time' => 'required'
+            ]);
+        } else if ($transactionType == 'LOAN') {
+            $message = __('transaction.loan.add.success');
 
             $incomingFields = $request->validate([
                 'amount' => ['required', 'numeric', 'min:0'],
@@ -158,6 +186,15 @@ class TrackingHistoryController extends Controller
             $arhead['tracking_history_id'] = $trackingHistory->id;
             $arhead['user_id'] = auth()->id();
             if ($transactionType == 'INCOME') {
+                $arhead['amount'] = $trackingHistory['amount'];
+                $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
+                $arhead['wallet_id'] = $trackingHistory['to_wallet'];
+                $arhead['row_sign'] = 1;
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
+
+                Arhead::create($arhead);
+            } else if ($transactionType == 'LOAN') {
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
@@ -226,7 +263,7 @@ class TrackingHistoryController extends Controller
     {
         $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('transaction_date', '=', date('Y/m/d'))
-            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN'])
             ->orderBy('id', 'desc')
             ->get();
 
@@ -278,7 +315,7 @@ class TrackingHistoryController extends Controller
     public function showYearWiseTransactions($year, Request $request)
     {
         $totalIncome = TrackingHistory::where('year', '=', $year)
-            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN'])
             ->orderBy('transaction_date', 'desc')
             ->orderBy('id', 'desc')
             ->get();
@@ -431,6 +468,12 @@ class TrackingHistoryController extends Controller
             $altAmountKey = 'expense';
         } 
 
+        if($transactiontype == 'LOAN'){
+            $searchColumn = 'income_source';
+            $amountKey = 'income';
+            $altAmountKey = 'expense';
+        } 
+
         $allTransactions = TrackingHistory::where('transaction_type', '=', $transactiontype)
             ->where($searchColumn, '=', $itemid)
             ->orderBy('transaction_date', 'desc')
@@ -483,7 +526,7 @@ class TrackingHistoryController extends Controller
 
         $totalIncome = TrackingHistory::where('month', '=', $monthno)
             ->where('year', '=', $year)
-            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER'])
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN'])
             ->orderBy('transaction_date', 'desc')
             ->orderBy('id', 'desc')
             ->get();
@@ -551,6 +594,15 @@ class TrackingHistoryController extends Controller
                 'incomeSources' => $incomeSources,
                 'wallets' => $wallets,
                 'transaction_type' => 'INCOME'
+            ]);
+        } else if ($trackingHistory->transaction_type == 'LOAN') {
+            $incomeSources = IncomeSource::orderBy('name', 'asc')->get();
+
+            return view('layouts.transactions.transaction-edit-form', [
+                'trackingHistory' => $trackingHistory,
+                'incomeSources' => $incomeSources,
+                'wallets' => $wallets,
+                'transaction_type' => 'LOAN'
             ]);
         } else if ($trackingHistory->transaction_type == 'EXPENSE') {
             $expenseTypes = ExpenseType::orderBy('name', 'asc')->get();
@@ -620,6 +672,20 @@ class TrackingHistoryController extends Controller
 
             // Delete previous
             $trackingHistory->delete();
+        } else if ($transactionType == 'LOAN') {
+            $message = __('transaction.loan.update.success');
+
+            $incomingFields = $request->validate([
+                'amount' => ['required', 'numeric', 'min:0'],
+                'transaction_charge' => ['required', 'numeric', 'min:0'],
+                'to_wallet' => 'required',
+                'income_source' => 'required',
+                'transaction_date' => 'required',
+                'transaction_time' => 'required'
+            ]);
+
+            // Delete previous
+            $trackingHistory->delete();
         } else if ($transactionType == 'EXPENSE') {
             $message = __('transaction.expense.update.success');
 
@@ -675,6 +741,15 @@ class TrackingHistoryController extends Controller
             $arhead['tracking_history_id'] = $trackingHistory->id;
             $arhead['user_id'] = auth()->user()->id;
             if ($transactionType == 'INCOME') {
+                $arhead['amount'] = $trackingHistory['amount'];
+                $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
+                $arhead['wallet_id'] = $trackingHistory['to_wallet'];
+                $arhead['row_sign'] = 1;
+                $arhead['xdate'] = $trackingHistory['transaction_date'];
+                $arhead['xtime'] = $trackingHistory['transaction_time'];
+
+                Arhead::create($arhead);
+            } else if ($transactionType == 'LOAN') {
                 $arhead['amount'] = $trackingHistory['amount'];
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
