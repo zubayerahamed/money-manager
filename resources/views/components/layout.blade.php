@@ -261,7 +261,7 @@
                 <!-- Footer -->
                 <div class="navbar navbar-sm navbar-footer border-top">
                     <div class="container-fluid justify-content-center">
-                        {!! systemsettingsNow('copyright_text') . '&nbsp (version-7.0.0)' !!}
+                        {!! systemsettingsNow('copyright_text') . '&nbsp (version-8.0.0)' !!}
                     </div>
                 </div>
                 <!-- /Footer -->

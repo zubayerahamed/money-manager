@@ -85,7 +85,7 @@ if (!function_exists('defaultSettings')) {
             // Site
             'site_logo' => asset('/assets/images/money-manager-logo-light.png'),
             'site_title' => 'Money Manager',
-            'copyright_text' => 'Copyright &copy; ' . date('Y') . ' &nbsp; <b><a href="http://www.zubayerahamed.com" target="_blank">Zubayer Ahamed</a></b>. All rights reserved.',
+            'copyright_text' => 'Copyright &copy; ' . date('Y') . ' &nbsp; <b><a href="https://www.zubayerahamed.com" target="_blank">Zubayer Ahamed</a></b> &nbsp; All rights reserved',
         ];
     }
 }

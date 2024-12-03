@@ -10,7 +10,11 @@
 }
 
 .datepicker {
-    z-index: 10000 !important;
+    z-index: 9999999 !important;
+}
+
+#transaction-modal{
+    z-index: 999999 !important;
 }
 
 
