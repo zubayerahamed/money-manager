@@ -272,8 +272,15 @@ class IncomeSourceController extends Controller
             ->where('transaction_type', '=', 'INCOME')
             ->get();
 
+        $totalLoan = DB::table('tracking_history')
+            ->selectRaw("SUM(amount) as totalLoan")
+            ->where('user_id', '=', auth()->id())
+            ->where('transaction_type', '=', 'LOAN')
+            ->get();
+
         return view('layouts.income-sources.income-sources-header', [
-            'totalIncome' => $totalIncome->isEmpty() ? 0 : $totalIncome->get(0)->totalIncome
+            'totalIncome' => $totalIncome->isEmpty() ? 0 : $totalIncome->get(0)->totalIncome,
+            'totalLoan' => $totalLoan->isEmpty() ? 0 : $totalLoan->get(0)->totalLoan
         ]);
     }
 
