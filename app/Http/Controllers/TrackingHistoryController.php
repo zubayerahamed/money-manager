@@ -263,7 +263,7 @@ class TrackingHistoryController extends Controller
     {
         $totalIncome = TrackingHistory::where('user_id', '=', auth()->user()->id)
             ->where('transaction_date', '=', date('Y/m/d'))
-            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN'])
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN', 'OPENING'])
             ->orderBy('id', 'desc')
             ->get();
 
@@ -315,7 +315,7 @@ class TrackingHistoryController extends Controller
     public function showYearWiseTransactions($year, Request $request)
     {
         $totalIncome = TrackingHistory::where('year', '=', $year)
-            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN'])
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN', 'OPENING'])
             ->orderBy('transaction_date', 'desc')
             ->orderBy('id', 'desc')
             ->get();
@@ -526,7 +526,7 @@ class TrackingHistoryController extends Controller
 
         $totalIncome = TrackingHistory::where('month', '=', $monthno)
             ->where('year', '=', $year)
-            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN'])
+            ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN', 'OPENING'])
             ->orderBy('transaction_date', 'desc')
             ->orderBy('id', 'desc')
             ->get();

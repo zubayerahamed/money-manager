@@ -25,7 +25,12 @@
                         <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $trn->id }}">
                             <div class="row">
                                 <div class="d-flex">
-                                    @if ($trn->transaction_type == 'INCOME')
+                                    @if ($trn->transaction_type == 'OPENING')
+                                        <span class="text-muted">Create Wallet <b>{{ $trn->toWallet->name }}</b> with opening balance <b>{{ $trn->amount }} {{ auth()->user()->currency }}</b></span>
+                                        @if ($val['expense'] == '')
+                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                        @endif
+                                    @elseif ($trn->transaction_type == 'INCOME')
                                         <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name . ' ' }}</b></span>
                                         @if ($val['expense'] == '')
                                             <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
@@ -53,7 +58,7 @@
                         </button>
                     </h2>
 
-                   
+                    @if ($trn->transaction_type != 'OPENING')
                     <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush_detail">
                         <div class="accordion-body">
                             
@@ -80,6 +85,7 @@
 
                         </div>
                     </div>
+                    @endif
 
                 </div>
             @endforeach
