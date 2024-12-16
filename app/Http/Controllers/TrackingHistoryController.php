@@ -192,6 +192,7 @@ class TrackingHistoryController extends Controller
                 $arhead['row_sign'] = 1;
                 $arhead['xdate'] = $trackingHistory['transaction_date'];
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
 
                 Arhead::create($arhead);
             } else if ($transactionType == 'LOAN') {
@@ -201,6 +202,7 @@ class TrackingHistoryController extends Controller
                 $arhead['row_sign'] = 1;
                 $arhead['xdate'] = $trackingHistory['transaction_date'];
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
 
                 Arhead::create($arhead);
             } else if ($transactionType == 'EXPENSE') {
@@ -210,6 +212,7 @@ class TrackingHistoryController extends Controller
                 $arhead['row_sign'] = -1;
                 $arhead['xdate'] = $trackingHistory['transaction_date'];
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
 
                 Arhead::create($arhead);
 
@@ -240,11 +243,13 @@ class TrackingHistoryController extends Controller
 
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
                 Arhead::create($arhead);
 
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
                 Arhead::create($arhead);
             }
 
@@ -747,6 +752,7 @@ class TrackingHistoryController extends Controller
                 $arhead['row_sign'] = 1;
                 $arhead['xdate'] = $trackingHistory['transaction_date'];
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
 
                 Arhead::create($arhead);
             } else if ($transactionType == 'LOAN') {
@@ -756,6 +762,7 @@ class TrackingHistoryController extends Controller
                 $arhead['row_sign'] = 1;
                 $arhead['xdate'] = $trackingHistory['transaction_date'];
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
 
                 Arhead::create($arhead);
             } else if ($transactionType == 'EXPENSE') {
@@ -765,6 +772,7 @@ class TrackingHistoryController extends Controller
                 $arhead['row_sign'] = -1;
                 $arhead['xdate'] = $trackingHistory['transaction_date'];
                 $arhead['xtime'] = $trackingHistory['transaction_time'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
 
                 Arhead::create($arhead);
 
@@ -795,11 +803,13 @@ class TrackingHistoryController extends Controller
 
                 $arhead['wallet_id'] = $trackingHistory['to_wallet'];
                 $arhead['row_sign'] = 1;
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
                 Arhead::create($arhead);
 
                 $arhead['wallet_id'] = $trackingHistory['from_wallet'];
                 $arhead['row_sign'] = -1;
                 $arhead['transaction_charge'] = $trackingHistory['transaction_charge'];
+                $arhead['excluded'] = Wallet::find($arhead['wallet_id'])->excluded;
                 Arhead::create($arhead);
             }
 

@@ -48,9 +48,19 @@ class DashboardController extends Controller
         $currentBalance = DB::table('arhead')
             ->selectRaw("SUM(amount * row_sign) - SUM(transaction_charge) as currentBalance")
             ->where('user_id', '=', auth()->id())
+            ->where('excluded', '=', 0)
             ->get();
 
         $currentBalance = $currentBalance->isEmpty() ? 0 : $currentBalance->get(0)->currentBalance;
+
+        // Excluded balance
+        $excludedBalance = DB::table('arhead')
+            ->selectRaw("SUM(amount * row_sign) - SUM(transaction_charge) as excludedBalance")
+            ->where('user_id', '=', auth()->id())
+            ->where('excluded', '=', 1)
+            ->get();
+
+        $excludedBalance = $excludedBalance->isEmpty() ? 0 : $excludedBalance->get(0)->excludedBalance;
 
         // Get all the transaction of current year except OPENING transaction
         $allTransactionsOfCurrentYear = TrackingHistory::where('year', '=', date('Y'))
@@ -157,14 +167,16 @@ class DashboardController extends Controller
             return view('layouts.dashboard.dashboard-chart', [
                 'currentBalance' => $currentBalance,
                 'monthWiseGroup' => $monthWiseGroup,
-                'yearWiseGroup' => $yearWiseGroup
+                'yearWiseGroup' => $yearWiseGroup,
+                'excludedBalance' => $excludedBalance,
             ]);
         }
 
         return view('dashboard', [
             'currentBalance' => $currentBalance,
             'monthWiseGroup' => $monthWiseGroup,
-            'yearWiseGroup' => $yearWiseGroup
+            'yearWiseGroup' => $yearWiseGroup,
+            'excludedBalance' => $excludedBalance,
         ]);
     }
 

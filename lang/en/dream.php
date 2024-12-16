@@ -23,6 +23,7 @@ return [
     'label.target_year' => 'Target year',
     'label.dream_id' => 'Account dream',
     'label.note' => 'Note',
+    'label.wallet_id' => 'Wallet',
 
     'btn.create-dream' => 'Create dream',
     'btn.edit-dream' => 'Edit dream',

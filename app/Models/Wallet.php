@@ -17,7 +17,8 @@ class Wallet extends Model
         'name',
         'icon',
         'note',
-        'user_id'
+        'user_id',
+        'excluded'
     ];
 
     public function getCurrentBalanceAttribute()

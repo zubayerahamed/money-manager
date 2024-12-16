@@ -50,6 +50,15 @@
         </div>
     </div>
 
+    @if ($fromtransaction == null)
+    <div class="mb-3">
+        <div class="form-check mb-2">
+            <input type="checkbox" class="form-check-input" id="excluded" name="excluded" {{ $wallet->excluded ? 'checked' : '' }}>
+            <label class="form-check-label" for="excluded">Exclude balance from current balance</label>
+        </div>
+    </div>
+    @endif
+
     <div class="row mb-3">
         <label class="form-label" for="note">{{ __('wallet.label.note') }}</label>
         <div class="form-group">

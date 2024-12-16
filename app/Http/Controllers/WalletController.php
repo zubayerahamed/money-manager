@@ -73,11 +73,19 @@ class WalletController extends Controller
         $totalBalance = DB::table('arhead')
             ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
             ->where('user_id', '=', auth()->id())
+            ->where('excluded', '=', 0)
+            ->get();
+        
+        $totalBalanceEx = DB::table('arhead')
+            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalanceEx")
+            ->where('user_id', '=', auth()->id())
+            ->where('excluded', '=', 1)
             ->get();
 
         return view('wallets', [
             'wallets' => $wallets,
-            'totalBalance' => $totalBalance->isEmpty() ? 0 : $totalBalance->get(0)->totalBalance
+            'totalBalance' => $totalBalance->isEmpty() ? 0 : $totalBalance->get(0)->totalBalance,
+            'totalBalanceEx' => $totalBalanceEx->isEmpty() ? 0 : $totalBalanceEx->get(0)->totalBalanceEx,
         ]);
     }
 
@@ -109,8 +117,10 @@ class WalletController extends Controller
             'current_balance' => ['required', 'numeric', 'min:0']
         ]);
 
+        $requset['excluded'] = $requset->has('excluded');
+
         $wallet = Wallet::create($requset->only([
-            'name', 'icon', 'note', 'user_id'
+            'name', 'icon', 'note', 'user_id', 'excluded'
         ]));
 
         if ($wallet->exists && $requset->get('current_balance') != 0) {
@@ -137,6 +147,7 @@ class WalletController extends Controller
                 $arhead['row_sign'] = 1;
                 $arhead['xdate'] = date('Y-m-d');
                 $arhead['xtime'] = date('H:i');
+                $arhead['excluded'] = $wallet->excluded;
 
                 Arhead::create($arhead);
             }
@@ -236,8 +247,10 @@ class WalletController extends Controller
             'icon' => 'required'
         ]);
 
+        $requset['excluded'] = $requset->has('excluded');
+
         $updated = $wallet->update($requset->only([
-            'name', 'icon', 'note', 'user_id'
+            'name', 'icon', 'note', 'user_id', 'excluded'
         ]));
 
         if ($updated) {
@@ -324,10 +337,18 @@ class WalletController extends Controller
         $totalBalance = DB::table('arhead')
             ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalance")
             ->where('user_id', '=', auth()->id())
+            ->where('excluded', '=', 0)
+            ->get();
+        
+        $totalBalanceEx = DB::table('arhead')
+            ->selectRaw("SUM(amount * row_sign)-SUM(transaction_charge) as totalBalanceEx")
+            ->where('user_id', '=', auth()->id())
+            ->where('excluded', '=', 1)
             ->get();
 
         return view('layouts.wallets.wallets-header', [
             'totalBalance' => $totalBalance->isEmpty() ? 0 : $totalBalance->get(0)->totalBalance,
+            'totalBalanceEx' => $totalBalanceEx->isEmpty() ? 0 : $totalBalanceEx->get(0)->totalBalanceEx,
         ]);
     }
 

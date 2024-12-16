@@ -40,7 +40,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-fill">
                                     <h4 class="mb-0">{{ $currentBalance }} {{ auth()->user()->currency }}</h4>
-                                    {{ __('home.text.current-balance') }}
+                                    {{ __('home.text.current-balance') }}, <span class="bg-light text-dark rounded-pill p-1 ps-2 pe-2">Excluded ({{ $excludedBalance }})</span>
                                 </div>
 
                                 <i class="ph-wallet ph-2x opacity-75 ms-3"></i>

@@ -20,7 +20,8 @@ class Arhead extends Model
         'transaction_charge',
         'user_id',
         'xdate',
-        'xtime'
+        'xtime',
+        'excluded',
     ];
 
     public function wallet()

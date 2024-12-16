@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('transaction_charge', 8, 2)->default('0');
             $table->integer('row_sign');
             $table->foreignId('tracking_history_id')->references('id')->on('tracking_history')->onDelete('cascade');
+            $table->boolean('excluded')->default(false);
             $table->foreignId('wallet_id')->references('id')->on('wallet')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
