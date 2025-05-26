@@ -39,8 +39,9 @@
                         <div class="card card-body bg-primary text-white">
                             <div class="d-flex align-items-center">
                                 <div class="flex-fill">
-                                    <h4 class="mb-0">{{ $currentBalance }} {{ auth()->user()->currency }}</h4>
-                                    {{ __('home.text.current-balance') }}, <span class="bg-light text-dark rounded-pill p-1 ps-2 pe-2">Excluded ({{ $excludedBalance }})</span>
+                                    <h5 class="p-0 m-0">{{ __('home.text.current-balance') }}</h5>
+                                    <h1 class="mb-0">{{ $currentBalance }} {{ auth()->user()->currency }}</h1>
+                                    <span>Excluded <strong>{{ $excludedBalance }}</strong> {{ auth()->user()->currency }}</span>
                                 </div>
 
                                 <i class="ph-wallet ph-2x opacity-75 ms-3"></i>
@@ -54,8 +55,9 @@
                         <div class="card card-body bg-success text-white">
                             <div class="d-flex align-items-center">
                                 <div class="flex-fill">
-                                    <h4 class="mb-0">{{ $val['income'] }} {{ auth()->user()->currency }}</h4>
-                                    {{ __('home.text.income') }}, <span class="bg-warning rounded-pill p-1 ps-2 pe-2">Loan ({{ $val['loan'] }})</span>
+                                    <h5 class="p-0 m-0">{{ __('home.text.income') }}</h1>
+                                    <h1 class="mb-0">{{ $val['income'] }} {{ auth()->user()->currency }}</h4>
+                                    <span>Loan <strong>{{ $val['loan'] }}</strong> {{ auth()->user()->currency }}</span>
                                 </div>
 
                                 <i class="ph-mask-happy ph-2x opacity-75 ms-3"></i>
@@ -69,8 +71,9 @@
                         <div class="card card-body bg-danger text-white">
                             <div class="d-flex align-items-center">
                                 <div class="flex-fill">
-                                    <h4 class="mb-0">{{ $val['expense'] + $val['trancharge'] }} {{ auth()->user()->currency }}</h4>
-                                    {{ __('home.text.expense.charge') }} ({{ $val['trancharge'] }})
+                                    <h5 class="p-0 m-0">Expense</h1>
+                                    <h1 class="mb-0">{{ $val['expense'] + $val['trancharge'] }} {{ auth()->user()->currency }}</h1>
+                                    <span>Charge <strong>{{ $val['trancharge'] }}</strong> {{ auth()->user()->currency }}</span>
                                 </div>
 
                                 <i class="ph-mask-sad ph-2x opacity-75 ms-3"></i>
@@ -83,12 +86,17 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body bg-indigo text-white">
                             <div class="d-flex align-items-center">
-                                <i class="ph-floppy-disk-back ph-2x opacity-75 me-3"></i>
+                                <div class="flex-fill">
+                                    <h5 class="p-0 m-0">Saving</h1>
+                                    <h1 class="mb-0">{{ $val['saving'] }} {{ auth()->user()->currency }}</h1>
 
-                                <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ $val['saving'] }} {{ auth()->user()->currency }}</h4>
-                                    {{ __('home.text.saving') }}
+                                    @php
+                                        $prev_month_name = date('F', strtotime('first day of last month'));
+                                    @endphp     
+
+                                    <span>Last Month <strong>{{ $monthWiseGroup[$prev_month_name]['saving'] }}</strong> {{ auth()->user()->currency }}</span>
                                 </div>
+                                <i class="ph-floppy-disk-back ph-2x opacity-75 ms-3"></i>
                             </div>
                         </div>
                     </div>
