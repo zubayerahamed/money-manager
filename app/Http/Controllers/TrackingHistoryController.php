@@ -443,8 +443,6 @@ class TrackingHistoryController extends Controller
             }
         }
 
-        //dd($yearWiseGroup);
-
         $sectionReloadRoute = $request->route()->getName();
 
         if($request->ajax()){
@@ -704,13 +702,13 @@ class TrackingHistoryController extends Controller
             ]);
 
             
+            // Delete previous
+            $trackingHistory->delete();
+            
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) == null || $wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
                 return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
-
-            // Delete previous
-            $trackingHistory->delete();
         } else {
             $message = __('transaction.transfer.update.success');
 
@@ -723,13 +721,15 @@ class TrackingHistoryController extends Controller
                 'transaction_time' => 'required'
             ]);
 
+            // Delete previous
+            $trackingHistory->delete();
+
             $wallet = Wallet::find($incomingFields['from_wallet']);
             if ($wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) == null || $wallet->getBalanceByDate($incomingFields['transaction_date'], $incomingFields['transaction_time']) < ($incomingFields['amount'] + $incomingFields['transaction_charge'] - $trackingHistory->amount - $trackingHistory->transaction_charge)) {
                 return $this->error(null, __('transaction.insufficient.balance', ['name' => $wallet->name]), 400);
             }
 
-            // Delete previous
-            $trackingHistory->delete();
+            
         }
 
 
