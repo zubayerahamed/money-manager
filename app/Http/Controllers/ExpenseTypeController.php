@@ -31,7 +31,8 @@ class ExpenseTypeController extends Controller
      * @param Request $requset
      * @return void
      */
-    public function reloadPageSections(Request $requset){
+    public function reloadPageSections(Request $requset)
+    {
         return $this->reloadSectionsOnly(
             [
                 $this->section_accordion,
@@ -80,6 +81,37 @@ class ExpenseTypeController extends Controller
         ]);
     }
 
+    public function getExpenseTypeChartData($id) {
+        $trackingHistoriesOfExpense = DB::table('tracking_history')
+            ->selectRaw("SUM(amount) as amount, SUM(transaction_charge) as charge, month")
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('transaction_type', '=', 'EXPENSE')
+            ->where('year', '=', date('Y'))
+            ->where('expense_type', '=', $id)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        // dd($trackingHistoriesOfExpense);
+
+        $data = [];
+
+        // Max current month
+        $currentMonth = date('n');
+        for ($i = 0; $i < $currentMonth; $i++) {
+            $data[$i] = [
+                'month' => $i + 1,
+                'amount' => 0,
+            ];
+        }
+
+        foreach ($trackingHistoriesOfExpense as $history) {
+            $data[$history->month - 1]['amount'] = $history->amount;
+        }
+
+        return $data;
+    }
+
     /**
      * Open income source create form in modal
      *
@@ -113,15 +145,19 @@ class ExpenseTypeController extends Controller
         $requset['active'] = $requset->has('active') ? true : false;
 
         $expenseType = ExpenseType::create($requset->only([
-            'name', 'icon', 'note', 'user_id', 'active'
+            'name',
+            'icon',
+            'note',
+            'user_id',
+            'active'
         ]));
 
-        if($requset->get('fromtransaction')){
+        if ($requset->get('fromtransaction')) {
             // For transaction edit screen
-            if($requset->get('trnId') != null && $requset->get('trnId') != ''){
+            if ($requset->get('trnId') != null && $requset->get('trnId') != '') {
                 $route = route("tracking.edit", [$requset->get('trnId')]);
                 $modalTitle = "Edit transaction";
-    
+
                 return $this->successWithReloadSectionsInModal(
                     null,
                     __('expense-type.save.success', ['name' => $expenseType->name]),
@@ -134,11 +170,11 @@ class ExpenseTypeController extends Controller
             // For new transaction screen
             $route = route("do-transfer");
             $modalTitle = "Do Transfer";
-            if($requset->get('fromtransaction') == 'INCOME') {
+            if ($requset->get('fromtransaction') == 'INCOME') {
                 $route = route('add-income');
                 $modalTitle = "Add Income";
             }
-            if($requset->get('fromtransaction') == 'EXPENSE') {
+            if ($requset->get('fromtransaction') == 'EXPENSE') {
                 $route = route('add-expense');
                 $modalTitle = "Add Expense";
             }
@@ -203,7 +239,11 @@ class ExpenseTypeController extends Controller
         $requset['active'] = $requset->has('active') ? true : false;
 
         $updated = $expenseType->update($requset->only([
-            'name', 'icon', 'note', 'user_id', 'active'
+            'name',
+            'icon',
+            'note',
+            'user_id',
+            'active'
         ]));
 
         if ($updated) {

@@ -31,6 +31,10 @@
                     @endif
 
                     <span class="badge border border-teal text-teal rounded-pill m-auto">
+                        <a href="{{ route('expense-type.chart.data', ['id' => $expenseType->id]) }}" data-expense-type-id="{{ $expenseType->id }}" class="m-2 text-primary line-chart-btn" title="View Chart" data-title="Expense Chart of {{ $expenseType->name }}">
+                            <i class="fas fa-chart-line"></i>
+                        </a>
+
                         <a href="{{ route('tracking.monthlygrouped', [$expenseType->id, 'EXPENSE']) }}" class="m-2 text-primary transaction-btn" title="View Details" data-title="Expense Details of {{ $expenseType->name }}">
                             <i class="fas fa-eye"></i>
                         </a>
@@ -59,6 +63,16 @@
                         </a>
                     </span>
 
+                     <!-- Expense Line Chart -->
+                    <div class="chart-container mt-3">
+                        <div class="chart has-fixed-height expense-type-chart d-none" 
+                            data-chart-url="{{ route('expense-type.chart.data', ['id' => $expenseType->id]) }}"
+                            id="line_basic_{{ $expenseType->id }}" 
+                            data-expense-type-id="{{ $expenseType->id }}" 
+                            style="height: 440px; width: 100%;"></div>
+                    </div>
+                    <!-- /Expense Line Chart -->
+
                     <div class="sub-expense-type-wrapper-{{ $expenseType->id }}">
                         @include('layouts.sub-expense-types.sub-expense-types-accordion')
                     </div>
@@ -69,3 +83,206 @@
 
     </div>
 @endforeach
+
+
+
+<script>
+    $(document).ready(function() {
+
+        // Calling year line chart
+        $('.line-chart-btn').off('click').on('click', function(e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            var expenseTypeId = $(this).data('expense-type-id');
+            var title = $(this).data('title');
+            var chartElement = $('#line_basic_' + expenseTypeId);
+            chartElement.toggleClass('d-none');
+            chartElement.attr('title', title);
+
+             $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    prepareYearlyLineChart(chartElement.attr('id'), data);
+                },
+                error: function(jqXHR, status, errorThrown) {
+                    showMessage(status, "Something went wrong .... ");
+                }
+            });
+        });
+
+        function prepareYearlyLineChart(chartId, data) {
+            var months = [
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+            ];
+            var labels = data.map(d => months[d.month - 1]);
+            var amounts = data.map(d => d.amount);
+
+            if (typeof echarts == 'undefined') {
+                console.warn('Warning - echarts.min.js is not loaded.');
+                return;
+            }
+
+            // Define element
+            var chartElement  = document.getElementById(chartId);
+
+            //
+            // Charts configuration
+            //
+            if (chartElement) {
+
+                // Initialize chart
+                var line_stacked = echarts.init(chartElement, null, {
+                    renderer: 'svg'
+                });
+
+                // Options
+                line_stacked.setOption({
+
+                    // Define colors
+                    color: ['#EF5350'],
+
+                    // Global text styles
+                    textStyle: {
+                        fontFamily: 'var(--body-font-family)',
+                        color: 'var(--body-color)',
+                        fontSize: 14,
+                        //lineHeight: 22,
+                        //textBorderColor: 'transparent'
+                    },
+
+                    // Chart animation duration
+                    animationDuration: 750,
+
+                    // Setup grid
+                    grid: {
+                        left: 10,
+                        right: 20,
+                        top: 40,
+                        bottom: 60,
+                        containLabel: true
+                    },
+
+                    // Add legend
+
+                    // Title
+
+                    // Add tooltip
+                    tooltip: {
+                        trigger: 'axis',
+                        className: 'shadow-sm rounded',
+                        backgroundColor: 'var(--white)',
+                        borderColor: 'var(--gray-400)',
+                        padding: 15,
+                        textStyle: {
+                            color: '#000'
+                        }
+                    },
+
+                    // Horizontal axis
+                    xAxis: [{
+                        type: 'category',
+                        boundaryGap: false,
+                        data: labels,
+                        axisLabel: {
+                            color: 'rgba(var(--body-color-rgb), .65)'
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'var(--gray-500)'
+                            }
+                        },
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                color: 'var(--gray-300)'
+                            }
+                        }
+                    }],
+
+                    // Vertical axis
+                    yAxis: [{
+                        type: 'value',
+                        axisLabel: {
+                            color: 'rgba(var(--body-color-rgb), .65)'
+                        },
+                        axisLine: {
+                            show: true,
+                            lineStyle: {
+                                color: 'var(--gray-500)'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: 'var(--gray-300)'
+                            }
+                        },
+                        splitArea: {
+                            show: true,
+                            areaStyle: {
+                                color: ['rgba(var(--white-rgb), .01)', 'rgba(var(--black-rgb), .01)']
+                            }
+                        }
+                    }],
+
+                    // Axis pointer
+                    axisPointer: [{
+                        lineStyle: {
+                            color: 'var(--gray-600)'
+                        }
+                    }],
+
+                    // Add series
+                    series: [{
+                            name: 'Expense',
+                            type: 'line',
+                            data: amounts,
+                            smooth: true,
+                            symbol: 'circle',
+                            symbolSize: 8,
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.25
+                                }
+                            },
+                        },
+                    ]
+                });
+            }
+
+            //
+            // Resize charts
+            //
+
+            // Resize function
+            var triggerChartResize = function() {
+                chartElement && line_stacked.resize();
+            };
+
+            // On sidebar width change
+            var sidebarToggle = document.querySelectorAll('.sidebar-control');
+            if (sidebarToggle) {
+                sidebarToggle.forEach(function(togglers) {
+                    togglers.addEventListener('click', triggerChartResize);
+                });
+            }
+            var tabToggle = document.querySelectorAll('.nav-link');
+            if (tabToggle) {
+                tabToggle.forEach(function(togglers) {
+                    togglers.addEventListener('click', triggerChartResize);
+                });
+            }
+
+            // On window resize
+            var resizeCharts;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeCharts);
+                resizeCharts = setTimeout(function() {
+                    triggerChartResize();
+                }, 200);
+            });
+        }
+
+    });
+</script>

@@ -527,7 +527,7 @@ class TrackingHistoryController extends Controller
     public function showMonthWiseTransactions($monthno, $year, Request $request)
     {
 
-        $totalIncome = TrackingHistory::where('month', '=', $monthno)
+        $totalIncome = TrackingHistory::with(['details.subExpenseType'])->where('month', '=', $monthno)
             ->where('year', '=', $year)
             ->whereIn('transaction_type', ['INCOME', 'EXPENSE', 'TRANSFER', 'LOAN', 'OPENING'])
             ->orderBy('transaction_date', 'desc')

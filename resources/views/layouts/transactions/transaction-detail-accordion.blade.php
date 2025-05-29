@@ -49,6 +49,7 @@
                                         <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.transfer.from') }} <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
                                     @endif
                                 </div>
+
                                 @if ($trn->note != '')
                                     <div class="row">
                                         <span class="fw-semibold">{{ $trn->note }}</span>
@@ -62,6 +63,18 @@
                     <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush_detail">
                         <div class="accordion-body">
                             
+                            @if (count($trn->details) > 0)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul style="list-style-type: none; padding-left: 0;">
+                                            @foreach ($trn->details as $detail)
+                                                <li>{{ $detail->subExpenseType->name . ' - ' .  $detail->amount . ' ' . auth()->user()->currency}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="col-md-12 text-center">
                                 <span class="badge border border-teal text-teal rounded-pill m-auto">
                                     <a href="{{ route('tracking.edit', $trn->id) }}" class="m-2 text-primary transaction-btn" title="Edit" data-title="{{ __('transaction.btn.edit-transaction') }}" title="{{ __('transaction.btn.edit-transaction') }}">
