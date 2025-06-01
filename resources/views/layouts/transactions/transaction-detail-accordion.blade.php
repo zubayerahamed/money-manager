@@ -24,34 +24,36 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush_item{{ $trn->id }}">
                             <div class="row">
-                                <div class="d-flex">
+                                <div class="d-flex flex-column">
                                     @if ($trn->transaction_type == 'OPENING')
                                         <span class="text-muted">Create Wallet <b>{{ $trn->toWallet->name }}</b> with opening balance <b>{{ $trn->amount }} {{ auth()->user()->currency }}</b></span>
                                         @if ($val['expense'] == '')
                                             <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @elseif ($trn->transaction_type == 'INCOME')
-                                        <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name . ' ' }}</b></span>
+                                        <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
+                                        <i style="color: #2b2b2b; font-size: 11px;">Added to wallet <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></i>
                                         @if ($val['expense'] == '')
                                             <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @elseif ($trn->transaction_type == 'LOAN')
-                                        <span class="text-warning"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.loan.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name . ' ' }}</b></span>
+                                        <span class="text-warning"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.loan.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
                                         @if ($val['expense'] == '')
                                             <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @elseif ($trn->transaction_type == 'EXPENSE')
                                         <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.expense.for') }} <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
+                                        <i style="color: #2b2b2b; font-size: 11px;">From wallet <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b></i>
                                         @if ($val['income'] == '')
                                             <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @else
-                                        <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.transfer.from') }} <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
+                                        <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> transfer from wallet <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
                                     @endif
                                 </div>
 
                                 @if ($trn->note != '')
-                                    <div class="row">
+                                    <div class="row mt-2">
                                         <span class="fw-semibold">{{ $trn->note }}</span>
                                     </div>
                                 @endif
