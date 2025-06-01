@@ -21,7 +21,7 @@
         </h2>
 
         <div id="flush_item{{ $expenseType->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush">
-            <div class="accordion-body">
+            <div class="accordion-body" style="background-color: #f5f3f3">
                 <div class="col-md-12 text-center">
 
                     @if ($expenseType->note != '')

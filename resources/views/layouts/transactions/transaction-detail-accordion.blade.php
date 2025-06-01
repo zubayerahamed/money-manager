@@ -28,24 +28,24 @@
                                     @if ($trn->transaction_type == 'OPENING')
                                         <span class="text-muted">Create Wallet <b>{{ $trn->toWallet->name }}</b> with opening balance <b>{{ $trn->amount }} {{ auth()->user()->currency }}</b></span>
                                         @if ($val['expense'] == '')
-                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                            <span>{!! '(' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @elseif ($trn->transaction_type == 'INCOME')
                                         <span class="text-success"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.income.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
                                         <i style="color: #2b2b2b; font-size: 11px;">Added to wallet <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></i>
                                         @if ($val['expense'] == '')
-                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                            <span>{!! '(' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @elseif ($trn->transaction_type == 'LOAN')
                                         <span class="text-warning"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.loan.from') }} <b style="text-transform: uppercase;">{{ $trn->incomeSource->name }}</b></span>
                                         @if ($val['expense'] == '')
-                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                            <span>{!! '(' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @elseif ($trn->transaction_type == 'EXPENSE')
                                         <span class="text-danger"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> {{ __('transaction.details.expense.for') }} <b style="text-transform: uppercase;">{{ $trn->expenseType->name }}</b></span>
                                         <i style="color: #2b2b2b; font-size: 11px;">From wallet <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b></i>
                                         @if ($val['income'] == '')
-                                            <span>{!! '&nbsp; (' . $trn->transaction_date . ')' !!}</span>
+                                            <span>{!! '(' . $trn->transaction_date . ')' !!}</span>
                                         @endif
                                     @else
                                         <span class="text-primary"><b>{{ $trn->amount }} {{ auth()->user()->currency }}</b> transfer from wallet <b style="text-transform: uppercase;">{{ $trn->fromWallet->name }}</b> to <b style="text-transform: uppercase;">{{ $trn->toWallet->name }}</b></span>
@@ -63,19 +63,7 @@
 
                     @if ($trn->transaction_type != 'OPENING')
                     <div id="flush_item{{ $trn->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion_flush_detail">
-                        <div class="accordion-body">
-                            
-                            @if (count($trn->details) > 0)
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <ul style="list-style-type: none; padding-left: 0;">
-                                            @foreach ($trn->details as $detail)
-                                                <li>{{ $detail->subExpenseType->name . ' - ' .  $detail->amount . ' ' . auth()->user()->currency}}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endif
+                        <div class="accordion-body" style="background-color: #f5f3f3">
 
                             <div class="col-md-12 text-center">
                                 <span class="badge border border-teal text-teal rounded-pill m-auto">
@@ -97,6 +85,18 @@
                                     </form>
                                 </span>
                             </div>
+
+                            @if (count($trn->details) > 0)
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <ul style="list-style-type: none; padding-left: 0;">
+                                            @foreach ($trn->details as $detail)
+                                                <li>{{ $detail->subExpenseType->name . ' - '}} <b>{{ $detail->amount . ' ' . auth()->user()->currency }}</b></li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endif
 
                         </div>
                     </div>
