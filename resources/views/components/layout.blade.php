@@ -274,6 +274,30 @@
     </div>
     <!-- /Page content -->
 
+    <!-- Chart Modal -->
+    <div class="modal fade" id="chart-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title chart-modal-title">Modal Title</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- ./Modal Header -->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div id="expense-type-line-chart" class="chart has-fixed-height expense-type-line-chart d-none" style="height: 440px; width: 100%;">
+                    </div>
+                </div>
+                <!-- ./Modal body -->
+            </div>
+        </div>
+    </div>
+    <!-- /Chart Modal -->
+
+
     <!-- Transaction Modal -->
     <div class="modal fade" id="transaction-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">

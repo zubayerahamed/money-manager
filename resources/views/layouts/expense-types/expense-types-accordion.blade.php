@@ -63,16 +63,6 @@
                         </a>
                     </span>
 
-                     <!-- Expense Line Chart -->
-                    <div class="chart-container mt-3">
-                        <div class="chart has-fixed-height expense-type-chart d-none" 
-                            data-chart-url="{{ route('expense-type.chart.data', ['id' => $expenseType->id]) }}"
-                            id="line_basic_{{ $expenseType->id }}" 
-                            data-expense-type-id="{{ $expenseType->id }}" 
-                            style="height: 440px; width: 100%;"></div>
-                    </div>
-                    <!-- /Expense Line Chart -->
-
                     <div class="sub-expense-type-wrapper-{{ $expenseType->id }}">
                         @include('layouts.sub-expense-types.sub-expense-types-accordion')
                     </div>
@@ -95,15 +85,28 @@
             var url = $(this).attr('href');
             var expenseTypeId = $(this).data('expense-type-id');
             var title = $(this).data('title');
-            var chartElement = $('#line_basic_' + expenseTypeId);
-            chartElement.toggleClass('d-none');
-            chartElement.attr('title', title);
 
              $.ajax({
                 url: url,
                 type: 'GET',
                 success: function(data) {
-                    prepareYearlyLineChart(chartElement.attr('id'), data);
+
+                    // Assuming data contains the chart HTML
+                    var chartContainer = '<div id="expense-type-line-chart" class="chart has-fixed-height expense-type-line-chart d-none" style="height: 440px; width: 100%;"></div>';
+                    $('#chart-modal .modal-body').html(chartContainer);
+
+                    var chartElement = $('#expense-type-line-chart');
+                    chartElement.html("");
+                    chartElement.removeClass('d-none');
+
+                    $('#chart-modal .chart-modal-title').text(title);
+                    $('#chart-modal').modal('show');
+
+                    // Call the function after modal fully loaded
+                    $('#chart-modal').on('shown.bs.modal', function () {
+                        prepareYearlyLineChart(chartElement.attr('id'), data);
+                    });
+
                 },
                 error: function(jqXHR, status, errorThrown) {
                     showMessage(status, "Something went wrong .... ");

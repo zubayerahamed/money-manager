@@ -127,6 +127,7 @@ Route::group(['middleware' => ['auth', 'setup']], function () {
         Route::get('/section/accordion', [ExpenseTypeController::class, 'accordion'])->name('section.accordion');
         Route::get('/sections/all', [ExpenseTypeController::class, 'reloadPageSections'])->name('sections');
         Route::get('/expense-tracking-data/{id}', [ExpenseTypeController::class, 'getExpenseTypeChartData'])->name('chart.data');
+        Route::get('/expense-tracking-data/sub-expense/{id}', [ExpenseTypeController::class, 'getExpenseChartDataBySubExpenseType'])->name('chart.sub-expense.data');
     });
 
     // Sub Expense Type

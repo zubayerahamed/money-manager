@@ -81,7 +81,37 @@ class ExpenseTypeController extends Controller
         ]);
     }
 
+    public function getExpenseChartDataBySubExpenseType($id) {
+
+        $transactionHistoryDetailOfExpense = DB::table('transaction_history_details')
+            ->selectRaw("SUM(amount) as amount, month")
+            ->where('user_id', '=', auth()->user()->id)
+            ->where('year', '=', date('Y'))
+            ->where('sub_expense_type_id', '=', $id)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+        
+        $data = [];
+
+        // Max current month
+        $currentMonth = date('n');
+        for ($i = 0; $i < $currentMonth; $i++) {
+            $data[$i] = [
+                'month' => $i + 1,
+                'amount' => 0,
+            ];
+        }
+
+        foreach ($transactionHistoryDetailOfExpense as $history) {
+            $data[$history->month - 1]['amount'] = $history->amount;
+        }
+
+        return $data;
+    }
+
     public function getExpenseTypeChartData($id) {
+        
         $trackingHistoriesOfExpense = DB::table('tracking_history')
             ->selectRaw("SUM(amount) as amount, SUM(transaction_charge) as charge, month")
             ->where('user_id', '=', auth()->user()->id)
@@ -91,8 +121,6 @@ class ExpenseTypeController extends Controller
             ->groupBy('month')
             ->orderBy('month')
             ->get();
-
-        // dd($trackingHistoriesOfExpense);
 
         $data = [];
 
