@@ -86,32 +86,31 @@
             var expenseTypeId = $(this).data('expense-type-id');
             var title = $(this).data('title');
 
-             $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(data) {
+            // Assuming data contains the chart HTML
+            var chartContainer = '<div id="expense-type-line-chart" class="chart has-fixed-height expense-type-line-chart d-none" style="height: 440px; width: 100%;"></div>';
+            $('#chart-modal .modal-body').html(chartContainer);
 
-                    // Assuming data contains the chart HTML
-                    var chartContainer = '<div id="expense-type-line-chart" class="chart has-fixed-height expense-type-line-chart d-none" style="height: 440px; width: 100%;"></div>';
-                    $('#chart-modal .modal-body').html(chartContainer);
+            var chartElement = $('#expense-type-line-chart');
+            chartElement.html("");
+            chartElement.removeClass('d-none');
 
-                    var chartElement = $('#expense-type-line-chart');
-                    chartElement.html("");
-                    chartElement.removeClass('d-none');
+            $('#chart-modal .chart-modal-title').text(title);
+            $('#chart-modal').modal('show');
 
-                    $('#chart-modal .chart-modal-title').text(title);
-                    $('#chart-modal').modal('show');
-
-                    // Call the function after modal fully loaded
-                    $('#chart-modal').on('shown.bs.modal', function () {
+            // Call the function after modal fully loaded
+            $('#chart-modal').on('shown.bs.modal', function () {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(data) {
                         prepareYearlyLineChart(chartElement.attr('id'), data);
-                    });
-
-                },
-                error: function(jqXHR, status, errorThrown) {
-                    showMessage(status, "Something went wrong .... ");
-                }
+                    },
+                    error: function(jqXHR, status, errorThrown) {
+                        showMessage(status, "Something went wrong .... ");
+                    }
+                });
             });
+
         });
 
         function prepareYearlyLineChart(chartId, data) {
